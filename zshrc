@@ -111,3 +111,5 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 fpath=(~/.zsh/completion $fpath)
+
+export GPG_TTY="$(tty)"
