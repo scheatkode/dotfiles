@@ -452,7 +452,7 @@ call plug#begin(s:vimrc_path_plugin)
   " --> miscellaneous plug-ins
   Plug 'mhinz/vim-startify'   | " start screen
   Plug 'psliwka/vim-smoothie' | " smooth scrolling
-  Plug 'vimwiki/vimwiki'      | " personal note taking
+  "Plug 'vimwiki/vimwiki'      | " personal note taking
   Plug 'kana/vim-operator-user'
   Plug 'junegunn/vim-easy-align', { 'on':['<Plug>(EasyAlign)','EasyAlign']}
   Plug 'machakann/vim-sandwich',  { 'on':[
