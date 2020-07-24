@@ -517,47 +517,47 @@ if s:vimrc_plugin_manager_present
   call coc#config('suggest.removeDuplicateItems', 'true')
   call coc#config('suggest.snippetIndicator', " \ue796")
   call coc#config('suggest.completionItemKindLabels', {
-        \    'keyword':       "\uf1de",
-        \    'variable':      "\ue79b",
-        \    'value':         "\uf89f",
-        \    'operator':      "\u03a8",
-        \    'function':      "\u0192",
-        \    'reference':     "\ufa46",
-        \    'constant':      "\uf8fe",
-        \    'method':        "\uf09a",
-        \    'struct':        "\ufb44",
-        \    'class':         "\uf0e8",
-        \    'interface':     "\uf417",
-        \    'text':          "\ue612",
-        \    'enum':          "\uf435",
-        \    'enumMember':    "\uf02b",
-        \    'module':        "\uf40d",
-        \    'color':         "\ue22b",
-        \    'property':      "\ue624",
-        \    'field':         "\uf9be",
-        \    'unit':          "\uf475",
-        \    'event':         "\ufacd",
-        \    'file':          "\uf723",
-        \    'folder':        "\uf114",
-        \    'snippet':       "\ue60b",
-        \    'typeParameter': "\uf728",
-        \    'default':       "\uf29c"
-        \})
+        \    'keyword'       : "\uf1de",
+        \    'variable'      : "\ue79b",
+        \    'value'         : "\uf89f",
+        \    'operator'      : "\u03a8",
+        \    'function'      : "\u0192",
+        \    'reference'     : "\ufa46",
+        \    'constant'      : "\uf8fe",
+        \    'method'        : "\uf09a",
+        \    'struct'        : "\ufb44",
+        \    'class'         : "\uf0e8",
+        \    'interface'     : "\uf417",
+        \    'text'          : "\ue612",
+        \    'enum'          : "\uf435",
+        \    'enumMember'    : "\uf02b",
+        \    'module'        : "\uf40d",
+        \    'color'         : "\ue22b",
+        \    'property'      : "\ue624",
+        \    'field'         : "\uf9be",
+        \    'unit'          : "\uf475",
+        \    'event'         : "\ufacd",
+        \    'file'          : "\uf723",
+        \    'folder'        : "\uf114",
+        \    'snippet'       : "\ue60b",
+        \    'typeParameter' : "\uf728",
+        \    'default'       : "\uf29c"
+        \ })
 
   call coc#config('codeLens.enable',    'true')
   call coc#config('codeLens.separator', "\u2023")
 
-  call coc#config('list.indicator',"\ue602")
-  call coc#config('list.maxHeight',15)
+  call coc#config('list.indicator', "\ue602")
+  call coc#config('list.maxHeight', 15)
 
   "call coc#config('signature.target','echo')
 
   call coc#config('diagnostic.level',       'hint')
   call coc#config('diagnostic.virtualtext', 'true')
-  call coc#config('diagnostic.errorSign',   "\uf65b")
-  call coc#config('diagnostic.warningSign', "\uf421")
-  call coc#config('diagnostic.infoSign',    "\uf05a")
-  call coc#config('diagnostic.hintSign',    "\u25b8")
+  call coc#config('diagnostic.errorSign',   "\u2b24") " \uf65b 
+  call coc#config('diagnostic.warningSign', "\u2b24") " \uf421 
+  call coc#config('diagnostic.infoSign',    "\u2b24") " \uf05a 
+  call coc#config('diagnostic.hintSign',    "\u2b24") " \u25b8 ▸
   "call coc#config('diagnostic.messageTarget','echo')
 
   " lint `sh` (includes `bash`) files
@@ -715,31 +715,31 @@ if s:vimrc_plugin_manager_present
 
   let g:lightline = {
         \   'colorscheme': 'jellybeans',
-        \   'active': {
-        \     'left':[
+        \   'active' : {
+        \     'left' : [
         \               [ 'mode', 'paste' ],
-        \               [ 'cocstatus','gitbranch', 'readonly', 'filename', 'modified' ]
+        \               [ 'gitbranch', 'readonly', 'relativepath', 'modified' ]
         \     ],
-        \     'right':[
         \               [ 'lineinfo' ],
         \               [ 'percent' ]
+        \     'right' : [
         \     ]
         \   },
-        \   'component': {
-        \     'lineinfo': ' %3l:%-2v  ',
+        \   'component' : {
+        \     'lineinfo' : "%3p%% ☰ %{printf(' %d/%d  : %2d ', line('.'), line('$'), col('.'))}",
         \   },
-        \   'component_function': {
-        \     'cocstatus': 'coc#status',
-        \     'gitbranch': 'LightlineGit',
+        \   'component_function' : {
+        \     'cocstatus' : 'coc#status',
+        \     'gitbranch' : 'LightlineGit',
+        \   },
         \   }
         \ }
   let g:lightline.separator = {
         \   'left': "\ue0c8", 'right': "\ue0c7"
-        \}
+        \ }
   let g:lightline.subseparator = {
         \   'left': "\ue0bb", 'right': "\ue0b9"
-        \}
-
+        \ }
 endif
 
 " --------------------------------------------------------------------------}}}-
