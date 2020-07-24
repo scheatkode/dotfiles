@@ -422,8 +422,8 @@ call plug#begin(s:vimrc_path_plugin)
 
   " --> auto completion, language server, tags, and snippets plug-ins
   Plug 'neoclide/coc.nvim',    {'branch':'release'}
-  Plug 'rhysd/vim-grammarous' | " technically a language server
-  Plug 'liuchengxu/vista.vim'
+  "Plug 'rhysd/vim-grammarous' | " technically a language server
+  "Plug 'liuchengxu/vista.vim'
   "Plug 'honza/vim-snippets'
 
   " --> fuzzy searching and file exploring plug-ins
