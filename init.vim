@@ -186,6 +186,38 @@ function! LightlineGit()
   return status
 endfunction
 
+function! s:lightline_coc_diagnostic(kind, sign) abort
+  let info = get(b:, 'coc_diagnostic_info', 0)
+
+  if empty(info) || get(info, a:kind, 0) == 0
+    return ''
+  endif
+
+  try
+    let s = g:coc_user_config['diagnostic.' . a:sign . 'Sign']
+  catch
+    let s = ''
+  endtry
+
+  return printf('%s %d', s, info[a:kind])
+endfunction
+
+function! LightlineCocErrors() abort
+  return s:lightline_coc_diagnostic('error', 'error')
+endfunction
+
+function! LightlineCocWarnings() abort
+  return s:lightline_coc_diagnostic('warning', 'warning')
+endfunction
+
+function! LightlineCocInfos() abort
+  return s:lightline_coc_diagnostic('information', 'info')
+endfunction
+
+function! LightlineCocHints() abort
+  return s:lightline_coc_diagnostic('hints', 'hint')
+endfunction
+
 " -> fzf -----------------------------------------------------------------------
 
 " TODO
@@ -437,8 +469,8 @@ call plug#begin(s:vimrc_path_plugin)
 
   " --> visual plug-ins
   "Plug 'nathanaelkane/vim-indent-guides' | " indentation guides
-  Plug 'vim-airline/vim-airline' | " status bar
-  "Plug 'itchyny/lightline.vim'
+  "Plug 'vim-airline/vim-airline' | " status bar
+  Plug 'itchyny/lightline.vim'
   Plug 'ryanoasis/vim-devicons'  | " icons            | filetypes and the such
   Plug 'morhetz/gruvbox'         | " colorscheme      | THE colorscheme
   Plug 'junegunn/goyo.vim'       | " distraction-free | no ui elements
@@ -698,20 +730,20 @@ if s:vimrc_plugin_manager_present
 
   " --> Airline
 
-  let g:airline_powerline_fonts = 1
-  let g:airline_left_sep        = "\ue0c8" " 
-  let g:airline_left_alt_sep    = "\ue0bb" " 
-  let g:airline_right_sep       = "\ue0c7" " 
-  let g:airline_right_alt_sep   = "\ue0b9" " 
+"  let g:airline_powerline_fonts = 1
+"  let g:airline_left_sep        = "\ue0c8" " 
+"  let g:airline_left_alt_sep    = "\ue0bb" " 
+"  let g:airline_right_sep       = "\ue0c7" " 
+"  let g:airline_right_alt_sep   = "\ue0b9" " 
 
-  let g:airline_extensions = [
-        \ 'branch',
-        \ 'coc',
-        \ 'fugitiveline',
-        \ 'hunks',
-        \ 'whitespace',
-        \ 'wordcount'
-        \ ]
+"  let g:airline_extensions = [
+"        \ 'branch',
+"        \ 'coc',
+"        \ 'fugitiveline',
+"        \ 'hunks',
+"        \ 'whitespace',
+"        \ 'wordcount'
+"        \ ]
 
   let g:lightline = {
         \   'colorscheme': 'jellybeans',
@@ -720,9 +752,9 @@ if s:vimrc_plugin_manager_present
         \               [ 'mode', 'paste' ],
         \               [ 'gitbranch', 'readonly', 'relativepath', 'modified' ]
         \     ],
-        \               [ 'lineinfo' ],
-        \               [ 'percent' ]
         \     'right' : [
+        \               [ 'coc_error', 'coc_warning', 'coc_info', 'coc_hint', 'coc_fix' ],
+        \               [ 'lineinfo' ]
         \     ]
         \   },
         \   'component' : {
@@ -732,6 +764,19 @@ if s:vimrc_plugin_manager_present
         \     'cocstatus' : 'coc#status',
         \     'gitbranch' : 'LightlineGit',
         \   },
+        \   'component_expand' : {
+        \     'coc_error'   : 'LightlineCocErrors',
+        \     'coc_warning' : 'LightlineCocWarnings',
+        \     'coc_info'    : 'LightlineCocInfos',
+        \     'coc_hint'    : 'LightlineCocHints',
+        \     'coc_fix'     : "LightlineCocFixes"
+        \   },
+        \   'component_type' : {
+        \     'coc_error'   : 'error',
+        \     'coc_warning' : 'warning',
+        \     'coc_info'    : 'tabsel',
+        \     'coc_hint'    : 'middle',
+        \     'coc_fix'     : 'middle'
         \   }
         \ }
   let g:lightline.separator = {
@@ -1010,6 +1055,12 @@ if s:vimrc_plugin_manager_present
 "    autocmd!
 "    autocmd CursorHold * silent call airline#extensions#whitespace#check()
 "  augroup END
+
+" --> lightline
+
+  augroup Lightline
+    autocmd User CocDiagnosticChange call lightline#update()
+  augroup END
 
 " --> vista.vim
 
