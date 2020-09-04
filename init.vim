@@ -20,6 +20,8 @@
 "     [-] follow-up: maybe replace airline with lightline
 "     [ ] document code
 "     [ ] check out some documentation generator [kkoomen/vim-doge]
+"     [ ] whitespace plugin implementation for mixed indent and trailing
+"         whitespaces
 
 " -> {FUNCTIONS   | COMMON} {{{
 
@@ -796,6 +798,7 @@ call plug#begin(s:vimrc_path_plugin)
         \ '<Plug>(textobj-sandwich-query-a)',
         \ '<Plug>(textobj-sandwich-query-i)'
         \ ] }
+  "Plug 'HiPhish/awk-ward.nvim'
 
   if !has('nvim')
     Plug 'roxma/nvim-yarp'
@@ -1382,6 +1385,15 @@ endfunction
 " }}}
 " -> {PLUGFUNC    | itchyny/lightline.vim} {{{
 
+  function! LightlineShortRelativePath()
+    if winwidth(0) < 70
+      return ''
+    endif
+
+    return pathshorten(fnamemodify(expand('%'), ":~:."))
+  endfunction
+
+
   function! LightlineReadonly()
     return &readonly
           \ ? g:symbols.readonly
@@ -1448,6 +1460,25 @@ endfunction
     return s:lightline_coc_diagnostic('hints', 'hint')
   endfunction
 
+
+  function! LightlineDevIconsFileType() abort
+    return winwidth(0) > 70
+          \ ? (
+          \   strlen(&filetype)
+          \     ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol()
+          \     : ''
+          \   )
+          \ : ''
+  endfunction
+
+
+  function! LightlineDevIconsFileFormatAndEncoding()
+    return winwidth(0) > 70
+          \ ? (&fileencoding . ' ' . WebDevIconsGetFileFormatSymbol())
+          \ : ''
+  endfunction
+
+
 " }}}
 " -> {PLUGOPT     | itchyny/lightline.vim} {{{
 
@@ -1458,8 +1489,8 @@ endfunction
         \               [ 'mode', 'paste' ],
         \               [
         \                 'gitbranch',
-        \                 'readonly',
         \                 'relativepath',
+        \                 'readonly',
         \                 'modified'
         \               ]
         \     ],
@@ -1471,7 +1502,10 @@ endfunction
         \                 'coc_hint',
         \                 'coc_fix'
         \               ],
-        \               [ 'lineinfo' ]
+        \               [ 'lineinfo' ],
+        \               [
+        \                 'filetype', 'fileformat' 
+        \               ]
         \     ]
         \   },
         \   'component' : {
@@ -1479,8 +1513,11 @@ endfunction
         \                . "line('.'), line('$'), col('.'))}",
         \   },
         \   'component_function' : {
-        \     'cocstatus' : 'coc#status',
-        \     'gitbranch' : 'LightlineGit',
+        \     'relativepath' : 'LightlineShortRelativePath',
+        \     'filetype'     : 'LightlineDevIconsFileType',
+        \     'fileformat'   : 'LightlineDevIconsFileFormatAndEncoding',
+        \     'cocstatus'    : 'coc#status',
+        \     'gitbranch'    : 'LightlineGit',
         \   },
         \   'component_type' : {
         \     'coc_error'   : 'error',
