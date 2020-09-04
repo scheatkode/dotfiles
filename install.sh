@@ -27,8 +27,9 @@ home="${HOME:-'~'}"
 
 info 'Creating necessary directory hierarchy'
 
-mkdir -p ${home}/.config/nvim/  \
-&& success                      \
+mkdir -p    "${home}/.config/emacs/" \
+&& mkdir -p "${home}/.config/nvim/"  \
+&& success                           \
 || fail 'Unable to create folders'
 
 # -- LINK CREATION ------------------------------------------------------------
@@ -36,7 +37,8 @@ mkdir -p ${home}/.config/nvim/  \
 infoline 'Links will be created to keep stuff in sync in case of update'
 info     'Creating links'
 
-ln    -s "`pwd`/init.vim"  "${home}/.config/nvim/"  \
+ln -s    "`pwd`/emacs"     "${home}/.config/emacs/" \
+&& ln -s "`pwd`/init.vim"  "${home}/.config/nvim/"  \
 && ln -s "`pwd`/tmux.conf" "${home}/.tmux.conf"     \
 && success                                          \
 || fail 'Unable to create links'
