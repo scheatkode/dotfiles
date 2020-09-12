@@ -1,0 +1,101 @@
+# ~~ BEGIN_METADATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#+TITLE:        Literate dotfiles
+#+TITLE:
+#+AUTHOR:       chaoticmurder
+#+EMAIL:        chaoticmurder.git@gmail.com
+#+DESCRIPTION:  A (almost) literate collection of my dotfiles, written in Org-mode
+#+STARTUP:      indent lognoteclock-out
+#+OPTIONS:      html-postamble:nil toc:nil title:nil d:nil num:nil :results nil
+#+BABEL:        :cache yes
+#+PROPERTY:     header-args :tangle no :comments link :results none
+# DRAFT:        yes
+#+SOURCEFILE:   https://github.com/chaoticmurder/dotfiles/blob/master/README.org
+#+IMAGE:        ./assets/dotfiles.png
+#+LATEX_HEADER: \usepackage{parskip}
+#+LATEX_HEADER: \usepackage{inconsolata}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+# ~~ END_METADATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#+HTML: <p align="center"><img src="assets/images/dotfiles.png" /></p>
+
+#+HTML: <div align="center">
+#+BEGIN_CENTER
+/You shall pass !/
+#+END_CENTER
+#+HTML: </div>
+
+Welcome to  the land  of silly  witticisms and  shamelessly stolen,  banged up
+semi-working snippets  of obscure code,  where lame jokes and  dark references
+run galore.
+
+This repository is  a strictly personal collection of  loosely coupled, mostly
+failed  experiments and/or  thoughts.  I  try to  keep everything  filterless,
+meaning I dump  whatever I have on my  mind at the time of  writing, which can
+consist of  sometimes extremely  basic explanation  that a  2 year  old should
+already be aware of.
+
+#+BEGIN_QUOTE
+/“If you  can't explain it simply,  you don't understand it  well enough.”/ --
+Albert Einstein
+#+END_QUOTE
+
+Enough with the poor  banter, this here is my meager  attempt at rebuilding my
+dotfiles following the [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]]  paradigm.  Being a sucker for the
+darker parts of computer science culture, history, and discipline, I feel this
+is the  perfect opportunity  to learn a  new paradigm and  to get  myself more
+acquainted to  the inner workings  of [[https://www.gnu.org/s/emacs/][Emacs]]  and [[https://orgmode.org/][Org-mode]] following  my recent
+shift from the [[https://neovim.io/][dark side]].
+
+* Installation
+
+This repository contains  multiple dotfiles for multiple  programs. Luckily, I
+have provided handy script  to install one, many, or all of  those at the same
+time.  But  first, selfies be  damned, clone the  repository using one  of the
+below commands. Come on, you should know this.
+
+#+BEGIN_SRC sh
+git clone git@github.com:chaoticmurder/dotfiles.git
+git clone https://github.com/chaoticmurder/dotfiles
+#+END_SRC
+
+Or, if you prefer GitLab, like myself.
+
+#+BEGIN_SRC sh
+git clone git@gitlab.com:chaoticmurder/dotfiles.git
+git clone https://gitlab.com/chaoticmurder/dotfiles
+#+END_SRC
+
+No  need  to back  up  your  configuration, the  setup  script  takes care  of
+everything for you automatically.
+
+Assuming you already =cd='ed into the resulting folder, the rest is a simple
+
+#+BEGIN_SRC sh
+./dotfiles install [whatever you want to install]
+#+END_SRC
+
+So if you want to install just the emacs dotfiles, you'd use
+
+#+BEGIN_SRC sh
+./dotfiles install emacs
+#+END_SRC
+
+... or many things
+
+#+BEGIN_SRC sh
+./dotfiles install emacs,neovim,tmux
+#+END_SRC
+
+... or everything at once
+
+#+BEGIN_SRC sh
+./dotfiles install all
+#+END_SRC
+
+Well, install is a big word. All this script does is (/implicitely backup your
+configuration,  if  it  exists  then/)   create  symlinks  to  the  respective
+configurations of  the given programs.   This is so there  is no need  to keep
+separate  configurations  since  every  change is  reflected  into  the  local
+repository.  The included ~.gitignore~ file also takes care of, well, ignoring
+packages, cache files and all sorts of garbage to keep your code clean.
+
