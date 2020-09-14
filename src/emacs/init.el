@@ -92,3 +92,14 @@
 		    ;; :height "150"
 		    :weight 'bold
 		    :width 'normal)
+
+;;; Org-babel
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (sh . t)
+   (shell . t)
+   ))
+
+(setq org-src-fontify-natively t)
