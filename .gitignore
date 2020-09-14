@@ -1,19 +1,25 @@
 # -*- mode: gitignore; -*-
 
-# -- EMACS SPECIFIC ------------------------------------------------------------
+# -- GARBAGE FILES ------------------------------------------------------------
 
 *~
 \#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-*.elc
-auto-save-list
-early-init-do-not-edit
-tramp
 .\#*
-pack/
 
-# Org-mode
+# -- EMACS SPECIFIC -----------------------------------------------------------
+
+.emacs.desktop
+.emacs.desktop.lock
+*.elc
+/src/emacs/auto-save-list
+/src/emacs/early-init-do-not-edit
+/src/emacs/tramp
+/src/emacs/pack/
+
+# custom configurations
+custom.el
+
+# org-mode
 .org-id-locations
 *_archive
 
@@ -21,27 +27,29 @@ pack/
 *_flymake.*
 
 # eshell files
-/eshell/history
-/eshell/lastdir
+/src/emacs/eshell/history
+/src/emacs/eshell/lastdir
 
 # elpa packages
-/elpa/
+/src/emacs/elpa/
+/src/emacs/melpa/
+/src/emacs/quelpa/
 
 # reftex files
 *.rel
 
-# AUCTeX auto folder
-/auto/
+# auctex auto folder
+/src/emacs/auto/
 
 # cask packages
 .cask/
 dist/
 
-# Flycheck
+# flycheck
 flycheck_*.el
 
 # server auth directory
-/server/
+/src/emacs/server/
 
 # projectiles files
 .projectile
@@ -54,12 +62,13 @@ transient/
 
 # recently edited files
 recentf
+recentf*
 
 # directory configuration
 .dir-locals.el
 
 # network security
-/network-security.data
+/src/emacs/network-security.data
 
 # -- VIM SPECIFIC --------------------------------------------------------------
 
@@ -68,10 +77,13 @@ recentf
 [._]*.sw[a-p]
 [._]s[a-v][a-z]
 [._]sw[a-p]
+
 # session
 Session.vim
+
 # temporary
 .netrwhist
 *~
+
 # auto-generated tag files
 tags
