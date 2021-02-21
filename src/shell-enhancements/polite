@@ -1,0 +1,53 @@
+#!/usr/bin/env false
+
+[ -z "${__SOURCED_PLEASE}"] || return
+__SOURCED_PLEASE=1
+
+__please_random() {
+    if [ x"${#}" = x"2" ] ; then
+        awk               \
+            -v min="${1}" \
+            -v max="${2}" \
+            'BEGIN { srand(); print int(min + rand() * (max-min+1)) }'
+    fi
+}
+
+__please_reply() {
+    case "`__please_random 1 19`" in
+        1)  echo "What would you even do without me ?"                                         ;;
+        2)  echo "Do you even mean it ?"                                                       ;;
+        3)  echo "Hmm. Should I ?"                                                             ;;
+        4)  echo "You sound better with your mouth closed."                                    ;;
+        5)  echo "You're like school in July, no class."                                       ;;
+        6)  echo "You're so fake Barbie's jealous."                                            ;;
+        7)  echo "Someday you'll go far, and I hope you stay there."                           ;;
+        8)  echo "I'd slap you, but that'd be animal abuse."                                   ;;
+        9)  echo "Your birth certificate is an apology letter from the condom factory."        ;;
+        10) echo "The last time I saw something like you, I flushed it."                       ;;
+        11) echo "I hope one day you choke on the shit you talk."                              ;;
+        12) echo "You remind me of a penny, two-faced and not worth much."                     ;;
+        13) echo "Calling you an idiot would be an insult to all the stupid people."           ;;
+        14) echo "I would make a joke about your life, but I see life already beat me to it."  ;;
+        15) echo "Your mother should've swallowed you."                                        ;;
+        16) echo "The trash gets picked up tomorrow. Be ready."                                ;;
+        17) echo "I would love to insult you, but I'm afraid I won't do as well as nature did.";;
+        18) echo "There's no need to repeat yourself. I ignored you just fine the first time." ;;
+        19) echo "You're like a Windows software update, whenever I see you, I say not now."   ;;
+    esac
+    echo ""
+}
+
+__please() {
+    __please_reply
+
+    if [ "$1" ] ; then
+        sudo $@
+    else
+        sudo "`history -p !!`"
+    fi
+}
+
+case "${@:-}" in
+    ":") alias please='__please' ;;
+    "")  : ;;
+esac
