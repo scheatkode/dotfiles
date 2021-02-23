@@ -31,9 +31,9 @@ require('telescope').setup {
                 ['<C-j>'] = actions.move_selection_next,
                 ['<C-k>'] = actions.move_selection_previous,
 
-                ['<CR>'] = actions.goto_file_selection_edit,
-                ['<C-v>'] = actions.goto_file_selection_vsplit,
-                ['<C-s>'] = actions.goto_file_selection_split,
+                ['<CR>'] = actions.select_default,
+                ['<C-v>'] = actions.select_vertical,
+                ['<C-s>'] = actions.select_horizontal,
                 ['<C-x>'] = false,
 
                 ['<C-c>'] = actions.close,
@@ -47,9 +47,9 @@ require('telescope').setup {
                 ['j'] = actions.move_selection_next,
                 ['k'] = actions.move_selection_previous,
 
-                ['<CR>'] = actions.goto_file_selection_edit,
-                ['<C-v>'] = actions.goto_file_selection_vsplit,
-                ['<C-s>'] = actions.goto_file_selection_split,
+                ['<CR>'] = actions.select_default,
+                ['<C-v>'] = actions.select_vertical,
+                ['<C-s>'] = actions.select_horizontal,
                 ['<C-x>'] = false,
 
                 ['<C-c>'] = actions.close,
