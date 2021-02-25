@@ -29,6 +29,10 @@ if not packer_exists then
    ))
 
    print(out)
+
+   vim.cmd('PackerCompile')
+   vim.cmd('PackerInstall')
+
    print('Restart is needed now')
 
    return false
@@ -77,7 +81,7 @@ return require('packer').startup(function(use)
    --use {'junegunn/fzf.vim'}
    use {
       'kyazdani42/nvim-tree.lua',
-      requires = {'kyazdani42/nvim-web-devicons'}
+      requires = {'kyazdani42/nvim-web-devicons'},
    }
    use {
       'nvim-telescope/telescope.nvim', -- extensible fuzzy finder

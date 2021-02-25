@@ -10,7 +10,7 @@ vim.api.nvim_exec('autocmd BufEnter * lua require("completion").on_attach()', fa
 
 local mappings = {
 
-   -- i like to trigger autocompletion manually sometimes
+   -- i like to trigger autocompletion manually sometimes.
 
    {'i', '<tab>',   'pumvisible() ? "\\<c-n>" : "\\<tab>"',   { expr = true, noremap = true }},
    {'i', '<s-tab>', 'pumvisible() ? "\\<c-p>" : "\\<s-tab>"', { expr = true, noremap = true }},
