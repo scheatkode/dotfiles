@@ -135,6 +135,7 @@ return require('packer').startup(function(use)
 
    use {'mhinz/vim-startify'}      -- start screen
    use {'psliwka/vim-smoothie'}    -- smooth scrolling
+   use {'lambdalisue/suda.vim'}    -- workaround for using `sudo`
    use {'vimwiki/vimwiki'}         -- personal note taking
    use {'kana/vim-operator-user'}  -- operator definitions for text objects
    use {'junegunn/vim-easy-align'} -- alignment made easy
