@@ -65,13 +65,26 @@ require('telescope').setup {
 -- keymaps
 
 local keymaps = {
-   {'n', '<leader>ff', '<cmd>Telescope find_files<CR>', {silent = true, noremap = true}},
-   {'n', '<leader>fr', '<cmd>Telescope oldfiles<CR>',   {silent = true, noremap = true}},
-   {'n', '<leader>fg', '<cmd>Telescope live_grep<CR>',  {silent = true, noremap = true}},
-   {'n', '<leader>bb', '<cmd>Telescope buffers<CR>',    {silent = true, noremap = true}},
-   {'n', '<leader>sh', '<cmd>Telescope help_tags<CR>',  {silent = true, noremap = true}},
+
+   {'n', '<leader>fF',   '<cmd>Telescope find_files                theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>ff',   '<cmd>Telescope file_browser              theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>fr',   '<cmd>Telescope oldfiles                  theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>fg',   '<cmd>Telescope live_grep                 theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>bb',   '<cmd>Telescope buffers                   theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>sh',   '<cmd>Telescope help_tags                 theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>sl',   '<cmd>Telescope current_buffer_fuzzy_find theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>sr',   '<cmd>Telescope registers                 theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>sq',   '<cmd>Telescope quickfix                  theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>sm',   '<cmd>Telescope man_pages                 theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>lr',   '<cmd>Telescope lsp_references            theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>lsd',  '<cmd>Telescope lsp_document_symbols      theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>lsw',  '<cmd>Telescope lsp_workspace_symbols     theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>lca',  '<cmd>Telescope lsp_code_actions          theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>lrca', '<cmd>Telescope lsp_range_code_actions    theme=get_dropdown<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>lts',  '<cmd>Telescope treesitter                theme=get_dropdown<CR>', {silent = true, noremap = true}},
 
    {'c', '<c-r><c-r>', '<Plug>(TelescopeFuzzyCommandSearch)', {noremap = false, nowait = true}},
+
 }
 
 apply(keymaps)
