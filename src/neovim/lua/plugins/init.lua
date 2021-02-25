@@ -133,6 +133,7 @@ return require('packer').startup(function(use)
 
    -- miscellaneous plugins
 
+   use {'dstein64/vim-startuptime'} -- startup time monitor
    use {'mhinz/vim-startify'}      -- start screen
    use {'psliwka/vim-smoothie'}    -- smooth scrolling
    use {'lambdalisue/suda.vim'}    -- workaround for using `sudo`
