@@ -32,18 +32,20 @@ end
 require('lib.options')
 require('lib.mappings')
 
-vim.cmd('runtime macros/justify.vim') -- i simply cannot live without this
+vim.cmd('runtime macros.justify.vim') -- i simply cannot live without this
 vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 
-require('modules/visual')
-require('modules/lsp')
-
-require('plugins/align')
-require('plugins/completion')
-require('plugins/nvim-tree')
-require('plugins/surround')
-require('plugins/telescope')
-require('plugins/treesitter')
-require('plugins/wiki')
-require('plugins/sudo')
+require('modules.visual')
 require('modules.statusline')
+require('modules.lsp')
+
+require('plugins.align')
+require('plugins.completion')
+require('plugins.nvim-tree')
+require('plugins.surround')
+require('plugins.telescope')
+require('plugins.treesitter')
+require('plugins.wiki')
+require('plugins.sudo')
+require('plugins.git')
+require('plugins.autopairs')

@@ -4,10 +4,7 @@ local lspsaga   = require('lspsaga')
 lspsaga.init_lsp_saga()
 
 local on_attach = function(client, bufnr)
-    print('LSP started.') -- announce LSP start
-
-    --require('completion').on_attach() -- moved to main config
-    --require('diagnostic').on_attach() -- deprecated
+   print('💡 LSP started.') -- announce LSP start
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -16,37 +13,30 @@ local on_attach = function(client, bufnr)
 
     -- mappings
     local opts = {noremap = true, silent = true}
-    buf_set_keymap('n', '<leader>cF',        '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>',                                opts)
-    buf_set_keymap('n', '<leader>cD',        '<cmd>lua vim.lsp.buf.declaration()<CR>',                                opts)
-    --buf_set_keymap('n', 'gd',        '<cmd>lua vim.lsp.buf.definition()<CR>',                                 opts)
-    buf_set_keymap('n', '<leader>cd',        '<cmd>lua require("lspsaga.provider").preview_definition()<CR>',                                 opts)
-    buf_set_keymap('n', '<leader>ci',        '<cmd>lua vim.lsp.buf.implementation()<CR>',                             opts)
-    buf_set_keymap('n', 'K',         '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',                                      opts)
-    buf_set_keymap('n', '<leader>cs',     '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>',                             opts)
-    buf_set_keymap('n', '<leader>cwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',                       opts)
-    buf_set_keymap('n', '<leader>cwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',                    opts)
-    buf_set_keymap('n', '<leader>cwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    buf_set_keymap('n', '<leader>D',  '<cmd>lua vim.lsp.buf.type_definition()<CR>',                            opts)
-    --buf_set_keymap('n', '<leader>cr', '<cmd>lua vim.lsp.buf.rename()<CR>',                                     opts)
-    --buf_set_keymap('n', 'gr',        '<cmd>lua vim.lsp.buf.references()<CR>',                                 opts)
-    buf_set_keymap('n', '<leader>cr',        '<cmd>lua require("lspsaga.rename").rename()<CR>',                                 opts)
-    --buf_set_keymap('n', '<space>e',  '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',               opts)
-    buf_set_keymap('n', '<leader>cl',  '<cmd>Lspsaga show_line_diagnostics<CR>',               opts)
-    --buf_set_keymap('n', '[d',        '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',                           opts)
-    buf_set_keymap('n', '[d',  '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<CR>',               opts)
-    --buf_set_keymap('n', ']d',        '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>',                           opts)
-    buf_set_keymap('n', ']d',  '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>',               opts)
-    buf_set_keymap('n', '<leader>q',  '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',                         opts)
-    buf_set_keymap('n', '<leader>ca',  '<cmd>Lspsaga code_action<CR>',               opts)
-    buf_set_keymap('x', '<leader>ca',  '<cmd>Lspsaga range_code_action<CR>',               opts)
-
-   buf_set_keymap('n', '<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n',   '<leader>cF',  '<cmd>lua     require("lspsaga.provider").lsp_finder()<CR>',                 opts)
+    buf_set_keymap('n',   '<leader>cD',  '<cmd>lua     vim.lsp.buf.declaration()<CR>',                                opts)
+    buf_set_keymap('n',   '<leader>cd',  '<cmd>lua     require("lspsaga.provider").preview_definition()<CR>',         opts)
+    buf_set_keymap('n',   '<leader>ci',  '<cmd>lua     vim.lsp.buf.implementation()<CR>',                             opts)
+    buf_set_keymap('n',   '<leader>cR', '<cmd>lua     vim.lsp.buf.references()<CR>',                                 opts)
+    buf_set_keymap('n',   'K',          '<cmd>lua     require("lspsaga.hover").render_hover_doc()<CR>',              opts)
+    buf_set_keymap('n',   '<leader>cs',  '<cmd>lua     require("lspsaga.signaturehelp").signature_help()<CR>',        opts)
+    buf_set_keymap('n',   '<leader>cwa', '<cmd>lua     vim.lsp.buf.add_workspace_folder()<CR>',                       opts)
+    buf_set_keymap('n',   '<leader>cwr', '<cmd>lua     vim.lsp.buf.remove_workspace_folder()<CR>',                    opts)
+    buf_set_keymap('n',   '<leader>cwl', '<cmd>lua     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    buf_set_keymap('n',   '<leader>D',   '<cmd>lua     vim.lsp.buf.type_definition()<CR>',                            opts)
+    buf_set_keymap('n',   '<leader>cr',  '<cmd>lua     require("lspsaga.rename").rename()<CR>',                       opts)
+    buf_set_keymap('n',   '<leader>cl',  '<cmd>Lspsaga show_line_diagnostics<CR>',                                    opts)
+    buf_set_keymap('n',   '[d',         '<cmd>lua     require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<CR>', opts)
+    buf_set_keymap('n',   ']d',         '<cmd>lua     require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>', opts)
+    buf_set_keymap('n',   '<leader>q',   '<cmd>lua     vim.lsp.diagnostic.set_loclist()<CR>',                         opts)
+    buf_set_keymap('n',   '<leader>ca',  '<cmd>Lspsaga code_action<CR>',                                              opts)
+    buf_set_keymap('x',   '<leader>ca',  '<cmd>Lspsaga range_code_action<CR>',                                        opts)
 
     -- set keybindings depending on server capabilities
     if client.resolved_capabilities.document_formatting then
-        buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+        buf_set_keymap('n', '<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+        buf_set_keymap('n', '<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     end
 
     -- set autocommands depending on server capabilities
@@ -62,6 +52,10 @@ local on_attach = function(client, bufnr)
             augroup End
         ]], false)
     end
+
+   require('lspkind').init({
+      Function = 'ƒ',
+   }) -- pictograms
 end
 
 local servers = {
@@ -92,8 +86,13 @@ else
 end
 
 -- set the path to the sumneko installation; if you previously installed via the now deprecated :LspInstall, use
-local sumneko_root_path = vim.fn.stdpath('data')..'/lspinstall/lua-language-server'
-local sumneko_binary    = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+local sumneko_root_path = vim.fn.stdpath('data')
+   .. '/lspinstall/lua-language-server'
+
+local sumneko_binary = sumneko_root_path
+   .. "/bin/"
+   .. system_name
+   .. "/lua-language-server"
 
 lspconfig['sumneko_lua'].setup {
     on_attach = on_attach,
@@ -128,21 +127,23 @@ lspconfig['sumneko_lua'].setup {
     },
 }
 
-lspconfig['intelephense'].setup {
-    on_attach = on_attach,
-    cmd = {'/home/alice/.yarn/bin/intelephense', '--stdio' },
+lspconfig['bashls'].setup {
+   on_attach = on_attach,
+   cmd = {'/home/alice/.yarn/bin/bash-language-server', 'start'},
+   cmd_env = {
+      GLOB_PATTERN = "*@(.sh|.inc|.bash|.command)"
+   },
+   root_dir = lspconfig.util.root_pattern('main', '.git')
 }
 
---lspconfig['tsserver'].setup {
---    on_attach = on_attach,
---    cmd = {'/home/alice/.yarn/bin/typescript-language-server', '--stdio' },
---    filetypes = {'javascript', 'javascriptreact', 'javascript.jsx', 'typescript',
---        'typescriptreact', 'typescript.tsx',},
---        root_dir = lspconfig.util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git')
---}
+lspconfig['intelephense'].setup {
+   on_attach = on_attach,
+   cmd = {'/home/alice/.yarn/bin/intelephense', '--stdio' },
+}
 
 lspconfig['denols'].setup {
-   cmd = {'/home/alice/.deno/bin/deno', 'lsp', '--import-map=import_map.json',},
+   on_attach = on_attach,
+   cmd = {'/home/alice/.local/bin/deno', 'lsp'},
    filetypes = {
       'javascript',
       'javascriptreact',
@@ -152,9 +153,22 @@ lspconfig['denols'].setup {
       'typescript.tsx',
    },
    init_options = {
-      enable = true,
-      lint = true,
+      enable   = true,
+      lint     = true,
       unstable = false,
    },
    root_dir = lspconfig.util.root_pattern('package.json', 'tsconfig.json', '.git')
 }
+
+lspconfig['yamlls'].setup {
+   cmd       = { '/home/alice/.yarn/bin/yaml-language-server', '--stdio' },
+   filetypes = { 'yaml' },
+   root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd())
+}
+
+lspconfig['jsonls'].setup {
+   cmd       = { '/home/alice/.yarn/bin/jsonls', '--stdio' },
+   filetypes = { 'json' },
+   root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd())
+}
+
