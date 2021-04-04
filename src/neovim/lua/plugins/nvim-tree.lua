@@ -1,5 +1,5 @@
-local apply_maps = require('core/config').keymaps.use
-local apply_conf = require('core/config').variables.use
+local apply_maps = require('lib.config').keymaps.use
+local apply_conf = require('lib.config').variables.use
 
 local configuration = {
    vim_tree_side    = 'left',

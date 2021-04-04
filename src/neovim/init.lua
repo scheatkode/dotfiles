@@ -25,12 +25,12 @@ global.maplocalleader = ' '
 
 -- load plugins using packer.
 
-if not require('plugins/init') then
+if not require('plugins') then
    return
 end
 
-require('core/options')
-require('core/mappings')
+require('lib.options')
+require('lib.mappings')
 
 vim.cmd('runtime macros/justify.vim') -- i simply cannot live without this
 vim.cmd('set invlist') -- FIXME: find a way to integrate with other options

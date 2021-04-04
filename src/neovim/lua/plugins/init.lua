@@ -1,5 +1,5 @@
-local confirm = require('core/util').func.confirm
-local apply   = require('core/config').keymaps.use
+local confirm = require('lib').func.confirm
+local apply   = require('lib.config').keymaps.use
 
 -- only required if packer is tagged as optional.
 

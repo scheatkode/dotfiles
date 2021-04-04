@@ -1,4 +1,4 @@
-local apply   = require('core/config').keymaps.use
+local apply   = require('lib.config').keymaps.use
 
 local keymaps = {
    {'n', '<leader>ta', '<Plug>(EasyAlign)', {}},

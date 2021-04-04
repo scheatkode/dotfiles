@@ -1,4 +1,4 @@
-local apply   = require('core/config').keymaps.use
+local apply   = require('lib.config').keymaps.use
 local keymaps = {
    {'n', '<leader>tsd',  '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)',  {}},
    {'n', '<leader>tsdd', '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',   {}},
