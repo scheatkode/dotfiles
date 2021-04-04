@@ -1,4 +1,4 @@
-local apply   = require('core/config').keymaps.use
+local apply   = require('lib.config').keymaps.use
 local keymaps = {
 
    --- semicolon is never used in normal mode anyway, win a keystroke
@@ -129,6 +129,8 @@ local keymaps = {
    --- buffer operations
 
    -- <leader>bb - fuzzy search buffers
+   -- <tab>      - quick jump to next buffer
+   -- <s-tab>    - quick jump to previous buffer
    -- <leader>bn - next buffer
    -- <leader>bp - previous buffer
    -- <leader>bl - list buffers
@@ -143,6 +145,8 @@ local keymaps = {
    -- <leader>br - reload current buffer from file
    -- <leader>bR - force reload current buffer from file, losing changes
 
+   {'n', '<tab>',      '<cmd>bnext<cr>',     {silent = true, noremap = true}},
+   {'n', '<s-tab>',    '<cmd>bprevious<cr>', {silent = true, noremap = true}},
    {'n', '<leader>bn', '<cmd>bnext<CR>',     {silent = true, noremap = true}},
    {'n', '<leader>bp', '<cmd>bprevious<CR>', {silent = true, noremap = true}},
    {'n', '<leader>bl', '<cmd>buffers<CR>',   {silent = true, noremap = true}},
@@ -156,11 +160,11 @@ local keymaps = {
    {'n', '<leader>bR', '<cmd>e!<CR>',        {silent = true, noremap = true}},
 
    {'n', '<leader>bz',
-      '<cmd>lua require("core/util").vim.buffers.close_orphaned()<CR>',
+      '<cmd>lua require("lib").vim.buffers.close_orphaned()<CR>',
       {silent = true, noremap = true}
    },
    {'n', '<leader>bZ',
-      '<cmd>lua require("core/util").vim.buffers.close_orphaned(true)<CR>',
+      '<cmd>lua require("lib").vim.buffers.close_orphaned(true)<CR>',
       {silent = true, noremap = true}
    },
 

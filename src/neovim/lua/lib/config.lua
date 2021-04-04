@@ -1,21 +1,21 @@
---------------------------------------------------------------------------------
---- config.lua
---
--- contains functionality for quickly setting up configuration in a DRY manner.
+---------------------------------- config.lua ----------------------------------
+--                                                                            --
+--          contains functionality for DRYing up yuor configuration.          --
+--                                                                            --
 --------------------------------------------------------------------------------
 
 
 --- dependencies
 --
--- override the  'table'  namespace  with  a  unified  one  containing  all  the
--- necessary functionality.
+-- override the  'table' namespace  with a  unified one
+-- containing all the necessary functionality.
 
-local table = require('core/util').table
+local table = require('lib').table
 
 --- module namespaces
 --
--- module namespaces  are  defined  here,  which  will  be  available  when  the
--- module is 'require'd :
+-- module namespaces  are defined  here, which  will be
+-- available when the module is 'require'd :
 --
 --   - keymaps   :: utility functions for vim keymap handling.
 --   - options   :: utility functions for vim option handling.
@@ -30,9 +30,11 @@ local m = {
 
 --- commit options
 --
--- takes a table of options to loop through and commit. this is intended so  the
--- configuration stays DRY. it takes care of setting the variables  and  joining
--- arrays (if any), so that vim accepts them as a comma-separated string.
+-- takes a table of options to loop through and commit.
+-- this is intended so  the configuration stays DRY. it
+-- takes  care of  setting  the  variables and  joining
+-- arrays  (if any),  so  that vim  accepts  them as  a
+-- comma-separated string.
 --
 -- @param  opts table → table of options
 -- @return table      → options table
@@ -52,9 +54,9 @@ end
 
 --- commit key mappings
 --
--- takes an array of key mappings and their  associated  modes  and  actions  to
--- loop  through  and  commit.  this,  too,  is  intended  for  keeping  a   DRY
--- configuration.
+-- takes an array of  key mappings and their associated
+-- modes and actions to  loop through and commit. this,
+-- too, is intended for keeping a DRY configuration.
 --
 -- @param  maps table → array of keymaps
 -- @return table      → keymaps array
@@ -76,8 +78,9 @@ end
 
 --- commit variables
 --
--- takes a set of variables and their associated  values  to  loop  through  and
--- commit in  neovim's  internal  tables.  this  is  intended  for  keeping  DRY
+-- takes a set of variables and their associated values
+-- to  loop through  and  commit  in neovim's  internal
+-- tables.   this   is   intended   for   keeping   DRY
 -- configurations as well.
 --
 -- @param  loc  integer → locality of variables
@@ -101,7 +104,8 @@ end
 
 --- module exports
 --
--- the module and its underlying namespaces are exported here.
+-- the  module   and  its  underlying   namespaces  are
+-- exported here.
 
 return m
 
@@ -109,5 +113,4 @@ return m
 -- tab-width: 3
 -- mode: lua
 -- End:
-
 -- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:

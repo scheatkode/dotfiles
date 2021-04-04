@@ -1,5 +1,7 @@
------------------------------------ util.lua -----------------------------------
--- contains miscellaneous functionality for dealing with lua shortcomings.    --
+----------------------------------- library ------------------------------------
+--                                                                            --
+--   contains miscellaneous functionality for dealing with lua shortcomings.  --
+--                                                                            --
 --------------------------------------------------------------------------------
 
 --- module namespaces
@@ -13,10 +15,11 @@
 --   - vim   :: utility functions for dealing with (neo)vim.
 
 local m = {
-   func  = {confirm = nil},
-   array = {},
-   table = {},
-   vim   = {buffers = {}},
+   func   = {confirm = nil},
+   array  = {},
+   string = {},
+   table  = {},
+   vim    = {buffers = {}},
 }
 
 -------------------------------- func namespace --------------------------------
@@ -101,6 +104,20 @@ m.array.contains = function(haystack, needle)
    end
 
    return false
+end
+
+
+------------------------------- string namespace -------------------------------
+
+--- unify string api
+--
+-- unify the string api under a common namespace without redefining  or  touching
+-- the global one provided with the language as to not break existing code.
+
+m.string.len = string.len
+
+m.string.is_empty = function (s)
+   return s == nil or s == ''
 end
 
 

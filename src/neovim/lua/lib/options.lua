@@ -1,4 +1,4 @@
-local apply   = require('core/config').options.use
+local apply   = require('lib.config').options.use
 local options = {
 
    -- miscellaneous
