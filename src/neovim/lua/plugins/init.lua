@@ -61,7 +61,7 @@ return require('packer').startup(function(use)
    use {'wbthomason/packer.nvim', opt = true}
 
 
-   -- auto completion, language servers, tags, and snippets plugins
+   -- auto completion, language server clients, tags, and snippets plugins
 
    --use {'neoclide/coc.nvim', branch = 'release'}
    --use {'rhysd/vim-grammarous'}
@@ -72,6 +72,8 @@ return require('packer').startup(function(use)
    use {'neovim/nvim-lspconfig'}
    use {'anott03/nvim-lspinstall'}
    use {'glepnir/lspsaga.nvim'}
+   use {'onsails/lspkind-nvim'}
+   use {'windwp/nvim-autopairs'}
 
 
    -- fuzzy searching and file exploring plugins
@@ -98,8 +100,10 @@ return require('packer').startup(function(use)
    -- git plugins
 
    --use {'mhinz/vim-signify'}     -- git file changes in the gutter
-   use {'tpope/vim-fugitive'}      -- git wrapper
+   --use {'tpope/vim-fugitive'}      -- git wrapper
+   --use {'mhinz/vim-signify'}
    use {'lewis6991/gitsigns.nvim'} -- git file changes in the gutter
+   use {'TimUntersberger/neogit'}  -- magit for neovim
 
 
    -- syntax plugins
@@ -120,7 +124,8 @@ return require('packer').startup(function(use)
    --use {'nathanaelkane/vim-indent-guides'}  -- indent guides
    --use {'vim-airline/vim-airline'} -- status bar
    --use {'morhetz/gruvbox'}         -- THE colorscheme
-   use {'lifepillar/vim-gruvbox8'}   -- lighter colorscheme
+   --use {'lifepillar/vim-gruvbox8'}   -- lighter colorscheme
+   use {'npxbr/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}} -- lua port of THE colorscheme
    --use {'itchyny/lightline.vim'}   -- *lighter* status bar
    --use {'ryanoasis/vim-devicons'}  -- icons for filetypes and the such
    --use {'camspiers/animate'}       -- animation library
@@ -128,6 +133,10 @@ return require('packer').startup(function(use)
    use {'junegunn/goyo.vim',           opt = true} -- distraction-free → no ui elements
    use {'junegunn/limelight.vim',      opt = true} -- distraction-free → dim paragraphs
    use {'norcalli/nvim-colorizer.lua', opt = true} -- colorize hex/rgb/hsl values
+   use {
+      'yamatsum/nvim-nonicons',
+      requires = {'kyazdani42/nvim-web-devicons'}
+   }
    use {
       'glepnir/galaxyline.nvim',
       branch   = 'main',
@@ -139,9 +148,12 @@ return require('packer').startup(function(use)
 
    use {'dstein64/vim-startuptime'} -- startup time monitor
    use {'mhinz/vim-startify'}      -- start screen
-   use {'psliwka/vim-smoothie'}    -- smooth scrolling
+   --use {'psliwka/vim-smoothie'}    -- smooth scrolling
+   use {'karb94/neoscroll.nvim'}   -- better smooth scrolling
    use {'lambdalisue/suda.vim'}    -- workaround for using `sudo`
-   use {'vimwiki/vimwiki'}         -- personal note taking
+   --use {'vimwiki/vimwiki'}         -- personal note taking
+   --use {'plasticboy/vim-markdown'} -- markdown support
+   --use {'pbrisbin/vim-mkdir'}      -- like mkdir -p, but for vim
    use {'kana/vim-operator-user'}  -- operator definitions for text objects
    use {'junegunn/vim-easy-align'} -- alignment made easy
    use {
