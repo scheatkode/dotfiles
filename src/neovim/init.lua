@@ -48,6 +48,8 @@ require('plugins.treesitter')
 require('plugins.sudo')
 require('plugins.git')
 require('plugins.autopairs')
+require('plugins.commenting')
+require('plugins.scroll')
 
 -- late tweaks
 -- vim.cmd([[highlight clear SignColumn]])
