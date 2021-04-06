@@ -68,7 +68,8 @@ return require('packer').startup(function(use)
    --use {'liuchengxu/vista.vim'}
    --use {'honza/vim-snippets'}
    --use {'nvim-lua/diagnostic-nvim'} -- deprecated
-   use {'nvim-lua/completion-nvim'}
+   --use {'nvim-lua/completion-nvim'}
+   use {'hrsh7th/nvim-compe'}
    use {'neovim/nvim-lspconfig'}
    use {'anott03/nvim-lspinstall'}
    use {'glepnir/lspsaga.nvim'}
