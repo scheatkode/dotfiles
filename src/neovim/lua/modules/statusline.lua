@@ -222,25 +222,42 @@ gls.right[10] = {
 
 
 gls.short_line_left[1] = {
-   BufferType = {
-      provider            = 'FileTypeName',
-      separator           = ' ',
-      separator_highlight = {'NONE'},
-      highlight           = {colors.blue, colors.lightred, 'bold'}
-   }
-}
-
-gls.short_line_left[2] = {
    SFileName = {
-      provider  = 'SFileName',
+      provider  = function ()
+         return fn.pathshorten(fn.expand('%:F'))
+      end,
       condition = condition.buffer_not_empty,
       highlight = {colors.fg, 'bold'}
    }
 }
 
+
 gls.short_line_right[1] = {
+   GitBranch = {
+      provider  = 'GitBranch',
+      condition = condition.check_git_workspace,
+      highlight = {colors.violet, 'bold'},
+      -- separator = ' ',
+      -- separator_highlight = {'NONE'},
+   }
+}
+
+gls.short_line_right[2] = {
+   GitIcon = {
+      provider            = function() return '' end,
+      condition           = condition.check_git_workspace,
+      separator           = ' ',
+      -- separator_highlight = {'NONE'},
+      highlight           = {colors.violet, 'bold'},
+   }
+}
+
+gls.short_line_right[3] = {
    BufferIcon = {
-      provider  = 'BufferIcon',
-      highlight = {colors.fg}
+      provider  = 'FileIcon',
+      separator = ' ',
+      highlight = {
+         require('galaxyline.provider_fileinfo').get_file_icon_color,
+      },
    }
 }

@@ -51,9 +51,6 @@ require('plugins.autopairs')
 require('plugins.commenting')
 require('plugins.scroll')
 
--- late tweaks
--- vim.cmd([[highlight clear SignColumn]])
--- vim.cmd([[highlight clear StatusLine]])
 vim.cmd([[
    augroup highlight
       autocmd BufEnter * :highlight clear SignColumn
