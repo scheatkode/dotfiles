@@ -172,3 +172,8 @@ lspconfig['jsonls'].setup {
    root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd())
 }
 
+-- late tweaks
+vim.cmd([[sign define LspDiagnosticsSignError text=⬤]])
+vim.cmd([[sign define LspDiagnosticsSignWarning text=⬤]])
+vim.cmd([[sign define LspDiagnosticsSignInformation text=⬤]])
+vim.cmd([[sign define LspDiagnosticsSignHint text=⬤]])

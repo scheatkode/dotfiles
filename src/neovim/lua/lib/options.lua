@@ -132,7 +132,7 @@ local options = {
 
    -- signs and autocompletion
 
-   signcolumn  = 'yes', -- always show the sign column, flicker is annoying
+   signcolumn  = 'number', -- always show the sign column, flicker is annoying
    wildmenu    = true,  -- enable autocomplete menu
    wildoptions = 'pum', -- use the pop-up menu cmdline-completion
    wildignore  = { -- ignore compiled files
