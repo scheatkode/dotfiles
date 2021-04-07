@@ -25,12 +25,15 @@ autopair.completion_confirm = function ()
    if vim.fn.pumvisible() ~= 0 then
       if vim.fn.complete_info()['selected'] ~= -1 then
          vim.fn['compe#confirm']()
-         return npairs.esc('<c-y>')
+         return npairs.esc('')
       else
-         vim.defer_fn(function ()
-            vim.fn['compe#confirm']('<cr>')
-         end, 20)
-         return npairs.esc('<c-n>')
+         vim.api.nvim_select_popupmenu_item(0, false, false, {})
+         vim.fn['compe#confirm']()
+         -- vim.defer_fn(function ()
+         --    vim.fn['compe#confirm']('<cr>')
+         -- end, 20)
+         -- return npairs.esc('<c-n>')
+         return npairs.esc('')
       end
    else
       return npairs.check_break_line_char()
@@ -38,7 +41,7 @@ autopair.completion_confirm = function ()
 end
 
 local keymap = {
-   {'i', '<c-y>', 'v:lua.autopair.completion_confirm()', {expr = true, noremap = true}},
+   {'i', '<cr>', 'v:lua.autopair.completion_confirm()', {expr = true, noremap = true}},
 }
 
 apply(keymap)
