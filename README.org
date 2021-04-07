@@ -1,10 +1,9 @@
 # ~~ BEGIN_METADATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #+TITLE:        Literate dotfiles
 #+TITLE:
-#+AUTHOR:       chaoticmurder
-#+EMAIL:        chaoticmurder.git@gmail.com
-#+DESCRIPTION:  A (almost)  literate collection  of my  dotfiles, written  in
-#+DESCRIPTION+: Org-mode.
+#+AUTHOR:       scheatkode
+#+EMAIL:        scheatkode@gmail.com
+#+DESCRIPTION:  A (almost) literate collection of my dotfiles
 #+PROPERTY:     header-args :tangle no :comments no :results output silent
 # ~~ END_METADATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -46,15 +45,15 @@ shift from the [[https://neovim.io/][dark side]].
   below commands. Come on, you should know this.
 
   #+begin_src shell
-git clone git@github.com:chaoticmurder/dotfiles.git
-git clone https://github.com/chaoticmurder/dotfiles
+git clone git@github.com:scheatkode/dotfiles.git
+git clone https://github.com/scheatkode/dotfiles
   #+end_src
 
   Or, if you prefer GitLab, like myself.
 
   #+begin_src shell
-git clone git@gitlab.com:chaoticmurder/dotfiles.git
-git clone https://gitlab.com/chaoticmurder/dotfiles
+git clone git@gitlab.com:scheatkode/dotfiles.git
+git clone https://gitlab.com/scheatkode/dotfiles
   #+end_src
 
   No  need to  back up  your  configuration, the  setup script  takes care  of

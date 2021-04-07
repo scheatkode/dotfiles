@@ -1,7 +1,7 @@
 # -- BEGIN_METADATA -----------------------------------------------------------
 #+TITLE:        .files installation script
-#+AUTHOR:       chaoticmurder
-#+EMAIL:        chaoticmurder.git@gmail.com
+#+AUTHOR:       scheatkode
+#+EMAIL:        scheatkode@gmail.com
 #+DESCRIPTION:  .files installation script code and documentation
 #+STARTUP:      noindent lognoteclock-out
 #+OPTIONS:      html-postamble:nil toc:nil d:nil num:nil :results nil

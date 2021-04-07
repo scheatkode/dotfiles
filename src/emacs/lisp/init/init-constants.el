@@ -6,8 +6,8 @@
 
 ;;; user identification
 
-(setq user-full-name    "chaoticmurder")
-(setq user-mail-address "chaoticmurder.git@gmail.com")
+(setq user-full-name    "scheatkode")
+(setq user-mail-address "scheatkode@gmail.com")
 
 ;;; explicit true/false variable naming
 
