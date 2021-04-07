@@ -104,7 +104,8 @@ return require('packer').startup(function(use)
    --use {'tpope/vim-fugitive'}      -- git wrapper
    --use {'mhinz/vim-signify'}
    use {'lewis6991/gitsigns.nvim'} -- git file changes in the gutter
-   use {'TimUntersberger/neogit'}  -- magit for neovim
+   -- use {'TimUntersberger/neogit'}  -- magit for neovim
+   use {'kdheepak/lazygit.nvim'} -- lazygit wrapper inside neovim
 
 
    -- syntax plugins
