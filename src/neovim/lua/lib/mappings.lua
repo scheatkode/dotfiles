@@ -1,5 +1,4 @@
-local apply   = require('lib.config').keymaps.use
-local keymaps = {
+require('lib.config').keymaps.use({
 
    --- semicolon is never used in normal mode anyway, win a keystroke
 
@@ -251,8 +250,6 @@ local keymaps = {
    -- {'n', '<leader>lrca', '<cmd>Telescope lsp_range_code_actions theme=get_dropdown<CR>', {silent = true, noremap = true}},
    -- {'n', '<leader>lts',  '<cmd>Telescope treesitter                theme=get_dropdown<CR>', {silent = true, noremap = true}},
 
-}
+})
 
-apply(keymaps)
-
--- vim: set sw=3 ts=3 sts=3 et tw=81 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:

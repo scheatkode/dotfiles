@@ -1,3 +1,22 @@
+----------------------------------- throttle -----------------------------------
+--                                                                            --
+--       provides higher order functions for throttling and debouncing.       --
+--                                                                            --
+--------------------------------------------------------------------------------
+
+--                   =-=-=-=-=-=-=-=-=-)-=-=-=-=-=-=-=-=-=-
+--                   _| |__| |________(_________| |__| |___
+--                    \  \/  /         )        \  \/  /
+--                     )    (         (          )    (
+--                     |    |         (          |    |
+--                     |    |          \|        |    |
+--                     |    |           \o       |    |
+--                     |    |           ( \      |    |
+--                     |    |                    |    |
+--                     |    |                    |    |
+--                     |    |                    |    |
+--                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 local m = {}
 
 --- debounces a function on the trailing edge.
@@ -13,6 +32,8 @@ local m = {}
 -- provided to the debounced function. subsequent calls
 -- to the  debounced function return the  result of the
 -- last function invocation.
+--
+-- /s function.
 --
 -- @param delay (number)   → timeout in milliseconds.
 -- @param f     (function) → function to debounce.
@@ -66,3 +87,9 @@ function m.throttle (delay, f)
 end
 
 return m
+
+-- Local Variables:
+-- tab-width: 3
+-- mode: lua
+-- End:
+-- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
