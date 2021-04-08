@@ -1,10 +1,64 @@
 local lspconfig = require('lspconfig')
 local lspsaga   = require('lspsaga')
 
-lspsaga.init_lsp_saga()
+lspsaga.init_lsp_saga({
+   use_saga_diagnostic_sign = true,
+
+   error_sign = '⬤',
+   warn_sign  = '⬤',
+   hint_sign  = '⬤',
+   infor_sign = '⬤',
+
+   dianostic_header_icon = '   ',
+   code_action_icon      = ' ',
+   code_action_prompt    = {
+      enable        = true,
+      sign          = true,
+      sign_priority = 20,
+      virtual_text  = true,
+   },
+
+   finder_definition_icon = '  ',
+   finder_reference_icon  = '  ',
+
+   max_preview_lines = 20, -- preview lines of lsp_finder and definition preview
+
+   finder_action_keys = {
+      open        = 'o',
+      vsplit      = 's',
+      split       = 'i',
+      quit        = {'q', '<Esc>'}, -- quit can be a table
+      scroll_down = '<C-f>',
+      scroll_up   = '<C-b>',
+   },
+
+   code_action_keys = {
+      quit = {'q', '<Esc>'},
+      exec = '<CR>',
+   },
+
+   rename_action_keys = {
+      quit = {'<C-c>', '<Esc>'},  -- quit can be a table
+      exec = '<CR>',
+   },
+
+   definition_preview_icon = '丨  ',
+
+   -- 1: thin border | 2: rounded border | 3: thick border | 4: ascii border
+
+   border_style = 1,
+
+   rename_prompt_prefix = '❯ ',
+
+   -- if you don't use nvim-lspconfig you must pass your server name and
+   -- the related filetypes into this table
+   -- like server_filetype_map = {metals = {'sbt', 'scala'}}
+
+   server_filetype_map = {},
+})
 
 local on_attach = function(client, bufnr)
-   print('💡 LSP started.') -- announce LSP start
+   print(' LSP started.') -- announce LSP startup
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -173,7 +227,7 @@ lspconfig['jsonls'].setup {
 }
 
 -- late tweaks
-vim.cmd([[sign define LspDiagnosticsSignError text=⬤]])
-vim.cmd([[sign define LspDiagnosticsSignWarning text=⬤]])
-vim.cmd([[sign define LspDiagnosticsSignInformation text=⬤]])
-vim.cmd([[sign define LspDiagnosticsSignHint text=⬤]])
+-- vim.cmd([[sign define LspDiagnosticsSignError text=⬤]])
+-- vim.cmd([[sign define LspDiagnosticsSignWarning text=⬤]])
+-- vim.cmd([[sign define LspDiagnosticsSignInformation text=⬤]])
+-- vim.cmd([[sign define LspDiagnosticsSignHint text=⬤]])
