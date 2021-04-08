@@ -37,18 +37,18 @@
 -- return apply(mappings)
 
 require('compe').setup({
-   enabled = true,
-   autocomplete = true,
-   debug = false,
-   min_length = 1,
-   preselect = 'enable',
-   throttle_time = 80,
-   source_timeout = 200,
+   enabled          = true,
+   autocomplete     = true,
+   debug            = false,
+   min_length       = 1,
+   preselect        = 'enable',
+   throttle_time    = 80,
+   source_timeout   = 200,
    incomplete_delay = 400,
-   max_abbr_width = 100,
-   max_kind_width = 100,
-   max_menu_width = 100,
-   documentation = true,
+   max_abbr_width   = 100,
+   max_kind_width   = 100,
+   max_menu_width   = 100,
+   documentation    = true,
 
    source = {
       path                  = {kind = '  '},
@@ -107,7 +107,9 @@ _G.s_tab_complete = function ()
    end
 end
 
-vim.api.nvim_set_keymap('i', '<tab>',   'v:lua.tab_complete()',   {expr = true})
-vim.api.nvim_set_keymap('s', '<tab>',   'v:lua.tab_complete()',   {expr = true})
-vim.api.nvim_set_keymap('i', '<s-tab>', 'v:lua.s_tab_complete()', {expr = true})
-vim.api.nvim_set_keymap('s', '<s-tab>', 'v:lua.s_tab_complete()', {expr = true})
+require('lib.config').keymaps.use({
+   {'i', '<tab>',   'pumvisible() ? v:lua.tab_complete()   : "\\<tab>"',   {expr = true}},
+   {'s', '<tab>',   'pumvisible() ? v:lua.tab_complete()   : "\\<tab>"',   {expr = true}},
+   {'i', '<s-tab>', 'pumvisible() ? v:lua.s_tab_complete() : "\\<s-tab>"', {expr = true}},
+   {'s', '<s-tab>', 'pumvisible() ? v:lua.s_tab_complete() : "\\<s-tab>"', {expr = true}},
+})
