@@ -2,12 +2,8 @@
 -- MODELINE, NOTES, AND SUMMARY
 --
 --  modeline :
---    vim: set sw=3 ts=3 sts=3 et tw=78 fmr={{{,}}} fdl=0 fdm=marker:
+--    vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
 --
---  changelog :
---      - removed this section's fold to see the todo list every time the file
---        is opened
---      - removed the todo list to put it in org-mode
 --]]
 
 local global = vim.g   -- a table to access vim's global variables
@@ -36,7 +32,7 @@ vim.cmd('runtime macros.justify.vim') -- i simply cannot live without this
 vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 
 require('modules.visual')
-require('modules.statusline')
+require('statusline')
 require('modules.lsp')
 
 require('plugins.align')
@@ -51,9 +47,8 @@ require('plugins.autopairs')
 require('plugins.commenting')
 require('plugins.scroll')
 
-vim.cmd([[
-   augroup highlight
-      autocmd BufEnter * :highlight clear SignColumn
-      autocmd BufEnter * :highlight clear StatusLine
-   augroup End
-]])
+-- Local Variables:
+-- tab-width: 3
+-- mode: lua
+-- End:
+-- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
