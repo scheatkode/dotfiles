@@ -148,6 +148,7 @@ return require('packer').startup(function(use)
 
    -- miscellaneous plugins
 
+   use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
    use {'b3nj5m1n/kommentary'}  -- commenting plugin
    use {'dstein64/vim-startuptime'} -- startup time monitor
    use {'mhinz/vim-startify'}      -- start screen
@@ -174,4 +175,4 @@ return require('packer').startup(function(use)
 
 end)
 
--- vim: set sw=3 ts=3 sts=3 et tw=81 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:

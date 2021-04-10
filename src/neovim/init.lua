@@ -46,6 +46,7 @@ require('plugins.git')
 require('plugins.autopairs')
 require('plugins.commenting')
 require('plugins.scroll')
+require('plugins.indent-guides')
 
 -- Local Variables:
 -- tab-width: 3
