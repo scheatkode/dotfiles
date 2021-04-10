@@ -31,7 +31,7 @@ require('lib.mappings')
 vim.cmd('runtime macros.justify.vim') -- i simply cannot live without this
 vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 
-require('modules.visual')
+require('colorscheme')
 require('statusline')
 require('modules.lsp')
 
