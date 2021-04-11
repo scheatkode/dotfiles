@@ -121,27 +121,27 @@ local servers = {
 }
 
 for _, server in ipairs(servers) do
-    lspconfig[server].setup {
-        on_attach = on_attach,
-    }
+   lspconfig[server].setup {
+      on_attach = on_attach,
+   }
 end
 
 -- sumenko_lua specific configuration
 
 local system_name
 if vim.fn.has("mac") == 1 then
-  system_name = "macOS"
+   system_name = "macOS"
 elseif vim.fn.has("unix") == 1 then
-  system_name = "Linux"
+   system_name = "Linux"
 elseif vim.fn.has('win32') == 1 then
-  system_name = "Windows"
+   system_name = "Windows"
 else
-  print("Unsupported system for sumneko")
+   print("Unsupported system for sumneko")
 end
 
 -- set the path to the sumneko installation; if you previously installed via the now deprecated :LspInstall, use
 local sumneko_root_path = vim.fn.stdpath('data')
-   .. '/lspinstall/lua-language-server'
+   .. '/lsp/lua-language-server'
 
 local sumneko_binary = sumneko_root_path
    .. "/bin/"
@@ -149,36 +149,37 @@ local sumneko_binary = sumneko_root_path
    .. "/lua-language-server"
 
 lspconfig['sumneko_lua'].setup {
-    on_attach = on_attach,
-    cmd       = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
-    settings  = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path    = vim.split(package.path, ';'),
+   on_attach = on_attach,
+   cmd       = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
+   settings  = {
+      Lua = {
+         runtime = {
+            -- Tell the language server which version of Lua you're using (most
+            -- likely LuaJIT in the case of Neovim)
+            version = 'LuaJIT',
+            -- Setup your lua path
+            path    = vim.split(package.path, ';'),
+         },
+         diagnostics = {
+            enable = true,
+            -- Get the language server to recognize the `vim` global
+            globals = {
+               'vim',
+               --'describe',
+               --'it',
+               --'before_each',
+               --'after_each',
             },
-            diagnostics = {
-                enable = true,
-                -- Get the language server to recognize the `vim` global
-                globals = {
-                    'vim',
-                    --'describe',
-                    --'it',
-                    --'before_each',
-                    --'after_each',
-                },
+         },
+         workspace = {
+            -- Make the server aware of Neovim runtime files
+            library = {
+               [vim.fn.expand('$VIMRUNTIME/lua')]         = true,
+               [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
             },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = {
-                    [vim.fn.expand('$VIMRUNTIME/lua')]         = true,
-                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                },
-            },
-        },
-    },
+         },
+      },
+   },
 }
 
 lspconfig['bashls'].setup {
@@ -225,9 +226,3 @@ lspconfig['jsonls'].setup {
    filetypes = { 'json' },
    root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd())
 }
-
--- late tweaks
--- vim.cmd([[sign define LspDiagnosticsSignError text=⬤]])
--- vim.cmd([[sign define LspDiagnosticsSignWarning text=⬤]])
--- vim.cmd([[sign define LspDiagnosticsSignInformation text=⬤]])
--- vim.cmd([[sign define LspDiagnosticsSignHint text=⬤]])
