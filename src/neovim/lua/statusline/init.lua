@@ -12,6 +12,8 @@ end
 -- galaxyline specific imports.
 
 local condition  = require('galaxyline.condition')
+
+local buffer     = require('galaxyline.provider_buffer')
 local diagnostic = require('galaxyline.provider_diagnostic')
 local fileinfo   = require('galaxyline.provider_fileinfo')
 local vcs        = require('galaxyline.provider_vcs')
@@ -74,13 +76,13 @@ galaxyline.section.left = {{
       separator_highlight = { colors.none, colors.bg1 },
    }}, {
 
-      file_icon = {
-          provider = fileinfo.get_file_icon,
-         condition = condition.buffer_not_empty,
-         highlight = {
-            require('galaxyline.provider_fileinfo').get_file_icon_color,
-            colors.bg1
-         },
+   file_icon = {
+       provider = fileinfo.get_file_icon,
+      condition = condition.buffer_not_empty,
+      highlight = {
+         require('galaxyline.provider_fileinfo').get_file_icon_color,
+         colors.bg1
+      },
    }}, {
 
    file_name = {
@@ -190,36 +192,77 @@ galaxyline.section.right = {{
 }
 
 galaxyline.section.short_line_left = {{
-   shortened_path = {
-       provider = function ()
-         return vim.fn.pathshorten(vim.fn.expand('%:F'))
-      end,
-      condition = condition.buffer_not_empty,
-      highlight = { colors.fg, 'bold' }
-   }
-}}
-
-galaxyline.section.short_line_right = {{
-   git_branch = {
-       provider = vcs.get_git_branch,
-      condition = condition.check_git_workspace,
-      highlight = { colors.lightpurple, 'bold' },
+   inactive_left_rounded = {
+       provider = function() return powerline.crescent_left_full end,
+      highlight = { colors.bg0_h }
    }}, {
 
-   git_icon = {
-       provider = function() return powerline.git_branch end,
-      condition = condition.check_git_workspace,
-      separator = ' ',
-      highlight = { colors.lightpurple, 'bold' },
-   }}, {
-
-   buffer_icon = {
+   inactive_file_icon = {
        provider = fileinfo.get_file_icon,
-      separator = ' ',
+      condition = condition.buffer_not_empty,
       highlight = {
          require('galaxyline.provider_fileinfo').get_file_icon_color,
+         colors.bg0_h
       },
-   }}
+   }}, {
+
+   inactive_file_name = {
+       provider = { fileinfo.get_current_file_name },
+      condition = condition.buffer_not_empty,
+      highlight = { colors.fg1, colors.bg0_h, 'bold' },
+   }}, {
+
+   inactive_right_rounded = {
+       provider = function () return powerline.crescent_right_full end,
+      separator = ' ',
+      highlight = { colors.bg0_h },
+   }},
+}
+
+galaxyline.section.short_line_right = {{
+   inactive_git_icon = {
+       provider = function() return powerline.git_branch end,
+      condition = condition.check_git_workspace,
+      highlight = { colors.purple, 'bold' },
+   }}, {
+
+   inactive_git_branch = {
+       provider = vcs.get_git_branch,
+      condition = condition.check_git_workspace,
+      separator = ' ',
+      highlight = { colors.purple, 'bold' },
+   }}, {
+
+   inactive_right_left_rounded = {
+       provider = function () return powerline.crescent_left_full end,
+      highlight = { colors.bg0_h },
+      separator = ' ',
+   }}, {
+
+   inactive_file_type = {
+                 provider = function ()
+                    return buffer.get_buffer_filetype():lower()
+                 end,
+                condition = condition.buffer_not_empty,
+                separator = ' ',
+                highlight = { colors.fg1,  colors.bg0_h },
+      separator_highlight = { colors.none, colors.bg0_h },
+   }}, {
+
+   inactive_file_encoding = {
+                 provider = function ()
+                    return fileinfo.get_file_encode():lower()
+                 end,
+                condition = condition.buffer_not_empty,
+                separator = ' ',
+                highlight = { colors.fg1,  colors.bg0_h },
+      separator_highlight = { colors.none, colors.bg0_h },
+   }}, {
+
+   inactive_right_right_rounded = {
+       provider = function() return powerline.crescent_right_full end,
+      highlight = { colors.bg0_h },
+   }},
 }
 
 -- Local Variables:
