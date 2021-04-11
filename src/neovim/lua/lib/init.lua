@@ -34,8 +34,8 @@ local m = {
 m.func.confirm = function(message)
    print(message .. ' (y/n): ')
 
-   --local answer = string.char(vim.fn.getchar())
-   local answer = io.read(1)
+   local answer = string.char(vim.fn.getchar())
+   -- local answer = io.read(1)
 
    if     'y' == answer then return true
    elseif 'n' == answer then return false
