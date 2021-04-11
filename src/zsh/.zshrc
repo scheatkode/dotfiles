@@ -38,9 +38,13 @@ fi
 
 export UPDATE_INTERVAL="${UPDATE_INTERVAL:-15}"
 export ZDOTDIR="${ZDOTDIR:-${XDG_CONFIG_HOME}/zsh}"
+export ZDATADIR="${ZDATADIR:-${XDG_DATA_HOME}/zsh}"
+export ZCACHEDIR="${ZCACHEDIR:-${XDG_CACHE_HOME}/zsh}"
 export ZSH="${ZDOTDIR}"
 
-[[ -d "${ZDOTDIR}" ]] || mkdir --parent "${ZDOTDIR}"
+[[ -d   "${ZDOTDIR}" ]] || mkdir --parent "${ZDOTDIR}"
+[[ -d  "${ZDATADIR}" ]] || mkdir --parent "${ZDATADIR}"
+[[ -d "${ZCACHEDIR}" ]] || mkdir --parent "${ZCACHEDIR}"
 
 # load the prompt and completion systems and initialize them.
 
@@ -50,12 +54,12 @@ autoload -Uz compinit promptinit
 # regenerated adds a noticable delay to zsh startup.  this little hack restricts
 # it to once every 20 hours.
 
-_comp_files=(${ZDOTDIR})
+_comp_files=(${ZCACHEDIR})
 
 if (( ${#_comp_files} )); then
-   compinit -i -C
+   compinit -i -C -d "${ZCACHEDIR}/zcompdump"
 else
-   compinit -i
+   compinit -i -d "${ZCACHEDIR}/zcompdump"
 fi
 
 unset _comp_files
@@ -134,7 +138,7 @@ zstyle ':completion:*' rehash true
 
 # history
 
-HISTFILE="${ZDOTDIR}/.zhistory"
+HISTFILE="${ZDATADIR}/history"
 HISTSIZE=65535
 SAVEHIST=65535
 
@@ -163,11 +167,12 @@ setopt   EXTENDED_HISTORY         # show timestamp in history.
 declare -A ZINIT
 
 ZINIT=(
-   ['BIN_DIR']="${XDG_DATA_HOME}/zsh/zinit/bin"
-   ['HOME_DIR']="${XDG_DATA_HOME}/zsh/zinit"
+          ['BIN_DIR']="${ZDATADIR}/zinit/bin"
+         ['HOME_DIR']="${ZDATADIR}/zinit"
+   ['ZCOMPDUMP_PATH']="${ZCACHEDIR}/zcompdump"
 )
 
-ZINIT_HOME="${ZINIT_HOME:-${XDG_DATA_HOME}/zsh/zinit}"
+ZINIT_HOME="${ZINIT_HOME:-${ZDATADIR}/zinit}"
 
 if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
    print -P "%F{33}▒ %F{220}Installing zinit (zdharma/zinit)…%f"
