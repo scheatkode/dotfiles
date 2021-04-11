@@ -34,8 +34,9 @@ Enough with the poor  banter, this here is my meager  attempt at rebuilding my
 dotfiles following the  [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] paradigm. Being a  sucker for the
 darker parts of computer science culture, history, and discipline, I feel this
 is the  perfect opportunity  to learn a  new paradigm and  to get  myself more
-acquainted to  the inner workings  of [[https://www.gnu.org/s/emacs/][Emacs]]  and [[https://orgmode.org/][Org-mode]] following  my recent
-shift from the [[https://neovim.io/][dark side]].
+acquainted to  the inner workings  of [[https://www.gnu.org/s/emacs/][Emacs]]  and [[https://orgmode.org/][Org-mode]] +following  my recent
+shift from the [[https://neovim.io/][dark side]].+ Scratch that, I couldn't in the end ... The literate
+programming part still stands true.
 
 * Installation
 
