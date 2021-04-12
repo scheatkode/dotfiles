@@ -73,6 +73,24 @@ setopt prompt_subst
 # ---------------------------------------------------------------------------- #
 
 autoload -U colors && colors # load colors.
+
+LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32";
+LSCOLORS="ExGxFxDxCxDxDxhbhdacEc";
+
+# do we need linux or bsd style ?
+
+if ls --color -d . &> /dev/null 2>&1 ; then
+   # linux style
+   export LS_COLORS="${LS_COLORS}"
+else
+   # bsd style
+   :
+fi
+
+# ---------------------------------------------------------------------------- #
+#                                 Zsh settings                                 #
+# ---------------------------------------------------------------------------- #
+
 unsetopt CASE_GLOB           # use case-insensitive globbing.
 setopt   GLOBDOTS            # glob dotfiles as well.
 setopt   EXTENDEDGLOB        # use extended globbing.
@@ -129,8 +147,8 @@ zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "$HOME/.zcompcache"
-zstyle ':completion:*' list-colors $LS_COLORS
+zstyle ':completion::complete:*' cache-path "${ZCACHEDIR}/zcompcache"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
@@ -220,7 +238,7 @@ zinit light romkatv/powerlevel10k
 
 zinit snippet OMZ::lib/key-bindings.zsh
 
-zinit wait'0a' lucid light-mode for                                   \
+zinit wait:'0a' lucid light-mode for                              \
       OMZ::lib/clipboard.zsh                                      \
       OMZ::lib/compfix.zsh                                        \
       OMZ::lib/completion.zsh                                     \
@@ -233,13 +251,13 @@ zinit wait'0a' lucid light-mode for                                   \
       OMZ::lib/termsupport.zsh                                    \
       OMZ::lib/theme-and-appearance.zsh                           \
       OMZ::plugins/fzf/fzf.plugin.zsh                             \
-   atinit"zicompinit; zicdreplay"                                 \
+   atinit:"zicompinit; zicdreplay"                                \
          zdharma/fast-syntax-highlighting                         \
       OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
       OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
-  atload"_zsh_autosuggest_start"                                  \
+  atload:"_zsh_autosuggest_start"                                 \
          zsh-users/zsh-autosuggestions                            \
-  as"completion"                                                  \
+  as:"completion"                                                 \
       OMZ::plugins/docker/_docker                                 \
       OMZ::plugins/composer/composer.plugin.zsh
 
@@ -248,22 +266,42 @@ zinit wait'0a' lucid light-mode for                                   \
 zinit ice wait'0c' blockf lucid atpull'zinit creinstall -q .'
 zinit load zsh-users/zsh-completions
 
-zinit ice lucid wait'1c' as"command" id-as"junegunn/fzf-tmux" pick"bin/fzf-tmux"
-zinit light junegunn/fzf
-
-zinit ice lucid wait'1c' from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
-zinit light sharkdp/bat
-
 export BAT_THEME="gruvbox-dark"
 
-zinit ice lucid wait'1c' as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
-zinit light sharkdp/fd
+zinit wait'0b' lucid from:gh-r as:program for \
+   pick:'bin/fzf'                             \
+      @junegunn/fzf                           \
+   atload:'alias lg=lazygit'                  \
+      @jesseduffield/lazygit                  \
+   pick:'tldr'                                \
+      @dbrgn/tealdeer # TODO: stil not working correctly
 
-zinit ice lucid wait'1c' from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
-zinit light BurntSushi/ripgrep
+zinit wait'0c' lucid from:gh-r as:program for              \
+   mv:'bat* -> bat' pick:'bat*/bat' atload:'alias cat=bat'            \
+      @sharkdp/bat                                                    \
+   mv:'fd* -> fd' pick:'fd/fd'                                        \
+      @sharkdp/fd                                                     \
+   mv:'hyperfine*/hyperfine -> hyperfine' pick:'hyperfine*/hyperfine' \
+      @sharkdp/hyperfine                                              \
+   mv:'exa* -> exa' pick:'bin/exa' atload:'alias ls="exa --icons"'    \
+      @ogham/exa                                                      \
+   mv:'ripgrep* -> ripgrep' pick:'ripgrep/rg'                         \
+      @BurntSushi/ripgrep                                             \
+   mv:'procs* -> procs' bpick'*lnx*'                                  \
+      @dalance/procs                                                  \
+   mv:'bandwhich* -> bandwhich' pick'imsnif/bandwhich'                \
+      @imsnif/bandwhich                                               \
+   mv:'dust*/dust' pick'dust*/dust'                                   \
+      @bootandy/dust
 
-zinit ice lucid wait"1c" as"program" from"gh-r" mv"lazygit* -> lazygit" atload"alias lg='lazygit'"
-zinit light 'jesseduffield/lazygit'
+#zinit ice lucid wait'1c' as"command" id-as"junegunn/fzf-tmux" pick"bin/fzf-tmux"
+#zinit light junegunn/fzf
+
+#zinit ice lucid wait'1c' as'program' from'gh-r' mv'lazygit* -> lazygit' atload'alias lg=lazygit'
+#zinit light jesseduffield/lazygit
+
+#zinit ice as'program' from'gh-r' mv'tldr* -> tldr' pick'tldr'
+#zinit light dbrgn/tealdeer
 
 # ---------------------------------------------------------------------------- #
 #                         Theme / Prompt customization                         #
@@ -301,3 +339,5 @@ export PATH=$HOME/bin:${HOME}/local/bin:/usr/local/bin:$PATH
 
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
+# To customize prompt, run `p10k configure` or edit ~/repositories/dotfiles/src/zsh/.p10k.zsh.
+[[ ! -f ~/repositories/dotfiles/src/zsh/.p10k.zsh ]] || source ~/repositories/dotfiles/src/zsh/.p10k.zsh
