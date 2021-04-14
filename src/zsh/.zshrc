@@ -79,12 +79,10 @@ LSCOLORS="ExGxFxDxCxDxDxhbhdacEc";
 
 # do we need linux or bsd style ?
 
-if ls --color -d . &> /dev/null 2>&1 ; then
-   # linux style
-   export LS_COLORS="${LS_COLORS}"
+if command -v dircolors > /dev/null 2>&1 ; then
+   eval "$(command dircolors --sh "$(dirname "${(%):-%N}")/gruvbox.dircolors")"
 else
-   # bsd style
-   :
+   eval "$(command gdircolors --sh "$(dirname "${(%):-%N}")/gruvbox.dircolors")"
 fi
 
 # ---------------------------------------------------------------------------- #
