@@ -148,7 +148,7 @@ require('lib.config').options.use({
    },
    completeopt = { -- better completion experience
       'menuone',  -- use the pop-up menu
-      'longest',  -- only insert the longest common match
+      -- 'longest',  -- only insert the longest common match
       'noinsert', -- do not insert any text for a match
       'noselect', -- do not autoselect a match
    },
