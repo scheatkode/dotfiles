@@ -1,9 +1,11 @@
 require('lib.config').keymaps.use({
 
-   --- semicolon is never used in normal mode anyway, win a keystroke
+   -- @todo find or write a plugin to mimic emacs' evil-snipe
+   -- @body bonus points for binding to the fFtT keys for quicker navigation
+   -- --- semicolon is never used in normal mode anyway, win a keystroke
 
-   {'n', ';', ':', {noremap = true}},
-   {'x', ';', ':', {noremap = true}},
+   -- {'n', ';', ':', {noremap = true}},
+   -- {'x', ';', ':', {noremap = true}},
 
    --- remove annoying ex-mode
 
