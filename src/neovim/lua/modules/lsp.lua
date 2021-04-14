@@ -44,9 +44,9 @@ lspsaga.init_lsp_saga({
 
    definition_preview_icon = '丨  ',
 
-   -- 1: thin border | 2: rounded border | 3: thick border | 4: ascii border
+   -- "single" | "double" | "round" | "plus"
 
-   border_style = 1,
+   border_style = 'round',
 
    rename_prompt_prefix = '❯ ',
 
