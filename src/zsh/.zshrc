@@ -324,10 +324,11 @@ ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 FZF_CTRL_T_COMMAND='fd --type f --hidden --exclude .git --exclude .cache'
 FZF_ALT_C_COMMAND='fd --type d --exclude .git --exclude .npm'
-export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS}
---color fg:252,hl:67,fg+:252,bg+:235,hl+:81
---color info:144,prompt:161,spinner:135,pointer:135,marker:118
-"
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+--color=fg:#a89984,bg:-1,hl:#d79921
+--color=fg+:#ebdbb2,bg+:-1,hl+:#fabd2f
+--color=info:#d79921,prompt:#d65d0e,pointer:#fe8019
+--color=marker:#689d6a,spinner:#b16286,header:#83a598'
 
 # updating the path
 
