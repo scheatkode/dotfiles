@@ -75,6 +75,7 @@ return require('packer').startup(function(use)
    use {'glepnir/lspsaga.nvim'}
    use {'onsails/lspkind-nvim'}
    use {'windwp/nvim-autopairs'}
+   use {'liuchengxu/vista.vim'}
 
 
    -- fuzzy searching and file exploring plugins
@@ -135,10 +136,10 @@ return require('packer').startup(function(use)
    use {'junegunn/goyo.vim',           opt = true} -- distraction-free → no ui elements
    use {'junegunn/limelight.vim',      opt = true} -- distraction-free → dim paragraphs
    use {'norcalli/nvim-colorizer.lua', opt = true} -- colorize hex/rgb/hsl values
-   use {
-      'yamatsum/nvim-nonicons',
-      requires = {'kyazdani42/nvim-web-devicons'}
-   }
+   -- use {
+   --    'yamatsum/nvim-nonicons',
+   --    requires = {'kyazdani42/nvim-web-devicons'}
+   -- }
    use {
       'glepnir/galaxyline.nvim',
       branch   = 'main',
