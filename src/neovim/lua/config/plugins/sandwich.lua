@@ -1,6 +1,6 @@
 --- sandwich configuration
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
    {'n', '<leader>tsd',  '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)',  {}},
    {'n', '<leader>tsD', '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',   {}},
    {'n', '<leader>tsc',  '<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)', {}},
@@ -71,3 +71,9 @@ whichkey.register_keymap('leader', {
 }, {
    mode = 'v',
 })
+
+-- Local Variables:
+-- tab-width: 3
+-- mode: lua
+-- End:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

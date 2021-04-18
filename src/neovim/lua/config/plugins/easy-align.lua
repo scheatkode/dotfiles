@@ -1,6 +1,6 @@
 --- easy-align configuration
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
    {'n', '<leader>ta', '<Plug>(EasyAlign)', {}},
    {'x', '<leader>ta', '<Plug>(EasyAlign)', {}},
 })

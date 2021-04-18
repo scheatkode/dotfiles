@@ -1,4 +1,4 @@
-require('lib.config').options.use({
+require('sol.vim').apply_options({
 
    -- miscellaneous
 

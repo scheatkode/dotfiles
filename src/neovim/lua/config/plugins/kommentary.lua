@@ -30,7 +30,7 @@ kommentary.configure_language('php', {
 
 -- keyboard mappings
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
    {'n', '<leader>ccc', '<plug>kommentary_line_default',   {}},
    {'n', '<leader>ccm',  '<plug>kommentary_motion_default', {}},
    {'v', '<leader>ccc',  '<plug>kommentary_visual_default', {}},
@@ -99,4 +99,4 @@ whichkey.register_keymap('visual', {
 -- tab-width: 3
 -- mode: lua
 -- End:
--- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

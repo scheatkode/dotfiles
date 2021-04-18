@@ -2,6 +2,9 @@
 
 local api        = vim.api
 local buffer_api = vim.bo
+local options    = vim.o
+
+local table = require('sol.table')
 
 local m = {
    buffer = {},
@@ -37,7 +40,8 @@ m.buffer.close_orphaned = function(force)
 
    for _, buffer in ipairs(buffers) do
       if not buffer_api[buffer].buflisted then
-         if buffer_api[buffer].modified
+         if
+            buffer_api[buffer].modified
             and not options.force
          then
             modified = modified + 1
@@ -55,6 +59,75 @@ m.buffer.close_orphaned = function(force)
    elseif modified > 1 then
       return api.nvim_err_writeln(modified .. ' buffers modified, skipped.')
    end
+end
+
+--- commit options
+--
+-- takes a table of options to loop through and commit.
+-- this is intended so  the configuration stays DRY. it
+-- takes  care of  setting  the  variables and  joining
+-- arrays  (if any),  so  that vim  accepts  them as  a
+-- comma-separated string.
+--
+-- @param  opts table → table of options
+-- @return table      → options table
+
+m.apply_options = function(opts)
+   for k, v in pairs(opts) do
+      if type(v) ~= 'table' then
+         options[k] = v
+      else
+         options[k] = table.concat(v, ',')
+      end
+   end
+
+   return opts
+end
+
+--- commit key mappings
+--
+-- takes an array of  key mappings and their associated
+-- modes and actions to  loop through and commit. this,
+-- too, is intended for keeping a DRY configuration.
+--
+-- @param  maps table → array of keymaps
+-- @return table      → keymaps array
+
+m.apply_keymaps = function(keymaps)
+   for _, map in pairs(keymaps) do
+      if #map ~= 4 then
+         return api.nvim_err_writeln(
+            'Invalid keymap format : ' .. vim.inspect(map)
+         )
+      end
+
+      api.nvim_set_keymap(unpack(map))
+   end
+end
+
+--- commit variables
+--
+-- takes a set of variables and their associated values
+-- to  loop through  and  commit  in neovim's  internal
+-- tables.   this   is   intended   for   keeping   DRY
+-- configurations as well.
+--
+-- @param  loc  integer → locality of variables
+-- @param  vars table   → array of variables
+-- @return table        → variables array
+
+m.apply_variables = function(loc, vars)
+   local vim_variable_loc = { 'g', 'b', 'w', 't', 'v' }
+
+   if table.contains(vim_variable_loc, loc) then
+      error('Given locality "' .. loc .. '" is invalid.')
+   end
+
+   for k, v in pairs(vars) do
+      vim[loc][k] = v
+   end
+
+   return vars
 end
 
 -------------------------------- module exports --------------------------------

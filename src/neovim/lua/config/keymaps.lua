@@ -3,7 +3,7 @@ local modifiers = {
    noremap = true
 }
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
 
    --- remove annoying ex-mode
 

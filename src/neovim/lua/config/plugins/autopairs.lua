@@ -29,7 +29,7 @@ end
 
 -- keymaps
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
    {'i', '<cr>', 'v:lua.autopair.completion_confirm()', {expr = true, noremap = true}},
 })
 

@@ -8,8 +8,6 @@ local global = vim.g -- a table to access vim's global variables
 global.mapleader      = ' '
 global.maplocalleader = ' '
 
-
-
 vim.cmd('runtime macros.justify.vim') -- i simply cannot live without this
 vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 

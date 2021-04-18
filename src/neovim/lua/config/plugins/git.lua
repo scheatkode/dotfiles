@@ -137,13 +137,15 @@ gitsigns.setup({
 --    },
 -- })
 
-vim.g.lazygit_floating_window_winblend       = 0     -- transparency of floating window
-vim.g.lazygit_floating_window_scaling_factor = 0.8   -- scaling factor of floating window
-vim.g.lazygit_floating_window_corner_chars   = {'╭', '╮', '╰', '╯'} -- customize lazygit popup window corner characters
-vim.g.lazygit_floating_window_use_plenary    = true  -- use plenary.vim to manage floating window if available
-vim.g.lazygit_use_neovim_remote              = false -- fallback to 0 if neovim-remote is not installed
+require('sol.vim').apply_variables('g', {
+   lazygit_floating_window_winblend       = 0,     -- transparency of floating window
+   lazygit_floating_window_scaling_factor = 0.8,   -- scaling factor of floating window
+   lazygit_floating_window_corner_chars   = {'╭', '╮', '╰', '╯'}, -- customize lazygit popup window corner characters
+   lazygit_floating_window_use_plenary    = true,  -- use plenary.vim to manage floating window if available
+   lazygit_use_neovim_remote              = false, -- fallback to 0 if neovim-remote is not installed
+})
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
    {'n', '<leader>gg', '<cmd>LazyGit<cr>', {noremap = true, silent = true}},
 })
 

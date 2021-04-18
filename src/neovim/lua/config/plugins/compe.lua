@@ -9,7 +9,7 @@ if not ok then
    return ok
 end
 
-require('compe').setup({
+compe.setup({
    enabled          = true,
    autocomplete     = true,
    debug            = false,
@@ -87,7 +87,7 @@ local modifiers = {
    silent = true,
 }
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
    {'i', '<Tab>',   'pumvisible() ? v:lua.tab_complete()   : "\\<tab>"',   modifiers},
    {'s', '<Tab>',   'pumvisible() ? v:lua.tab_complete()   : "\\<tab>"',   modifiers},
    {'i', '<S-Tab>', 'pumvisible() ? v:lua.s_tab_complete() : "\\<s-tab>"', modifiers},

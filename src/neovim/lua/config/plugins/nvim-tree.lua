@@ -1,4 +1,4 @@
-require('lib.config').variables.use('g', {
+require('sol.vim').apply_variables('g', {
    vim_tree_side                  = 'left',
    nvim_tree_width                = 35,
    nvim_tree_auto_open            = 0,
@@ -53,7 +53,7 @@ require('lib.config').variables.use('g', {
 --   },
 })
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
    {'n', '<leader>ft', ':NvimTreeToggle<CR>', {silent = true, noremap = true}},
 })
 

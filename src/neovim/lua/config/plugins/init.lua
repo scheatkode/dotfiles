@@ -142,7 +142,7 @@ local modifiers = {
       noremap = true
 }
 
-require('lib.config').keymaps.use({
+require('sol.vim').apply_keymaps({
    {'n', '<leader>pc', '<cmd>PackerCompile<CR>', modifiers},
    {'n', '<leader>pC', '<cmd>PackerClean<CR>',   modifiers},
    {'n', '<leader>pi', '<cmd>PackerInstall<CR>', modifiers},
