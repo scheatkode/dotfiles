@@ -1,13 +1,4 @@
---[[
--- MODELINE, NOTES, AND SUMMARY
---
---  modeline :
---    vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
---
---]]
-
-local global = vim.g   -- a table to access vim's global variables
-
+local global = vim.g -- a table to access vim's global variables
 
 -- leader key
 
@@ -17,39 +8,19 @@ local global = vim.g   -- a table to access vim's global variables
 global.mapleader      = ' '
 global.maplocalleader = ' '
 
--- plugins
 
--- load plugins using packer.
-
-if not require('plugins') then
-   return
-end
-
-require('lib.options')
-require('lib.mappings')
 
 vim.cmd('runtime macros.justify.vim') -- i simply cannot live without this
 vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 
-require('colorscheme')
-require('statusline')
 require('modules.lsp')
 
-require('plugins.align')
-require('plugins.completion')
-require('plugins.nvim-tree')
-require('plugins.surround')
-require('plugins.telescope')
-require('plugins.treesitter')
-require('plugins.sudo')
-require('plugins.git')
-require('plugins.autopairs')
-require('plugins.commenting')
-require('plugins.scroll')
-require('plugins.indent-guides')
+require('lsp.symbols')
+
+require('config')
 
 -- Local Variables:
 -- tab-width: 3
 -- mode: lua
 -- End:
--- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

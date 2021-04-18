@@ -1,17 +1,8 @@
-local apply_maps = require('lib.config').keymaps.use
-local apply_conf = require('lib.config').variables.use
-
-local configuration = {
-   vim_tree_side    = 'left',
-   nvim_tree_width  = 35,
-   nvim_tree_ignore = {
-      '.git',
-      'node_modules',
-      '.cache',
-   },
+require('lib.config').variables.use('g', {
+   vim_tree_side                  = 'left',
+   nvim_tree_width                = 35,
    nvim_tree_auto_open            = 0,
    nvim_tree_auto_close           = 1,
-   nvim_tree_auto_ignore_ft       = {'startify', 'dashboard'},
    nvim_tree_quit_on_open         = 1,
    nvim_tree_follow               = 1,
    nvim_tree_indent_markers       = 0,
@@ -20,6 +11,17 @@ local configuration = {
    nvim_tree_root_folder_modifier = ':~',
    nvim_tree_tab_open             = 0,
    nvim_tree_width_allow_resize   = 1,
+
+   nvim_tree_auto_ignore_ft = {
+      'startify',
+      'dashboard'
+   },
+
+   nvim_tree_ignore = {
+      '.git',
+      'node_modules',
+      '.cache',
+   },
 
 --   nvim_tree_bindings = {
 --      edit            = {
@@ -49,13 +51,14 @@ local configuration = {
 --      dir_up          = '-',
 --      close           = 'q',
 --   },
-}
+})
 
-local keymaps = {
+require('lib.config').keymaps.use({
    {'n', '<leader>ft', ':NvimTreeToggle<CR>', {silent = true, noremap = true}},
-}
+})
 
-apply_conf('g', configuration)
-apply_maps(keymaps)
-
--- vim: set sw=3 ts=3 sts=3 et tw=81 fmr={{{,}}} fdl=0 fdm=marker:
+-- Local Variables:
+-- tab-width: 3
+-- mode: lua
+-- End:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

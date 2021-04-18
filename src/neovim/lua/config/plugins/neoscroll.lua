@@ -1,13 +1,15 @@
-local ok, plugin = pcall(require, 'neoscroll')
+--- neoscroll setup
+
+local ok, neoscroll = pcall(require, 'neoscroll')
 
 if not ok then
-   print('‼ Tried importing neoscroll plugin ... unsuccessfully.')
+   print('‼ Tried loading neoscroll plugin ... unsuccessfully.')
    return ok
 end
 
--- configure default options
+-- default options
 
-return plugin.setup({
+neoscroll.setup({
    no_mappings          = false, -- do not define mappings
    hide_cursor          = true,  -- hide cursor while scrolling
    stop_eof             = true,  -- stop at <eof> when scrolling downwards

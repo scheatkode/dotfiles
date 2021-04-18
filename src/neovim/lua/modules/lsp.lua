@@ -1,62 +1,6 @@
 local lspconfig = require('lspconfig')
 local lspsaga   = require('lspsaga')
 
-lspsaga.init_lsp_saga({
-   use_saga_diagnostic_sign = true,
-
-   error_sign = '⬤',
-   warn_sign  = '⬤',
-   hint_sign  = '⬤',
-   infor_sign = '⬤',
-
-   dianostic_header_icon = '   ',
-   code_action_icon      = ' ',
-   code_action_prompt    = {
-      enable        = true,
-      sign          = true,
-      sign_priority = 20,
-      virtual_text  = true,
-   },
-
-   finder_definition_icon = '  ',
-   finder_reference_icon  = '  ',
-
-   max_preview_lines = 20, -- preview lines of lsp_finder and definition preview
-
-   finder_action_keys = {
-      open        = 'o',
-      vsplit      = 's',
-      split       = 'i',
-      quit        = {'q', '<Esc>'}, -- quit can be a table
-      scroll_down = '<C-f>',
-      scroll_up   = '<C-b>',
-   },
-
-   code_action_keys = {
-      quit = {'q', '<Esc>'},
-      exec = '<CR>',
-   },
-
-   rename_action_keys = {
-      quit = {'<C-c>', '<Esc>'},  -- quit can be a table
-      exec = '<CR>',
-   },
-
-   definition_preview_icon = '丨  ',
-
-   -- "single" | "double" | "round" | "plus"
-
-   border_style = 'round',
-
-   rename_prompt_prefix = '❯ ',
-
-   -- if you don't use nvim-lspconfig you must pass your server name and
-   -- the related filetypes into this table
-   -- like server_filetype_map = {metals = {'sbt', 'scala'}}
-
-   server_filetype_map = {},
-})
-
 local on_attach = function(client, bufnr)
    print(' LSP started.') -- announce LSP startup
 
@@ -67,24 +11,24 @@ local on_attach = function(client, bufnr)
 
     -- mappings
     local opts = {noremap = true, silent = true}
-    buf_set_keymap('n',   '<leader>cF',  '<cmd>lua     require("lspsaga.provider").lsp_finder()<CR>',                 opts)
-    buf_set_keymap('n',   '<leader>cD',  '<cmd>lua     vim.lsp.buf.declaration()<CR>',                                opts)
-    buf_set_keymap('n',   '<leader>cd',  '<cmd>lua     require("lspsaga.provider").preview_definition()<CR>',         opts)
-    buf_set_keymap('n',   '<leader>ci',  '<cmd>lua     vim.lsp.buf.implementation()<CR>',                             opts)
-    buf_set_keymap('n',   '<leader>cR', '<cmd>lua     vim.lsp.buf.references()<CR>',                                 opts)
-    buf_set_keymap('n',   'K',          '<cmd>lua     require("lspsaga.hover").render_hover_doc()<CR>',              opts)
-    buf_set_keymap('n',   '<leader>cs',  '<cmd>lua     require("lspsaga.signaturehelp").signature_help()<CR>',        opts)
-    buf_set_keymap('n',   '<leader>cwa', '<cmd>lua     vim.lsp.buf.add_workspace_folder()<CR>',                       opts)
-    buf_set_keymap('n',   '<leader>cwr', '<cmd>lua     vim.lsp.buf.remove_workspace_folder()<CR>',                    opts)
-    buf_set_keymap('n',   '<leader>cwl', '<cmd>lua     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    buf_set_keymap('n',   '<leader>D',   '<cmd>lua     vim.lsp.buf.type_definition()<CR>',                            opts)
-    buf_set_keymap('n',   '<leader>cr',  '<cmd>lua     require("lspsaga.rename").rename()<CR>',                       opts)
-    buf_set_keymap('n',   '<leader>cl',  '<cmd>Lspsaga show_line_diagnostics<CR>',                                    opts)
-    buf_set_keymap('n',   '[d',         '<cmd>lua     require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<CR>', opts)
-    buf_set_keymap('n',   ']d',         '<cmd>lua     require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>', opts)
-    buf_set_keymap('n',   '<leader>q',   '<cmd>lua     vim.lsp.diagnostic.set_loclist()<CR>',                         opts)
-    buf_set_keymap('n',   '<leader>ca',  '<cmd>Lspsaga code_action<CR>',                                              opts)
-    buf_set_keymap('x',   '<leader>ca',  '<cmd>Lspsaga range_code_action<CR>',                                        opts)
+    buf_set_keymap('n', '<leader>cF',  '<cmd>lua     require("lspsaga.provider").lsp_finder()<CR>',                 opts)
+    buf_set_keymap('n', '<leader>cD',  '<cmd>lua     vim.lsp.buf.declaration()<CR>',                                opts)
+    buf_set_keymap('n', '<leader>cd',  '<cmd>lua     require("lspsaga.provider").preview_definition()<CR>',         opts)
+    buf_set_keymap('n', '<leader>ci',  '<cmd>lua     vim.lsp.buf.implementation()<CR>',                             opts)
+    buf_set_keymap('n', '<leader>cR',  '<cmd>lua     vim.lsp.buf.references()<CR>',                                 opts)
+    buf_set_keymap('n', 'K',           '<cmd>lua     require("lspsaga.hover").render_hover_doc()<CR>',              opts)
+    buf_set_keymap('n', '<leader>cs',  '<cmd>lua     require("lspsaga.signaturehelp").signature_help()<CR>',        opts)
+    buf_set_keymap('n', '<leader>cwa', '<cmd>lua     vim.lsp.buf.add_workspace_folder()<CR>',                       opts)
+    buf_set_keymap('n', '<leader>cwr', '<cmd>lua     vim.lsp.buf.remove_workspace_folder()<CR>',                    opts)
+    buf_set_keymap('n', '<leader>cwl', '<cmd>lua     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    buf_set_keymap('n', '<leader>D',   '<cmd>lua     vim.lsp.buf.type_definition()<CR>',                            opts)
+    buf_set_keymap('n', '<leader>cr',  '<cmd>lua     require("lspsaga.rename").rename()<CR>',                       opts)
+    buf_set_keymap('n', '<leader>cl',  '<cmd>Lspsaga show_line_diagnostics<CR>',                                    opts)
+    buf_set_keymap('n', '[d',          '<cmd>lua     require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<CR>', opts)
+    buf_set_keymap('n', ']d',          '<cmd>lua     require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>', opts)
+    buf_set_keymap('n', '<leader>q',   '<cmd>lua     vim.lsp.diagnostic.set_loclist()<CR>',                         opts)
+    buf_set_keymap('n', '<leader>ca',  '<cmd>Lspsaga code_action<CR>',                                              opts)
+    buf_set_keymap('x', '<leader>ca',  '<cmd>Lspsaga range_code_action<CR>',                                        opts)
 
     -- set keybindings depending on server capabilities
     if client.resolved_capabilities.document_formatting then
@@ -109,6 +53,7 @@ local on_attach = function(client, bufnr)
 
    require('lspkind').init({
       Function = 'ƒ',
+      Method   = 'ƒ',
    }) -- pictograms
 end
 
@@ -226,3 +171,16 @@ lspconfig['jsonls'].setup {
    filetypes = { 'json' },
    root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd())
 }
+
+-- lspconfig['phpactor'].setup {
+--    on_attach = on_attach,
+--    cmd       = { '/home/alice/.local/bin/phpactor', 'language-server' },
+--    filetypes = { 'php' },
+--    root_dir  = lspconfig.util.root_pattern('composer.json', '.git')
+-- }
+
+-- Local Variables:
+-- tab-width: 3
+-- mode: lua
+-- End:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

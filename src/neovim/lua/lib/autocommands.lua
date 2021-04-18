@@ -91,4 +91,4 @@ local test = table.concat({}, '|')
 print(#test == 0)
 apply(autocommands)
 
--- vim: set sw=3 ts=3 sts=3 et tw=81 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

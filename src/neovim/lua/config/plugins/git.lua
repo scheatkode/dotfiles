@@ -23,7 +23,16 @@
 --   _/  ( /          \
 --  `----'(____________)
 
-require('gitsigns').setup({
+local global = vim.g
+
+local ok, gitsigns = pcall(require, 'gitsigns')
+
+if not ok then
+   print('‼ Tried loading gitsigns ... unsuccessfully.')
+   return ok
+end
+
+gitsigns.setup({
    signs = {
       add          = {hl = 'DiffAdd',    text = ' █', numhl='GitSignsAddNr',    linehl='GitSignsAddLn'},
       change       = {hl = 'DiffChange', text = ' █', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
@@ -31,6 +40,7 @@ require('gitsigns').setup({
       topdelete    = {hl = 'DiffDelete', text = ' █', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
       changedelete = {hl = 'DiffChange', text = ' █', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
    },
+
    keymaps = {
       -- Default keymap options
       noremap = true,
@@ -47,16 +57,25 @@ require('gitsigns').setup({
       ['n <leader>gb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
 
       -- Text objects
-      ['o ig'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-      ['x ig'] = ':<C-U>lua require"gitsigns".text_object()<CR>'
+      ['o ig'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
+      ['x ig'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
    },
-   numhl              = false,
-   sign_priority      = 5,
+
+   numhl  = false,
+   linehl = false,
+
+   watch_index = {
+      interval = 1000,
+   },
+
+   update_debounce = 100,
+
+   sign_priority      = 6,
    status_formatter   = nil,
    use_decoration_api = true,
+   use_internal_diff  = true,
 })
 
---- porcelain
 --
 --               .----------/ |<=== floppy disk
 --              /           | |
@@ -132,4 +151,31 @@ require('lib.config').keymaps.use({
 --    {'n', '<leader>gg', '<cmd>Neogit kind=split<cr>', {noremap = true, silent = true}},
 -- })
 
--- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
+--- whichkey configuration
+
+local ok, whichkey = pcall(require, 'whichkey_setup')
+
+if not ok then
+   return ok
+end
+
+whichkey.register_keymap('leader', {
+   g = {
+      name = '+git',
+
+      g = 'Git porcelain',
+
+      b = 'Blame line',
+      p = 'Preview hunk',
+      r = 'Reset hunk',
+      R = 'Reset buffer',
+      s = 'Stage hunk',
+      u = 'Undo stage hunk',
+   },
+})
+
+-- Local Variables:
+-- tab-width: 3
+-- mode: lua
+-- End:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

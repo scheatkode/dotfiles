@@ -5,7 +5,7 @@ local ok, galaxyline = pcall(require, 'galaxyline')
 -- if not, inform the user and softly return to the calling file.
 
 if not ok then
-   print('‼ Tried importing galaxyline plugin ... unsuccessfully.')
+   print('‼ Tried loading galaxyline ... unsuccessfully.')
    return ok
 end
 
@@ -269,4 +269,4 @@ galaxyline.section.short_line_right = {{
 -- tab-width: 3
 -- mode: lua
 -- End:
--- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80
