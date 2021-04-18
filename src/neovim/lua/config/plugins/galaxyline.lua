@@ -20,9 +20,9 @@ local vcs        = require('galaxyline.provider_vcs')
 
 -- coloring and the such.
 
-local colors    = require('colors.gruvbox')
-local glyph     = require('icons.glyph')
-local powerline = require('icons.powerline')
+local colors    = require('meta.colorscheme.gruvbox')
+local glyph     = require('meta.icon.glyph')
+local powerline = require('meta.icon.powerline')
 
 -- galaxyline ignore.
 

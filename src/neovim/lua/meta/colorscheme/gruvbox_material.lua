@@ -1,7 +1,5 @@
-local m
-
 if vim.o.background == 'dark' then
-   m = {
+   return {
           bg = '#1d2021',
          bg0 = '#1d2021',
          bg1 = '#282828',
@@ -25,7 +23,7 @@ if vim.o.background == 'dark' then
         none = 'NONE',
    }
 else
-   m = {
+   return {
                bg = '#f9f5d7',
               bg0 = '#f9f5d7',
               bg1 = '#f5edca',
@@ -53,10 +51,8 @@ else
    }
 end
 
-return m
-
 -- Local Variables:
 -- tab-width: 3
 -- mode: lua
 -- End:
--- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

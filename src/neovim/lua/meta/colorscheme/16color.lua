@@ -1,4 +1,4 @@
-local m = {
+return {
    black   = '#000000',
    maroon  = '#800000',
    green   = '#008000',
@@ -17,10 +17,8 @@ local m = {
    white   = '#ffffff',
 }
 
-return m
-
 -- Local Variables:
 -- tab-width: 3
 -- mode: lua
 -- End:
--- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

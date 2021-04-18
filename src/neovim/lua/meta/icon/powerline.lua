@@ -1,4 +1,4 @@
-local m = {
+return {
                    git_branch = '\u{e0a0}',
                   line_number = '\u{e0a1}',
                          lock = '\u{e0a2}',
@@ -39,10 +39,8 @@ local m = {
               angry_eyes_left = '\u{e0d4}', -- at it from the side ...
 }
 
-return m
-
 -- Local Variables:
 -- tab-width: 3
 -- mode: lua
 -- End:
--- vim: set sw=3 ts=3 sts=3 et tw=80 fmr={{{,}}} fdl=0 fdm=marker:
+-- vim: set sw=3 ts=3 sts=3 et tw=80

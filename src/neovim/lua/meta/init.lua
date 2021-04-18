@@ -1,13 +1,13 @@
 return setmetatable({}, {
    __index = function (table, file)
-      local ok, icons = pcall(require, 'icons.' .. file)
+      local ok, metafile = pcall(require, 'meta.' .. file)
 
       if not ok then
-         error('Icon set ' .. file .. ' not found.')
+         error('Metadata file ' .. file .. ' not found.')
          return ok
       end
 
-      return icons
+      return metafile
    end,
 })
 
