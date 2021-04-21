@@ -185,6 +185,16 @@ galaxyline.section.right = {{
       separator_highlight = { colors.none, colors.fg0 },
    }}, {
 
+   scroll_lock = {
+         provider = function ()
+            if vim.wo.scrollbind then
+               -- return ' ' .. powerline.lock
+               return '  ' .. glyph.up_down_arrow .. powerline.lock
+            end
+         end,
+         highlight = { colors.bg1, colors.fg0, 'bold' },
+   }}, {
+
    right_right_rounded = {
        provider = function() return powerline.crescent_right_full end,
       highlight = { colors.fg0 },
@@ -257,6 +267,15 @@ galaxyline.section.short_line_right = {{
                 separator = ' ',
                 highlight = { colors.fg1,  colors.bg0_h },
       separator_highlight = { colors.none, colors.bg0_h },
+   }}, {
+
+   inactive_scroll_lock = {
+         provider = function ()
+            if vim.wo.scrollbind then
+               return '  ' .. glyph.up_down_arrow .. ' ' .. powerline.lock
+            end
+         end,
+         highlight = { colors.fg1,  colors.bg0_h },
    }}, {
 
    inactive_right_right_rounded = {
