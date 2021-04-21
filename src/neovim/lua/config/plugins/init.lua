@@ -173,12 +173,12 @@ end
 --- convenience
 
 return setmetatable({}, {
-   __index = function (table, file)
-      local ok, plugin = pcall('config.plugins.' .. file)
+   __index = function (_, file)
+      local has_plugin, plugin = pcall('config.plugins.' .. file)
 
       if not ok then
          error('Plugin ' .. file .. ' not found.')
-         return ok
+         return has_plugin
       end
 
       return plugin
