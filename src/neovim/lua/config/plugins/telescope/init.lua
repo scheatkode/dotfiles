@@ -1,15 +1,17 @@
 --- telescope configuration
 
-local ok, telescope = pcall(require, 'telescope')
+local has_telescope, telescope = pcall(require, 'telescope')
 
-if not ok then
+if not has_telescope then
    print('‼ Tried loading telescope ... unsuccessfully.')
-   return ok
+   return has_telescope
 end
 
 local actions    = require('telescope.actions')
 local builtin    = require('telescope.builtin')
 local previewers = require('telescope.previewers')
+
+local custom_actions = require('config.plugins.telescope.actions.buffer_delete')
 
 local m = {}
 
@@ -71,10 +73,10 @@ telescope.setup({
             -- ['<c-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
             -- ['<a-q>'] = actions.smart_add_to_qflist  + actions.open_qflist,
 
-            ['<tab>'] = actions.toggle_selection,
+            ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
 
             ['<c-c>'] = actions.close,
-            ['<esc>'] = actions.close,
+            -- ['<esc>'] = actions.close,
          },
 
          n = {
@@ -95,8 +97,9 @@ telescope.setup({
 
             ['<c-c>'] = actions.close,
             ['<esc>'] = actions.close,
+            ['q']     = actions.close,
 
-            ['<tab>'] = actions.toggle_selection,
+            ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
          },
       },
    },
@@ -140,6 +143,7 @@ end
 m.files = function ()
    builtin.find_files({
       file_ignore_patterns = { '%.png', '%.jpg', '%webp' },
+      shorten_path         = false
    })
 end
 
@@ -168,6 +172,19 @@ m.code_actions = function ()
    builtin.lsp_code_actions(themed_preview())
 end
 
+--- picker-specific
+
+m.buffers = function ()
+   builtin.buffers({
+      attach_mappings = function (_, map)
+         map('n', 'd',     custom_actions.delete_selected)
+         map('i', '<Del>', custom_actions.delete_selected)
+
+         return true
+      end,
+   })
+end
+
 --- keymaps
 
 local modifiers = {
@@ -177,7 +194,9 @@ local modifiers = {
 
 require('sol.vim').apply_keymaps({
 
-   {'n', '<leader>fF', '<cmd>Telescope find_files   theme=get_dropdown<CR>', modifiers},
+   -- {'n', '<leader>fT', '<cmd>lua require("config.plugins.telescope").buffers()<CR>', modifiers},
+   {'n', '<leader>fF', '<cmd>lua require("config.plugins.telescope").files()<CR>', modifiers},
+   -- {'n', '<leader>fF', '<cmd>Telescope find_files   theme=get_dropdown<CR>', modifiers},
    {'n', '<leader>ff', '<cmd>Telescope file_browser theme=get_dropdown<CR>', modifiers},
    {'n', '<leader>fr', '<cmd>Telescope oldfiles     theme=get_dropdown<CR>', modifiers},
    {'n', '<leader>fg', '<cmd>Telescope live_grep    theme=get_dropdown<CR>', modifiers},
@@ -203,9 +222,9 @@ require('sol.vim').apply_keymaps({
 
 --- whichkey configuration
 
-local ok, whichkey = pcall(require, 'whichkey_setup')
+local has_whichkey, whichkey = pcall(require, 'whichkey_setup')
 
-if ok then
+if has_whichkey then
    whichkey.register_keymap('leader', {
       b = {
          name = '+buffers',
