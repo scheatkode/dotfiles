@@ -68,7 +68,7 @@ galaxyline.section.left = {{
             'highlight Galaxyvi_mode guifg=' .. mode_color[vim.fn.mode()]
          )
 
-         return glyph.large_circle
+         return glyph.small_circle
       end,
 
                 highlight = { colors.red, colors.bg1, 'bold' },
