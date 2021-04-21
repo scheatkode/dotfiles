@@ -1,5 +1,5 @@
 return setmetatable({}, {
-   __index = function (table, file)
+   __index = function (_, file)
       local ok, metafile = pcall(require, 'meta.' .. file)
 
       if not ok then
