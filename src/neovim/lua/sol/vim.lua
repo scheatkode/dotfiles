@@ -1,8 +1,8 @@
 --------------------------------- vim namespace --------------------------------
 
-local api        = vim.api
-local buffer_api = vim.bo
-local options    = vim.o
+local api = vim.api
+local bo  = vim.bo
+local o   = vim.o
 
 local table = require('sol.table')
 
@@ -39,9 +39,9 @@ m.buffer.close_orphaned = function(force)
    end
 
    for _, buffer in ipairs(buffers) do
-      if not buffer_api[buffer].buflisted then
+      if not bo[buffer].buflisted then
          if
-            buffer_api[buffer].modified
+            bo[buffer].modified
             and not options.force
          then
             modified = modified + 1
@@ -75,9 +75,9 @@ end
 m.apply_options = function(opts)
    for k, v in pairs(opts) do
       if type(v) ~= 'table' then
-         options[k] = v
+         o[k] = v
       else
-         options[k] = table.concat(v, ',')
+         o[k] = table.concat(v, ',')
       end
    end
 
