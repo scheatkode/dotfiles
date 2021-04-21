@@ -18,7 +18,7 @@ vim.g.completion_confirm_key = ''
 autopair.completion_confirm = function ()
    if fn.pumvisible() ~= 0 then
       if fn.complete_info()['selected'] ~= -1 then
-         return fn['compe#confirm'](npairs.esc('<C-r>'))
+         return fn['compe#confirm'](npairs.esc('<CR>'))
       else
          return npairs.esc('<CR>')
       end
