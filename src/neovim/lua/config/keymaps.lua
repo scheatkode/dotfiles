@@ -142,6 +142,16 @@ require('sol.vim').apply_keymaps({
       modifiers
    },
 
+   --- tab operations
+
+   {'n', '<leader>tf', '<cmd>tabfirst<CR>',    modifiers},
+   {'n', '<leader>tl', '<cmd>tablast<CR>',     modifiers},
+   {'n', '<leader>tL', '<cmd>tabs<CR>',        modifiers},
+   {'n', '<leader>tN', '<cmd>tabnew<CR>',      modifiers},
+   {'n', '<leader>tn', '<cmd>tabnext<CR>',     modifiers},
+   {'n', '<leader>tp', '<cmd>tabprevious<CR>', modifiers},
+   {'n', '<leader>tq', '<cmd>tabclose<CR>',    modifiers},
+
    --- closing operations
 
    {'n', '<leader>qq', '<cmd>quitall<CR>',  modifiers},
@@ -181,6 +191,18 @@ if ok then
 
          q    = 'Quit Neovim',
          Q    = 'Force quit Neovim',
+      },
+
+      t = {
+         name = '+tab',
+
+         f = 'First tab',
+         l = 'Last tab',
+         L = 'List tabs',
+         N = 'New tab',
+         n = 'Next tab',
+         p = 'Prevous tab',
+         q = 'Delete tab',
       },
 
       w = {
