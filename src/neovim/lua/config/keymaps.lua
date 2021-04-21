@@ -156,6 +156,10 @@ require('sol.vim').apply_keymaps({
 
    {'n', '<leader>qq', '<cmd>quitall<CR>',  modifiers},
    {'n', '<leader>qQ', '<cmd>quitall!<CR>', modifiers},
+
+   --- toggle operations
+
+   {'n', '<leader>Ts', '<cmd>set scrollbind!<CR>', modifiers},
 })
 
 --- whichkey setup
@@ -203,6 +207,12 @@ if ok then
          n = 'Next tab',
          p = 'Prevous tab',
          q = 'Delete tab',
+      },
+
+      T = {
+         name = '+toggle',
+
+         s = 'Scroll bind toggle',
       },
 
       w = {
