@@ -83,7 +83,7 @@ local autocommands = {
 
    -- remove all trailing whitespaces
 
-   {{'BufWritePre'}, {}, '%s/\s\+$//'},
+   {{'BufWritePre'}, {}, '%s/\\s\\+$//'},
 }
 
 local test = table.concat({}, '|')

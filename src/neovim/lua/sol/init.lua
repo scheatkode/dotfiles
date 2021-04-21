@@ -5,8 +5,8 @@
 --------------------------------------------------------------------------------
 
 return setmetatable({}, {
-   __index = function (table, file)
-      local ok, library = pcall(require, 'sol.', .. file)
+   __index = function (_, file)
+      local ok, library = pcall(require, 'sol.' .. file)
 
       if not ok then
          error('Library ' .. file .. ' not found.')

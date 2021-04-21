@@ -56,13 +56,13 @@ treesitter.setup {
 
 --- whichkey setup
 
-local ok, whichkey = pcall(require, 'whichkey_setup')
+local has_whichkey, whichkey = pcall(require, 'whichkey_setup')
 
-if not ok then
-   return ok
+if not has_whichkey then
+   return has_whichkey
 end
 
-local keys = {
+whichkey.register_keymap('leader', {
    c = {
       name = '+code',
 
@@ -73,9 +73,7 @@ local keys = {
          S = 'Swap previous parameter',
       }
    }
-}
-
-whichkey.register_keymap('leader', keys)
+})
 
 -- Local Variables:
 -- tab-width: 3
