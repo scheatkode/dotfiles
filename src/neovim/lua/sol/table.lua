@@ -14,7 +14,7 @@ m.move   = table.move
 m.pack   = table.pack
 m.remove = table.remove
 m.sort   = table.sort
-m.unpack = table.unpack
+m.unpack = unpack or table.unpack
 
 
 --- check if a value exists
