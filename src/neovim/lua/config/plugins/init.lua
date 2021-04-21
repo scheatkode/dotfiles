@@ -58,6 +58,8 @@ require('packer').startup(function(use)
    use {'onsails/lspkind-nvim'}
    use {'windwp/nvim-autopairs'}
    use {'liuchengxu/vista.vim'}
+   use {'hrsh7th/vim-vsnip'}
+   use {'rafamadriz/friendly-snippets'}
 
    --- fuzzy searching and file exploration plugins
 
