@@ -120,8 +120,8 @@ require('sol.vim').apply_keymaps({
 
    --- buffer operations
 
-   {'n', '<tab>',      '<cmd>bnext<CR>',     modifiers},
-   {'n', '<s-tab>',    '<cmd>bprevious<CR>', modifiers},
+   {'n', '<Tab>',      '<cmd>bnext<CR>',     modifiers},
+   {'n', '<S-Tab>',    '<cmd>bprevious<CR>', modifiers},
    {'n', '<leader>bn', '<cmd>bnext<CR>',     modifiers},
    {'n', '<leader>bp', '<cmd>bprevious<CR>', modifiers},
    {'n', '<leader>bl', '<cmd>buffers<CR>',   modifiers},
@@ -223,6 +223,16 @@ if ok then
          k = 'Go to window above',
          l = 'Go to window right',
 
+         m = {
+            name = '+move',
+
+            x = 'Exchange windows',
+            h = 'Move window left',
+            j = 'Move window below',
+            k = 'Move window above',
+            l = 'Move window right',
+         },
+
          r = {
             name = '+resize',
 
@@ -238,16 +248,6 @@ if ok then
 
             b = 'Rotate down/right',
             u = 'Rotate up/left',
-         },
-
-         m = {
-            name = '+move',
-
-            x = 'Exchange windows',
-            h = 'Move window left',
-            j = 'Move window below',
-            k = 'Move window above',
-            l = 'Move window right',
          },
 
          q = 'Delete window',
