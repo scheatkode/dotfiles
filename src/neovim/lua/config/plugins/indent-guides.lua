@@ -17,6 +17,7 @@ global.indentLine_bufTypeExclude  = { 'terminal' }
 global.indentLine_fileTypeExclude = {
    'startify',
    'help',
+   'LspTrouble',
 }
 
 global.indent_blankline_context_patterns = {

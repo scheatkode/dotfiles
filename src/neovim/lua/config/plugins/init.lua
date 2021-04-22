@@ -56,6 +56,7 @@ require('packer').startup(function(use)
    use {'anott03/nvim-lspinstall'}
    use {'glepnir/lspsaga.nvim'}
    use {'onsails/lspkind-nvim'}
+   use {'folke/lsp-trouble.nvim'}
    use {'windwp/nvim-autopairs'}
    use {'liuchengxu/vista.vim'}
    use {'hrsh7th/vim-vsnip'}

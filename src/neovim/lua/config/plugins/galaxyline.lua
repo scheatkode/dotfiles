@@ -30,6 +30,7 @@ galaxyline.short_line_list = {
    'NvimTree',
    'dbui',
    'packer',
+   'LspTrouble',
 }
 
 galaxyline.section.left = {{
