@@ -44,10 +44,10 @@ fi
 # install functions.
 
 export UPDATE_INTERVAL="${UPDATE_INTERVAL:-15}"
-export ZDOTDIR="${ZDOTDIR:-${XDG_CONFIG_HOME}/zsh}"
-export ZDATADIR="${ZDATADIR:-${XDG_DATA_HOME}/zsh}"
-export ZCACHEDIR="${ZCACHEDIR:-${XDG_CACHE_HOME}/zsh}"
-export ZSH="${ZDOTDIR}"
+export         ZDOTDIR="${ZDOTDIR:-${XDG_CONFIG_HOME}/zsh}"
+export        ZDATADIR="${ZDATADIR:-${XDG_DATA_HOME}/zsh}"
+export       ZCACHEDIR="${ZCACHEDIR:-${XDG_CACHE_HOME}/zsh}"
+export             ZSH="${ZDOTDIR}"
 
 [[ -d   "${ZDOTDIR}" ]] || mkdir --parent "${ZDOTDIR}"
 [[ -d  "${ZDATADIR}" ]] || mkdir --parent "${ZDATADIR}"
@@ -93,6 +93,16 @@ if command -v dircolors > /dev/null 2>&1 ; then
 else
    eval "$(command gdircolors --sh "$(dirname "${(%):-%N}")/gruvbox.dircolors")"
 fi
+
+# ---------------------------------------------------------------------------- #
+#                                 Word style                                   #
+# ---------------------------------------------------------------------------- #
+
+# Useful when <C-w>-ing a path.
+
+autoload -U select-word-style
+select-word-style bash
+
 
 # ---------------------------------------------------------------------------- #
 #                                 Zsh settings                                 #
@@ -187,11 +197,21 @@ setopt   EXTENDED_HISTORY         # show timestamp in history.
 
 # ---------------------------------------------------------------------------- #
 #                             Zinit configuration                              #
+#                            Zsh vim-like bindings                             #
 # ---------------------------------------------------------------------------- #
 
 declare -A ZINIT
+bindkey '^K'   up-line-or-beginning-search
+bindkey '^k'   up-line-or-beginning-search
+bindkey '^J' down-line-or-beginning-search
+bindkey '^j' down-line-or-beginning-search
 
-ZINIT=(
+
+# ---------------------------------------------------------------------------- #
+#                             Zinit configuration                              #
+# ---------------------------------------------------------------------------- #
+
+declare -A ZINIT ; ZINIT=(
           ['BIN_DIR']="${ZDATADIR}/zinit/bin"
          ['HOME_DIR']="${ZDATADIR}/zinit"
    ['ZCOMPDUMP_PATH']="${ZCACHEDIR}/zcompdump"
@@ -225,27 +245,32 @@ setopt promptsubst
 
 # these plugins provide many aliases - atload:''.
 
-zinit wait lucid for   \
-      OMZ::lib/git.zsh \
-   atload"unalias grv" \
+zinit wait:'0a' lucid for \
+      OMZ::lib/git.zsh    \
+   atload:'unalias grv'   \
       OMZ::plugins/git/git.plugin.zsh
 
 # provide a simple prompt until the theme finishes loading.
 
-PS1="READY >"
-zinit ice wait'!' lucid
-zinit ice depth=1
+PS1="Loading prompt ... "
+
+zinit ice lucid                                      \
+   depth=1                                           \
+   atload:'source ${ZDOTDIR}/.p10k.zsh; _p9k_precmd'
 zinit light romkatv/powerlevel10k
 
 # ---------------------------------------------------------------------------- #
 #                                   Plugins                                    #
 # ---------------------------------------------------------------------------- #
 
+
+zinit light zinit-zsh/z-a-bin-gem-node
+
 # load early to mitigate romkatv/powerlevel#716
 
 zinit snippet OMZ::lib/key-bindings.zsh
 
-zinit wait:'0a' lucid light-mode for                              \
+zinit wait:'0b' lucid light-mode for                              \
       OMZ::lib/clipboard.zsh                                      \
       OMZ::lib/compfix.zsh                                        \
       OMZ::lib/completion.zsh                                     \
