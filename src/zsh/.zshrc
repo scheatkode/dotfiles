@@ -17,13 +17,20 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 export GPG_TTY="${TTY}"
 
 # ---------------------------------------------------------------------------- #
+#                                Path setup                                    #
+# ---------------------------------------------------------------------------- #
+
+export PATH=$HOME/bin:${HOME}/local/bin:/usr/local/bin:$PATH
+
+# ---------------------------------------------------------------------------- #
 #                                Instant prompt                                #
 # ---------------------------------------------------------------------------- #
 
-# enable powerlevel10k instant prompt. should stay close to the top of
-# ~/.config/zsh/.zshrc. initialization code that may require console input
-# (password prompts, [y/n] confirmations, etc.) must go above this block;
-# everything else may go below.
+# enable  powerlevel10k  instant  prompt.  should  stay
+# close   to    the   top    of   ~/.config/zsh/.zshrc.
+# initialization  code that  may require  console input
+# (password prompts, [y/n] confirmations, etc.) must go
+# above this block; everything else may go below.
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -34,7 +41,7 @@ fi
 #                              Zsh configuration                               #
 # ---------------------------------------------------------------------------- #
 
-# install functions
+# install functions.
 
 export UPDATE_INTERVAL="${UPDATE_INTERVAL:-15}"
 export ZDOTDIR="${ZDOTDIR:-${XDG_CONFIG_HOME}/zsh}"
@@ -46,13 +53,15 @@ export ZSH="${ZDOTDIR}"
 [[ -d  "${ZDATADIR}" ]] || mkdir --parent "${ZDATADIR}"
 [[ -d "${ZCACHEDIR}" ]] || mkdir --parent "${ZCACHEDIR}"
 
-# load the prompt and completion systems and initialize them.
+# load the prompt and completion systems and initialize
+# them.
 
 autoload -Uz compinit promptinit
 
-# on slow systems, checking the cached .zcompdump file to see if it must be
-# regenerated adds a noticable delay to zsh startup.  this little hack restricts
-# it to once every 20 hours.
+# on slow systems, checking  the cached .zcompdump file
+# to see  if it  must be  regenerated adds  a noticable
+# delay to  zsh startup. this little  hack restricts it
+# to once every 20 hours.
 
 _comp_files=(${ZCACHEDIR})
 
@@ -69,7 +78,7 @@ setopt prompt_subst
 
 
 # ---------------------------------------------------------------------------- #
-#                                 Zsh settings                                 #
+#                                  Ls colors                                   #
 # ---------------------------------------------------------------------------- #
 
 autoload -U colors && colors # load colors.
@@ -207,14 +216,14 @@ autoload -Uz _zinit
 
 
 # ---------------------------------------------------------------------------- #
-#                                    Theme                                     #
+#                         Theme & premature loading                            #
 # ---------------------------------------------------------------------------- #
 
 # most themes use this option.
 
 setopt promptsubst
 
-# these plugins provide many aliases - atload''
+# these plugins provide many aliases - atload:''.
 
 zinit wait lucid for   \
       OMZ::lib/git.zsh \
@@ -320,7 +329,8 @@ DISABLE_AUTO_TITLE="off"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-# fzf settings. uses sharkdp/fd for a faster alternative to `find`.
+# junegunn/fzf  settings. uses  sharkdp/fd as  a faster
+# alternative to `find`.
 
 FZF_CTRL_T_COMMAND='fd --type f --hidden --exclude .git --exclude .cache'
 FZF_ALT_C_COMMAND='fd --type d --exclude .git --exclude .npm'
