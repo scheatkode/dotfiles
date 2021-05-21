@@ -1,0 +1,4 @@
+define continue-breakpoint
+python gdb.post_event(lambda: gdb.execute('continue'))
+end
+
