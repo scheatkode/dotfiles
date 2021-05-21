@@ -196,11 +196,9 @@ setopt   EXTENDED_HISTORY         # show timestamp in history.
 
 
 # ---------------------------------------------------------------------------- #
-#                             Zinit configuration                              #
 #                            Zsh vim-like bindings                             #
 # ---------------------------------------------------------------------------- #
 
-declare -A ZINIT
 bindkey '^K'   up-line-or-beginning-search
 bindkey '^k'   up-line-or-beginning-search
 bindkey '^J' down-line-or-beginning-search
@@ -295,61 +293,74 @@ zinit wait:'0b' lucid light-mode for                              \
 
 # recommended be loaded last.
 
-zinit ice wait'0c' blockf lucid atpull'zinit creinstall -q .'
-zinit load zsh-users/zsh-completions
+zinit ice wait'0c' blockf silent atpull'zinit creinstall -q .'
+zinit light zsh-users/zsh-completions
+
+# junegunn/fzf
+zinit wait:'1a' silent from:gh-r as:program light-mode for \
+     sbin:'bin/fzf'                                        \
+         @junegunn/fzf                                     \
+     sbin:'lazygit'                                        \
+   atload:'alias lg=lazygit'                               \
+         @jesseduffield/lazygit                            \
+     sbin:'tldr'                                           \
+   atinit:'mv tldr* tldr 2> /dev/null'                     \
+         @dbrgn/tealdeer
+
+zinit wait:'1b' silent from:gh-r as:program for \
+       mv:'bat* -> bat'                         \
+     pick:'bat*/bat'                            \
+   atload:'alias cat=bat'                       \
+            @sharkdp/bat                        \
+       mv:'fd* -> fd'                           \
+     pick:'fd/fd'                               \
+            @sharkdp/fd                         \
+       mv:'hyperfine*/hyperfine -> hyperfine'   \
+     pick:'hyperfine*/hyperfine'                \
+            @sharkdp/hyperfine                  \
+       mv:'exa* -> exa'                         \
+     pick:'bin/exa'                             \
+   atload:'alias ls="exa --icons"'              \
+            @ogham/exa                          \
+       mv:'ripgrep* -> ripgrep'                 \
+     pick:'ripgrep/rg'                          \
+            @BurntSushi/ripgrep                 \
+       mv:'procs* -> procs'                     \
+    bpick:'*lnx*'                               \
+            @dalance/procs                      \
+       mv:'bandwhich* -> bandwhich'             \
+     pick:'imsnif/bandwhich'                    \
+            @imsnif/bandwhich                   \
+       mv:'dust*/dust'                          \
+     pick:'dust*/dust'                          \
+            @bootandy/dust                      \
+    id-as:'pueue'                               \
+    bpick:'pueue-*linux*64*'                    \
+   atinit:'mv pueue-* pueue 2> /dev/null'       \
+  atclone:'%atinit'                             \
+   atpull:'%atinit'                             \
+   atload:'alias p=pueue'                       \
+            @Nukesor/pueue                      \
+    id-as:'pueued'                              \
+    bpick:'pueued-*linux*64*'                   \
+   atinit:'mv pueued-* pueued 2> /dev/null'     \
+  atclone:'%atinit'                             \
+   atpull:'%atinit'                             \
+   atload:'pueued --daemonize > /dev/null 2>&1' \
+            @Nukesor/pueue                      \
+     pick:'zoxide*/zoxide'                      \
+   atload:'eval "$(zoxide init zsh)"'           \
+            @ajeetdsouza/zoxide
+
+# ---------------------------------------------------------------------------- #
+#                            Plugin configuration                              #
+# ---------------------------------------------------------------------------- #
+
+# sharkdp/bat theme.
 
 export BAT_THEME="gruvbox-dark"
 
-zinit wait'0b' lucid from:gh-r as:program for \
-   pick:'bin/fzf'                             \
-      @junegunn/fzf                           \
-   atload:'alias lg=lazygit'                  \
-      @jesseduffield/lazygit                  \
-   pick:'tldr'                                \
-      @dbrgn/tealdeer # TODO: stil not working correctly
-
-zinit wait'0c' lucid from:gh-r as:program for              \
-   mv:'bat* -> bat' pick:'bat*/bat' atload:'alias cat=bat'            \
-      @sharkdp/bat                                                    \
-   mv:'fd* -> fd' pick:'fd/fd'                                        \
-      @sharkdp/fd                                                     \
-   mv:'hyperfine*/hyperfine -> hyperfine' pick:'hyperfine*/hyperfine' \
-      @sharkdp/hyperfine                                              \
-   mv:'exa* -> exa' pick:'bin/exa' atload:'alias ls="exa --icons"'    \
-      @ogham/exa                                                      \
-   mv:'ripgrep* -> ripgrep' pick:'ripgrep/rg'                         \
-      @BurntSushi/ripgrep                                             \
-   mv:'procs* -> procs' bpick'*lnx*'                                  \
-      @dalance/procs                                                  \
-   mv:'bandwhich* -> bandwhich' pick'imsnif/bandwhich'                \
-      @imsnif/bandwhich                                               \
-   mv:'dust*/dust' pick'dust*/dust'                                   \
-      @bootandy/dust
-
-#zinit ice lucid wait'1c' as"command" id-as"junegunn/fzf-tmux" pick"bin/fzf-tmux"
-#zinit light junegunn/fzf
-
-#zinit ice lucid wait'1c' as'program' from'gh-r' mv'lazygit* -> lazygit' atload'alias lg=lazygit'
-#zinit light jesseduffield/lazygit
-
-#zinit ice as'program' from'gh-r' mv'tldr* -> tldr' pick'tldr'
-#zinit light dbrgn/tealdeer
-
-# ---------------------------------------------------------------------------- #
-#                         Theme / Prompt customization                         #
-# ---------------------------------------------------------------------------- #
-
-# to customize prompt, run `p10k configure` or edit `~/.p10k.zsh`.
-
-[[ ! -f "${ZDOTDIR}/.p10k.zsh" ]] || . "${ZDOTDIR}/.p10k.zsh"
-
-# old config
-# FIXME: needs to be cleaned up
-
-autoload -U select-word-style
-select-word-style bash
-
-DISABLE_AUTO_TITLE="off"
+# autosuggestion plugin options.
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=true
@@ -365,13 +376,6 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 --color=info:#d79921,prompt:#d65d0e,pointer:#fe8019
 --color=marker:#689d6a,spinner:#b16286,header:#83a598'
 
-# updating the path
+# Finalize p10k configuration.
 
-export PATH=$HOME/bin:${HOME}/local/bin:/usr/local/bin:$PATH
-
-# to customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
-
-# To customize prompt, run `p10k configure` or edit ~/repositories/dotfiles/src/zsh/.p10k.zsh.
-[[ ! -f ~/repositories/dotfiles/src/zsh/.p10k.zsh ]] || source ~/repositories/dotfiles/src/zsh/.p10k.zsh
+(( ! ${+functions[p10k]} )) || p10k finalize
