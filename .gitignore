@@ -1,12 +1,16 @@
 # -*- mode: gitignore; -*-
 
-# -- GARBAGE FILES ------------------------------------------------------------
+# —— VARIOUS CACHES ———————————————————————————————————————————————————————————
+
+__pycache__/
+
+# —— GARBAGE FILES ————————————————————————————————————————————————————————————
 
 *~
 \#*\#
 .\#*
 
-# -- EMACS SPECIFIC -----------------------------------------------------------
+# —— EMACS SPECIFIC ———————————————————————————————————————————————————————————
 
 .emacs.desktop
 .emacs.desktop.lock
@@ -70,7 +74,7 @@ recentf*
 # network security
 /src/emacs/network-security.data
 
-# -- VIM SPECIFIC --------------------------------------------------------------
+# —— VIM SPECIFIC ——————————————————————————————————————————————————————————————
 
 # swap
 [._]*.s[a-v][a-z]
@@ -87,3 +91,21 @@ Session.vim
 
 # auto-generated tag files
 tags
+
+# —— WEECHAT SPECIFIC ——————————————————————————————————————————————————————————
+
+# logs
+**/weechat/logs/
+**/weechat/*.log
+
+# matrix session
+**/weechat/matrix/
+
+# script cache
+**/weechat/script/
+**/weechat/python/
+
+# —— BPYTOP SPECIFIC ———————————————————————————————————————————————————————————
+
+# logs
+**/bpytop/error.log
