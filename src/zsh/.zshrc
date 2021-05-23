@@ -305,7 +305,12 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
          @jesseduffield/lazygit                            \
      sbin:'tldr'                                           \
    atinit:'mv tldr* tldr 2> /dev/null'                     \
-         @dbrgn/tealdeer
+         @dbrgn/tealdeer                                   \
+     sbin:'ipinfo'                                         \
+   atinit:'mv ipinfo* ipinfo 2> /dev/null'                 \
+   atpull:'%atinit'                                        \
+  atclone:'%atinit'                                        \
+         @ipinfo/cli
 
 zinit wait:'1b' silent from:gh-r as:program for \
        mv:'bat* -> bat'                         \
