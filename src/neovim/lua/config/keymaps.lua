@@ -14,9 +14,17 @@ require('sol.vim').apply_keymaps({
 
    {'n', 'Y', 'y$', modifiers},
 
-   --- faster and more consistent terminal escape
+   --- faster escaping
 
    {'t', '<Esc>', '<C-\\><C-n>', modifiers},
+   {'i', 'jk',    '<Esc>',       modifiers},
+   {'i', 'kj',    '<Esc>',       modifiers},
+   {'c', 'jk',    '<Esc>',       modifiers},
+   {'c', 'kj',    '<Esc>',       modifiers},
+   {'t', 'jk',    '<Esc>',       modifiers},
+   {'t', 'kj',    '<Esc>',       modifiers},
+   {'o', 'jk',    '<Esc>',       modifiers},
+   {'o', 'kj',    '<Esc>',       modifiers},
 
    --- soft navigation by default
 
