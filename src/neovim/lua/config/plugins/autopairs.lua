@@ -34,3 +34,8 @@ require('sol.vim').apply_keymaps({
 })
 
 npairs.setup({})
+-- Local Variables:
+-- tab-width: 3
+-- mode: lua
+-- End:
+-- vim: set ft=lua sw=3 ts=3 sts=3 et tw=78:

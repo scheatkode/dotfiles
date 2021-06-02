@@ -38,4 +38,4 @@ whichkey.register_keymap('leader', {
 -- tab-width: 3
 -- mode: lua
 -- End:
--- vim: set sw=3 ts=3 sts=3 et tw=80
+-- vim: set ft=lua sw=3 ts=3 sts=3 et tw=78:
