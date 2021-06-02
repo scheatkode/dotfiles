@@ -1,15 +1,16 @@
 --- configure treesitter
 
-local ok, treesitter = pcall(require, 'nvim-treesitter.configs')
+local has_treesitter, treesitter = pcall(require, 'nvim-treesitter.configs')
 
-if not ok then
+if not has_treesitter then
    print('‼ Tried loading treesitter ... unsuccessfully.')
-   return ok
+   return has_treesitter
 end
 
-treesitter.setup {
+treesitter.setup({
    ensure_installed = 'maintained',
 
+   autopairs             = { enable = true },
    autotag               = { enable = true },
    context_commentstring = { enable = true },
    highlight             = { enable = true },
@@ -52,7 +53,7 @@ treesitter.setup {
    --    persist_queries = false, -- persistence across vim sessions
    -- },
 
-}
+})
 
 --- whichkey setup
 
