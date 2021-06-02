@@ -100,6 +100,7 @@ require('sol.vim').apply_keymaps({
    {'n', '<leader>w-', '<cmd>wincmd -<CR>', modifiers},
    {'n', '<leader>w<', '<cmd>wincmd <<CR>', modifiers},
    {'n', '<leader>w>', '<cmd>wincmd ><CR>', modifiers},
+   {'n', '<leader>w=', '<cmd>wincmd =<CR>', modifiers},
 
    --- window movement
 
