@@ -1,3 +1,5 @@
+local apply_keymaps = require('sol.vim').apply_keymaps
+
 local modifiers = {
    silent  = true,
    noremap = true
