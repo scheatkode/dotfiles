@@ -28,16 +28,16 @@ require('sol.vim').apply_keymaps({
 
    --- soft navigation by default
 
-   {'n', 'j', 'gj', modifiers},
-   {'x', 'j', 'gj', modifiers},
-   {'n', 'k', 'gk', modifiers},
-   {'x', 'k', 'gk', modifiers},
-   {'n', '0', 'g0', modifiers},
-   {'x', '0', 'g0', modifiers},
-   {'n', '^', 'g^', modifiers},
-   {'x', '^', 'g^', modifiers},
-   {'n', '$', 'g$', modifiers},
-   {'x', '$', 'g$', modifiers},
+   -- {'n', 'j', 'gj', modifiers},
+   -- {'x', 'j', 'gj', modifiers},
+   -- {'n', 'k', 'gk', modifiers},
+   -- {'x', 'k', 'gk', modifiers},
+   -- {'n', '0', 'g0', modifiers},
+   -- {'x', '0', 'g0', modifiers},
+   -- {'n', '^', 'g^', modifiers},
+   -- {'x', '^', 'g^', modifiers},
+   -- {'n', '$', 'g$', modifiers},
+   -- {'x', '$', 'g$', modifiers},
 
    --- don't lose selection when indenting or outdenting
    -- https://github.com/mhinz/vim-galore#dont-lose-selection-when-shifting-sidewards
