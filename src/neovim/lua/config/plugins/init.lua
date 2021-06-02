@@ -217,11 +217,14 @@ local modifiers = {
 }
 
 require('sol.vim').apply_keymaps({
-   {'n', '<leader>pc', '<cmd>PackerCompile<CR>', modifiers},
-   {'n', '<leader>pC', '<cmd>PackerClean<CR>',   modifiers},
-   {'n', '<leader>pi', '<cmd>PackerInstall<CR>', modifiers},
-   {'n', '<leader>pu', '<cmd>PackerUpdate<CR>',  modifiers},
-   {'n', '<leader>ps', '<cmd>PackerSync<CR>',    modifiers},
+   {'n', '<leader>Pc', '<cmd>PackerCompile<CR>', modifiers},
+   {'n', '<leader>PC', '<cmd>PackerClean<CR>',   modifiers},
+   {'n', '<leader>Pi', '<cmd>PackerInstall<CR>', modifiers},
+   {'n', '<leader>PI', '<cmd>PackerInstall<CR>', modifiers},
+   {'n', '<leader>Pu', '<cmd>PackerUpdate<CR>',  modifiers},
+   {'n', '<leader>PU', '<cmd>PackerUpdate<CR>',  modifiers},
+   {'n', '<leader>Ps', '<cmd>PackerSync<CR>',    modifiers},
+   {'n', '<leader>PS', '<cmd>PackerSync<CR>',    modifiers},
 })
 
 --- whichkey setup
