@@ -57,9 +57,9 @@ require('packer').startup(function(use)
    use {'glepnir/lspsaga.nvim'}
    use {'onsails/lspkind-nvim'}
    use {'folke/lsp-trouble.nvim'}
-   use {'liuchengxu/vista.vim'}
    -- use {'windwp/nvim-autopairs'}
    use {'steelsojka/pears.nvim'}
+   use {'simrat39/symbols-outline.nvim'}
    use {'hrsh7th/vim-vsnip'}
    use {'rafamadriz/friendly-snippets'}
 
@@ -113,6 +113,7 @@ require('packer').startup(function(use)
    --- miscellaneous plugins
 
    use {'ojroques/nvim-bufdel'} -- delete buffer without messing up layout
+   use {'folke/which-key.nvim'}
    use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
    use {'mbbill/undotree'}
    use {'b3nj5m1n/kommentary'}      -- commenting plugin
@@ -135,10 +136,6 @@ require('packer').startup(function(use)
       --      '<Plug>(textobj-sandwich-query-i)'
       --    }
    }
-   use {
-      'AckslD/nvim-whichkey-setup.lua',
-      requires = {'liuchengxu/vim-which-key'},
-   }
 
 end)
 
@@ -159,18 +156,18 @@ require('sol.vim').apply_keymaps({
 
 --- whichkey setup
 
-local ok, whichkey = pcall(require, 'whichkey_setup')
+local has_whichkey, whichkey = pcall(require, 'which-key')
 
-if ok then
-   whichkey.register_keymap('leader', {
-      p = {
-         name = '+plugins',
+if has_whichkey then
+   whichkey.register({
+      ['<leader>P'] = {
+         name = '+Plugins',
 
-         c = 'Compile plugins (requires restart to take effect)',
-         C = 'Clean unused plugins',
-         i = 'Install plugins',
-         u = 'Update plugins',
-         s = 'Synchronize plugins',
+         c = {'Compile plugins (requires restart to take effect)'},
+         C = {'Clean unused plugins'},
+         i = {'Install plugins'},
+         u = {'Update plugins'},
+         s = {'Synchronize plugins'},
       },
    })
 end

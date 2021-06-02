@@ -26,50 +26,51 @@ require('sol.vim').apply_keymaps({
 
 --- whichkey configuration
 
-local ok, whichkey = pcall(require, 'whichkey_setup')
+local has_whichkey, whichkey = pcall(require, 'which-key')
 
-if not ok then
-   return ok
+if not has_whichkey then
+   return has_whichkey
 end
 
 -- normal mode
 
-whichkey.register_keymap('leader', {
-   t = {
+whichkey.register({
+   ['<leader>t'] = {
       name = '+text',
 
       s = {
          name = '+surround',
 
-         C = 'Change surrounding character automatically',
-         D = 'Delete surrounding character automatically',
-         a = 'Add surrounding character',
-         c = 'Change surrounding character',
-         d = 'Delete surrounding character',
+         C = {'Change surrounding character automatically'},
+         D = {'Delete surrounding character automatically'},
+         a = {'Add surrounding character'},
+         c = {'Change surrounding character'},
+         d = {'Delete surrounding character'},
       },
    },
 })
 
 -- visual mode
 
-whichkey.register_keymap('leader', {
+whichkey.register({
    i = {
       name = '+inner',
 
-      S = 'Select inside surrounding character automatically',
-      m = 'Select inside surrounding character literally',
-      s = 'Select inside surrounding character',
+      S = {'Select inside surrounding character automatically'},
+      m = {'Select inside surrounding character literally'},
+      s = {'Select inside surrounding character'},
    },
 
    a = {
       name = '+outer',
 
-      S = 'Select outside surrounding character automatically',
-      m = 'Select outside surrounding character literally',
-      s = 'Select outside surrounding character',
+      S = {'Select outside surrounding character automatically'},
+      m = {'Select outside surrounding character literally'},
+      s = {'Select outside surrounding character'},
    }
 }, {
-   mode = 'v',
+   mode   = 'v',
+   prefix = '<leader>',
 })
 
 -- Local Variables:

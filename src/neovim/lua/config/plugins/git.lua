@@ -155,19 +155,20 @@ require('sol.vim').apply_keymaps({
 
 --- whichkey configuration
 
-local ok, whichkey = pcall(require, 'whichkey_setup')
+local has_whichkey, whichkey = pcall(require, 'which-key')
 
-if not ok then
-   return ok
+if not has_whichkey then
+   return has_whichkey
 end
 
-whichkey.register_keymap('leader', {
-   g = {
+whichkey.register({
+   ['<leader>g'] = {
       name = '+git',
 
       g = 'Git porcelain',
 
       b = 'Blame line',
+      d = 'Diff',
       p = 'Preview hunk',
       r = 'Reset hunk',
       R = 'Reset buffer',

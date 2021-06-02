@@ -164,97 +164,105 @@ require('sol.vim').apply_keymaps({
 
 --- whichkey setup
 
-local ok, whichkey = pcall(require, 'whichkey_setup')
+local has_whichkey, whichkey = pcall(require, 'which-key')
 
-if ok then
-   whichkey.register_keymap('leader', {
+if has_whichkey then
+   whichkey.register({
       b = {
          name = '+buffers',
 
-         k = 'Kill buffer',
-         K = 'Kill buffer forcefully',
-         l = 'List buffers',
-         L = 'List all buffers',
-         n = 'Next buffer',
-         p = 'Previous buffer',
-         N = 'New buffer',
-         r = 'Reload buffer',
-         R = 'Reload buffer forcefully',
-         u = 'Unload buffer',
+         k = {'Kill buffer'},
+         K = {'Kill buffer forcefully'},
+         l = {'List buffers'},
+         L = {'List all buffers'},
+         n = {'Next buffer'},
+         p = {'Previous buffer'},
+         N = {'New buffer'},
+         r = {'Reload buffer'},
+         R = {'Reload buffer forcefully'},
+         u = {'Unload buffer'},
       },
 
       f = {
          name = '+files',
 
-         s = 'Save file',
-         S = 'Save file as',
+         s = {'Save file'},
+         S = {'Save file as'},
       },
 
       q = {
          name = '+quit',
 
-         q    = 'Quit Neovim',
-         Q    = 'Force quit Neovim',
+         q = {'Quit Neovim'},
+         Q = {'Force quit Neovim'},
       },
 
       t = {
          name = '+tab',
 
-         f = 'First tab',
-         l = 'Last tab',
-         L = 'List tabs',
-         N = 'New tab',
-         n = 'Next tab',
-         p = 'Prevous tab',
-         q = 'Delete tab',
+         f = {'First tab'},
+         l = {'Last tab'},
+         L = {'List tabs'},
+         N = {'New tab'},
+         n = {'Next tab'},
+         p = {'Prevous tab'},
+         q = {'Delete tab'},
       },
 
       T = {
          name = '+toggle',
 
-         s = 'Scroll bind toggle',
+         s = {'Scroll bind toggle'},
       },
 
       w = {
          name = '+windows',
 
-         h = 'Go to window left',
-         j = 'Go to window below',
-         k = 'Go to window above',
-         l = 'Go to window right',
+         h = {'Go to window left'},
+         j = {'Go to window below'},
+         k = {'Go to window above'},
+         l = {'Go to window right'},
 
          m = {
             name = '+move',
 
-            x = 'Exchange windows',
-            h = 'Move window left',
-            j = 'Move window below',
-            k = 'Move window above',
-            l = 'Move window right',
+            x = {'Exchange windows'},
+            h = {'Move window left'},
+            j = {'Move window below'},
+            k = {'Move window above'},
+            l = {'Move window right'},
          },
 
          r = {
             name = '+resize',
 
-            ['='] = 'Balance windows',
-            ['+'] = 'Increase window height',
-            ['-'] = 'Decrease window height',
-            ['>'] = 'Increase window width',
-            ['<'] = 'Decrease window width',
+            ['='] = {'Balance windows'},
+            ['+'] = {'Increase window height'},
+            ['-'] = {'Decrease window height'},
+            ['>'] = {'Increase window width'},
+            ['<'] = {'Decrease window width'},
          },
 
          R = {
             name = '+rotate',
 
-            b = 'Rotate down/right',
-            u = 'Rotate up/left',
+            b = {'Rotate down/right'},
+            u = {'Rotate up/left'},
          },
 
-         q = 'Delete window',
-         s = 'Split horizontally',
-         v = 'Split vertically',
+         q = {'Delete window'},
+         s = {'Split horizontally'},
+         v = {'Split vertically'},
       },
+   }, {
+      prefix = '<leader>'
    })
+
+   whichkey.register({
+      ['q:']   = 'which_key_ignore',
+      ['Q']    = 'which_key_ignore',
+   })
+
 end
 
 -- Local Variables:

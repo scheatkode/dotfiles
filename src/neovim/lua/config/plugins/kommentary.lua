@@ -48,51 +48,53 @@ require('sol.vim').apply_keymaps({
 
 --- whichkey setup
 
-local ok, whichkey = pcall(require, 'whichkey_setup')
+local has_whichkey, whichkey = pcall(require, 'which-key')
 
-if not ok then
-   return
+if not has_whichkey then
+   return has_whichkey
 end
 
-whichkey.register_keymap('leader', {
-   c = {
+whichkey.register({
+   ['<leader>c'] = {
       name = '+code',
 
       c = {
          name = '+comment',
 
-         c = 'Comment line',
-         m = 'Comment motion',
+         c = {'Comment line'},
+         m = {'Comment motion'},
 
          i = {
             name = '+increase',
 
-            c = 'Increase commenting level for line',
-            m = 'Increase commenting level for motion',
+            c = {'Increase commenting level for line'},
+            m = {'Increase commenting level for motion'},
          },
 
          d = {
             name = '+decrease',
 
-            c = 'Decrease commenting level for line',
-            m = 'Decrease commenting level for motion',
+            c = {'Decrease commenting level for line'},
+            m = {'Decrease commenting level for motion'},
          },
       },
    },
 })
 
-whichkey.register_keymap('visual', {
-   c = {
+whichkey.register({
+   ['<leader>c'] = {
       name = '+code',
 
       c = {
          name = '+comment',
 
-         c = 'Comment selection',
-         i = 'Increase commenting level',
-         d = 'Decrease commenting level',
+         c = {'Comment selection'},
+         i = {'Increase commenting level'},
+         d = {'Decrease commenting level'},
       },
    },
+}, {
+   mode = 'v',
 })
 
 -- Local Variables:
