@@ -130,6 +130,12 @@ m.apply_variables = function(loc, vars)
    return vars
 end
 
+-------------------------------- miscellaneous ---------------------------------
+
+m.escape_termcode = function(s)
+   return api.nvim_replace_termcodes(s, true, true, true)
+end
+
 -------------------------------- module exports --------------------------------
 
 -- the module is exported here.
