@@ -28,6 +28,7 @@ require('config.plugins.sandwich')
 require('config.plugins.suda')
 require('config.plugins.telescope')
 require('config.plugins.treesitter')
+require('config.plugins.undo-tree')
 
 -- Local Variables:
 -- tab-width: 3
