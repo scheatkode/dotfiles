@@ -13,6 +13,8 @@ require('sol.vim').apply_options({
    mouse      = 'n',   -- mice are for the weak
    synmaxcol  = 300,   -- limit for syntax highlighting in a single line
 
+   syntax = 'off', -- overridden by treesitter
+
    clipboard     = 'unnamedplus', -- unified clipboard, yay ~
    termguicolors = true,          -- true colors for better visuals
 
