@@ -11,7 +11,7 @@ end
 
 require('config.plugins.whichkey')
 
-require('config.plugins.autopairs')
+require('config.plugins.pears')
 require('config.plugins.compe')
 require('config.plugins.easy-align')
 require('config.plugins.galaxyline')

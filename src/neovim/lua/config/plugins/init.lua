@@ -50,15 +50,16 @@ require('packer').startup(function(use)
 
    --- auto completion, language server clients, tags, and snippets plugins
 
-   --use {'nvim-lua/completion-nvim'}
+   -- use {'nvim-lua/completion-nvim'}
    use {'hrsh7th/nvim-compe'}
    use {'neovim/nvim-lspconfig'}
    use {'anott03/nvim-lspinstall'}
    use {'glepnir/lspsaga.nvim'}
    use {'onsails/lspkind-nvim'}
    use {'folke/lsp-trouble.nvim'}
-   use {'windwp/nvim-autopairs'}
    use {'liuchengxu/vista.vim'}
+   -- use {'windwp/nvim-autopairs'}
+   use {'steelsojka/pears.nvim'}
    use {'hrsh7th/vim-vsnip'}
    use {'rafamadriz/friendly-snippets'}
 
