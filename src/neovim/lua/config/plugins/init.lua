@@ -189,7 +189,7 @@ packer.startup(function (use)
    use {'b3nj5m1n/kommentary'}      -- commenting plugin
    use {'dstein64/vim-startuptime'} -- startup time monitor
    use {'mhinz/vim-startify'}       -- start screen
-   use {'tversteeg/registers.nvim'} -- register quick peek
+   -- use {'tversteeg/registers.nvim'} -- register quick peek
    use {'karb94/neoscroll.nvim'}    -- better smooth scrolling
    use {'lambdalisue/suda.vim'}     -- workaround for using `sudo`
    use {'kana/vim-operator-user'}   -- operator definitions for text objects
