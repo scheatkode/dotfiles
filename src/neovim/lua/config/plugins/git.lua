@@ -23,13 +23,11 @@
 --   _/  ( /          \
 --  `----'(____________)
 
-local global = vim.g
+local has_gitsigns, gitsigns = pcall(require, 'gitsigns')
 
-local ok, gitsigns = pcall(require, 'gitsigns')
-
-if not ok then
+if not has_gitsigns then
    print('‼ Tried loading gitsigns ... unsuccessfully.')
-   return ok
+   return has_gitsigns
 end
 
 gitsigns.setup({
