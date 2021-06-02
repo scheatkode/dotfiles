@@ -212,8 +212,8 @@ end)
 --- keymaps
 
 local modifiers = {
-      silent  = true,
-      noremap = true
+   silent  = true,
+   noremap = true,
 }
 
 require('sol.vim').apply_keymaps({
