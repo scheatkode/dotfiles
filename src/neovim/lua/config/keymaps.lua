@@ -127,7 +127,7 @@ require('sol.vim').apply_keymaps({
    {'n', '<leader>bl', '<cmd>buffers<CR>',   modifiers},
    {'n', '<leader>bL', '<cmd>buffers!<CR>',  modifiers},
    {'n', '<leader>bN', '<cmd>enew<CR>',      modifiers},
-   {'n', '<leader>bk', '<cmd>bwipeout<CR>',  modifiers},
+   -- {'n', '<leader>bk', '<cmd>bwipeout<CR>',  modifiers},
    {'n', '<leader>bw', '<cmd>bwipeout!<CR>', modifiers},
    {'n', '<leader>bq', '<cmd>bunload<CR>',   modifiers},
    {'n', '<leader>br', '<cmd>e<CR>',         modifiers},
