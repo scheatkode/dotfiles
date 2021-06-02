@@ -92,7 +92,7 @@ require('sol.vim').apply_options({
    -- delays
 
    updatetime = 1000, -- inactivity delay of 1 second
-   timeoutlen = 1000, -- delay before keystroke timeout
+   timeoutlen = 500,  -- delay before keystroke timeout
 
    -- scrolling
 
