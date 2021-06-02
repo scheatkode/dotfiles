@@ -154,9 +154,16 @@ packer.startup(function (use)
 
    --- git plugins
 
-   -- use {'TimUntersberger/neogit'} -- magit for neovim
+   use {'TimUntersberger/neogit',
+      opt = true,
+      cmd = 'Neogit',
+} -- magit for neovim
    use {'lewis6991/gitsigns.nvim'}   -- git file changes in the gutter
-   use {'kdheepak/lazygit.nvim'}     -- lazygit wrapper inside neovim
+   -- use {'kdheepak/lazygit.nvim'}     -- lazygit wrapper inside neovim
+   use {'sindrets/diffview.nvim', -- ediff-like diff view
+      -- opt = true,
+      -- cmd = 'DiffviewOpen',
+   }
 
    --- syntax plugins
 

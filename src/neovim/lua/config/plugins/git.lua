@@ -74,6 +74,52 @@ gitsigns.setup({
    use_internal_diff  = true,
 })
 
+local has_diffview, diffview = pcall(require, 'diffview')
+
+if not has_diffview then
+   print('‼ Tried loading diffview ... unsuccessfully.')
+   return has_diffview
+end
+
+local cb = require('diffview.config').diffview_callback
+
+diffview.setup({
+   diff_binaries = false, -- Show diffs for binaries
+
+   file_panel = {
+      width = 35,
+      use_icons = true -- Requires nvim-web-devicons
+   },
+
+   key_bindings = {
+      -- The `view` bindings are active in the diff buffers, only when the current
+      -- tabpage is a Diffview.
+      view = {
+         ['<tab>']     = cb('select_next_entry'),  -- Open the diff for the next file
+         ['<s-tab>']   = cb('select_prev_entry'),  -- Open the diff for the previous file
+         ['<leader>e'] = cb('focus_files'),        -- Bring focus to the files panel
+         ['<leader>b'] = cb('toggle_files'),       -- Toggle the files panel.
+      },
+      file_panel = {
+         ['j']         = cb('next_entry'),         -- Bring the cursor to the next file entry
+         ['<down>']    = cb('next_entry'),
+         ['k']         = cb('prev_entry'),         -- Bring the cursor to the previous file entry.
+         ['<up>']      = cb('prev_entry'),
+         ['<cr>']      = cb('select_entry'),       -- Open the diff for the selected entry.
+         ['o']         = cb('select_entry'),
+         ['R']         = cb('refresh_files'),      -- Update stats and entries in the file list.
+         ['<tab>']     = cb('select_next_entry'),
+         ['<s-tab>']   = cb('select_prev_entry'),
+         ['<leader>e'] = cb('focus_files'),
+         ['<leader>b'] = cb('toggle_files'),
+      }
+   }
+})
+
+require('sol.vim').apply_keymaps({
+   {'n', '<leader>gd', '<cmd>DiffviewOpen<cr>', {noremap = true, silent = true}},
+})
+
 --
 --               .----------/ |<=== floppy disk
 --              /           | |
@@ -135,21 +181,21 @@ gitsigns.setup({
 --    },
 -- })
 
-require('sol.vim').apply_variables('g', {
-   lazygit_floating_window_winblend       = 0,     -- transparency of floating window
-   lazygit_floating_window_scaling_factor = 0.8,   -- scaling factor of floating window
-   lazygit_floating_window_corner_chars   = {'╭', '╮', '╰', '╯'}, -- customize lazygit popup window corner characters
-   lazygit_floating_window_use_plenary    = true,  -- use plenary.vim to manage floating window if available
-   lazygit_use_neovim_remote              = false, -- fallback to 0 if neovim-remote is not installed
-})
+-- require('sol.vim').apply_variables('g', {
+--    lazygit_floating_window_winblend       = 0,     -- transparency of floating window
+--    lazygit_floating_window_scaling_factor = 0.8,   -- scaling factor of floating window
+--    lazygit_floating_window_corner_chars   = {'╭', '╮', '╰', '╯'}, -- customize lazygit popup window corner characters
+--    lazygit_floating_window_use_plenary    = true,  -- use plenary.vim to manage floating window if available
+--    lazygit_use_neovim_remote              = false, -- fallback to 0 if neovim-remote is not installed
+-- })
+
+-- require('sol.vim').apply_keymaps({
+--    {'n', '<leader>gg', '<cmd>LazyGit<cr>', {noremap = true, silent = true}},
+-- })
 
 require('sol.vim').apply_keymaps({
-   {'n', '<leader>gg', '<cmd>LazyGit<cr>', {noremap = true, silent = true}},
+   {'n', '<leader>gg', '<cmd>Neogit kind=split<cr>', {noremap = true, silent = true}},
 })
-
--- require('lib.config').keymaps.use({
---    {'n', '<leader>gg', '<cmd>Neogit kind=split<cr>', {noremap = true, silent = true}},
--- })
 
 --- whichkey configuration
 
