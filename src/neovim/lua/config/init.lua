@@ -12,6 +12,7 @@ end
 require('config.plugins.whichkey')
 
 require('config.plugins.pears')
+require('config.plugins.bufdel')
 require('config.plugins.compe')
 require('config.plugins.easy-align')
 require('config.plugins.galaxyline')

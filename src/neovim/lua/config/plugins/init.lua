@@ -112,6 +112,7 @@ require('packer').startup(function(use)
 
    --- miscellaneous plugins
 
+   use {'ojroques/nvim-bufdel'} -- delete buffer without messing up layout
    use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
    use {'b3nj5m1n/kommentary'}      -- commenting plugin
    use {'dstein64/vim-startuptime'} -- startup time monitor
