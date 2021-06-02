@@ -5,6 +5,16 @@ local modifiers = {
 
 require('sol.vim').apply_keymaps({
 
+   --- auto correct me please
+
+   {'i', '_>',   '->',   modifiers},
+   {'i', '+>',   '=>',   modifiers},
+   {'i', 'htis', 'this', modifiers},
+
+   --- when there is no need for modifier keys
+
+   {'i', ';;',   '::',   modifiers},
+
    --- remove annoying ex-mode
 
    {'n', 'Q',  '<NOP>', modifiers},
