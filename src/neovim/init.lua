@@ -13,8 +13,6 @@ vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 
 require('modules.lsp')
 
-require('lsp.symbols')
-
 require('config')
 
 vim.cmd([[:command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G']])
