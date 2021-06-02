@@ -17,6 +17,8 @@ require('lsp.symbols')
 
 require('config')
 
+vim.cmd([[:command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G']])
+
 -- Local Variables:
 -- tab-width: 3
 -- mode: lua
