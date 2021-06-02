@@ -56,15 +56,25 @@ require('sol.vim').apply_keymaps({
    {'x', '>', '>gv', modifiers},
 
    --- saner behavior of n and N (search forward and backward, respectively)
-   -- https://github.com/mhinz/vim-galore#go-to-other-end-of-selected-text
+   -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 
-   {'n', 'n', "'Nn'[v:searchforward]", modifiers},
-   {'x', 'n', "'Nn'[v:searchforward]", modifiers},
-   {'o', 'n', "'Nn'[v:searchforward]", modifiers},
+   {'n', 'n', "'Nn'[v:searchforward]", {expr = true}},
+   {'x', 'n', "'Nn'[v:searchforward]", {expr = true}},
+   {'o', 'n', "'Nn'[v:searchforward]", {expr = true}},
 
-   {'n', 'N', "'nN'[v:searchforward]", modifiers},
-   {'x', 'N', "'nN'[v:searchforward]", modifiers},
-   {'o', 'N', "'nN'[v:searchforward]", modifiers},
+   {'n', 'N', "'nN'[v:searchforward]", {expr = true}},
+   {'x', 'N', "'nN'[v:searchforward]", {expr = true}},
+   {'o', 'N', "'nN'[v:searchforward]", {expr = true}},
+
+   --- saner behavior of ; and , (search character forward and backward, respectively)
+
+   {'n', ';', "getcharsearch().forward ? ';':','", {expr = true, noremap = true}},
+   {'x', ';', "getcharsearch().forward ? ';':','", {expr = true, noremap = true}},
+   {'o', ';', "getcharsearch().forward ? ';':','", {expr = true, noremap = true}},
+
+   {'n', ',', "getcharsearch().forward ? ',':';'", {expr = true, noremap = true}},
+   {'x', ',', "getcharsearch().forward ? ',':';'", {expr = true, noremap = true}},
+   {'o', ',', "getcharsearch().forward ? ',':';'", {expr = true, noremap = true}},
 
    --- remove annoying persistent search highlighting
 
