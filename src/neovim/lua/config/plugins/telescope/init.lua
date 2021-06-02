@@ -75,8 +75,8 @@ telescope.setup({
 
             ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
 
-            ['<c-c>'] = actions.close,
-            -- ['<esc>'] = actions.close,
+            -- ['<c-c>'] = actions.close,
+            ['<esc>'] = actions.close,
          },
 
          n = {
@@ -110,6 +110,13 @@ telescope.setup({
          override_file_sorter    = true,
       },
 
+      fzf = {
+         override_generic_sorter = true,         -- override the generic sorter
+         override_file_sorter    = true,         -- override the file sorter
+         case_mode               = 'smart_case', -- or "ignore_case" or "respect_case"
+         fuzzy                   = true,         -- false will only do exact matching
+      },
+
       media_files = {
          filetypes = { 'jpg', 'jpeg', 'png', 'webp', 'pdf', 'mkv' },
          find_cmd  = 'rg',
@@ -129,9 +136,11 @@ telescope.setup({
    }
 })
 
-pcall(telescope.load_extension, 'fzy_native')  -- superfast sorter
-pcall(telescope.load_extension, 'media_files') -- media preview
+-- pcall(telescope.load_extension, 'fzy_native')  -- superfast sorter
+pcall(telescope.load_extension, 'fzf')         -- other superfast sorter
 pcall(telescope.load_extension, 'frecency')    -- frecency
+pcall(telescope.load_extension, 'project')     -- project picker
+pcall(telescope.load_extension, 'media_files') -- media preview
 
 m.grep_prompt = function ()
    builtin.grep_string({
@@ -172,6 +181,10 @@ m.code_actions = function ()
    builtin.lsp_code_actions(themed_preview())
 end
 
+m.projects = function ()
+   telescope.extensions.project.project({ display_type = 'full' })
+end
+
 --- picker-specific
 
 m.buffers = function ()
@@ -196,10 +209,17 @@ require('sol.vim').apply_keymaps({
 
    -- {'n', '<leader>fT', '<cmd>lua require("config.plugins.telescope").buffers()<CR>', modifiers},
    {'n', '<leader>fF', '<cmd>lua require("config.plugins.telescope").files()<CR>', modifiers},
+   {'n', '<leader>FF', '<cmd>lua require("config.plugins.telescope").files()<CR>', modifiers},
+   {'n', '<leader><leader>', '<cmd>lua require("config.plugins.telescope").files()<CR>', modifiers},
    -- {'n', '<leader>fF', '<cmd>Telescope find_files   theme=get_dropdown<CR>', modifiers},
    {'n', '<leader>ff', '<cmd>Telescope file_browser theme=get_dropdown<CR>', modifiers},
+   {'n', '<leader>Ff', '<cmd>Telescope file_browser theme=get_dropdown<CR>', modifiers},
    {'n', '<leader>fr', '<cmd>Telescope oldfiles     theme=get_dropdown<CR>', modifiers},
+   {'n', '<leader>Fr', '<cmd>Telescope oldfiles     theme=get_dropdown<CR>', modifiers},
    {'n', '<leader>fg', '<cmd>Telescope live_grep    theme=get_dropdown<CR>', modifiers},
+   {'n', '<leader>Fg', '<cmd>Telescope live_grep    theme=get_dropdown<CR>', modifiers},
+
+   {'n', '<leader>pp', '<cmd>lua require("config.plugins.telescope").projects()<CR>', modifiers},
 
    {'n', '<leader>bb', '<cmd>Telescope buffers theme=get_dropdown<CR>', modifiers},
 

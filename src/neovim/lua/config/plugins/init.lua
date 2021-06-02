@@ -144,9 +144,11 @@ packer.startup(function (use)
       requires = {
          {'nvim-lua/popup.nvim'},
          {'nvim-lua/plenary.nvim'},
-         {'nvim-telescope/telescope-fzy-native.nvim'},  -- fast sorter
+         -- {'nvim-telescope/telescope-fzy-native.nvim'},  -- fast sorter
+         {'nvim-telescope/telescope-project.nvim'}, -- project picker
+         {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},  -- better sorter
          {'nvim-telescope/telescope-media-files.nvim'}, -- media preview
-         {'nvim-telescope/telescope-frecency.nvim'},    -- media preview
+         {'nvim-telescope/telescope-frecency.nvim'},    -- frequency sorter
       },
    }
 
