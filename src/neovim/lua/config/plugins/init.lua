@@ -1,28 +1,26 @@
-local fn  = vim.fn
-local cmd = vim.cmd
+--- localise vim globals
+
+local fn     = vim.fn
+local cmd    = vim.cmd
+local notify = vim.notify
 
 local confirm = require('sol.util').confirm
 local format  = require('sol.string').format
 
 --- only required if packer is tagged as optional.
 
-local packer_exists = pcall(cmd, 'packadd packer.nvim')
+local has_packer = pcall(cmd, 'packadd packer.nvim')
 
 --- packer automatic installation
 
-if not packer_exists then
-   if not confirm('Download Packer ?') then
-      return false
-   end
+if not has_packer then
+   if not confirm('Download Packer ?') then return false end
 
-   local directory = string.format(
-      '%s/site/pack/packer/opt',
-      fn.stdpath('data')
-   )
+   local directory = format('%s/site/pack/packer/opt', fn.stdpath('data'))
 
    fn.mkdir(directory, 'p')
 
-   print('Downloading packer.nvim...')
+   notify('Downloading packer.nvim ...')
 
    local out = fn.system(format(
       'git clone %s %s',
@@ -30,10 +28,12 @@ if not packer_exists then
       directory .. '/packer.nvim'
    ))
 
-   print(out)
+   notify(out)
 
-   cmd('PackerCompile')
-   cmd('PackerInstall')
+   local packer = require('packer')
+
+   packer.compile()
+   packer.install()
 
    print('Restart is needed now')
 
