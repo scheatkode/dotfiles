@@ -2,7 +2,7 @@
 
 local api = vim.api
 local bo  = vim.bo
-local o   = vim.o
+local o   = vim.go
 
 local table = require('sol.table')
 
