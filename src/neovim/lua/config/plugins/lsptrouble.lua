@@ -44,6 +44,26 @@ trouble.setup({
    use_lsp_diagnostic_signs = true, -- enabling this will use the signs defined in your lsp client
 })
 
+require('sol.vim').apply_keymaps({
+   {'n', '<leader>clt', '<cmd>LspTroubleToggle<CR>', {silent = true, noremap = true}},
+})
+
+--- whichkey configuration
+
+local has_whichkey, whichkey = pcall(require, 'which-key')
+
+if not has_whichkey then
+   return has_whichkey
+end
+
+whichkey.register({
+   ['<leader>cl'] = {
+      name = '+lsp',
+
+      t = {'Show Trouble in code'}
+   }
+})
+
 -- Local Variables:
 -- tab-width: 3
 -- mode: lua
