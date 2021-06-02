@@ -126,7 +126,7 @@ require('sol.vim').apply_options({
 
    -- lines
 
-   textwidth      = 80,   -- maximum line width is 78
+   textwidth      = 78,   -- maximum line width is 78
    relativenumber = true, -- use line numbers relative to the current line
    number         = true, -- .. but show the actual current line number
    cursorline     = true, -- highlight current line
