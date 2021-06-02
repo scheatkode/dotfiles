@@ -42,7 +42,77 @@ end
 
 --- packer configuration
 
-require('packer').startup(function(use)
+local packer = require('packer')
+local util   = require('packer.util')
+
+packer.init({
+   package_root         = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
+   compile_path         = util.join_paths(vim.fn.stdpath('data'), 'site', 'packer_compiled.vim'),
+
+   ensure_dependencies  = true, -- should packer install plugin dependencies?
+
+   plugin_package       = 'packer', -- the default package for plugins
+   max_jobs             = 10,       -- limit the number of simultaneous jobs. nil means no limit
+
+   auto_clean           = true, -- during sync(), remove unused plugins
+   auto_reload_compiled = true, -- automatically reload the compiled file after creating it.
+   compile_on_sync      = true, -- during sync(), run packer.compile()
+
+   disable_commands     = false, -- disable creating commands
+   opt_default          = false, -- default to using opt (as opposed to start) plugins
+   transitive_opt       = true,  -- make dependencies of opt plugins also opt by default
+   transitive_disable   = true,  -- automatically disable dependencies of disabled plugins
+
+   git = {
+      cmd           = 'git', -- the base command for git operations
+      clone_timeout = 600,   -- timeout, in seconds, for git clones
+      depth         = 1,     -- git clone depth
+
+      subcommands = { -- format strings for git subcommands
+         update         = '-C %s pull --ff-only --progress --rebase=false',
+         install        = 'clone %s %s --depth %i --no-single-branch --progress',
+         fetch          = '-C %s fetch --depth 999999 --progress',
+         checkout       = '-C %s checkout %s --',
+         update_branch  = '-C %s merge --ff-only @{u}',
+         current_branch = '-C %s branch --show-current',
+         diff           = '-C %s log --color=never --pretty=format:FMT --no-show-signature HEAD@{1}...HEAD',
+         diff_fmt       = '%%h %%s (%%cr)',
+         get_rev        = '-C %s rev-parse --short HEAD',
+         get_msg        = '-C %s log --color=never --pretty=format:FMT --no-show-signature HEAD -n 1',
+         submodules     = '-C %s submodule update --init --recursive --progress'
+      },
+   },
+
+   display = {
+      non_interactive = false, -- if true, disable display windows for all operations
+      open_fn         = nil, -- an optional function to open a window for packer's display
+      open_cmd        = '65vnew [packer]', -- an optional command to open a window for packer's display
+      working_sym     = '⟳', -- the symbol for a plugin being installed/updated
+      error_sym       = '✗', -- the symbol for a plugin with an error in installation/updating
+      done_sym        = '✓', -- the symbol for a plugin which has completed installation/updating
+      removed_sym     = '-', -- the symbol for an unused plugin which was removed
+      moved_sym       = '→', -- the symbol for a plugin which was moved (e.g. from opt to start)
+      header_sym      = '━', -- the symbol for the header line in packer's display
+      show_all_info   = true, -- should packer show all update details automatically?
+
+      keybindings = { -- keybindings for the display window
+         quit          = '<Esc>',
+         toggle_info   = '<CR>',
+         prompt_revert = 'r',
+      }
+   },
+
+   luarocks = {
+      python_cmd = 'python' -- set the python command to use for running hererocks
+   },
+
+   profile = {
+      enable    = false,
+      threshold = 1, -- integer in milliseconds, plugins which load faster than this won't be shown in profile output
+   }
+})
+
+packer.startup(function (use)
 
    -- packer can manage itself as an optional plugin.
 
@@ -178,7 +248,7 @@ return setmetatable({}, {
    __index = function (_, file)
       local has_plugin, plugin = pcall('config.plugins.' .. file)
 
-      if not ok then
+      if not has_plugin then
          error('Plugin ' .. file .. ' not found.')
          return has_plugin
       end
