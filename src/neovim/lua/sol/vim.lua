@@ -94,8 +94,15 @@ end
 -- @return table      → keymaps array
 
 m.apply_keymaps = function(keymaps)
+   local default_modifiers = {
+      silent  = true,
+      noremap = true,
+   }
+
    for _, map in pairs(keymaps) do
-      if #map ~= 4 then
+      if #map == 3 then
+         table.insert(map, default_modifiers)
+      elseif #map ~= 4 then
          return api.nvim_err_writeln(
             'Invalid keymap format : ' .. vim.inspect(map)
          )
