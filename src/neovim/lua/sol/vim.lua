@@ -112,6 +112,34 @@ m.apply_keymaps = function(keymaps)
    end
 end
 
+--- commit key mappings locally
+--
+-- takes an array of  key mappings and their associated
+-- modes and actions to  loop through and commit. this,
+-- too, is intended for keeping a DRY configuration.
+--
+-- @param  maps table → array of keymaps
+-- @return table      → keymaps array
+
+m.apply_buffer_keymaps = function(bufnr, keymaps)
+   local default_modifiers = {
+      silent  = true,
+      noremap = true,
+   }
+
+   for _, map in pairs(keymaps) do
+      if #map == 3 then
+         table.insert(map, default_modifiers)
+      elseif #map ~= 4 then
+         return api.nvim_err_writeln(
+            'Invalid keymap format : ' .. vim.inspect(map)
+         )
+      end
+
+      api.nvim_buf_set_keymap(bufnr, unpack(map))
+   end
+end
+
 --- commit variables
 --
 -- takes a set of variables and their associated values
