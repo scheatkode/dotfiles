@@ -122,6 +122,14 @@ packer.startup(function (use)
 
    -- use {'nvim-lua/completion-nvim'}
    use {'hrsh7th/nvim-compe'}
+   use {
+      'ray-x/navigator.lua',
+      requires = {
+         {'ray-x/guihua.lua', {run = 'cd lua/fzy && make'}},
+         {'neovim/nvim-lspconfig'},
+      }
+   }
+   use {'ray-x/lsp_signature.nvim'}
    use {'neovim/nvim-lspconfig'}
    use {'anott03/nvim-lspinstall'}
    use {'glepnir/lspsaga.nvim'}
