@@ -251,7 +251,7 @@ local has_whichkey, whichkey = pcall(require, 'which-key')
 if has_whichkey then
    whichkey.register({
       ['<leader>P'] = {
-         name = '+Plugins',
+         name = '+plugins',
 
          c = {'Compile plugins (requires restart to take effect)'},
          C = {'Clean unused plugins'},
