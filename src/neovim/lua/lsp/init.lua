@@ -4,11 +4,10 @@ local api = vim.api
 
 --- required and optional plugins
 
-local has_config,    config    = pcall(require, 'lspconfig')
-local has_kind,      kind      = pcall(require, 'lspkind')
-local has_saga,      _         = pcall(require, 'lspsaga')
-local has_signature, signature = pcall(require, 'lsp_signature')
-local has_whichkey,  whichkey  = pcall(require, 'which-key')
+local has_config,   config   = pcall(require, 'lspconfig')
+local has_kind,     kind     = pcall(require, 'lspkind')
+local has_saga,     _        = pcall(require, 'lspsaga')
+local has_whichkey, whichkey = pcall(require, 'which-key')
 
 --- internal utilities
 
@@ -26,47 +25,6 @@ local on_attach_default = function (client, bufnr)
    -- local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
    -- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
    -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-   --- signature help
-
-   if has_signature then
-      signature.on_attach({
-
-         bind = true, -- this is=j mandatory, otherwise  border config won't get
-                      -- registered.  if you  want  to hook  lspsaga or  other
-                      -- signature handler, set to false
-
-         doc_lines = 2, -- will  show two  lines of  comment/doc(if there  are
-                        -- more than two lines in doc, will be truncated); set
-                        -- to 0  if you  DO NOT  want any  API comments  to be
-                        -- shown.  this setting  only takes  effect in  insert
-                        -- mode, it  does not affect signature  help in normal
-                        -- mode, 10 by default
-
-         floating_window = true, -- show  hint in  a floating  window, set  to
-                                 -- false for virtual text only mode
-
-         hint_enable = true, -- virtual hint enable
-         hint_prefix = "ⓘ ", -- icon
-         hint_scheme = "String",
-
-         use_lspsaga = true, -- set to true if you want to use lspsaga popup
-
-         hi_parameter = "Search", -- how your parameter will be highlighted
-
-         max_height = 12, -- max  height  of   signature  floating_window,  if
-                          -- content is  more than max_height, you  can scroll
-                          -- down to view the hiding contents
-
-         max_width = 120, -- max_width of signature floating_window, line will
-                          -- be wrapped if exceed max_width
-
-         handler_opts = {
-            border = "single"   -- double, single, shadow, none
-         },
-
-      })
-   end
 
    --- mappings
 
@@ -164,6 +122,9 @@ local on_attach_default = function (client, bufnr)
    print(' LSP server started.')
 end
 
+
+--- configured lsp servers
+
 local servers = {
    -- 'pyright',
    -- 'gopls',
@@ -180,10 +141,16 @@ local servers = {
    'yamlls',
 }
 
+
+--- fail with a message if lspconfig is not available
+
 if not has_config then
    print('‼ lspconfig not found.')
    return has_config
 end
+
+
+--- on lsp server start
 
 for _, server in ipairs(servers) do
    local has_settings, settings = pcall(require, 'lsp.' .. server)
@@ -203,6 +170,9 @@ for _, server in ipairs(servers) do
 
    ::continue::
 end
+
+
+--- mappings help
 
 if has_whichkey then
    whichkey.register({
@@ -234,7 +204,7 @@ if has_whichkey then
          },
       },
 
-      ['<leader>cf'] = {'Format code'},
+      ['<leader>clf'] = {'Format code'},
       ['<leader>=']  = {'Format code'},
 
       ['K'] = {'Show hover documentation'},
