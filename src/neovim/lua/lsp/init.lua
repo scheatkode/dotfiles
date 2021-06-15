@@ -17,10 +17,6 @@ local apply_buffer_keymaps = require('sol.vim').apply_buffer_keymaps
 
 local on_attach_default = function (client, bufnr)
 
-   --- LSP startup announcement
-
-   print(' Starting LSP server ...')
-
    --- omnifunc setup
 
    vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
@@ -127,10 +123,10 @@ local on_attach_default = function (client, bufnr)
          {'x', '<leader>cla',  '<cmd><c-u>lua require("lspsaga.codeaction").range_code_action()<CR>'},
          {'n', '<leader>clc',  '<cmd>lua require("lspsaga.diagnostic").show_cursor_diagnostics()<CR>'},
          {'n', '<leader>cld',  '<cmd>lua require("lspsaga.provider").preview_definition()<CR>'},
-         {'n', '<leader>clh',  '<cmd>lua require("lspsaga.provider").render_hover_doc()<CR>'},
+         {'n', '<leader>clh',  '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>'},
          {'n', '<leader>cll',  '<cmd>lua require("lspsaga.diagnostic").show_line_diagnostics()<CR>'},
          {'n', '<leader>cls',  '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>'},
-         {'n', 'K',            '<cmd>lua require("lspsaga.provider").render_hover_doc()<CR>'},
+         {'n', 'K',            '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>'},
          {'n', ']d',           '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>'},
          {'n', ']d',           '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<CR>'},
       })
@@ -161,9 +157,9 @@ local on_attach_default = function (client, bufnr)
       })
    end
 
-   --- announce LSP startup
+   --- LSP startup announcement
 
-   print(' LSP started.')
+   print(' LSP server started.')
 end
 
 local servers = {
