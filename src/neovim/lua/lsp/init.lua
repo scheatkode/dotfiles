@@ -179,21 +179,21 @@ if has_whichkey then
       ['<leader>cl'] = {
          name = '+lsp',
 
-         D = {'Show declaration'},
+         D = {'Declaration'},
          F = {'Find symbol'},
-         I = {'Show incoming calls'},
-         O = {'Show outgoing calls'},
+         I = {'Incoming calls'},
+         O = {'Outgoing calls'},
          R = {'Rename symbol'},
-         d = {'Show definition'},
+         d = {'Definition'},
          a = {'Code action'},
-         h = {'Show hover documentation'},
-         i = {'Show implementation'},
-         l = {'Show line diagnostics'},
-         c = {'Show diagnostics under cursor'},
+         h = {'Hover documentation'},
+         i = {'Implementation'},
+         l = {'Line diagnostics'},
+         c = {'Diagnostics under cursor'},
          q = {'Send diagnostics to quicklist'},
-         r = {'Show references'},
-         s = {'Show signature help'},
-         t = {'Show type definition'},
+         r = {'References'},
+         s = {'Signature help'},
+         t = {'Type definition'},
 
          w = {
             name = '+workspace',
@@ -207,7 +207,7 @@ if has_whichkey then
       ['<leader>clf'] = {'Format code'},
       ['<leader>=']  = {'Format code'},
 
-      ['K'] = {'Show hover documentation'},
+      ['K'] = {'Hover documentation'},
 
       ['[d'] = {'Go to previous diagnostic'},
       [']d'] = {'Go to next diagnostic'},
