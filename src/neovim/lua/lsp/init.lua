@@ -174,7 +174,7 @@ local servers = {
    'intelephense',
    'jsonls',
    'sumneko_lua',
-   'phpactor',
+   -- 'phpactor',
    'yamlls',
 }
 
