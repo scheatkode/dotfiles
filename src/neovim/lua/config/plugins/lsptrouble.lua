@@ -45,7 +45,8 @@ trouble.setup({
 })
 
 require('sol.vim').apply_keymaps({
-   {'n', '<leader>clt', '<cmd>LspTroubleToggle<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>clT', '<cmd>LspTroubleToggle<CR>', {silent = true, noremap = true}},
+   {'n', '<leader>clwT', '<cmd>LspTroubleWorkspaceToggle<CR>', {silent = true, noremap = true}},
 })
 
 --- whichkey configuration
@@ -60,8 +61,10 @@ whichkey.register({
    ['<leader>cl'] = {
       name = '+lsp',
 
-      t = {'Show Trouble in code'}
-   }
+      T = {'Trouble in code'}
+   },
+
+   ['<leader>clwT'] = { 'Trouble in workspace' },
 })
 
 -- Local Variables:
