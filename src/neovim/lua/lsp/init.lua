@@ -135,6 +135,7 @@ local servers = {
    'ccls',
    'denols',
    'intelephense',
+   'jdtls',
    'jsonls',
    'sumneko_lua',
    -- 'phpactor',
