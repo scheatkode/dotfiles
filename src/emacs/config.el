@@ -207,7 +207,7 @@
 
 ;; Configuration for Org-mode
 (use-package! org
-  ;; :defer-incrementally color
+  :defer-incrementally color
 
   ;; Configure font attributes for Org-mode
   ;; (set-face-attribute 'org-block nil :background
@@ -419,21 +419,21 @@
 ;; Prettify Org-mode
 (after! org
   ;; Configure font attributes for Org-mode
-  ;; (set-face-attribute 'org-block nil :background
-  ;;                     (color-lighten-name
-  ;;                      (face-attribute 'default :background) 5))
+  (set-face-attribute 'org-block nil :background
+                      (color-lighten-name
+                       (face-attribute 'default :background) 5))
   (set-face-attribute 'org-block            nil :extend t)
   (set-face-attribute 'org-block-begin-line nil :extend t)
   (set-face-attribute 'org-block-end-line   nil :extend t)
-  ;; (set-face-attribute 'org-level-1 nil :background
-  ;;                     (color-darken-name
-  ;;                      (face-attribute 'default :background) 3))
-  ;; (set-face-attribute 'org-level-2 nil :background
-  ;;                     (color-darken-name
-                       ;; (face-attribute 'default :background) 2))
-  ;; (set-face-attribute 'org-level-3 nil :background
-  ;;                     (color-darken-name
-  ;;                      (face-attribute 'default :background) 1))
+  (set-face-attribute 'org-level-1 nil :background
+                      (color-darken-name
+                       (face-attribute 'default :background) 3))
+  (set-face-attribute 'org-level-2 nil :background
+                      (color-darken-name
+                       (face-attribute 'default :background) 2))
+  (set-face-attribute 'org-level-3 nil :background
+                      (color-darken-name
+                       (face-attribute 'default :background) 1))
 
   ;; Setup LaTeX preview in Org-mode
   ;; (setq org-latex-packages-alist 'nil)
