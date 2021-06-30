@@ -78,8 +78,8 @@ local on_attach_default = function (client, bufnr)
       apply_buffer_keymaps(bufnr, {
          {'n', '<leader>clF',  '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>'},
          {'n', '<leader>clR',  '<cmd>lua require("lspsaga.rename").rename()<CR>'},
-         {'n', '<leader>cla',  '<cmd>lua require("lspsaga.codeaction").code_action()<CR>'},
-         {'x', '<leader>cla',  '<cmd><c-u>lua require("lspsaga.codeaction").range_code_action()<CR>'},
+         -- {'n', '<leader>cla',  '<cmd>lua require("lspsaga.codeaction").code_action()<CR>'},
+         -- {'x', '<leader>cla',  '<cmd><c-u>lua require("lspsaga.codeaction").range_code_action()<CR>'},
          {'n', '<leader>clc',  '<cmd>lua require("lspsaga.diagnostic").show_cursor_diagnostics()<CR>'},
          {'n', '<leader>cld',  '<cmd>lua require("lspsaga.provider").preview_definition()<CR>'},
          {'n', '<leader>clh',  '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>'},
