@@ -4,6 +4,7 @@ local api = vim.api
 
 --- required and optional plugins
 
+local has_protocol, protocol = pcall(require, 'vim.lsp.protocol')
 local has_config,   config   = pcall(require, 'lspconfig')
 local has_kind,     kind     = pcall(require, 'lspkind')
 local has_saga,     _        = pcall(require, 'lspsaga')
@@ -150,6 +151,35 @@ if not has_config then
    return has_config
 end
 
+
+--- tweak lsp protocol
+
+if has_protocol then
+   protocol.CompletionItemKind = {
+      '',  -- Text        = 1
+      'ƒ',  -- Method      = 2
+      -- '',  -- Function    = 3
+      'ƒ',  -- Function    = 3
+      '',  -- Constructor = 4
+      '',  -- Variable    = 5
+      -- '',  -- Class       = 6
+      '',  -- Class       = 6
+      'ﰮ',  -- Interface   = 7
+      '',  -- Module      = 8
+      '',  -- Property    = 9
+      '',  -- Unit        = 10
+      '',  -- Value       = 11
+      '了', -- Enum        = 12
+      '',  -- Keyword     = 13
+      '﬌',  -- Snippet     = 14
+      '',  -- Color       = 15
+      '',  -- File        = 16
+      '',  -- Folder      = 17
+      '',  -- EnumMember  = 18
+      '',  -- Constant    = 19
+      ''   -- Struct      = 20
+   }
+end
 
 --- on lsp server start
 
