@@ -15,7 +15,7 @@ cp -Rf /usr/share/java/jdtls/config_linux ${cache_dir}/java/
 JAR="/usr/share/java/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"
 JAVA_HOME="$(readlink -f /usr/bin/java | sed "s:/bin/java::")"
 GRADLE_HOME="${cache_dir}/gradle"                   \
-   /usr/lib/jvm/java-15-openjdk/bin/java            \
+   /usr/lib/jvm/default/bin/java                    \
   -Declipse.application=org.eclipse.jdt.ls.core.id1 \
   -Dosgi.bundles.defaultStartLevel=4                \
   -Declipse.product=org.eclipse.jdt.ls.core.product \
