@@ -15,6 +15,8 @@ local has_whichkey,  whichkey  = pcall(require, 'which-key')
 local apply_buffer_keymaps = require('sol.vim').apply_buffer_keymaps
 
 
+local text_change_default_debounce = 150
+
 local on_attach_default = function (client, bufnr)
 
    --- omnifunc setup
@@ -191,11 +193,14 @@ for _, server in ipairs(servers) do
       goto continue
    end
 
-   settings.on_attach = on_attach_default
-
    if settings.before_attach ~= nil then
       settings.before_attach()
    end
+
+   settings.on_attach = on_attach_default
+   settings.flags     = {
+      debounce_text_changes = text_change_default_debounce,
+   }
 
    lspconfig[server].setup(settings)
 
