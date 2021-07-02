@@ -10,8 +10,7 @@ end
 local actions    = require('telescope.actions')
 local builtin    = require('telescope.builtin')
 local previewers = require('telescope.previewers')
-
-local custom_actions = require('config.plugins.telescope.actions.buffer_delete')
+local themes     = require('telescope.themes')
 
 local m = {}
 
@@ -28,18 +27,15 @@ telescope.setup({
       selection_strategy = 'reset',
       layout_stategy     = 'flex',
 
-      borderchars = {
-         '─',
-         '│',
-         '─',
-         '│',
-         '┌',
-         '┐',
-         '┘',
-         '└'
+      borderchars = { -- rounded corners
+         '─', '│', '─', '│', '╭', '╮', '╯', '╰',
       },
 
-      layout_defaults = {
+      -- borderchars = { -- angled corners
+      --    '─', '│', '─', '│', '┌', '┐', '┘', '└',
+      -- },
+
+      layout_config = {
          horizontal = {
             width_padding  = 0.1,
             height_padding = 0.1,
@@ -100,6 +96,22 @@ telescope.setup({
             ['q']     = actions.close,
 
             ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
+         },
+      },
+   },
+
+   pickers = {
+      buffers = {
+         sort_lastused = true,
+         theme         = 'dropdown',
+         previewer     = false,
+         mappings = {
+            i = {
+               ['<c-x>'] = actions.delete_buffer,
+            },
+            n = {
+               ['<c-x>'] = actions.delete_buffer,
+            },
          },
       },
    },
