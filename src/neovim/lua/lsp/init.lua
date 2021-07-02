@@ -4,11 +4,11 @@ local api = vim.api
 
 --- required and optional plugins
 
-local has_protocol, protocol = pcall(require, 'vim.lsp.protocol')
-local has_config,   config   = pcall(require, 'lspconfig')
-local has_kind,     kind     = pcall(require, 'lspkind')
-local has_saga,     _        = pcall(require, 'lspsaga')
-local has_whichkey, whichkey = pcall(require, 'which-key')
+local has_protocol,  protocol  = pcall(require, 'vim.lsp.protocol')
+local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local has_kind,      kind      = pcall(require, 'lspkind')
+local has_saga,      _         = pcall(require, 'lspsaga')
+local has_whichkey,  whichkey  = pcall(require, 'which-key')
 
 --- internal utilities
 
@@ -146,9 +146,9 @@ local servers = {
 
 --- fail with a message if lspconfig is not available
 
-if not has_config then
+if not has_lspconfig then
    print('‼ lspconfig not found.')
-   return has_config
+   return has_lspconfig
 end
 
 
@@ -197,7 +197,7 @@ for _, server in ipairs(servers) do
       settings.before_attach()
    end
 
-   config[server].setup(settings)
+   lspconfig[server].setup(settings)
 
    ::continue::
 end
