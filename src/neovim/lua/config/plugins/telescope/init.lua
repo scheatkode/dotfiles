@@ -156,29 +156,16 @@ m.files = function ()
    })
 end
 
-local themed_preview = function ()
-   return require('telescope.themes').get_dropdown({
-      width       = 0.8,
-      previewer   = true,
-      borderchars = {
-                   { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-         prompt  = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
-         results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
-         preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-      },
-   })
-end
-
 m.frecency = function ()
-   telescope.extensions.frecency.frecency(themed_preview())
+   telescope.extensions.frecency.frecency()
 end
 
 m.buffer_fuzzy = function ()
-   builtin.current_buffer_fuzzy_find(themed_preview())
+   builtin.current_buffer_fuzzy_find()
 end
 
 m.code_actions = function ()
-   builtin.lsp_code_actions(themed_preview())
+   builtin.lsp_code_actions()
 end
 
 m.projects = function ()
@@ -190,9 +177,10 @@ end
 m.buffers = function ()
    builtin.buffers({
       attach_mappings = function (_, map)
-         map('n', 'd',     custom_actions.delete_selected)
-         map('i', '<Del>', custom_actions.delete_selected)
-
+         -- map('i', '<C-x>', custom_actions.delete_selected)
+         -- map('n', '<C-x>', custom_actions.delete_selected)
+         map('i', '<C-x>', actions.delete_buffer)
+         map('n', '<C-x>', actions.delete_buffer)
          return true
       end,
    })
@@ -200,41 +188,34 @@ end
 
 --- keymaps
 
-local modifiers = {
-   silent  = true,
-   noremap = true,
-}
-
 require('sol.vim').apply_keymaps({
 
-   -- {'n', '<leader>fT', '<cmd>lua require("config.plugins.telescope").buffers()<CR>', modifiers},
-   {'n', '<leader>fF', '<cmd>lua require("config.plugins.telescope").files()<CR>', modifiers},
-   {'n', '<leader>FF', '<cmd>lua require("config.plugins.telescope").files()<CR>', modifiers},
-   {'n', '<leader><leader>', '<cmd>lua require("config.plugins.telescope").files()<CR>', modifiers},
-   -- {'n', '<leader>fF', '<cmd>Telescope find_files   theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>ff', '<cmd>Telescope file_browser theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>Ff', '<cmd>Telescope file_browser theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>fr', '<cmd>Telescope oldfiles     theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>Fr', '<cmd>Telescope oldfiles     theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>fg', '<cmd>Telescope live_grep    theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>Fg', '<cmd>Telescope live_grep    theme=get_dropdown<CR>', modifiers},
+   {'n', '<leader>fF', '<cmd>lua require("config.plugins.telescope").files()<CR>'},
+   {'n', '<leader>FF', '<cmd>lua require("config.plugins.telescope").files()<CR>'},
+   {'n', '<leader><leader>', '<cmd>lua require("config.plugins.telescope").files()<CR>'},
+   {'n', '<leader>ff', '<cmd>Telescope file_browser<CR>'},
+   {'n', '<leader>Ff', '<cmd>Telescope file_browser<CR>'},
+   {'n', '<leader>fr', '<cmd>Telescope oldfiles<CR>'},
+   {'n', '<leader>Fr', '<cmd>Telescope oldfiles<CR>'},
+   {'n', '<leader>fg', '<cmd>Telescope live_grep<CR>'},
+   {'n', '<leader>Fg', '<cmd>Telescope live_grep<CR>'},
 
-   {'n', '<leader>pp', '<cmd>lua require("config.plugins.telescope").projects()<CR>', modifiers},
+   {'n', '<leader>pp', '<cmd>lua require("config.plugins.telescope").projects()<CR>'},
 
-   {'n', '<leader>bb', '<cmd>Telescope buffers theme=get_dropdown<CR>', modifiers},
+   {'n', '<leader>bb', '<cmd>lua require("config.plugins.telescope").buffers()<CR>'},
 
-   {'n', '<leader>sh',  '<cmd>Telescope help_tags                 theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>sl',  '<cmd>Telescope current_buffer_fuzzy_find theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>sr',  '<cmd>Telescope registers                 theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>sq',  '<cmd>Telescope quickfix                  theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>sm',  '<cmd>Telescope man_pages                 theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>st',  '<cmd>Telescope treesitter                theme=get_dropdown<CR>', modifiers},
+   {'n', '<leader>sh',  '<cmd>Telescope help_tags<CR>'},
+   {'n', '<leader>sl',  '<cmd>Telescope current_buffer_fuzzy_find<CR>'},
+   {'n', '<leader>sr',  '<cmd>Telescope registers<CR>'},
+   {'n', '<leader>sq',  '<cmd>Telescope quickfix<CR>'},
+   {'n', '<leader>sm',  '<cmd>Telescope man_pages<CR>'},
+   {'n', '<leader>st',  '<cmd>Telescope treesitter<CR>'},
 
-   {'n', '<leader>clr', '<cmd>Telescope lsp_references        theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>cld', '<cmd>Telescope lsp_document_symbols  theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>clw', '<cmd>Telescope lsp_workspace_symbols theme=get_dropdown<CR>', modifiers},
-   {'n', '<leader>clc', '<cmd>Telescope lsp_code_actions      theme=get_dropdown<CR>', modifiers},
-   -- {'n', '<leader>clcr', '<cmd>Telescope lsp_range_code_actions    theme=get_dropdown<CR>', modifiers},
+   {'n', '<leader>clr', '<cmd>Telescope lsp_references<CR>'},
+   {'n', '<leader>cld', '<cmd>Telescope lsp_document_symbols<CR>'},
+   {'n', '<leader>clw', '<cmd>Telescope lsp_workspace_symbols<CR>'},
+   {'n', '<leader>clc', '<cmd>Telescope lsp_code_actions<CR>'},
+   -- {'n', '<leader>clcr', '<cmd>Telescope lsp_range_code_actions<CR>'},
 
    {'c', '<c-r><c-r>', '<Plug>(TelescopeFuzzyCommandSearch)', {noremap = false, nowait = true}},
 
