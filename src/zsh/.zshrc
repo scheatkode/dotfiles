@@ -291,6 +291,9 @@ zinit wait:'0b' lucid light-mode for                              \
       OMZ::plugins/docker/_docker                                 \
   as:"completion"                                                 \
       OMZ::plugins/dotnet/dotnet.plugin.zsh                       \
+  as:"completion"                                                 \
+      OMZ::plugins/ripgrep/_ripgrep                               \
+  as:"completion"                                                 \
       OMZ::plugins/composer/composer.plugin.zsh
 
 # recommended be loaded last.
