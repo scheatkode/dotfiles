@@ -289,6 +289,8 @@ zinit wait:'0b' lucid light-mode for                              \
          zsh-users/zsh-autosuggestions                            \
   as:"completion"                                                 \
       OMZ::plugins/docker/_docker                                 \
+  as:"completion"                                                 \
+      OMZ::plugins/dotnet/dotnet.plugin.zsh                       \
       OMZ::plugins/composer/composer.plugin.zsh
 
 # recommended be loaded last.
