@@ -267,6 +267,7 @@ zinit light zinit-zsh/z-a-bin-gem-node
 # load early to mitigate romkatv/powerlevel#716
 
 zinit snippet OMZ::lib/key-bindings.zsh
+zinit snippet https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh
 
 zinit wait:'0b' lucid light-mode for                              \
       OMZ::lib/clipboard.zsh                                      \
@@ -280,7 +281,6 @@ zinit wait:'0b' lucid light-mode for                              \
       OMZ::lib/spectrum.zsh                                       \
       OMZ::lib/termsupport.zsh                                    \
       OMZ::lib/theme-and-appearance.zsh                           \
-      OMZ::plugins/fzf/fzf.plugin.zsh                             \
    atinit:"zicompinit; zicdreplay"                                \
          zdharma/fast-syntax-highlighting                         \
       OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
@@ -301,9 +301,11 @@ zinit wait:'0b' lucid light-mode for                              \
 zinit ice wait'0c' blockf silent atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
-# junegunn/fzf
 zinit wait:'1a' silent from:gh-r as:program light-mode for \
-     sbin:'bin/fzf'                                        \
+     pick:'${ZPFX}/bin/(fzf|fzf-tmux)'                     \
+  atclone:'cp shell/completion.zsh _fzf_completion;        \
+      cp bin/(fzf|fzf-tmux) ${ZPFX}/bin'                   \
+     make:'PREFIX=${ZPFX} install'                         \
          @junegunn/fzf                                     \
      sbin:'lazygit'                                        \
    atload:'alias lg=lazygit'                               \
