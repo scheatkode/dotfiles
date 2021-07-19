@@ -109,7 +109,6 @@ select-word-style bash
 # ---------------------------------------------------------------------------- #
 
 unsetopt CASE_GLOB           # use case-insensitive globbing.
-setopt   GLOBDOTS            # glob dotfiles as well.
 setopt   EXTENDEDGLOB        # use extended globbing.
 setopt   AUTOCD              # automatically change directory if a directory is entered.
 
