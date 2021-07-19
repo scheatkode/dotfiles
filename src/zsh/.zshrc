@@ -318,6 +318,11 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
    atpull:'%atinit'                                        \
   atclone:'%atinit'                                        \
          @ipinfo/cli                                       \
+    bpick:'curlie*linux*64*gz'                             \
+   atinit:'mv curlie* curlie 2> /dev/null'                 \
+   atpull:'%atinit'                                        \
+  atclone:'%atinit'                                        \
+         @rs/curlie                                        \
    atinit:'mv sampler* sampler 2> /dev/null'               \
    atpull:'%atinit'                                        \
   atclone:'%atinit'                                        \
