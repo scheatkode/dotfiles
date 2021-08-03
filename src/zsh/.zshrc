@@ -374,7 +374,13 @@ zinit wait:'1b' silent from:gh-r as:program for \
             @Nukesor/pueue                      \
      pick:'zoxide*/zoxide'                      \
    atload:'eval "$(zoxide init zsh)"'           \
-            @ajeetdsouza/zoxide
+            @ajeetdsouza/zoxide                 \
+     pick:'delta/delta'                         \
+   atinit:'mv delta-* delta 2> /dev/null'       \
+  atclone:'%atinit'                             \
+   atpull:'%atinit'                             \
+   atload:'alias diff="delta"'                  \
+            @dandavison/delta
 
 # ---------------------------------------------------------------------------- #
 #                            Plugin configuration                              #
