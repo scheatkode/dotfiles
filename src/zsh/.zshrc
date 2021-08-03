@@ -324,7 +324,12 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
    atinit:'mv sampler* sampler 2> /dev/null'               \
    atpull:'%atinit'                                        \
   atclone:'%atinit'                                        \
-         @sqshq/sampler
+         @sqshq/sampler                                    \
+    bpick:'duf*64*gz'                                      \
+   atinit:'mv duf* duf 2> /dev/null'                       \
+   atpull:'%atinit'                                        \
+  atclone:'%atinit'                                        \
+         @muesli/duf
 
 zinit wait:'1b' silent from:gh-r as:program for \
        mv:'bat* -> bat'                         \
