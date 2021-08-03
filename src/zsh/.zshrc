@@ -380,7 +380,14 @@ zinit wait:'1b' silent from:gh-r as:program for \
   atclone:'%atinit'                             \
    atpull:'%atinit'                             \
    atload:'alias diff="delta"'                  \
-            @dandavison/delta
+            @dandavison/delta                   \
+     pick:'bin/dog'                             \
+  atclone:'%atinit'                             \
+   atpull:'%atinit'                             \
+   atinit:'mv dog-* dog 2> /dev/null'           \
+   atload:'alias dig="dog"'                     \
+      src:'completions/dog.zsh'                 \
+            @ogham/dog
 
 # ---------------------------------------------------------------------------- #
 #                            Plugin configuration                              #
