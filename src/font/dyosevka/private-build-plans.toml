@@ -12,6 +12,19 @@
 #                                                                              #
 # ---------------------------------------------------------------------------- #
 
+[iosevka]
+naming.copyright    = 'Copyright 2015-2021, scheatkode <scheatkode@gmail.com>'
+naming.licence      = '''This font is licenced under the MIT licence.'''
+naming.manufacturer = 'scheatkode'
+naming.designer     = 'scheatkode'
+naming.description  = 'Spatial efficient monospace font family for programming and enhanced readability. Built from code. http://be5invis.github.io/Iosevka'
+
+# powerline-specific parameters
+powerlineScaleY = 1    # vertical scale
+powerlineScaleX = 1    # horizontal scale
+powerlineShiftY = -200 # vertical shift
+powerlineShiftX = -50  # horizontal shift
+
 [buildPlans.Dyosevka]
 family   = "Dyosevka"
 spacing  = "term"
@@ -22,7 +35,7 @@ no-cv-ss = false
 capital-a = "curly-serifless"
 capital-g = "toothless-corner-serifless-hooked"
 capital-i = "serifed"
-capital-k = "straight"
+capital-k = "curly-serifless"
 capital-n = "standard"
 capital-p = "closed"
 capital-q = "curly-tailed"
@@ -33,7 +46,7 @@ capital-w = "curly"
 capital-x = "curly-serifless"
 capital-y = "curly-serifless"
 capital-z = "curly-serifed-with-crossbar"
-a = "single-storey"
+a = "single-storey-serifless"
 b = "toothless-rounded"
 d = "toothless-corner-serifless"
 e = "rounded"
@@ -41,7 +54,7 @@ f = "flat-hook-tailed"
 g = "double-storey-open"
 i = "tailed"
 j = "serifless"
-k = "curly"
+k = "curly-serifless"
 l = "tailed"
 m = "earless-corner-double-arch-short-leg"
 n = "earless-corner-straight"
@@ -55,26 +68,29 @@ w = "curly"
 x = "curly-serifless"
 y = "cursive"
 z = "curly-serifless"
+
 ampersand      = "et-toothed"
-asterisk       = "low"
+asterisk       = "turn-hex-low"
 at             = "short"
 bar            = "natural-slope"
 brace          = "curly"
 caret          = "low"
 dollar         = "open-cap"
-eight          = "crossing-asymmetric"
-five           = "oblique-upper-left-bar"
-latn-epsilon   = "serifless"
 lig-ltgteq     = "slanted"
 lower-alpha    = "crossing"
 lower-lambda   = "curly"
-nine           = "open-contour"
-number-sign    = "upright"
+number-sign    = "slanted-open"
 paragraph-sign = "low"
 paren          = "large-contour"
 question       = "corner-flat-hooked"
-seven          = "curly-serifed"
-six            = "open-contour"
 turn-v         = "curly"
-two            = "curly-neck"
-zero           = "dotted"
+
+zero  = "dotted"
+two   = "curly-neck"
+five  = "oblique-upper-left-bar"
+six   = "open-contour"
+seven = "curly-serifed"
+eight = "crossing-asymmetric"
+nine  = "open-contour"
+
+punctuation-dot = "round"
