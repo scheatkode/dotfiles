@@ -31,8 +31,10 @@ kommentary.configure_language('php', {
 -- keyboard mappings
 
 require('sol.vim').apply_keymaps({
+   {'n', '<leader>/', '<plug>kommentary_line_default',   {}},
    {'n', '<leader>ccc', '<plug>kommentary_line_default',   {}},
    {'n', '<leader>ccm',  '<plug>kommentary_motion_default', {}},
+   {'v', '<leader>/', '<plug>kommentary_visual_default',   {}},
    {'v', '<leader>ccc',  '<plug>kommentary_visual_default', {}},
 
    -- extended mappings
