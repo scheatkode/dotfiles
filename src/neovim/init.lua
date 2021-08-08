@@ -44,6 +44,12 @@ require('lsp')    -- lsp configuration
 
 vim.cmd([[:command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G']])
 
+-- garbage collection
+-- enable for lower memory consumption
+
+collectgarbage('setpause',   160)
+collectgarbage('setstepmul', 400)
+
 -- Local Variables:
 -- tab-width: 3
 -- mode: lua
