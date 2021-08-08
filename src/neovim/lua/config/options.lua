@@ -30,6 +30,9 @@ require('sol.vim').apply_options({
       'indent',
    },
 
+   pumblend = 15, -- pop-up menu transparency
+   winblend = 10, -- floating window transparency
+
    -- file detection
 
    autoread  = true, -- detect external file modifications
