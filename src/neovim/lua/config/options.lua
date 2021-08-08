@@ -10,7 +10,7 @@ require('sol.vim').apply_options({
    mat        = 2,     -- tenths of a second to blink when matching brackets
    pumheight  = 10,    -- limit completion items
    re         = 0,     -- set regexp engine to auto
-   mouse      = 'n',   -- mice are for the weak
+   mouse      = '',    -- mice are for the weak
    synmaxcol  = 300,   -- limit for syntax highlighting in a single line
 
    syntax = 'off', -- overridden by treesitter
