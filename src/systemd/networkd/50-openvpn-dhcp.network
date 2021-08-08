@@ -1,0 +1,5 @@
+[Match]
+Name = t[au][pn]*
+
+[Network]
+DHCP = yes
