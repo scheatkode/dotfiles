@@ -284,12 +284,12 @@ zinit wait:'0b' lucid light-mode for                              \
          zdharma/fast-syntax-highlighting                         \
       OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
       OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
+      OMZ::plugins/dotnet/dotnet.plugin.zsh                       \
   atload:"_zsh_autosuggest_start"                                 \
          zsh-users/zsh-autosuggestions
 
 zinit wait:'0b' lucid light-mode as:completion for \
       OMZ::plugins/docker/_docker                  \
-      OMZ::plugins/dotnet/dotnet.plugin.zsh        \
       OMZ::plugins/ripgrep/_ripgrep                \
       OMZ::plugins/flutter/_flutter                \
       OMZ::plugins/composer/composer.plugin.zsh
