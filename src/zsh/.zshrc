@@ -422,6 +422,7 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 # ---------------------------------------------------------------------------- #
 
 alias vol=alsamixer
+alias v=nvim
 
 # Finalize p10k configuration.
 
