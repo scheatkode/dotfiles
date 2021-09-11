@@ -391,7 +391,7 @@ zinit wait:'1b' silent from:gh-r as:program for                     \
       src:'completions/dog.zsh'                                     \
             @ogham/dog
 
-zinit creinstall pueue
+zinit creinstall pueue > /dev/null 2>&1
 
 # ---------------------------------------------------------------------------- #
 #                            Plugin configuration                              #
