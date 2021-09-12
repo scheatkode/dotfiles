@@ -10,6 +10,13 @@
    <img id='gif' class='nlSABoG9CSaJpsufv8WW9 _3vYn8QjoEvrXxHyqdn9ddZ _2XBDTIVigBJDybhZvL-hU3' src='https://media0.giphy.com/media/m12EDnP8xGLy8/200w.webp?cid=790b7611aed22bdda9b165fdcf6e511b52fbf78e6e1f6d00&amp;rid=200w.webp&amp;ct=g' srcset='https://media0.giphy.com/media/m12EDnP8xGLy8/200w.webp?cid=790b7611aed22bdda9b165fdcf6e511b52fbf78e6e1f6d00&amp;rid=200w.webp&amp;ct=g 200w,https://media0.giphy.com/media/m12EDnP8xGLy8/giphy.webp?cid=790b7611aed22bdda9b165fdcf6e511b52fbf78e6e1f6d00&amp;rid=giphy.webp&amp;ct=g 480w,' sizes='100vw' alt=''>
 </p>
 
+<p align='center'><b>
+This repository  is under  heavy refactoring.  Trust me,  it's not  worth your
+time... for now.
+</b></p>
+
+---
+
 <p align='center'><i>You shall pass ! Probably.</i></p>
 
 Welcome to  the land  of silly  witticisms and  shamelessly stolen,  banged up
@@ -48,7 +55,3 @@ programming part still stands true.
       ├── dotfiles                # Dotfiles management script.
       ├── LICENSE
       └── README.org
-
-
-**Anyway, this repository  is under heavy refactoring. Trust me,  it's not worth
-your time... for now.**
