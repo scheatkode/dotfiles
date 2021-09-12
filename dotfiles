@@ -21,9 +21,9 @@ DOTFILES_CONFIGURATION_PATH="${XDG_CONFIG_HOME-${HOME}/.config}"
 
 # icons {{{2
 
-DOTFILES_ICON_PENDING='\u2026'
-DOTFILES_ICON_SUCCESS='\uf00c'
-DOTFILES_ICON_FAILURE='\uf00d'
+DOTFILES_ICON_PENDING='\u2026' # …
+DOTFILES_ICON_SUCCESS='\uf00c' # 
+DOTFILES_ICON_FAILURE='\uf00d' # 
 
 # colors {{{2
 
@@ -91,10 +91,11 @@ fail () {
 
 dotfiles_setup_xdg_config () {
    mkdir --parents "${XDG_CONFIG_HOME-~/.config/}"
+   mkdir --parents "${XDG_DATA_HOME-~/.local/share/}"
 }
 
 dotfiles_setup_neovim () {
-   unlink "${DOTFILES_CONFIGURATION_PATH}/nvim" > /dev/null 2>&1
+   dotfiles_ensure_backup "${DOTFILES_CONFIGURATION_PATH}/nvim"
 
    ln --symbolic                        \
       "${DOTFILES_CURRENT_PATH}/neovim" \
@@ -102,7 +103,12 @@ dotfiles_setup_neovim () {
 }
 
 dotfiles_setup_zsh () {
-   cat << 'EOF'
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/zsh"
+
+   dotfiles_ensure_backup "${configuration_path}"
+   dotfiles_ensure_backup "${HOME}/.zshenv"
+
+   cat << 'EOF' > "${HOME}/.zshenv"
 if [[ -z "${XDG_CONFIG_HOME}" ]] ; then
    export XDG_CONFIG_HOME="${HOME}/.config"
 fi
@@ -120,34 +126,36 @@ if [[ -z "${GPG_TTY}" ]] ; then
 fi
 EOF
 
-   unlink "${DOTFILES_CONFIGURATION_PATH}/zsh" > /dev/null 2>&1
-
-   ln --symbolic                        \
+   ln --symbolic                     \
       "${DOTFILES_CURRENT_PATH}/zsh" \
-      "${DOTFILES_CONFIGURATION_PATH}/zsh"
+      "${configuration_path}"
 }
 
 # helpers {{{3
 
 usage () {
-   echo -e "
-   Dotfiles management script.
+   echo -e "   scheatkode's dotfiles management script.
 
    Usage: $(basename ${0}) [${DOTFILES_COLOR_YELLOW}sub-command${DOTFILES_COLOR_NORMAL}]
 
    ${DOTFILES_COLOR_YELLOW}Sub commands${DOTFILES_COLOR_NORMAL}:
       setup:git-hooks Setup automated git hooks
       setup:neovim    Setup neovim configuration
-      setup-all       Alias to run all the above commands at once
+      setup:zsh       Setup zsh configuration
+      setup:all       Alias to run all the above commands at once
 
-      help            Show this help screen
-   "
+      help            Show this help screen"
 }
 
 act_all () {
    act 'Setting up configuration directory' dotfiles_setup_xdg_config
    act 'Setting up neovim'                  dotfiles_setup_neovim
    act 'Setting up zsh'                     dotfiles_setup_zsh
+}
+
+dotfiles_ensure_backup () {
+   unlink "${1}"               > /dev/null 2>&1
+   mv     "${1}" "${1}.backup" > /dev/null 2>&1
 }
 
 # main {{{1
