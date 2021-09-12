@@ -90,6 +90,32 @@ dotfiles_setup_neovim () {
       "${DOTFILES_CONFIGURATION_PATH}/nvim"
 }
 
+dotfiles_setup_zsh () {
+   cat << 'EOF'
+if [[ -z "${XDG_CONFIG_HOME}" ]] ; then
+   export XDG_CONFIG_HOME="${HOME}/.config"
+fi
+
+if [[ -z "${XDG_DATA_HOME}" ]] ; then
+   export XDG_DATA_HOME="${HOME}/.local/share"
+fi
+
+if [[ -d "${XDG_CONFIG_HOME}/zsh" ]] ; then
+   export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+fi
+
+if [[ -z "${GPG_TTY}" ]] ; then
+   export GPG_TTY="${TTY}"
+fi
+EOF
+
+   unlink "${DOTFILES_CONFIGURATION_PATH}/zsh" > /dev/null 2>&1
+
+   ln --symbolic                        \
+      "${DOTFILES_CURRENT_PATH}/zsh" \
+      "${DOTFILES_CONFIGURATION_PATH}/zsh"
+}
+
 # helpers {{{3
 
 usage () {
@@ -110,6 +136,7 @@ usage () {
 act_all () {
    act 'Setting up configuration directory' dotfiles_setup_xdg_config
    act 'Setting up neovim'                  dotfiles_setup_neovim
+   act 'Setting up zsh'                     dotfiles_setup_zsh
 }
 
 # main {{{1
@@ -124,6 +151,11 @@ main () {
          setup:neovim)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up neovim'                  dotfiles_setup_neovim
+            ;;
+
+         setup:zsh)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up zsh'                     dotfiles_setup_zsh
             ;;
 
          setup:all) act_all ;;
