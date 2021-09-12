@@ -50,4 +50,18 @@ acquainted to  the inner workings  of [[https://www.gnu.org/s/emacs/][Emacs]]  a
 shift from the [[https://neovim.io/][dark side]].+ Scratch that, I couldn't in the end ... The literate
 programming part still stands true.
 
-*Anyway, this repository is under heavy refactoring. Trust me, it's not worth your time... for now.*
+#+begin_src
+      .
+      ├── assets/                 # Images and the such.
+      ├── etc/                    # System-wide configuration.
+      ├── src/                    # Unported, old configuration.
+      ├── xdg/                    # User configuration.
+      │   ├── neovim/             # Neovim configuration.
+      │   └── zsh/                # Zsh configuration.
+      ├── dotfiles                # Dotfiles management script.
+      ├── LICENSE
+      └── README.org
+#+end_src
+
+*Anyway, this repository  is under heavy refactoring. Trust me,  it's not worth
+ your time... for now.*
