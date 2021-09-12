@@ -1,0 +1,144 @@
+#!/bin/sh
+# shellcheck shell=sh
+# shellcheck disable=SC2006
+
+# constants {{{1
+# path {{{2
+
+DOTFILES_CURRENT_PATH="$(pwd)"
+DOTFILES_CONFIGURATION_PATH="${XDG_CONFIG_HOME-${HOME}/.config}"
+
+# icons {{{2
+
+DOTFILES_ICON_PENDING='\u2026'
+DOTFILES_ICON_SUCCESS='\uf00c'
+DOTFILES_ICON_FAILURE='\uf00d'
+
+# colors {{{2
+
+# basic 8 colors, no need for anything fancy.
+
+if [ -z "${NO_COLOR+x}" ] ; then
+
+      DOTFILES_COLOR_RED='\033[0;31m'
+    DOTFILES_COLOR_GREEN='\033[0;32m'
+   DOTFILES_COLOR_YELLOW='\033[1;33m'
+   DOTFILES_COLOR_NORMAL='\033[0m'
+
+else
+
+      DOTFILES_COLOR_RED=''
+    DOTFILES_COLOR_GREEN=''
+   DOTFILES_COLOR_YELLOW=''
+   DOTFILES_COLOR_NORMAL=''
+
+fi
+
+# script names {{{2
+
+DOTFILES_HOOK_POST_UPDATE='.git/hooks/post-update'
+
+# functions {{{1
+# action lifecycle {{{2
+
+act () {
+   act_message="${1-Processing}"
+   act_command="${2-:}"
+
+   printf                        \
+      "   [%b%b%b] - %s"         \
+      "${DOTFILES_COLOR_YELLOW}" \
+      "${DOTFILES_ICON_PENDING}" \
+      "${DOTFILES_COLOR_NORMAL}" \
+      "${act_message}"
+
+   shift 2
+
+   "${act_command}" ${*} > /dev/null 2>&1 \
+      && succeed                          \
+      || fail
+}
+
+succeed () {
+   printf                        \
+      "\r   [%b%b%b]\n"          \
+      "${DOTFILES_COLOR_GREEN}"  \
+      "${DOTFILES_ICON_SUCCESS}" \
+      "${DOTFILES_COLOR_NORMAL}"
+}
+
+fail () {
+   printf                        \
+      "\r   [%b%b%b]\n"          \
+      "${DOTFILES_COLOR_RED}"    \
+      "${DOTFILES_ICON_FAILURE}" \
+      "${DOTFILES_COLOR_NORMAL}"
+}
+
+# actions {{{2
+# dotfiles {{{3
+
+dotfiles_setup_xdg_config () {
+   mkdir --parents "${XDG_CONFIG_HOME-~/.config/}"
+}
+
+dotfiles_setup_neovim () {
+   unlink "${DOTFILES_CONFIGURATION_PATH}/nvim" > /dev/null 2>&1
+
+   ln --symbolic                        \
+      "${DOTFILES_CURRENT_PATH}/neovim" \
+      "${DOTFILES_CONFIGURATION_PATH}/nvim"
+}
+
+# helpers {{{3
+
+usage () {
+   echo -e "
+   Dotfiles management script.
+
+   Usage: $(basename ${0}) [${DOTFILES_COLOR_YELLOW}sub-command${DOTFILES_COLOR_NORMAL}]
+
+   ${DOTFILES_COLOR_YELLOW}Sub commands${DOTFILES_COLOR_NORMAL}:
+      setup:git-hooks Setup automated git hooks
+      setup:neovim    Setup neovim configuration
+      setup-all       Alias to run all the above commands at once
+
+      help            Show this help screen
+   "
+}
+
+act_all () {
+   act 'Setting up configuration directory' dotfiles_setup_xdg_config
+   act 'Setting up neovim'                  dotfiles_setup_neovim
+}
+
+# main {{{1
+
+main () {
+   while [ "${#}" -gt 0 ] ; do
+      case "${1}" in
+         setup:git-hooks)
+            act 'Setting up git hooks' git_hook_post_update
+            ;;
+
+         setup:neovim)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up neovim'                  dotfiles_setup_neovim
+            ;;
+
+         setup:all) act_all ;;
+
+         usage|--usage|help|--help) usage ;;
+      esac
+
+      shift
+   done
+}
+
+echo ''
+
+main "${*}"
+
+echo ''
+
+# vim: set fdm=marker fdl=0:
