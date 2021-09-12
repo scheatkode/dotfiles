@@ -1,98 +1,10 @@
-# ---------------------------------------------------------------------------- #
-#                                 XDG setup                                    #
-# ---------------------------------------------------------------------------- #
+# ░▀▀█░█▀▀░█░█░░
+# ░▄▀░░▀▀█░█▀█░░
+# ░▀▀▀░▀▀▀░▀░▀░░
 
-export   XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
-export  XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
+# load modular configurations
 
-[[ -d   "${XDG_DATA_HOME}" ]] || mkdir --parent "${XDG_DATA_HOME}"
-[[ -d  "${XDG_CACHE_HOME}" ]] || mkdir --parent "${XDG_CACHE_HOME}"
-[[ -d "${XDG_CONFIG_HOME}" ]] || mkdir --parent "${XDG_CONFIG_HOME}"
-
-# ---------------------------------------------------------------------------- #
-#                                 GPG setup                                    #
-# ---------------------------------------------------------------------------- #
-
-export GPG_TTY="${TTY}"
-
-# ---------------------------------------------------------------------------- #
-#                                Path setup                                    #
-# ---------------------------------------------------------------------------- #
-
-export PATH=$HOME/bin:${HOME}/local/bin:/usr/local/bin:$PATH
-
-# ---------------------------------------------------------------------------- #
-#                                Instant prompt                                #
-# ---------------------------------------------------------------------------- #
-
-# enable  powerlevel10k  instant  prompt.  should  stay
-# close   to    the   top    of   ~/.config/zsh/.zshrc.
-# initialization  code that  may require  console input
-# (password prompts, [y/n] confirmations, etc.) must go
-# above this block; everything else may go below.
-
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-
-# ---------------------------------------------------------------------------- #
-#                              Zsh configuration                               #
-# ---------------------------------------------------------------------------- #
-
-# install functions.
-
-export UPDATE_INTERVAL="${UPDATE_INTERVAL:-15}"
-export         ZDOTDIR="${ZDOTDIR:-${XDG_CONFIG_HOME}/zsh}"
-export        ZDATADIR="${ZDATADIR:-${XDG_DATA_HOME}/zsh}"
-export       ZCACHEDIR="${ZCACHEDIR:-${XDG_CACHE_HOME}/zsh}"
-export             ZSH="${ZDOTDIR}"
-
-[[ -d   "${ZDOTDIR}" ]] || mkdir --parent "${ZDOTDIR}"
-[[ -d  "${ZDATADIR}" ]] || mkdir --parent "${ZDATADIR}"
-[[ -d "${ZCACHEDIR}" ]] || mkdir --parent "${ZCACHEDIR}"
-
-# load the prompt and completion systems and initialize
-# them.
-
-autoload -Uz compinit promptinit
-
-# on slow systems, checking  the cached .zcompdump file
-# to see  if it  must be  regenerated adds  a noticable
-# delay to  zsh startup. this little  hack restricts it
-# to once every 20 hours.
-
-_comp_files=(${ZCACHEDIR})
-
-if (( ${#_comp_files} )); then
-   compinit -i -C -d "${ZCACHEDIR}/zcompdump"
-else
-   compinit -i -d "${ZCACHEDIR}/zcompdump"
-fi
-
-unset _comp_files
-
-promptinit
-setopt prompt_subst
-
-
-# ---------------------------------------------------------------------------- #
-#                                  Ls colors                                   #
-# ---------------------------------------------------------------------------- #
-
-autoload -U colors && colors # load colors.
-
-LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32";
-LSCOLORS="ExGxFxDxCxDxDxhbhdacEc";
-
-# do we need linux or bsd style ?
-
-if command -v dircolors > /dev/null 2>&1 ; then
-   eval "$(command dircolors --sh "$(dirname "${(%):-%N}")/gruvbox.dircolors")"
-else
-   eval "$(command gdircolors --sh "$(dirname "${(%):-%N}")/gruvbox.dircolors")"
-fi
+for config ("${ZDOTDIR:-~}"/**/*.zsh) source "${config}"
 
 # ---------------------------------------------------------------------------- #
 #                                 Word style                                   #
