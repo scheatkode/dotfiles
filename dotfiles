@@ -2,6 +2,17 @@
 # shellcheck shell=sh
 # shellcheck disable=SC2006
 
+if [ -z "${HOME+x}" ] ; then
+   cat << EOF
+
+   Something seems to be wrong with your environment.
+   Check that your HOME variable is properly set before rerunning the script.
+
+EOF
+
+   exit 67
+fi
+
 # constants {{{1
 # path {{{2
 
