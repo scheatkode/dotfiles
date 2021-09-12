@@ -47,6 +47,7 @@ vim.cmd([[:command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 
 require('scheatkode.global')
 require('scheatkode.settings')
 require('scheatkode.autocmds')
+require('scheatkode.commands')
 require('config') -- user configuration
 -- require('lsp')    -- lsp configuration
 
