@@ -95,11 +95,13 @@ dotfiles_setup_xdg_config () {
 }
 
 dotfiles_setup_neovim () {
-   dotfiles_ensure_backup "${DOTFILES_CONFIGURATION_PATH}/nvim"
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/nvim"
 
-   ln --symbolic                        \
-      "${DOTFILES_CURRENT_PATH}/neovim" \
-      "${DOTFILES_CONFIGURATION_PATH}/nvim"
+   dotfiles_ensure_backup "${configuration_path}"
+
+   ln --symbolic                            \
+      "${DOTFILES_CURRENT_PATH}/xdg/neovim" \
+      "${configuration_path}"
 }
 
 dotfiles_setup_zsh () {
@@ -126,8 +128,8 @@ if [[ -z "${GPG_TTY}" ]] ; then
 fi
 EOF
 
-   ln --symbolic                     \
-      "${DOTFILES_CURRENT_PATH}/zsh" \
+   ln --symbolic                         \
+      "${DOTFILES_CURRENT_PATH}/xdg/zsh" \
       "${configuration_path}"
 }
 
@@ -139,7 +141,6 @@ usage () {
    Usage: $(basename ${0}) [${DOTFILES_COLOR_YELLOW}sub-command${DOTFILES_COLOR_NORMAL}]
 
    ${DOTFILES_COLOR_YELLOW}Sub commands${DOTFILES_COLOR_NORMAL}:
-      setup:git-hooks Setup automated git hooks
       setup:neovim    Setup neovim configuration
       setup:zsh       Setup zsh configuration
       setup:all       Alias to run all the above commands at once
@@ -163,10 +164,6 @@ dotfiles_ensure_backup () {
 main () {
    while [ "${#}" -gt 0 ] ; do
       case "${1}" in
-         setup:git-hooks)
-            act 'Setting up git hooks' git_hook_post_update
-            ;;
-
          setup:neovim)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up neovim'                  dotfiles_setup_neovim
