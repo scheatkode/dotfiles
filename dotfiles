@@ -114,6 +114,16 @@ dotfiles_setup_alsa () {
       "${configuration_path}"
 }
 
+dotfiles_setup_awesome () {
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/awesome"
+
+   dotfiles_ensure_backup "${configuration_path}"
+
+   ln --symbolic                             \
+      "${DOTFILES_CURRENT_PATH}/xdg/awesome" \
+      "${configuration_path}"
+}
+
 dotfiles_setup_neovim () {
    configuration_path="${DOTFILES_CONFIGURATION_PATH}/nvim"
 
@@ -162,6 +172,7 @@ usage () {
 
    ${DOTFILES_COLOR_YELLOW}Sub commands${DOTFILES_COLOR_NORMAL}:
       setup:alacritty   Setup alacritty configuration
+      setup:awesome     Setup awesome configuration
       setup:alsa        Setup alsa configuration
       setup:neovim      Setup neovim configuration
       setup:zsh         Setup zsh configuration
@@ -174,6 +185,7 @@ act_all () {
    act 'Setting up configuration directory' dotfiles_setup_xdg_config
    act 'Setting up alacritty'               dotfiles_setup_alacritty
    act 'Setting up alsa'                    dotfiles_setup_alsa
+   act 'Setting up awesome'                 dotfiles_setup_awesome
    act 'Setting up neovim'                  dotfiles_setup_neovim
    act 'Setting up zsh'                     dotfiles_setup_zsh
 }
@@ -196,6 +208,11 @@ main () {
          setup:alsa)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up alsa'                    dotfiles_setup_alsa
+            ;;
+
+         setup:awesome)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up awesome'                 dotfiles_setup_awesome
             ;;
 
          setup:neovim)
