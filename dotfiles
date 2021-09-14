@@ -94,6 +94,16 @@ dotfiles_setup_xdg_config () {
    mkdir --parents "${XDG_DATA_HOME-~/.local/share/}"
 }
 
+dotfiles_setup_alacritty () {
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/alacritty"
+
+   dotfiles_ensure_backup "${configuration_path}"
+
+   ln --symbolic                               \
+      "${DOTFILES_CURRENT_PATH}/xdg/alacritty" \
+      "${configuration_path}"
+}
+
 dotfiles_setup_neovim () {
    configuration_path="${DOTFILES_CONFIGURATION_PATH}/nvim"
 
@@ -141,15 +151,17 @@ usage () {
    Usage: $(basename ${0}) [${DOTFILES_COLOR_YELLOW}sub-command${DOTFILES_COLOR_NORMAL}]
 
    ${DOTFILES_COLOR_YELLOW}Sub commands${DOTFILES_COLOR_NORMAL}:
-      setup:neovim    Setup neovim configuration
-      setup:zsh       Setup zsh configuration
-      setup:all       Alias to run all the above commands at once
+      setup:alacritty   Setup alacritty configuration
+      setup:neovim      Setup neovim configuration
+      setup:zsh         Setup zsh configuration
+      setup:all         Alias to run all the above commands at once
 
-      help            Show this help screen"
+      help              Show this help screen"
 }
 
 act_all () {
    act 'Setting up configuration directory' dotfiles_setup_xdg_config
+   act 'Setting up alacritty'               dotfiles_setup_alacritty
    act 'Setting up neovim'                  dotfiles_setup_neovim
    act 'Setting up zsh'                     dotfiles_setup_zsh
 }
@@ -164,6 +176,11 @@ dotfiles_ensure_backup () {
 main () {
    while [ "${#}" -gt 0 ] ; do
       case "${1}" in
+         setup:alacritty)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up alacritty'               dotfiles_setup_alacritty
+            ;;
+
          setup:neovim)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up neovim'                  dotfiles_setup_neovim
