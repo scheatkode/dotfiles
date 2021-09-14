@@ -144,6 +144,16 @@ dotfiles_setup_pueue () {
       "${configuration_path}"
 }
 
+dotfiles_setup_tmux () {
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/tmux"
+
+   dotfiles_ensure_backup "${configuration_path}"
+
+   ln --symbolic                          \
+      "${DOTFILES_CURRENT_PATH}/xdg/tmux" \
+      "${configuration_path}"
+}
+
 dotfiles_setup_zsh () {
    configuration_path="${DOTFILES_CONFIGURATION_PATH}/zsh"
 
@@ -186,6 +196,7 @@ usage () {
       setup:alsa        Setup alsa configuration
       setup:neovim      Setup neovim configuration
       setup:pueue       Setup pueue configuration
+      setup:tmux        Setup tmux configuration
       setup:zsh         Setup zsh configuration
       setup:all         Alias to run all the above commands at once
 
@@ -199,6 +210,7 @@ act_all () {
    act 'Setting up awesome'                 dotfiles_setup_awesome
    act 'Setting up neovim'                  dotfiles_setup_neovim
    act 'Setting up pueue'                   dotfiles_setup_pueue
+   act 'Setting up tmux'                    dotfiles_setup_tmux
    act 'Setting up zsh'                     dotfiles_setup_zsh
 }
 
@@ -235,6 +247,11 @@ main () {
          setup:pueue)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up pueue'                   dotfiles_setup_pueue
+            ;;
+
+         setup:tmux)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up tmux'                    dotfiles_setup_tmux
             ;;
 
          setup:zsh)
