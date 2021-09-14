@@ -104,6 +104,16 @@ dotfiles_setup_alacritty () {
       "${configuration_path}"
 }
 
+dotfiles_setup_alsa () {
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/alsa"
+
+   dotfiles_ensure_backup "${configuration_path}"
+
+   ln --symbolic                          \
+      "${DOTFILES_CURRENT_PATH}/xdg/alsa" \
+      "${configuration_path}"
+}
+
 dotfiles_setup_neovim () {
    configuration_path="${DOTFILES_CONFIGURATION_PATH}/nvim"
 
@@ -152,6 +162,7 @@ usage () {
 
    ${DOTFILES_COLOR_YELLOW}Sub commands${DOTFILES_COLOR_NORMAL}:
       setup:alacritty   Setup alacritty configuration
+      setup:alsa        Setup alsa configuration
       setup:neovim      Setup neovim configuration
       setup:zsh         Setup zsh configuration
       setup:all         Alias to run all the above commands at once
@@ -162,6 +173,7 @@ usage () {
 act_all () {
    act 'Setting up configuration directory' dotfiles_setup_xdg_config
    act 'Setting up alacritty'               dotfiles_setup_alacritty
+   act 'Setting up alsa'                    dotfiles_setup_alsa
    act 'Setting up neovim'                  dotfiles_setup_neovim
    act 'Setting up zsh'                     dotfiles_setup_zsh
 }
@@ -179,6 +191,11 @@ main () {
          setup:alacritty)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up alacritty'               dotfiles_setup_alacritty
+            ;;
+
+         setup:alsa)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up alsa'                    dotfiles_setup_alsa
             ;;
 
          setup:neovim)
