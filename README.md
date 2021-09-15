@@ -50,7 +50,12 @@ programming part still stands true.
       ├── etc/                    # System-wide configuration.
       ├── src/                    # Unported, old configuration.
       ├── xdg/                    # User configuration.
+      │   ├── alacritty/          # Alacritty configuration.
+      │   ├── alsa/               # Alsa configuration.
+      │   ├── awesome/            # Awesome Window Manager configuration.
       │   ├── neovim/             # Neovim configuration.
+      │   ├── pueue/              # Pueue configuration.
+      │   ├── tmux/               # Tmux configuration.
       │   └── zsh/                # Zsh configuration.
       ├── dotfiles                # Dotfiles management script.
       ├── LICENSE
