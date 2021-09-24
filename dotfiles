@@ -124,6 +124,16 @@ dotfiles_setup_awesome () {
       "${configuration_path}"
 }
 
+dotfiles_setup_btop () {
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/btop"
+
+   dotfiles_ensure_backup "${configuration_path}"
+
+   ln --symbolic                          \
+      "${DOTFILES_CURRENT_PATH}/xdg/btop" \
+      "${configuration_path}"
+}
+
 dotfiles_setup_neovim () {
    configuration_path="${DOTFILES_CONFIGURATION_PATH}/nvim"
 
@@ -192,8 +202,9 @@ usage () {
 
    ${DOTFILES_COLOR_YELLOW}Sub commands${DOTFILES_COLOR_NORMAL}:
       setup:alacritty   Setup alacritty configuration
-      setup:awesome     Setup awesome configuration
       setup:alsa        Setup alsa configuration
+      setup:awesome     Setup awesome configuration
+      setup:btop        Setup btop configuration
       setup:neovim      Setup neovim configuration
       setup:pueue       Setup pueue configuration
       setup:tmux        Setup tmux configuration
@@ -208,6 +219,7 @@ act_all () {
    act 'Setting up alacritty'               dotfiles_setup_alacritty
    act 'Setting up alsa'                    dotfiles_setup_alsa
    act 'Setting up awesome'                 dotfiles_setup_awesome
+   act 'Setting up btop'                    dotfiles_setup_btop
    act 'Setting up neovim'                  dotfiles_setup_neovim
    act 'Setting up pueue'                   dotfiles_setup_pueue
    act 'Setting up tmux'                    dotfiles_setup_tmux
@@ -237,6 +249,11 @@ main () {
          setup:awesome)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up awesome'                 dotfiles_setup_awesome
+            ;;
+
+         setup:btop)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up btop'                    dotfiles_setup_btop
             ;;
 
          setup:neovim)
@@ -275,3 +292,4 @@ main "${*}"
 echo ''
 
 # vim: set fdm=marker fdl=0:
+

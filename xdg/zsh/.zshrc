@@ -303,6 +303,12 @@ zinit wait:'1b' silent from:gh-r as:program for                     \
       src:'completions/dog.zsh'                                     \
             @ogham/dog
 
+zinit wait:'1c' silent from:gh-r as:program for \
+   atinit:"tar xvf *.tbz > /dev/null 2>&1"      \
+    bpick:'*linux*86*64*'                       \
+     pick:'bin/btop'                            \
+            @aristocratos/btop
+
 zinit creinstall pueue > /dev/null 2>&1
 
 # ---------------------------------------------------------------------------- #
