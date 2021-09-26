@@ -53,6 +53,7 @@ programming part still stands true.
       │   ├── alacritty/          # Alacritty configuration.
       │   ├── alsa/               # Alsa configuration.
       │   ├── awesome/            # Awesome Window Manager configuration.
+      │   ├── btop/               # Btop system monitor configuration.
       │   ├── neovim/             # Neovim configuration.
       │   ├── pueue/              # Pueue configuration.
       │   ├── tmux/               # Tmux configuration.
