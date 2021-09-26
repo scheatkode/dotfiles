@@ -243,64 +243,65 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
   atclone:'%atinit'                                        \
          @muesli/duf
 
-zinit wait:'1b' silent from:gh-r as:program for                     \
-       mv:'bat* -> bat'                                             \
-     pick:'bat*/bat'                                                \
-   atinit:'mv pueue-* pueue 2> /dev/null'                           \
-  atclone:'%atinit'                                                 \
-   atpull:'%atinit'                                                 \
-   atload:'alias cat=bat'                                           \
-            @sharkdp/bat                                            \
-       mv:'fd* -> fd'                                               \
-     pick:'fd/fd'                                                   \
-            @sharkdp/fd                                             \
-       mv:'hyperfine*/hyperfine -> hyperfine'                       \
-     pick:'hyperfine*/hyperfine'                                    \
-            @sharkdp/hyperfine                                      \
-       mv:'exa* -> exa'                                             \
-     pick:'bin/exa'                                                 \
-   atload:'alias ls="exa --icons"'                                  \
-            @ogham/exa                                              \
-       mv:'ripgrep* -> ripgrep'                                     \
-     pick:'ripgrep/rg'                                              \
-            @BurntSushi/ripgrep                                     \
-       mv:'procs* -> procs'                                         \
-    bpick:'*lnx*'                                                   \
-            @dalance/procs                                          \
-       mv:'bandwhich* -> bandwhich'                                 \
-     pick:'imsnif/bandwhich'                                        \
-            @imsnif/bandwhich                                       \
-       mv:'dust*/dust'                                              \
-     pick:'dust*/dust'                                              \
-            @bootandy/dust                                          \
-    id-as:'pueue'                                                   \
-    bpick:'pueue-*linux*64*'                                        \
-  atclone:'mv pueue* pueue 2> /dev/null; ./pueue completions zsh .' \
-   atpull:'%atclone'                                                \
-   atload:'alias p=pueue'                                           \
-            @Nukesor/pueue                                          \
-    id-as:'pueued'                                                  \
-    bpick:'pueued-*linux*64*'                                       \
-   atinit:'mv pueued-* pueued 2> /dev/null'                         \
-  atclone:'%atinit'                                                 \
-   atpull:'%atinit'                                                 \
-   atload:'pueued --daemonize > /dev/null 2>&1'                     \
-            @Nukesor/pueue                                          \
-     pick:'zoxide*/zoxide'                                          \
-   atload:'eval "$(zoxide init zsh)"'                               \
-            @ajeetdsouza/zoxide                                     \
-     pick:'delta/delta'                                             \
-   atinit:'mv delta-* delta 2> /dev/null'                           \
-  atclone:'%atinit'                                                 \
-   atpull:'%atinit'                                                 \
-   atload:'alias diff="delta"'                                      \
-            @dandavison/delta                                       \
-     pick:'bin/dog'                                                 \
-  atclone:'%atinit'                                                 \
-   atpull:'%atinit'                                                 \
-   atinit:'mv dog-* dog 2> /dev/null'                               \
-   atload:'alias dig="dog"'                                         \
-      src:'completions/dog.zsh'                                     \
+zinit wait:'1b' silent from:gh-r as:program for \
+       mv:'bat* -> bat'                         \
+     pick:'bat*/bat'                            \
+   atinit:'mv pueue-* pueue 2> /dev/null'       \
+  atclone:'%atinit'                             \
+   atpull:'%atinit'                             \
+   atload:'alias cat=bat'                       \
+            @sharkdp/bat                        \
+       mv:'fd* -> fd'                           \
+     pick:'fd/fd'                               \
+            @sharkdp/fd                         \
+       mv:'hyperfine*/hyperfine -> hyperfine'   \
+     pick:'hyperfine*/hyperfine'                \
+            @sharkdp/hyperfine                  \
+       mv:'exa* -> exa'                         \
+     pick:'bin/exa'                             \
+   atload:'alias ls="exa --icons"'              \
+            @ogham/exa                          \
+       mv:'ripgrep* -> ripgrep'                 \
+     pick:'ripgrep/rg'                          \
+            @BurntSushi/ripgrep                 \
+       mv:'procs* -> procs'                     \
+    bpick:'*lnx*'                               \
+            @dalance/procs                      \
+       mv:'bandwhich* -> bandwhich'             \
+     pick:'imsnif/bandwhich'                    \
+            @imsnif/bandwhich                   \
+       mv:'dust*/dust'                          \
+     pick:'dust*/dust'                          \
+            @bootandy/dust                      \
+    id-as:'pueue'                               \
+    bpick:'pueue-*linux*64*'                    \
+   atinit:'mv pueue* pueue 2> /dev/null'        \
+  atclone:' ./pueue completions zsh .'          \
+   atpull:'%atclone'                            \
+   atload:'alias p=pueue'                       \
+            @Nukesor/pueue                      \
+    id-as:'pueued'                              \
+    bpick:'pueued-*linux*64*'                   \
+   atinit:'mv pueued-* pueued 2> /dev/null'     \
+  atclone:'%atinit'                             \
+   atpull:'%atinit'                             \
+   atload:'pueued --daemonize > /dev/null 2>&1' \
+            @Nukesor/pueue                      \
+     pick:'zoxide*/zoxide'                      \
+   atload:'eval "$(zoxide init zsh)"'           \
+            @ajeetdsouza/zoxide                 \
+     pick:'delta/delta'                         \
+   atinit:'mv delta-* delta 2> /dev/null'       \
+  atclone:'%atinit'                             \
+   atpull:'%atinit'                             \
+   atload:'alias diff="delta"'                  \
+            @dandavison/delta                   \
+     pick:'bin/dog'                             \
+  atclone:'%atinit'                             \
+   atpull:'%atinit'                             \
+   atinit:'mv dog-* dog 2> /dev/null'           \
+   atload:'alias dig="dog"'                     \
+      src:'completions/dog.zsh'                 \
             @ogham/dog
 
 zinit wait:'1c' silent from:gh-r as:program for \
