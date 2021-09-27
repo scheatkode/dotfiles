@@ -57,7 +57,7 @@ if not require('plugins') then
 end
 
 require('scheatkode.whitespace')
-require('scheatkode.numbers')
+-- require('scheatkode.numbers')
 
 -- garbage collection
 
