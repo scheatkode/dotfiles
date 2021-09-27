@@ -48,6 +48,7 @@ require('scheatkode.global')
 require('scheatkode.settings')
 require('scheatkode.autocmds')
 require('scheatkode.commands')
+require('scheatkode.mappings')
 require('config') -- user configuration
 -- require('lsp')    -- lsp configuration
 
