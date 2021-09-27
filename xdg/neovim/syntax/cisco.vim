@@ -1,6 +1,13 @@
-if exists('b:current_syntax')
+" for version 5.x: clear all syntax items
+" for later versions: quit when a syntax file was already loaded
+if version < 600
+   syntax clear
+elseif exists('b:current_syntax')
    finish
 endif
+
+let s:keepcpo = &cpo
+set cpo&vim
 
 syntax case ignore
 
@@ -4613,26 +4620,43 @@ syntax match   keyword                 /cable upstream/
 syntax match   keyword                 /cable dhcp-giaddr/
 syntax match   keyword                 /cable downstream/
 
-highlight default link ciscoaction          Error
-highlight default link ciscoargument        String
-highlight default link ciscocomment         Comment
-highlight default link ciscocondition       Type
-highlight default link ciscoconfiguration   Identifier
-highlight default link ciscodanger          Error
-highlight default link ciscodescription     keyword
-highlight default link ciscodescriptiontext Comment
-highlight default link ciscofunctionality   Function
-highlight default link ciscoidentifier      String
-highlight default link ciscointerface       keyword
-highlight default link ciscointerfacename   String
-highlight default link ciscoip              Type
-highlight default link ciscoip6             Type
-highlight default link ciscokeyword         keyword
-highlight default link ciscono              Tag
-highlight default link ciscoprotocol        Type
-highlight default link ciscoroute           keyword
-highlight default link ciscorouteip         Type
-highlight default link ciscoroutemask       Type
-highlight default link ciscostring          String
+" define the default highlighting.
+" for version 5.7 and earlier: only when not done already
+" for version 5.8 and later: only when an item doesn't have highlighting yet
+if version >= 508 || !exists("did_cisco_syntax_inits")
+  if version < 508
+    let did_cisco_syntax_inits = 1
+    command -nargs=+ HiLink hi link <args>
+  else
+    command -nargs=+ HiLink hi def link <args>
+  endif
+
+  HiLink ciscoaction          Error
+  HiLink ciscoargument        String
+  HiLink ciscocomment         Comment
+  HiLink ciscocondition       Type
+  HiLink ciscoconfiguration   Identifier
+  HiLink ciscodanger          Error
+  HiLink ciscodescription     keyword
+  HiLink ciscodescriptiontext Comment
+  HiLink ciscofunctionality   Function
+  HiLink ciscoidentifier      String
+  HiLink ciscointerface       keyword
+  HiLink ciscointerfacename   String
+  HiLink ciscoip              Type
+  HiLink ciscoip6             Type
+  HiLink ciscokeyword         keyword
+  HiLink ciscono              Tag
+  HiLink ciscoprotocol        Type
+  HiLink ciscoroute           keyword
+  HiLink ciscorouteip         Type
+  HiLink ciscoroutemask       Type
+  HiLink ciscostring          String
+
+  delcommand HiLink
+endif
+
+let &cpo = s:keepcpo
+unlet s:keepcpo
 
 let b:current_syntax = 'cisco'
