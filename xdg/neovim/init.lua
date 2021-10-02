@@ -61,7 +61,5 @@ require('scheatkode.whitespace')
 
 -- garbage collection
 
--- enable for lower memory consumption
-
 collectgarbage('setpause',   260)
 collectgarbage('setstepmul', 500)
