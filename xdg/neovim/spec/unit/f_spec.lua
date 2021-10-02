@@ -8,6 +8,9 @@ describe('functional', function ()
             local i = f.iterate(t)
 
             assert.same(1, i())
+            assert.same(2, i())
+            assert.same(3, i())
+            assert.same(4, i())
          end)
 
          it('should sepecify that it is an iterator', function ()
