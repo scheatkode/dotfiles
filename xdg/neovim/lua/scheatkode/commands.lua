@@ -9,3 +9,11 @@ local api = vim.api
 api.nvim_exec([[
    command! BufOnly silent! execute "%bdelete|edit#|bdelete#"
 ]], false)
+
+-- Wipe hidden buffers.
+--
+-- Wipe  all  deleted  (unloaded  &  unlisted)  or  all
+-- unloaded buffers.
+api.nvim_exec([[
+   command! -bar -bang Bwipeout call miscellaneous#bwipeout(<bang>0)
+]], false)
