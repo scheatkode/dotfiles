@@ -60,7 +60,7 @@ opt.fileformats = {       -- line feed as standard line ending
 
 opt.updatetime  = 1000 -- inactivity delay of 1 second
 opt.timeout     = true -- wait `timeoutlen` milliseconds before applying map
-opt.timeoutlen  =  500 -- delay before keystroke timeout
+opt.timeoutlen  =  200 -- delay before keystroke timeout
 opt.ttimeoutlen =   10 -- same but for terminal
 
 -- windows and buffers {{{1
