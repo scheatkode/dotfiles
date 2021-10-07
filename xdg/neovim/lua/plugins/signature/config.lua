@@ -1,9 +1,8 @@
--- localize globals {{{
+-- localize globals {{{1
 
 local log = require('log')
 
--- }}}
--- check for plugin existence {{{
+-- check for plugin existence {{{1
 
 local has_signature, signature = pcall(require, 'lsp_signature')
 
@@ -12,39 +11,54 @@ if not has_signature then
    return has_signature
 end
 
--- }}}
--- configure plugin {{{
+-- configure plugin {{{1
 
 signature.on_attach({
 
-   bind = true, -- this is mandatory, otherwise  border config won't get
-                -- registered.  if you  want  to hook  lspsaga or  other
-                -- signature handler, set to false
+   -- autoclose  signature  float   win  after  x  sec,
+   -- disabled if `nil`.
+   auto_close_after = 5,
 
-   doc_lines = 2, -- will  show two  lines of  comment/doc(if there  are
-                  -- more than two lines in doc, will be truncated); set
-                  -- to 0  if you  DO NOT  want any  API comments  to be
-                  -- shown.  this setting  only takes  effect in  insert
-                  -- mode, it  does not affect signature  help in normal
-                  -- mode, 10 by default
+   -- this is mandatory,  otherwise border config won't
+   -- get registered.  if you  want to hook  lspsaga or
+   -- other signature handler, set to `false`.
+   bind = true,
 
-   floating_window = true, -- show  hint in  a floating  window, set  to
-                           -- false for virtual text only mode
+   -- will show four lines of comment/doc (if there are
+   -- more than two lines in doc, the excess lines will
+   -- be truncated);  set to 0  if you DO NOT  want any
+   -- API comments to be shown. this setting only takes
+   -- effect  in  insert  mode,   it  does  not  affect
+   -- signature help in normal mode, 10 by default.
+   doc_lines = 4,
 
-   hint_enable = true, -- virtual hint enable
-   hint_prefix = "ⓘ ", -- icon
+   -- show hint in a floating  window, set to false for
+   -- virtual text only mode.
+   floating_window = true,
+
+   -- try to place the  floating above the current line
+   -- when  possible. Note:  will  set  to `true`  when
+   -- fully tested,  set to `false` will  use whichever
+   -- side has more space  this setting will be helpful
+   -- if you do not want the PUM and floating window to
+   -- overlap.
+   floating_window_above_cur_line = true,
+
+   hint_enable = true, -- virtual hint enable.
+   hint_prefix = "ⓘ ", -- icon.
    hint_scheme = "String",
 
-   use_lspsaga = true, -- set to true if you want to use lspsaga popup
+   -- how the parameter will be highlighted.
+   hi_parameter = "Search",
 
-   hi_parameter = "Search", -- how your parameter will be highlighted
+   -- max height  of the signature floating  window, if
+   -- content is more than `max_height`, you can scroll
+   -- down to view the hidden contents.
+   max_height = 12,
 
-   max_height = 12, -- max  height  of   signature  floating_window,  if
-                    -- content is  more than max_height, you  can scroll
-                    -- down to view the hiding contents
-
-   max_width = 120, -- max_width of signature floating_window, line will
-                    -- be wrapped if exceed max_width
+   -- max width of signature floating window, line will
+   -- be wrapped if it exceeds `max_width`.
+   max_width = 80,
 
    handler_opts = {
       border = "single"   -- double, single, shadow, none
@@ -52,10 +66,11 @@ signature.on_attach({
 
 })
 
--- }}}
+-- {{{1
 
 log.info('Plugin loaded', 'lsp-signature')
 
 return true
 
 -- vim: set fdm=marker fdl=0:
+
