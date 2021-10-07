@@ -112,9 +112,11 @@ telescope.setup({
          previewer     = false,
          mappings = {
             i = {
+               ['<c-h>'] = 'which_key',
                ['<c-x>'] = actions.delete_buffer,
             },
             n = {
+               ['?'] = 'which_key',
                ['<c-x>'] = actions.delete_buffer,
             },
          },
