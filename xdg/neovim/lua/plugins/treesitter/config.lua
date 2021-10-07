@@ -24,12 +24,16 @@ treesitter_configs.norg = {
 treesitter.setup({
    ensure_installed = 'maintained',
 
-   autopairs             = { enable = true },
-   autotag               = { enable = true },
-   context_commentstring = { enable = true },
-   highlight             = { enable = true },
-   indent                = { enable = true },
-   lsp_interop           = { enable = true },
+   autopairs   = { enable = true },
+   autotag     = { enable = true },
+   highlight   = { enable = true },
+   indent      = { enable = true },
+   lsp_interop = { enable = true },
+
+   context_commentstring = {
+      enable         = true,
+      enable_autocmd = false,
+   },
 
    incremental_selection = {
       enable = true,
@@ -40,14 +44,6 @@ treesitter.setup({
          scope_incremental = 'R',
          node_decremental  = '-',
       }
-   },
-
-   tree_docs = {
-      enable  = true,
-      keymaps = {
-         doc_all_in_range   = '<leader>cgd',
-         doc_node_at_cursor = '<leader>cgd',
-      },
    },
 
    textobjects = {
