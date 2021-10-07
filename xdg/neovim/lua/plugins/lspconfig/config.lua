@@ -387,17 +387,6 @@ local on_attach = function (client, bufnr)
       },
 
       -- }}}
-      -- symbol search {{{
-
-      {
-         mode         = 'n',
-         keys         = '<leader>clF',
-         description  = 'Find symbol',
-         condition    = true,
-         options      = { buffer = bufnr },
-      }
-
-      -- }}}
 
    }
 
