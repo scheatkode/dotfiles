@@ -40,6 +40,8 @@ local languages = {
 }
 
 local border = {
+
+   --- rounded border
    {'╭', 'FloatBorder'},
    {'─', 'FloatBorder'},
    {'╮', 'FloatBorder'},
@@ -49,6 +51,7 @@ local border = {
    {'╰', 'FloatBorder'},
    {'│', 'FloatBorder'},
 
+   --- square border
    -- {'┌', 'FloatBorder'},
    -- {'─', 'FloatBorder'},
    -- {'┐', 'FloatBorder'},
@@ -57,9 +60,10 @@ local border = {
    -- {'─', 'FloatBorder'},
    -- {'└', 'FloatBorder'},
    -- {'│', 'FloatBorder'},
+
 }
 
--- mappings registration shorthand {{{
+-- mappings registration shorthand {{{1
 
 local normalize_keymaps = function (mappings)
    for _, mapping in ipairs(mappings) do
@@ -97,27 +101,24 @@ local normalize_keymaps = function (mappings)
    end
 end
 
--- }}}
--- on attach {{{
+-- on attach {{{1
 
 local on_attach = function (client, bufnr)
 
-   -- omnifunc setup {{{
+   -- omnifunc setup {{{2
 
    vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-   -- }}}
-   -- border customization {{{
+   -- border customization {{{2
 
    lsp.handlers['textDocument/hover']         = lsp.with(lsp.handlers.hover, {border = border})
    lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.hover, {border = border})
 
-   -- }}}
-   -- mappings {{{
+   -- mappings {{{2
 
    normalize_keymaps {
 
-      -- declaration {{{
+      -- declaration {{{3
 
       {
          mode         = 'n',
@@ -128,8 +129,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- definition {{{
+      -- definition {{{3
 
       {
          mode         = 'n',
@@ -140,8 +140,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- type definition {{{
+      -- type definition {{{3
 
       {
          mode         = 'n',
@@ -152,8 +151,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- implementation {{{
+      -- implementation {{{3
 
       {
          mode         = 'n',
@@ -164,8 +162,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- rename symbol {{{
+      -- rename symbol {{{3
 
       {
          mode         = 'n',
@@ -176,8 +173,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- references {{{
+      -- references {{{3
 
       {
          mode         = 'n',
@@ -188,8 +184,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- code action {{{
+      -- code action {{{3
 
       {
          mode         = 'n',
@@ -209,8 +204,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- hover documentation {{{
+      -- hover documentation {{{3
 
       {
          mode         = 'n',
@@ -230,8 +224,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- call hierarchy {{{
+      -- call hierarchy {{{3
 
       {
          mode         = 'n',
@@ -251,8 +244,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- diagnostics {{{
+      -- diagnostics {{{3
 
       {
          mode         = 'n',
@@ -290,8 +282,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- signature help {{{
+      -- signature help {{{3
 
       {
          mode         = 'n',
@@ -311,8 +302,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- workspace management {{{
+      -- workspace management {{{3
 
       {
          mode         = 'n',
@@ -341,8 +331,7 @@ local on_attach = function (client, bufnr)
          options      = { buffer = bufnr },
       },
 
-      -- }}}
-      -- code formatting {{{
+      -- code formatting {{{3
 
       {
          mode         = 'n',
@@ -369,7 +358,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>cf',
          description  = 'Format code',
          command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
-         -- command      = '<cmd>lua vim.lsp.buf.range_formatting()<CR>',
          condition    = client.resolved_capabilities.document_formatting
             or client.resolved_capabilities.document_range_formatting,
          options      = { buffer = bufnr },
@@ -380,7 +368,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>=',
          description  = 'Format code',
          command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
-         -- command      = '<cmd>lua vim.lsp.buf.range_formatting()<CR>',
          condition    = client.resolved_capabilities.document_formatting
             or client.resolved_capabilities.document_range_formatting,
          options      = { buffer = bufnr },
@@ -405,9 +392,7 @@ local on_attach = function (client, bufnr)
       })
    end
 
-   -- }}}
-
-   -- autocommands {{{
+   -- autocommands {{{2
 
    if client.resolved_capabilities.document_highlight then
       api.nvim_exec([[
@@ -427,8 +412,7 @@ local on_attach = function (client, bufnr)
 
 end
 
--- }}}
--- server configuration {{{
+-- server configuration {{{1
 
 local configure_servers = function(language_list)
    local capabilities = require('lsp.capabilities')
@@ -479,8 +463,7 @@ local configure_servers = function(language_list)
    end
 end
 
--- }}}
--- main {{{
+-- main {{{1
 
 if not has_lspconfig then
    log.error('Tried loading plugin ... unsuccessfully', '‼ lsp')
