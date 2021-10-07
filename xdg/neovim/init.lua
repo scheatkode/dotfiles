@@ -49,7 +49,7 @@ require('scheatkode.settings')
 require('scheatkode.autocmds')
 require('scheatkode.commands')
 require('scheatkode.mappings')
-require('config') -- user configuration
+-- require('config') -- user configuration
 -- require('lsp')    -- lsp configuration
 
 if not require('plugins') then
