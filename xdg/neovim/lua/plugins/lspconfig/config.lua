@@ -7,10 +7,7 @@ local lsp = vim.lsp
 
 local has_lspinstall, lspinstall = pcall(require, 'lspinstall')
 local has_lspconfig,  lspconfig  = pcall(require, 'lspconfig')
-local has_saga,       _          = pcall(require, 'lspsaga')
 local has_whichkey,   whichkey   = pcall(require, 'which-key')
-
-has_saga = false
 
 local register_keymap = require('util').register_single_keymap
 local log             = require('log')
@@ -70,24 +67,17 @@ local normalize_keymaps = function (mappings)
       local keys         = mapping.keys
       local description  = mapping.description
       local command      = mapping.command
-      local command_saga = mapping.command_saga
       local condition    = mapping.condition
       local options      = mapping.options
 
-      if
-             has_saga
-         and command_saga ~= nil
-      then
-         command = command_saga
-      end
+      local is_command_valid =
+             command ~= nil
+         and command ~= false
+         and command ~= ''
 
-      if
-             command   ~= nil
-         and command   ~= ''
-         and command   ~= false
-         and condition ~= nil
-         and condition ~= false
-      then
+      local is_condition_valid = condition ~= nil and condition ~= false
+
+      if is_command_valid and is_condition_valid then
          register_keymap {
             mode    = mode,
             keys    = keys,
@@ -134,7 +124,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clD',
          description  = 'Declaration',
          command      = '<cmd>lua vim.lsp.buf.declaration()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.declaration,
          options      = { buffer = bufnr },
       },
@@ -147,7 +136,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>cld',
          description  = 'Definition',
          command      = '<cmd>lua vim.lsp.buf.definition()<CR>',
-         command_saga = '<cmd>lua require("lspsaga.provider").preview_definition()<CR>',
          condition    = client.resolved_capabilities.goto_definition,
          options      = { buffer = bufnr },
       },
@@ -160,7 +148,6 @@ local on_attach = function (client, bufnr)
          keys         =  '<leader>clT',
          description  = 'Type definition',
          command      = '<cmd>lua vim.lsp.buf.type_definition()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.type_definition,
          options      = { buffer = bufnr },
       },
@@ -173,7 +160,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>cli',
          description  = 'Implementation',
          command      = '<cmd>lua vim.lsp.buf.implementation()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.implementation,
          options      = { buffer = bufnr },
       },
@@ -186,7 +172,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clR',
          description  = 'Rename symbol',
          command      = '<cmd>lua vim.lsp.buf.rename()<CR>',
-         command_saga = '<cmd>lua require("lspsaga.rename").rename()<CR>',
          condition    = client.resolved_capabilities.rename,
          options      = { buffer = bufnr },
       },
@@ -199,7 +184,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clr',
          description  = 'References',
          command      = '<cmd>lua vim.lsp.buf.references()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.references,
          options      = { buffer = bufnr },
       },
@@ -212,7 +196,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>cla',
          description  = 'Code action',
          command      = '<cmd>lua vim.lsp.buf.code_action()<CR>',
-         command_saga = nil, -- '<cmd>lua require("lspsaga.codeaction").code_action()<CR>',
          condition    = client.resolved_capabilities.code_action,
          options      = { buffer = bufnr },
       },
@@ -222,7 +205,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>cla',
          description  = 'Code action',
          command      = '<cmd>lua vim.lsp.buf.code_action()<CR>',
-         command_saga = nil, -- '<cmd><c-u>lua require("lspsaga.codeaction").range_code_action()<CR>',
          condition    = client.resolved_capabilities.code_action,
          options      = { buffer = bufnr },
       },
@@ -235,7 +217,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clh',
          description  = 'Hover documentation',
          command      = '<cmd>lua vim.lsp.buf.hover()<CR>',
-         command_saga = '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
          condition    = client.resolved_capabilities.hover,
          options      = { buffer = bufnr },
       },
@@ -245,7 +226,6 @@ local on_attach = function (client, bufnr)
          keys         = 'K',
          description  = 'Hover documentation',
          command      = '<cmd>lua vim.lsp.buf.hover()<CR>',
-         command_saga = '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
          condition    = client.resolved_capabilities.hover,
          options      = { buffer = bufnr },
       },
@@ -258,7 +238,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clI',
          description  = 'Incoming calls',
          command      = '<cmd>lua vim.lsp.buf.incoming_calls()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.call_hierarchy,
          options      = { buffer = bufnr },
       },
@@ -268,7 +247,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clO',
          description  = 'Outgoing calls',
          command      = '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.call_hierarchy,
          options      = { buffer = bufnr },
       },
@@ -281,7 +259,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>cll',
          description  = 'Line diagnostics',
          command      = '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({border = "rounded"})<CR>',
-         command_saga = '<cmd>lua require("lspsaga.diagnostic").show_line_diagnostics()<CR>',
          condition    = true,
          options      = { buffer = bufnr },
       },
@@ -291,7 +268,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clL',
          description  = 'Send diagnostics to loclist',
          command      = '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
-         command_saga = nil,
          condition    = true,
          options      = { buffer = bufnr },
       },
@@ -301,7 +277,6 @@ local on_attach = function (client, bufnr)
          keys         = '[d',
          description  = 'Go to previous diagnostic',
          command      = '<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = "rounded"}})<CR>',
-         command_saga = nil,
          condition    = true,
          options      = { buffer = bufnr },
       },
@@ -311,7 +286,6 @@ local on_attach = function (client, bufnr)
          keys         = ']d',
          description  = 'Go to next diagnostic',
          command      = '<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = "rounded"}})<CR>',
-         command_saga = nil,
          condition    = true,
          options      = { buffer = bufnr },
       },
@@ -324,7 +298,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clS',
          description  = 'Signature help',
          command      = '<cmd>lua vim.lsp.buf.signature_help()<CR>',
-         command_saga = '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>',
          condition    = client.resolved_capabilities.signature_help,
          options      = { buffer = bufnr },
       },
@@ -334,7 +307,6 @@ local on_attach = function (client, bufnr)
          keys         = '<M-s>',
          description  = 'Signature help',
          command      = '<cmd>lua vim.lsp.buf.signature_help()<CR>',
-         command_saga = '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>',
          condition    = client.resolved_capabilities.signature_help,
          options      = { buffer = bufnr },
       },
@@ -347,7 +319,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clwa',
          description  = 'Add folder to workspace',
          command      = '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.workspace_folder_properties,
          options      = { buffer = bufnr },
       },
@@ -357,7 +328,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clwd',
          description  = 'Remove folder from workspace',
          command      = '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.workspace_folder_properties,
          options      = { buffer = bufnr },
       },
@@ -367,7 +337,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>clwl',
          description  = 'List folders in workspace',
          command      = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.workspace_folder_properties,
          options      = { buffer = bufnr },
       },
@@ -380,7 +349,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>cf',
          description  = 'Format code',
          command      = '<cmd>lua vim.lsp.buf.formatting(vim.g.format_options or {})<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.document_formatting
             or client.resolved_capabilities.document_range_formatting,
          options      = { buffer = bufnr },
@@ -391,7 +359,6 @@ local on_attach = function (client, bufnr)
          keys         = '<leader>=',
          description  = 'Format code',
          command      = '<cmd>lua vim.lsp.buf.formatting(vim.g.format_options or {})<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.document_formatting
             or client.resolved_capabilities.document_range_formatting,
          options      = { buffer = bufnr },
@@ -403,7 +370,6 @@ local on_attach = function (client, bufnr)
          description  = 'Format code',
          command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
          -- command      = '<cmd>lua vim.lsp.buf.range_formatting()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.document_formatting
             or client.resolved_capabilities.document_range_formatting,
          options      = { buffer = bufnr },
@@ -415,7 +381,6 @@ local on_attach = function (client, bufnr)
          description  = 'Format code',
          command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
          -- command      = '<cmd>lua vim.lsp.buf.range_formatting()<CR>',
-         command_saga = nil,
          condition    = client.resolved_capabilities.document_formatting
             or client.resolved_capabilities.document_range_formatting,
          options      = { buffer = bufnr },
@@ -428,8 +393,6 @@ local on_attach = function (client, bufnr)
          mode         = 'n',
          keys         = '<leader>clF',
          description  = 'Find symbol',
-         command      = '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>',
-         command_saga = nil,
          condition    = true,
          options      = { buffer = bufnr },
       }
@@ -472,6 +435,7 @@ local on_attach = function (client, bufnr)
    end
 
    -- }}}
+
 end
 
 -- }}}
@@ -544,4 +508,5 @@ log.info('Plugin loaded', ' lsp')
 
 return true
 
--- }}}
+-- vim: set fdm=marker fdl=0:
+
