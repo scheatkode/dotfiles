@@ -35,6 +35,8 @@ local languages = {
    -- 'phpactor',
    yaml   = 'yamlls',
 
+   tailwindcss = 'tailwindcss',
+
    generic = 'efm',
 
 }
