@@ -11,16 +11,11 @@ local has_completion, completion = pcall(require, 'cmp')
 local has_snippets,   snippets   = pcall(require, 'luasnip')
 
 if not has_completion and not has_snippets then
-   log.error('Tried loading plugin ... unsuccessfully ‼', 'nvim-completion')
+   log.error('Tried loading plugin ... unsuccessfully ‼', 'nvim-cmp')
    return has_completion
 end
 
 -- configure plugin {{{1
-
-local check_backspace = function ()
-   local column = vim.fn.col('.') - 1
-   return column == 0 or vim.fn.getline('.'):sub(column, column):match('%s')
-end
 
 completion.setup {
    formatting = {
@@ -51,20 +46,18 @@ completion.setup {
       },
 
       ['<Tab>'] = function (fallback)
-         if fn.pumvisible() == 1 then
-            fn.feedkeys(t('<C-n>'), 'n')
+         if completion.visible() then
+            completion.select_next_item()
          elseif snippets.expand_or_jumpable() then
             fn.feedkeys(t('<Plug>luasnip-expand-or-jump'), '')
-         elseif check_backspace() then
-            fn.feedkeys(t('<Tab>'), 'n')
          else
             fallback()
          end
       end,
 
       ['<S-Tab>'] = function (fallback)
-         if fn.pumvisible() == 1 then
-            fn.feedkeys(t('<C-p>'), 'n')
+         if completion.visible() then
+            completion.select_prev_item()
          elseif snippets.jumpable(-1) then
             fn.feedkeys(t('<Plug>luasnip-jump-prev'), '')
          else
@@ -86,3 +79,4 @@ log.info('Plugin loaded', 'nvim-cmp')
 return true
 
 -- vim: set fdm=marker fdl=0:
+
