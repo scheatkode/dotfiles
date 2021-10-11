@@ -204,9 +204,9 @@ local packer_manage_plugins = function ()
          },
       } -- magit for neovim
 
-         use {'sindrets/diffview.nvim', opt = true, -- ediff-like diff view
-            cmd = 'DiffviewOpen',
-         }
+      use {'sindrets/diffview.nvim', opt = true, -- ediff-like diff view
+         cmd = 'DiffviewOpen',
+      }
 
       use {'rhysd/committia.vim', opt = true,
          ft = 'gitcommit',
@@ -628,3 +628,4 @@ return setmetatable({}, {
 })
 
 -- vim: set ft=lua fdm=marker fdl=0:
+
