@@ -339,7 +339,7 @@ local on_attach = function (client, bufnr)
          mode         = 'n',
          keys         = '<leader>cf',
          description  = 'Format code',
-         command      = '<cmd>lua vim.lsp.buf.formatting(vim.g.format_options or {})<CR>',
+         command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
          condition    = client.resolved_capabilities.document_formatting
             or client.resolved_capabilities.document_range_formatting,
          options      = { buffer = bufnr },
@@ -349,7 +349,7 @@ local on_attach = function (client, bufnr)
          mode         = 'n',
          keys         = '<leader>=',
          description  = 'Format code',
-         command      = '<cmd>lua vim.lsp.buf.formatting(vim.g.format_options or {})<CR>',
+         command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
          condition    = client.resolved_capabilities.document_formatting
             or client.resolved_capabilities.document_range_formatting,
          options      = { buffer = bufnr },
