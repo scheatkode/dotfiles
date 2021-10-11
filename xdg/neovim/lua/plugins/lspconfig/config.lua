@@ -37,7 +37,7 @@ local languages = {
 
    tailwindcss = 'tailwindcss',
 
-   generic = 'efm',
+   generic = 'null-ls',
 
 }
 

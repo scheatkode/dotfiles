@@ -168,6 +168,7 @@ local packer_manage_plugins = function ()
 
       use(require 'plugins.lspinstall')  -- powered by kabouzeid/nvim-lspinstall
       use(require 'plugins.lspconfig')   -- powered by neovim/nvim-lspconfig
+      use(require 'plugins.lint')
       use(require 'plugins.signature')   -- powered by xray/lsp_signature
       use(require 'plugins.diagnostics') -- powered by folke/lsp-trouble
       use(require 'plugins.symbols')     -- powered by simrat39/symbols-outline
