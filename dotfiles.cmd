@@ -1,6 +1,21 @@
-#!/bin/sh
-# shellcheck shell=sh
-# shellcheck disable=SC2006
+: #  ░░░░░░░█░░░░█▀▄░█▀█░▀█▀░█▀▀░▀█▀░█░░░█▀▀░█▀▀
+: #  ▄█▄█░░█▀░░░░█░█░█░█░░█░░█▀▀░░█░░█░░░█▀▀░▀▀█
+: #  ▀░▀░░█▀░░▀░░▀▀░░▀▀▀░░▀░░▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀
+
+: # This is a special script which intermixes both `sh`
+: # and `cmd` code.  It is written this  way because it
+: # is   used  in  `system()`  shell-outs  directly  in
+: # otherwise portable code.
+
+:<<"::WINJUMP"
+@ECHO OFF
+GOTO :WINDOWS_CMD_SCRIPT
+::WINJUMP
+
+set -e
+set -u
+
+# TODO(scheatkode): check for binaries and print warning if they are not found.
 
 if [ -z "${HOME+x}" ] ; then
    cat << EOF
@@ -291,5 +306,9 @@ main "${*}"
 
 echo ''
 
-# vim: set fdm=marker fdl=0:
+
+:WINDOWS_CMD_SCRIPT
+
+REM TODO(scheatkode): Handle windows case.
+REM TODO(scheatkode): Maybe break down the file and source system-specific scripts.
 
