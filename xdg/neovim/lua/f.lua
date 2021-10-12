@@ -172,10 +172,6 @@ local exports = {}
 --- ```
 --- TODO(scheatkode): Move this documentation elsewhere.
 
--- compatibility with non-JIT Lua
-
-local unpack = rawget(table, 'unpack') or unpack
-
 -----------------------------------------------------------------------------
 --- # Early definitions
 --- TODO(scheatkode): Small description
