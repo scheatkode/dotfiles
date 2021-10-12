@@ -189,13 +189,13 @@ local filterm_generator
 --- TODO(scheatkode): Small description
 -----------------------------------------------------------------------------
 
---- @class iterator
+--- @class Iterator
 --- @field generator function
 --- @field parameter any
 --- @field state     any
-local iterator = {}
+local Iterator = {}
 
-iterator.__index = iterator
+Iterator.__index = Iterator
 
 --- Makes  a `for`  loop  work. If  not called  without
 --- `parameter` or `state`, will just generate with the
@@ -218,7 +218,7 @@ iterator.__index = iterator
 --- @param parameter any
 --- @param state any
 --- @return any
-function iterator:__call(parameter, state)
+function Iterator:__call(parameter, state)
    return self.generator(
       parameter or self.parameter,
       state     or self.state
@@ -229,7 +229,7 @@ end
 --- used for iterating over lists.
 ---
 --- @return string
-function iterator:__tostring()
+function Iterator:__tostring()
    return '<iterator>'
 end
 
@@ -249,7 +249,7 @@ end
 ---
 --- @param f function
 --- @return nil
-function iterator:foreach(f)
+function Iterator:foreach(f)
    local parameter, state = self.parameter, self.state
 
    repeat
@@ -336,7 +336,7 @@ local argument_count = function (...)
       local it = select(n - 2, ...)
 
       if     type(it) == 'table'
-         and getmetatable(it) == iterator
+         and getmetatable(it) == Iterator
          and it.parameter     == select(n - 1, ...)
          and it.state         == select(n, ...)
       then
@@ -367,7 +367,7 @@ local raw_iterator = function (object, parameter, state)
       local metatable = getmetatable(object)
 
       if     metatable ~= nil
-         and metatable == iterator
+         and metatable == Iterator
       then
          return object.generator, object.parameter, object.state
       end
@@ -418,24 +418,24 @@ end
 --- as multivals  like the  original `luafun`.  See the
 --- `__call` metamethod for more information.
 ---
---- @see iterator::__call
+--- @see Iterator::__call
 ---
 --- @param  generator any
 --- @param  parameter any
 --- @param  state     any
---- @return iterator
+--- @return Iterator
 local wrap = function (generator, parameter, state)
    return setmetatable({
       generator = generator,
       parameter = parameter,
           state = state,
-   }, iterator)
+   }, Iterator)
 end
 
 --- Unwrap  an  iterator  metatable into  the  iterator
 --- triplet.
 ---
---- @param  self iterator
+--- @param  self Iterator
 --- @return any
 --- @return any
 --- @return any
@@ -509,7 +509,7 @@ end
 --- @param  object    any
 --- @param  parameter any (optional)
 --- @param  state     any (optional)
---- @return iterator
+--- @return Iterator
 local iterate = function (object, parameter, state)
    return wrap(raw_iterator(object, parameter, state))
 end
@@ -518,7 +518,7 @@ exports.iter    = iterate
 exports.wrap    = wrap
 exports.unwrap  = unwrap
 
-function iterator:iterate(object)
+function Iterator:iterate(object)
    return iterate(object, self.parameter, self.state)
 end
 
@@ -664,7 +664,7 @@ end
 --- @param  start number
 --- @param  stop number
 --- @param  step number
---- @return iterator
+--- @return Iterator
 local range = function (start, stop, step)
    if step == nil then
       if stop == nil then
@@ -727,7 +727,7 @@ end
 --- iteration.
 ---
 --- @vararg ...
---- @return iterator
+--- @return Iterator
 local duplicate = function (...)
    if select('#', ...) <= 1 then
       return wrap(duplicate_generator, select(1, ...), 0)
@@ -750,7 +750,7 @@ exports.xrepeat   = duplicate
 ---        stateless.
 ---
 --- @param  f function
---- @return iterator
+--- @return Iterator
 local tabulate = function (f)
    assert(type(f) == 'function')
    return wrap(duplicate_function_generator, f, 0)
@@ -761,7 +761,7 @@ exports.from_function = tabulate
 --- Creates an infinite iterator  that will yield zeros
 --- as an alias to calling `duplicate(0)`.
 ---
---- @return iterator
+--- @return Iterator
 local zeros = function ()
    return wrap(duplicate_generator, 0, 0)
 end
@@ -770,7 +770,7 @@ exports.zeros = zeros
 --- Creates an  infinite iterator that will  yield ones
 --- as an alias to calling `duplicate(1)`.
 ---
---- @return iterator
+--- @return Iterator
 local ones = function ()
    return wrap(duplicate_generator, 1, 0)
 end
@@ -804,7 +804,7 @@ end
 ---
 --- @param  n number
 --- @param  m number
---- @return iterator
+--- @return Iterator
 local random = function (n, m)
    if n == nil and m == nil then
       return wrap(random_nil_generator, 0, 0)
@@ -876,7 +876,7 @@ exports.nth = export1(nth)
 --- @param  n number
 --- @return nil
 --- @return any
-function iterator:nth(n)
+function Iterator:nth(n)
    return nth(n, self.generator, self.parameter, self.state)
 end
 
@@ -911,7 +911,7 @@ exports.car = exports.head
 ---
 --- @return nil
 --- @return any
-function iterator:head()
+function Iterator:head()
    return head(self.generator, self.parameter, self.state)
 end
 
@@ -922,7 +922,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local tail = function (generator, parameter, state)
    state = generator(parameter, state)
 
@@ -941,7 +941,7 @@ exports.cdr = exports.tail
 ---
 --- @return nil
 --- @return any
-function iterator:tail()
+function Iterator:tail()
    return tail(self.generator, self.parameter, self.state)
    -- return self
    -- return tail(self.generator, self.parameter, self.state)
@@ -988,7 +988,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local take_n = function (n, generator, parameter, state)
    assert(n >= 0,  'invalid first argument to take_n')
    return wrap(take_n_generator, {n, generator, parameter}, {0, state})
@@ -999,8 +999,8 @@ exports.take_n = export1(take_n)
 --- elements.
 ---
 --- @param  n number
---- @return iterator
-function iterator:take_n(n)
+--- @return Iterator
+function Iterator:take_n(n)
    return take_n(n, self.generator, self.parameter, self.state)
 end
 
@@ -1030,7 +1030,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local take_while = function (predicate, generator, parameter, state)
    assert(type(predicate) == 'function', 'invalid first argument to take_while')
    return wrap(take_while_generator, {predicate, generator, parameter}, state)
@@ -1042,8 +1042,8 @@ exports.take_while = export1(take_while)
 --- predicate.
 ---
 --- @param  predicate function
---- @return iterator
-function iterator:take_while(predicate)
+--- @return Iterator
+function Iterator:take_while(predicate)
    return take_while(predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1052,7 +1052,7 @@ end
 --- predicate.
 ---
 --- @param  n_or_predicate function
---- @return iterator
+--- @return Iterator
 local take = function (n_or_predicate, generator, parameter, state)
    if type(n_or_predicate) == 'number' then
       return take_n(n_or_predicate, generator, parameter, state)
@@ -1069,7 +1069,7 @@ exports.take = export1(take)
 --- @param  n_or_predicate number|function
 --- @return nil
 --- @return any
-function iterator:take(n_or_predicate)
+function Iterator:take(n_or_predicate)
    return take(n_or_predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1080,7 +1080,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local drop_n = function (n, generator, parameter, state)
    assert(n >= 0, 'invalid first argument to drop_n')
 
@@ -1100,8 +1100,8 @@ exports.drop_n = export1(drop_n)
 --- elements.
 ---
 --- @param  n number
---- @return iterator
-function iterator:drop_n(n)
+--- @return Iterator
+function Iterator:drop_n(n)
    return drop_n(n, self.generator, self.parameter, self.state)
 end
 
@@ -1126,7 +1126,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local drop_while = function(predicate, generator, parameter, state)
    assert(type(predicate) == 'function', 'invalid first argument to drop_while')
 
@@ -1152,7 +1152,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local drop = function (n_or_predicate, generator, parameter, state)
    if type(n_or_predicate) == 'number' then
       return drop_n(n_or_predicate, generator, parameter, state)
@@ -1167,8 +1167,8 @@ exports.drop = export1(drop)
 --- `n_or_predicate`'s type.
 ---
 --- @param  n_or_predicate number|function
---- @return iterator
-function iterator:drop(n_or_predicate)
+--- @return Iterator
+function Iterator:drop(n_or_predicate)
    return drop(n_or_predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1187,7 +1187,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator, iterator
+--- @return Iterator, Iterator
 local split_p = function (n_or_predicate, generator, parameter, state)
    return take(n_or_predicate, generator, parameter, state),
           drop(n_or_predicate, generator, parameter, state)
@@ -1205,7 +1205,7 @@ exports.span     = exports.split_p
 --- @param  n_or_predicate number|function
 --- @return nil
 --- @return any
-function iterator:split_p(n_or_predicate)
+function Iterator:split_p(n_or_predicate)
    return split_p(n_or_predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1238,7 +1238,7 @@ end
 ---
 --- @param  input string
 --- @param  separator string
---- @return iterator
+--- @return Iterator
 local split = function (input, separator)
    return wrap(string_split_generator, {input, separator}, 1)
 end
@@ -1251,7 +1251,7 @@ exports.split = split
 ---
 --- @return nil
 --- @return table
-function iterator:split(separator)
+function Iterator:split(separator)
    -- TODO(scheatkode): Figure this out
    -- return split(self.generator, self.parameter, self.state)
 end
@@ -1272,7 +1272,7 @@ exports.words = words
 ---
 --- @return nil
 --- @return table
-function iterator:words()
+function Iterator:words()
    return words()
 end
 
@@ -1330,7 +1330,7 @@ exports.elem_index = exports.index
 --- @param  x any
 --- @return nil
 --- @return number
-function iterator:index_of(x)
+function Iterator:index_of(x)
    return index(x, self.generator, self.parameter, self.state)
 end
 
@@ -1365,7 +1365,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local indexes = function (x, generator, parameter, state)
    return wrap(indexes_generator, {x, generator, parameter}, {0, state})
 end
@@ -1376,8 +1376,8 @@ exports.indices = exports.indexes
 --- equal `x`.
 ---
 --- @param  x any
---- @return iterator
-function iterator:indexes(x)
+--- @return Iterator
+function Iterator:indexes(x)
    return indexes(x, self.generator, self.parameter, self.state)
 end
 
@@ -1446,7 +1446,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local filter = function (predicate, generator, parameter, state)
    return wrap(filter_generator, {predicate, generator, parameter}, state)
 end
@@ -1457,8 +1457,8 @@ exports.remove_if = exports.filter
 --- satisfy the given `predicate`.
 ---
 --- @param  predicate function
---- @return iterator
-function iterator:filter(predicate)
+--- @return Iterator
+function Iterator:filter(predicate)
    return filter(predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1471,7 +1471,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local grep = function (regex_or_predicate, generator, parameter, state)
    local f = regex_or_predicate
 
@@ -1490,7 +1490,7 @@ exports.grep = export1(grep)
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator, iterator
+--- @return Iterator, Iterator
 local partition = function (predicate, generator, parameter, state)
    local negative_p = function (...)
       return not predicate(...)
@@ -1505,8 +1505,8 @@ exports.partition = export1(partition)
 --- satisfy the given predicate.
 ---
 --- @param  predicate function
---- @return iterator, iterator
-function iterator:partition(predicate)
+--- @return Iterator, Iterator
+function Iterator:partition(predicate)
    return partition(predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1584,7 +1584,7 @@ exports.foldl  = exports.reduce
 --- @param  accumulator function
 --- @param  start any
 --- @return any
-function iterator:reduce(accumulator, start)
+function Iterator:reduce(accumulator, start)
    return reduce(
       accumulator,
       start,
@@ -1642,7 +1642,7 @@ exports.length = export0(length)
 ---       iterators.
 ---
 --- @return number
-function iterator:length()
+function Iterator:length()
    return length(self.generator, self.parameter, self.state)
 end
 
@@ -1662,15 +1662,15 @@ exports.is_null = export0(is_null)
 --- finished, `false` otherwise.
 ---
 --- @return boolean
-function iterator:is_null()
+function Iterator:is_null()
    return is_null(self.generator, self.parameter, self.state)
 end
 
 --- Takes two iterators and returns `true` if the first
 --- iterator is a prefix of the second.
 ---
---- @param  iter_x iterator
---- @param  iter_y iterator
+--- @param  iter_x Iterator
+--- @param  iter_y Iterator
 --- @return boolean
 local is_prefix_of = function (iter_x, iter_y)
    local generator_x, parameter_x, state_x = iterate(iter_x)
@@ -1696,9 +1696,9 @@ exports.is_prefix_of = is_prefix_of
 --- Takes two iterators and returns `true` if the first
 --- iterator is a prefix of the second.
 ---
---- @param  iter iterator
+--- @param  iter Iterator
 --- @return boolean
-function iterator:is_prefix_of(iter)
+function Iterator:is_prefix_of(iter)
    return is_prefix_of(self, iter)
 end
 
@@ -1727,7 +1727,7 @@ exports.every = exports.every
 ---
 --- @param  predicate function
 --- @return boolean
-function iterator:every(predicate)
+function Iterator:every(predicate)
    return every(predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1758,7 +1758,7 @@ exports.some = exports.any
 ---
 --- @param  predicate function
 --- @return boolean
-function iterator:any(predicate)
+function Iterator:any(predicate)
    return any(predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1798,7 +1798,7 @@ exports.sum = export0(sum)
 --- 0 is returned for empty iterators.
 ---
 --- @return number
-function iterator:sum()
+function Iterator:sum()
    return sum(self.generator, self.parameter, self.state)
 end
 
@@ -1836,7 +1836,7 @@ exports.product = export0(product)
 --- 1 is returned for empty iterators.
 ---
 --- @return number
-function iterator:product()
+function Iterator:product()
    return product(self.generator, self.parameter, self.state)
 end
 
@@ -1887,7 +1887,7 @@ exports.minimum = export0(minimum)
 --- otherwise an error is raised.
 ---
 --- @return any
-function iterator:minimum()
+function Iterator:minimum()
    return minimum(self.generator, self.parameter, self.state)
 end
 
@@ -1921,7 +1921,7 @@ exports.minimum_by = export1(minimum_by)
 ---
 --- @param  predicate function
 --- @return any
-function iterator:minimum_by(predicate)
+function Iterator:minimum_by(predicate)
    return minimum_by(predicate, self.generator, self.parameter, self.state)
 end
 
@@ -1963,7 +1963,7 @@ exports.maximum = export0(maximum)
 --- error is raised.
 ---
 --- @return any
-function iterator:maximum()
+function Iterator:maximum()
    return maximum(self.generator, self.parameter, self.state)
 end
 
@@ -1997,7 +1997,7 @@ exports.maximum_by = export1(maximum_by)
 ---
 --- @param  predicate function
 --- @return any
-function iterator:maximum_by(predicate)
+function Iterator:maximum_by(predicate)
    return maximum_by(predicate, self.generator, self.parameter, self.state)
 end
 
@@ -2029,7 +2029,7 @@ exports.totable = export0(totable)
 --- `table.insert`.
 ---
 --- @return table
-function iterator:totable()
+function Iterator:totable()
    return totable(self.generator, self.parameter, self.state)
 end
 
@@ -2061,7 +2061,7 @@ exports.tomap = export0(tomap)
 --- doing `tab[val1] = val2`.
 ---
 --- @return table
-function iterator:tomap()
+function Iterator:tomap()
    return tomap(self.generator, self.parameter, self.state)
 end
 
@@ -2084,7 +2084,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local map = function (f, generator, parameter, state)
    return wrap(map_generator, {generator, parameter, f}, state)
 end
@@ -2095,8 +2095,8 @@ exports.map = export1(map)
 --- on the fly and no values are buffered.
 ---
 --- @param  f function
---- @return iterator
-function iterator:map(f)
+--- @return Iterator
+function Iterator:map(f)
    return map(f, self.generator, self.parameter, self.state)
 end
 
@@ -2127,7 +2127,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local enumerate = function (generator, parameter, state)
    return wrap(enumerate_generator, {generator, parameter}, {1, state})
 end
@@ -2141,8 +2141,8 @@ exports.enumerate = export0(enumerate)
 --- mapping is performed  on the fly and  no values are
 --- buffered.
 ---
---- @return iterator
-function iterator:enumerate()
+--- @return Iterator
+function Iterator:enumerate()
    return enumerate(self.generator, self.parameter, self.state)
 end
 
@@ -2176,7 +2176,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 ---
 --- TODO(scheatkode): intersperse must not add x to the tail
 local intersperse = function (x, generator, parameter, state)
@@ -2190,8 +2190,8 @@ exports.intersperse = export1(intersperse)
 --- element of  the created  iterator if the  first one
 --- contains an odd number of elements.
 ---
---- @return iterator
-function iterator:intersperse(x)
+--- @return Iterator
+function Iterator:intersperse(x)
    return intersperse(x, self.generator, self.parameter, self.state)
 end
 
@@ -2229,8 +2229,8 @@ end
 --- length to fit the shortest iterator. Only the first
 --- variable is used for multi-return iterators.
 ---
---- @vararg ... iterator
---- @return iterator
+--- @vararg ... Iterator
+--- @return Iterator
 local zip = function (...)
    local n = argument_count(...)
 
@@ -2263,9 +2263,9 @@ exports.zip = zip
 --- length to fit the shortest iterator. Only the first
 --- variable is used for multi-return iterators.
 ---
---- @vararg ... iterator
---- @return iterator
-function iterator:zip(...)
+--- @vararg ... Iterator
+--- @return Iterator
+function Iterator:zip(...)
    return zip({self.generator, self.parameter, self.state}, ...)
 end
 
@@ -2300,7 +2300,7 @@ end
 --- @param  generator function
 --- @param  parameter any
 --- @param  state any
---- @return iterator
+--- @return Iterator
 local cycle = function (generator, parameter, state)
    return wrap(cycle_generator, {generator, parameter, state}, deepcopy(state))
 end
@@ -2315,8 +2315,8 @@ exports.cycle = export0(cycle)
 --- make  an identical  clone.  Infinity iterators  are
 --- supported, but not recommended.
 ---
---- @return iterator
-function iterator:cycle()
+--- @return Iterator
+function Iterator:cycle()
    return cycle(self.generator, self.parameter, self.state)
 end
 
@@ -2355,8 +2355,8 @@ end
 --- Infinity   iterators   are   supported,   but   not
 --- recommended.
 ---
---- @vararg ... iterator
---- @return iterator
+--- @vararg ... Iterator
+--- @return Iterator
 local chain = function (...)
    local n = argument_count(...)
 
@@ -2389,9 +2389,9 @@ exports.chain = chain
 --- Infinity   iterators   are   supported,   but   not
 --- recommended.
 ---
---- @vararg ... iterator
---- @return iterator
-function iterator:chain(...)
+--- @vararg ... Iterator
+--- @return Iterator
+function Iterator:chain(...)
    return chain({self.generator, self.parameter, self.state}, ...)
 end
 
