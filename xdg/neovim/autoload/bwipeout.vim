@@ -1,5 +1,5 @@
 " Wipe all deleted (unloaded & unlisted) or all unloaded buffers.
-function! miscellaneous#bwipeout(listed) abort
+function! bwipeout#bwipeout(listed) abort
    let l:buffers = filter(
             \     getbufinfo(),
             \     {_, v -> !v.loaded && (!v.listed || a:listed)}
