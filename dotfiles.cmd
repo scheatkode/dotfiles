@@ -305,7 +305,7 @@ echo ''
 main "${*}"
 
 echo ''
-
+exit 0
 
 :WINDOWS_CMD_SCRIPT
 
