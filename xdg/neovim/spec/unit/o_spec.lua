@@ -582,6 +582,10 @@ describe('object oriented', function ()
          assert.equal(Vector(1,2,3), v / 2)
       end)
 
+      it('should implement __unm', function ()
+         assert.equal(Vector(-1, -2, -3), -u)
+      end)
+
       it('should implement __concat', function ()
          assert.equal(28, u .. v)
       end)
@@ -648,6 +652,10 @@ describe('object oriented', function ()
 
          it('should work with __div', function ()
             assert.equal(Vector2(1,2,3), v2 / 2)
+         end)
+
+         it('should work with __unm', function ()
+            assert.equal(Vector2(-1, -2, -3), -u2)
          end)
 
          it('should work with __concat', function ()
