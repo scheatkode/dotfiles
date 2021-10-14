@@ -216,18 +216,10 @@ local default_mixin = {
 }
 
 -- TODO(scheatkode): Documentation
-function m.class(name, super)
+return function (name, super)
    assert(type(name) == 'string', 'A name is needed for the new class')
 
    return super
       and super:subclass(name)
       or  include_mixin(create_class(name), default_mixin)
 end
-
-setmetatable(m, {
-   __call = function(_, ...)
-      return m.class(...)
-   end
-})
-
-return m
