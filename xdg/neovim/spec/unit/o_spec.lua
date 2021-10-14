@@ -1,4 +1,4 @@
----@diagnostic disable: duplicate-set-field
+--- @diagnostic disable: duplicate-set-field
 
 local class = require('o')
 
@@ -240,33 +240,53 @@ describe('object oriented', function ()
       describe('instances of', function ()
          describe('primitives', function ()
             local o = Object:new()
-            local primitives = {
-               nil,
-               1,
-               'foobar',
-               {},
-               function () end,
-               Object:new()
-            }
 
             describe('when used as classes', function ()
-               for _, primitive in ipairs(primitives) do
-                  local _type = type(primitive)
+               it ('object:is_instance_of(nil) should return false', function ()
+                  assert.is_falsy(o:is_instance_of(nil))
+               end)
 
-                  it('object:is_instance_of( ' .. _type .. ' ) should return false', function ()
-                     assert.is_falsy(o:is_instance_of(primitive))
-                  end)
-               end
+               it ('object:is_instance_of(number) should return false', function ()
+                  assert.is_falsy(o:is_instance_of(1))
+               end)
+
+               it ('object:is_instance_of(string) should return false', function ()
+                  assert.is_falsy(o:is_instance_of('foobar'))
+               end)
+
+               it ('object:is_instance_of(table) should return false', function ()
+                  assert.is_falsy(o:is_instance_of({}))
+               end)
+
+               it ('object:is_instance_of(function) should return false', function ()
+                  assert.is_falsy(o:is_instance_of(function () end))
+               end)
+
+               it ('object:is_instance_of(Object) should return false', function ()
+                  assert.is_falsy(o:is_instance_of(Object:new()))
+               end)
             end)
 
             describe('when used as instances', function ()
-               for _, primitive in ipairs(primitives) do
-                  local _type = type(primitive)
+               it ('Object.is_instance_of(nil, Object) should return false', function ()
+                  assert.is_falsy(Object.is_instance_of(nil, Object))
+               end)
 
-                  it('Object:is_instance_of( ' .. _type .. ', Object ) should return false', function ()
-                     assert.is_falsy(Object.is_instance_of(primitive, Object))
-                  end)
-               end
+               it ('Object.is_instance_of(number, Object) should return false', function ()
+                  assert.is_falsy(Object.is_instance_of(1, Object))
+               end)
+
+               it ('Object.is_instance_of(string, Object) should return false', function ()
+                  assert.is_falsy(Object.is_instance_of('foobar', Object))
+               end)
+
+               it ('Object.is_instance_of(table, Object) should return false', function ()
+                  assert.is_falsy(Object.is_instance_of({}, Object))
+               end)
+
+               it ('Object.is_instance_of(function, Object) should return false', function ()
+                  assert.is_falsy(Object.is_instance_of(function () end, Object))
+               end)
             end)
          end)
 
@@ -313,21 +333,25 @@ describe('object oriented', function ()
          end)
 
          describe('primitives', function ()
-            local primitives = {
-               nil,
-               1,
-               'foobar',
-               {},
-               function () end,
-            }
+            it('should return false for nil', function ()
+               assert.is_false(Object:is_subclass_of(nil))
+            end)
 
-            for _, primitive in ipairs(primitives) do
-               local _type = type(primitive)
+            it('should return false for number', function ()
+               assert.is_false(Object:is_subclass_of(1))
+            end)
 
-               it('should return false for ' .. _type, function ()
-                  assert.is_false(Object:is_subclass_of(primitive))
-               end)
-            end
+            it('should return false for string', function ()
+               assert.is_false(Object:is_subclass_of('foobar'))
+            end)
+
+            it('should return false for table', function ()
+               assert.is_false(Object:is_subclass_of({}))
+            end)
+
+            it('should return false for function', function ()
+               assert.is_false(Object:is_subclass_of(function () end))
+            end)
          end)
 
          describe('any class', function ()
