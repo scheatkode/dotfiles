@@ -141,7 +141,7 @@ end
 -- TODO(scheatkode): Documentation
 local default_mixin = {
        __tostring = function(self) return 'instance of ' .. tostring(self.class) end,
-       construct = function(self, ...) end,
+       construct  = function(self, ...) end,
    is_instance_of = function(self, c)
       return type(c)    == 'table'
          and type(self) == 'table'
@@ -168,7 +168,7 @@ local default_mixin = {
       end,
 
       subclass = function(self, name)
-         assert(type(self) == 'table', [[Make sure that you are using 'Class:subclass' instead of 'Class.subclass']])
+         assert(type(self) == 'table',  [[Make sure that you are using 'Class:subclass' instead of 'Class.subclass']])
          assert(type(name) == 'string', 'You must provide a name for your class')
 
          local subclass = create_class(name, self)
@@ -218,6 +218,7 @@ local default_mixin = {
 -- TODO(scheatkode): Documentation
 function m.class(name, super)
    assert(type(name) == 'string', 'A name is needed for the new class')
+
    return super
       and super:subclass(name)
       or  include_mixin(create_class(name), default_mixin)
