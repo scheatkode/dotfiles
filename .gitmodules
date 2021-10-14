@@ -1,0 +1,4 @@
+[submodule "xdg/neovim"]
+	path = xdg/neovim
+	url = git@github.com:scheatkode/dotfiles-neovim
+	branch = main
