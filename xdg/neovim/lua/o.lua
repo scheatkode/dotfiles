@@ -1,8 +1,38 @@
----@diagnostic disable: unused-local, unused-vararg
+--- @meta [[
+---
+--- This  file was  inspired  from `middleclass`  while
+--- modifying  some terms  and functionality  to better
+--- suit    Lua's    *prototype-based*   approach    to
+--- object-oriented  programming  which,  in  turn,  is
+--- closer to JavaScript's own model.
+---
+--- @meta ]]
+
+--- @diagnostic disable: unused-local, unused-vararg
+
+--- @class Prototype
+--- @field allocate       function
+--- @field include        function
+--- @field is_subclass_of function
+--- @field new            function
+--- @field subclass       function
+--- @field subclassed     function
+
+--- @class Class
+--- @field allocate       function
+--- @field construct      function
+--- @field include        function
+--- @field is_instance_of function
+--- @field is_subclass_of function
+--- @field name           string
+--- @field new            function
+--- @field prototype      Prototype
+--- @field subclass       function
+--- @field subclassed     function
+--- @field subclasses     table
 
 local m = {}
 
--- TODO(scheatkode): Documentation
 local function create_index_wrapper(c, f)
    if f == nil then
       return c.__instance_dictionary
@@ -32,7 +62,6 @@ local function create_index_wrapper(c, f)
    end
 end
 
--- TODO(scheatkode): Documentation
 local function propagate_instance_method(c, name, f)
    f = (
           name == '__index'
@@ -49,7 +78,6 @@ local function propagate_instance_method(c, name, f)
    end
 end
 
--- TODO(scheatkode): Documentation
 local function declare_instance_method(c, name, f)
    c.__declared_methods[name] = f
 
@@ -60,17 +88,14 @@ local function declare_instance_method(c, name, f)
    propagate_instance_method(c, name, f)
 end
 
--- TODO(scheatkode): Documentation
 local function __tostring(self) return
    'class ' .. self.name
 end
 
--- TODO(scheatkode): Documentation
 local function __call(self, ...) return
    self:new(...)
 end
 
--- TODO(scheatkode): Documentation
 local function create_class(name, super)
    local dictionary = {}
    dictionary.__index = dictionary
@@ -138,7 +163,6 @@ local function include_mixin(c, mixin)
    return c
 end
 
--- TODO(scheatkode): Documentation
 local default_mixin = {
        __tostring = function(self) return 'instance of ' .. tostring(self.class) end,
        construct  = function(self, ...) end,
@@ -215,7 +239,10 @@ local default_mixin = {
    }
 }
 
--- TODO(scheatkode): Documentation
+--- Create a new class.
+--- @param name string
+--- @param super? Class
+--- @return Class
 return function (name, super)
    assert(type(name) == 'string', 'A name is needed for the new class')
 
