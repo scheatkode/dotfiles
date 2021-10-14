@@ -1,4 +1,5 @@
 --- @meta [[
+---
 --- An adaptation  of `luafun`  for personal  use. Some
 --- documentation is the same  as the original `luafun`
 --- as well as some extra functions.
@@ -12,10 +13,10 @@
 --- and `ipairs()`  which, when called outside  a loop,
 --- generate :
 ---
---- ```lua
+--- <pre>
 --- > = ipairs({'a', 'b', 'c'})
 --- function: builtin#6     table: 0x42001520       0
---- ```
+--- </pre>
 ---
 --- The returned values are referred to as an *iterator
 --- triplet*, described below:
@@ -40,11 +41,11 @@
 --- When calling the  `generator` function manually, we
 --- get the following result :
 ---
---- ```lua
+--- <pre>
 --  > generator, parameter, state =ipairs({'a', 'b', 'c'})
 --  > = generator(parameter, state)
 --  1       a
---- ```
+--- </pre>
 ---
 --- The `generator`  function returned a new  state `1`
 --- and the  next iteration value `a`.  Another call to
@@ -56,14 +57,14 @@
 --- Let's   understand  iterations   with  a   concrete
 --- example:
 ---
---- ```lua
+--- <pre>
 --  for _, x in ipairs({'a', 'b', 'c'}) do print(x) end
---- ```
+--- </pre>
 ---
 --- According  to the  Lua reference  manual, the  code
 --- above is equivalent to :
 ---
---- ```lua
+--- <pre>
 --- do
 ---     -- Initialize the iterator
 ---     local g, p, s = ipairs({'a', 'b', 'c'})
@@ -78,7 +79,7 @@
 ---         print(x)
 ---     end
 --- end
---- ```
+--- </pre>
 ---
 --- What this is means is :
 ---
@@ -164,12 +165,12 @@ local exports = {}
 --- This will be used to export library utilities to be
 --- used object-oriented style.
 ---
---- ```lua
+--- <pre>
 --- local f = require 'f'
 --- f.range(n)
 ---  :map(function(x) return x ^ 2 end)
 ---  :reduce(operator.add, 0)
---- ```
+--- </pre>
 --- TODO(scheatkode): Move this documentation elsewhere.
 
 -----------------------------------------------------------------------------
@@ -1178,10 +1179,10 @@ end
 --- predicate and the second  operates the remainder of
 --- the iterator. This is equivalent to:
 ---
---- ```lua
+--- <pre>
 --- return take(n_or_predicate, generator, parameter, state),
 ---        drop(n_or_predicate, generator, parameter, state);
---- ```
+--- </pre>
 ---
 --- @param  n_or_predicate function
 --- @param  generator function
@@ -1537,7 +1538,7 @@ end
 --- binary operator `accumulator` and the initial value
 --- `start`. It is equivalent to:
 ---
---- ```lua
+--- <pre>
 --- local val = start
 ---
 --- for _, ... in generator, parameter, state do
@@ -1545,7 +1546,7 @@ end
 --- end
 ---
 --- return val
---- ```
+--- </pre>
 ---
 --- @param  accumulator function
 --- @param  start any
@@ -1571,7 +1572,7 @@ exports.foldl  = exports.reduce
 --- binary operator `accumulator` and the initial value
 --- `start`. It is equivalent to:
 ---
---- ```lua
+--- <pre>
 --- local val = start
 ---
 --- for _, ... in generator, parameter, state do
@@ -1579,7 +1580,7 @@ exports.foldl  = exports.reduce
 --- end
 ---
 --- return val
---- ```
+--- </pre>
 ---
 --- @param  accumulator function
 --- @param  start any
@@ -1765,9 +1766,9 @@ end
 --- Sum  up all  iteration values.  An optimized  alias
 --- for:
 ---
---- ```lua
+--- <pre>
 --- reduce(operator.add, 0, gen, param, state)
---- ```
+--- </pre>
 ---
 --- 0 is returned for empty iterators.
 ---
@@ -1791,9 +1792,9 @@ exports.sum = export0(sum)
 --- Sum  up all  iteration values.  An optimized  alias
 --- for:
 ---
---- ```lua
+--- <pre>
 --- reduce(operator.add, 0, gen, param, state)
---- ```
+--- </pre>
 ---
 --- 0 is returned for empty iterators.
 ---
@@ -1805,9 +1806,9 @@ end
 --- Multiply  up  all  iteration values.  An  optimized
 --- alias for:
 ---
---- ```lua
+--- <pre>
 --- reduce(operator.mul, 1, gen, param, state)
---- ```
+--- </pre>
 ---
 --- 1 is returned for empty iterators.
 ---
@@ -1829,9 +1830,9 @@ exports.product = export0(product)
 --- Multiply  up  all  iteration values.  An  optimized
 --- alias for:
 ---
---- ```lua
+--- <pre>
 --- reduce(operator.mul, 1, gen, param, state)
---- ```
+--- </pre>
 ---
 --- 1 is returned for empty iterators.
 ---
