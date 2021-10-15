@@ -14,6 +14,7 @@ GOTO :WINDOWS_CMD_SCRIPT
 
 set -e
 set -u
+set -o pipefail
 
 # TODO(scheatkode): check for binaries and print warning if they are not found.
 
