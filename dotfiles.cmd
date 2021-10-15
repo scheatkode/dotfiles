@@ -322,6 +322,18 @@ dotfiles_ensure_backup () {
 # main {{{1
 
 main () {
+   if [ x"${1}" = x'' ] \
+      || [ "${1}" = 'usage' ] \
+      || [ "${1}" = 'help' ]  \
+      || [ "${1}" = '--usage' ]  \
+      || [ "${1}" = '--help' ]
+   then
+
+      usage
+      return 0
+
+   fi
+
    if                                                                   \
       ! act 'Ensuring dependencies'        dotfiles_ensure_dependencies \
    || ! act 'Ensuring dependency versions' dotfiles_ensure_dependency_version
@@ -377,8 +389,6 @@ main () {
             ;;
 
          setup:all) act_all ;;
-
-         usage|--usage|help|--help) usage ;;
       esac
 
       shift
