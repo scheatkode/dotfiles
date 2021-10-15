@@ -19,10 +19,13 @@ end
 
 if has_treesitter then
    pairs.setup {
+      disable_in_macro = true,
       check_ts = true,
    }
 else
-   pairs.setup {}
+   pairs.setup {
+      disable_in_macro = true,
+   }
 
    log.warn(
       'Treesitter not found, autopairs will have limited functionality',
