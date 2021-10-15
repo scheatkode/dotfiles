@@ -318,6 +318,16 @@ dotfiles_ensure_backup () {
 # main {{{1
 
 main () {
+   if                                                                   \
+      ! act 'Ensuring dependencies'        dotfiles_ensure_dependencies \
+   || ! act 'Ensuring dependency versions' dotfiles_ensure_dependency_version
+   then
+
+      echo
+      return 1
+
+   fi
+
    while [ "${#}" -gt 0 ] ; do
       case "${1}" in
          setup:alacritty)
