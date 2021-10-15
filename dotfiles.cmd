@@ -102,9 +102,12 @@ act () {
 
    shift 2
 
-   "${act_command}" ${*} > /dev/null 2>&1 \
-      && succeed                          \
-      || fail
+   if act_return="$("${act_command}" ${*} 2>&1)" ; then
+      succeed
+   else
+      fail "${act_return}"
+      return 1
+   fi
 }
 
 succeed () {
@@ -123,6 +126,22 @@ fail () {
       "${DOTFILES_COLOR_RED}"    \
       "${DOTFILES_ICON_FAILURE}" \
       "${DOTFILES_COLOR_NORMAL}"
+
+   if [ "${1+?}" != '?' ] ; then
+      return 0
+   fi
+
+   if [ x"${1}" = x'' ] ; then
+      return 0
+   fi
+
+   printf \
+      '\r%b    %b%b%b %b\n' \
+      "${DOTFILES_INDENTATION}"  \
+      "${DOTFILES_COLOR_RED}"    \
+      "${DOTFILES_ICON_CONTINUATION}" \
+      "${DOTFILES_COLOR_NORMAL}" \
+      "${1}"
 }
 
 # actions {{{2
