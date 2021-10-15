@@ -145,6 +145,23 @@ fail () {
 }
 
 # actions {{{2
+# dependencies {{{3
+
+has () {
+   command -v "${@}" > /dev/null 2>&1
+}
+
+dotfiles_ensure_dependencies () {
+   if ! has git ; then
+      echo 'git command not found'
+      return 1
+   fi
+}
+
+dotfiles_ensure_dependency_version () {
+   : # TODO(scheatkode): Add dependency versions check
+}
+
 # dotfiles {{{3
 
 dotfiles_setup_xdg_config () {
