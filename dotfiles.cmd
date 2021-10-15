@@ -60,6 +60,10 @@ else
 
 fi
 
+# miscellaneous {{{2
+
+DOTFILES_INDENTATION='   '
+
 # script names {{{2
 
 DOTFILES_HOOK_POST_UPDATE='.git/hooks/post-update'
@@ -72,7 +76,8 @@ act () {
    act_command="${2-:}"
 
    printf                        \
-      "   [%b%b%b] - %s"         \
+      "%b[%b%b%b] - %s"          \
+      "${DOTFILES_INDENTATION}"  \
       "${DOTFILES_COLOR_YELLOW}" \
       "${DOTFILES_ICON_PENDING}" \
       "${DOTFILES_COLOR_NORMAL}" \
@@ -87,7 +92,8 @@ act () {
 
 succeed () {
    printf                        \
-      "\r   [%b%b%b]\n"          \
+      "\r%b[%b%b%b]\n"           \
+      "${DOTFILES_INDENTATION}"  \
       "${DOTFILES_COLOR_GREEN}"  \
       "${DOTFILES_ICON_SUCCESS}" \
       "${DOTFILES_COLOR_NORMAL}"
@@ -95,7 +101,8 @@ succeed () {
 
 fail () {
    printf                        \
-      "\r   [%b%b%b]\n"          \
+      "\r%b[%b%b%b]\n"           \
+      "${DOTFILES_INDENTATION}"  \
       "${DOTFILES_COLOR_RED}"    \
       "${DOTFILES_ICON_FAILURE}" \
       "${DOTFILES_COLOR_NORMAL}"
