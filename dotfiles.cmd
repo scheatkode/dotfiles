@@ -164,6 +164,10 @@ dotfiles_ensure_dependency_version () {
 
 # dotfiles {{{3
 
+dotfiles_initialize () {
+   git submodule update --remote
+}
+
 dotfiles_setup_xdg_config () {
    mkdir --parents "${XDG_CONFIG_HOME-~/.config/}"
    mkdir --parents "${XDG_DATA_HOME-~/.local/share/}"
@@ -327,6 +331,8 @@ main () {
       return 1
 
    fi
+
+   act 'Initializing dotfiles' dotfiles_initialize
 
    while [ "${#}" -gt 0 ] ; do
       case "${1}" in
