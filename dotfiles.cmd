@@ -130,7 +130,7 @@ fail () {
       return 0
    fi
 
-   if [ x"${1}" = x'' ] ; then
+   if [ "${1}" = '' ] ; then
       return 0
    fi
 
@@ -321,11 +321,11 @@ dotfiles_ensure_backup () {
 # main {{{1
 
 main () {
-   if [ x"${1}" = x'' ] \
-      || [ "${1}" = 'usage' ] \
-      || [ "${1}" = 'help' ]  \
-      || [ "${1}" = '--usage' ]  \
-      || [ "${1}" = '--help' ]
+   if    [ "${1}" = ''        ] \
+      || [ "${1}" = 'usage'   ] \
+      || [ "${1}" = 'help'    ] \
+      || [ "${1}" = '--usage' ] \
+      || [ "${1}" = '--help'  ]
    then
 
       usage
