@@ -41,29 +41,45 @@ DOTFILES_ICON_PENDING='\u2026' # …
 DOTFILES_ICON_SUCCESS='\uf00c' # 
 DOTFILES_ICON_FAILURE='\uf00d' # 
 
+DOTFILES_ICON_CONTINUATION='\u21b3' # ↳
+
 # colors {{{2
 
 # basic 8 colors, no need for anything fancy.
 
 if [ -z "${NO_COLOR+x}" ] ; then
 
-      DOTFILES_COLOR_RED='\033[0;31m'
-    DOTFILES_COLOR_GREEN='\033[0;32m'
-   DOTFILES_COLOR_YELLOW='\033[1;33m'
-   DOTFILES_COLOR_NORMAL='\033[0m'
+      DOTFILES_COLOR_BLACK="$(tput setaf 0)"
+        DOTFILES_COLOR_RED="$(tput setaf 1)"
+      DOTFILES_COLOR_GREEN="$(tput setaf 2)"
+     DOTFILES_COLOR_YELLOW="$(tput setaf 3)"
+       DOTFILES_COLOR_BLUE="$(tput setaf 4)"
+    DOTFILES_COLOR_MAGENTA="$(tput setaf 5)"
+       DOTFILES_COLOR_CYAN="$(tput setaf 6)"
+      DOTFILES_COLOR_WHITE="$(tput setaf 7)"
+     DOTFILES_COLOR_PURPLE="$(tput setaf 125)"
+     DOTFILES_COLOR_NORMAL="$(tput sgr0)"
 
 else
 
-      DOTFILES_COLOR_RED=''
-    DOTFILES_COLOR_GREEN=''
-   DOTFILES_COLOR_YELLOW=''
-   DOTFILES_COLOR_NORMAL=''
+      DOTFILES_COLOR_BLACK=''
+        DOTFILES_COLOR_RED=''
+      DOTFILES_COLOR_GREEN=''
+     DOTFILES_COLOR_YELLOW=''
+       DOTFILES_COLOR_BLUE=''
+    DOTFILES_COLOR_MAGENTA=''
+       DOTFILES_COLOR_CYAN=''
+      DOTFILES_COLOR_WHITE=''
+     DOTFILES_COLOR_PURPLE=''
+     DOTFILES_COLOR_NORMAL=''
 
 fi
 
 # miscellaneous {{{2
 
 DOTFILES_INDENTATION='   '
+NL='
+'
 
 # script names {{{2
 
@@ -219,7 +235,14 @@ EOF
 # helpers {{{3
 
 usage () {
-   echo -e "   scheatkode's dotfiles management script.
+   cat - <<EOF
+   ${DOTFILES_COLOR_CYAN}░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+   ░░░░░░░░░░░█░░░░█▀▄░█▀█░▀█▀░█▀▀░▀█▀░█░░░█▀▀░█▀▀░░░░
+   ░░░░▄█▄█░░█▀░░░░█░█░█░█░░█░░█▀▀░░█░░█░░░█▀▀░▀▀█░░░░
+   ░░░░▀░▀░░█▀░░▀░░▀▀░░▀▀▀░░▀░░▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀░░░░
+   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+   scheatkode${DOTFILES_COLOR_NORMAL}'s dotfiles management script.
 
    Usage: $(basename ${0}) [${DOTFILES_COLOR_YELLOW}sub-command${DOTFILES_COLOR_NORMAL}]
 
@@ -232,9 +255,11 @@ usage () {
       setup:pueue       Setup pueue configuration
       setup:tmux        Setup tmux configuration
       setup:zsh         Setup zsh configuration
-      setup:all         Alias to run all the above commands at once
+      setup:all         Alias to run all the above
 
-      help              Show this help screen"
+      help              Show this help screen
+
+EOF
 }
 
 act_all () {
