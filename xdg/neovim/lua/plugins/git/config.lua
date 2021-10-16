@@ -37,6 +37,8 @@ gitsigns.setup({
    linehl = false,
    numhl  = false,
 
+   trouble = true,
+
    watch_index = {
       interval = 1000,
    },
