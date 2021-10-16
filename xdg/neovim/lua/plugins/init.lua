@@ -166,7 +166,7 @@ local packer_manage_plugins = function ()
       -- }}}
       -- completion, lsp clients, debuggers, and snippets plugins {{{
 
-      use(require 'plugins.lspinstall')  -- powered by kabouzeid/nvim-lspinstall
+      use(require 'plugins.lspinstall')  -- powered by williamboman/nvim-lsp-installer
       use(require 'plugins.lspconfig')   -- powered by neovim/nvim-lspconfig
       use(require 'plugins.lint')
       use(require 'plugins.signature')   -- powered by xray/lsp_signature

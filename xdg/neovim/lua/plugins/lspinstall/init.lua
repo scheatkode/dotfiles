@@ -1,7 +1,12 @@
-return { 'kabouzeid/nvim-lspinstall', opt = true,
+return { 'williamboman/nvim-lsp-installer', opt = true,
    cmd = {
       'LspInstall',
+      'LspInstallInfo',
+      'LspInstallLog',
+      'LspPrintInstalled',
       'LspUninstall',
+      'LspUninstallAll',
    },
-   module   = { 'lspinstall' },
+
+   module   = { 'nvim-lsp-installer' },
 }
