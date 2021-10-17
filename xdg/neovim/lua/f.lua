@@ -1876,6 +1876,8 @@ local product = function (generator, parameter, state)
       p = p * v
       state, v = generator(parameter, state)
    until state == nil
+
+   return p
 end
 exports.product = export0(product)
 
