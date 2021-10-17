@@ -1524,6 +1524,22 @@ local grep = function (regex_or_predicate, generator, parameter, state)
 end
 exports.grep = export1(grep)
 
+--- If `regex_or_predicate` is a string then it is used
+--- as  a  regular  expression  to  build  a  filtering
+--- predicate. Otherwise the function  is just an alias
+--- for `filter()`.
+---
+--- @param  regex_or_predicate string|function
+--- @return Iterator
+function Iterator:grep(regex_or_predicate)
+   return grep(
+      regex_or_predicate,
+      self.generator,
+      self.parameter,
+      self.state
+   )
+end
+
 --- Returns two iterators where  elements do and do not
 --- satisfy the given predicate.
 ---
