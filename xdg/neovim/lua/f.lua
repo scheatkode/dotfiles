@@ -500,7 +500,6 @@ local iterate = function (object, parameter, state)
    return wrap(raw_iterator(object, parameter, state))
 end
 exports.iterate = iterate
-exports.iter    = iterate
 exports.wrap    = wrap
 exports.unwrap  = unwrap
 
