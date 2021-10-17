@@ -893,7 +893,7 @@ local nth = function (n, generator, parameter, state)
       end
    end
 
-   for _ = 1, n, 1 do
+   for _ = 1, n - 1, 1 do
       state = generator(parameter, state)
 
       if state == nil then
