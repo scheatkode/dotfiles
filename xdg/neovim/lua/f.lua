@@ -318,7 +318,7 @@ end
 ---
 --- @vararg ...
 --- @return number
-local argument_count = function (...)
+local count_arguments = function (...)
    local n = select('#', ...)
 
    if n >= 3 then
@@ -2228,7 +2228,7 @@ end
 --- @vararg ... Iterator
 --- @return Iterator
 local zip = function (...)
-   local n = argument_count(...)
+   local n = count_arguments(...)
 
    if n == 0 then
       return wrap(nil_generator, nil, nil)
@@ -2350,7 +2350,7 @@ end
 --- @vararg ... Iterator
 --- @return Iterator
 local chain = function (...)
-   local n = argument_count(...)
+   local n = count_arguments(...)
 
    if n == 0 then
       return wrap(nil_generator, nil, nil)
