@@ -143,13 +143,10 @@
 ---
 --- @meta ]]
 
------------------------------------------------------------------------------
---- # Initialization
---- TODO(scheatkode): Small description
------------------------------------------------------------------------------
+--- # Initialization {{{1
 
 --- This will be used to export library utilities to be
---- used functional style.
+--- used functional style …
 ---
 --- <pre>
 --- require 'f' ()
@@ -160,10 +157,8 @@
 ---       range(n)
 --- ))
 --- </pre>
-local exports = {}
-
---- This will be used to export library utilities to be
---- used object-oriented style.
+---
+--- … and/or object-oriented style.
 ---
 --- <pre>
 --- local f = require 'f'
@@ -171,12 +166,10 @@ local exports = {}
 ---  :map(function(x) return x ^ 2 end)
 ---  :reduce(operator.add, 0)
 --- </pre>
---- TODO(scheatkode): Move this documentation elsewhere.
 
------------------------------------------------------------------------------
---- # Early definitions
---- TODO(scheatkode): Small description
------------------------------------------------------------------------------
+local exports = {}
+
+--- # Early declarations {{{1
 
 local return_if_not_empty
 local call_if_not_empty
@@ -185,10 +178,9 @@ local string_generator
 local hashmap_generator
 local filterm_generator
 
------------------------------------------------------------------------------
---- # Iterator class
---- TODO(scheatkode): Small description
------------------------------------------------------------------------------
+--- # Iterator class {{{1
+---
+--- The `Iterator` is the basic primitive of this library.
 
 --- @class Iterator
 --- @field generator function
@@ -258,10 +250,7 @@ function Iterator:foreach(f)
    until state == nil
 end
 
------------------------------------------------------------------------------
---- # Helper functions
---- TODO(scheatkode): Small description
------------------------------------------------------------------------------
+--- # Helper functions {{{1
 
 --- A function that returns  the given parameters as-is
 --- when the current state is not nil.
@@ -348,14 +337,10 @@ local argument_count = function (...)
    return n
 end
 
------------------------------------------------------------
----
---- # Constructors
+--- # Constructors {{{1
 ---
 --- The section contains  functions to create iterators
 --- from Lua objects.
----
------------------------------------------------------------
 
 --- @param  object    any
 --- @param  parameter any
@@ -519,6 +504,71 @@ exports.iter    = iterate
 exports.wrap    = wrap
 exports.unwrap  = unwrap
 
+--- Make  `generator`,  `parameter`,  `state`  iterator
+--- from  the  given  iterable   object.  This  can  be
+--- considered  as a  generalized version  of `pairs()`
+--- and `ipairs()`.
+---
+--- The function distinguishes  between arrays and maps
+--- using  `#object ==  0`  check to  detect maps.  For
+--- arrays ipairs is used.  For maps a modified version
+--- of pairs  is used that also  returns keys. Userdata
+--- objects are handled in the same way as tables.
+---
+--- This is suitable for use in a `for .. in` loop.
+---
+--- <pre>
+--- > for _, a in iterate({1, 2, 3}) do print(a) end
+--- 1
+--- 2
+--- 3
+---
+--- > for _, k, v in iterate({a = 1, b = 2, c = 3}) do print(k, v) end
+--- b 2
+--- a 1
+--- c 3
+--- </pre>
+---
+--- The first cycle variable `_` is needed to store the
+--- internal state  of the iterator. The  value must be
+--- always ignored in loops:
+---
+--- <pre>
+--- for _, a, b in iterate({a = 1, b = 2, c = 3}) do print(a, b) end
+--- -- _ is some internal iterator state - always ignore it.
+--- -- a, b are the values returned from the iterator.
+--- </pre>
+---
+--- Simple  iterators like  `iterate({1,  2, 3})`  have
+--- simple states, whereas other iterators like `zip()`
+--- or `chain()` have complicated internal states whose
+--- values may be senseless for the end user.
+---
+--- There  is also  the  possibility  to supply  custom
+--- iterators to the function:
+---
+--- <pre>
+--- > local function mypairs_gen(max, state)
+---     if (state >= max) then
+---             return nil
+---     end
+---     return state + 1, state + 1
+--- end
+---
+--- > local function mypairs(max)
+---     return mypairs_gen, max, 0
+--- end
+---
+--- > for _, a in iter(mypairs(3)) do print(a) end
+--- 1
+--- 2
+--- 3
+--- </pre>
+---
+--- Iterators can return multiple values.
+---
+--- @param  object    any
+--- @return Iterator
 function Iterator:iterate(object)
    return iterate(object, self.parameter, self.state)
 end
@@ -544,15 +594,11 @@ local export2 = function (f)
    end
 end
 
------------------------------------------------------------
----
---- # Finite generators
+--- # Finite generators {{{1
 ---
 --- This section contains a number of useful generators
 --- modeled after  Standard ML, Haskell,  Python, Ruby,
 --- JavaScript and other languages.
----
------------------------------------------------------------
 
 --- Get  the  iterator   function  from  ipairs,  whose
 --- signature is:
@@ -618,7 +664,7 @@ end
 --- @param  parameter_x any
 --- @param  state_x any
 --- @return nil
---- @return any, any
+--- @return number, number
 local range_generator = function (parameter_x, state_x)
    local stop, step = parameter_x[1], parameter_x[2]
 
@@ -634,8 +680,8 @@ end
 --- @param  parameter_x any
 --- @param  state_x     any
 --- @return nil
---- @return any, any
-local range_rev_generator = function (parameter_x, state_x)
+--- @return number, number
+local range_reverse_generator = function (parameter_x, state_x)
    local stop, step = parameter_x[1], parameter_x[2]
 
    state_x = state_x + step
@@ -673,7 +719,7 @@ local range = function (start, stop, step)
             return nil_generator, nil, nil
          end
 
-         stop = start
+         stop  = start
          start = stop > 0 and 1 or -1
       end
 
@@ -693,13 +739,11 @@ local range = function (start, stop, step)
 end
 exports.range = range
 
------------------------------------------------------------
+--- # Infinite generators {{{1
 ---
---- # Infinite generators
----
---- TODO(scheatkode): Small description
----
------------------------------------------------------------
+--- This section contains a number of useful generators
+--- modeled after  Standard ML, Haskell,  Python, Ruby,
+--- JavaScript and other languages.
 
 --- @param  parameter_x table
 --- @param  state_x number
@@ -785,13 +829,7 @@ local random_nil_generator = function (_, _)
    return 0, math.random()
 end
 
------------------------------------------------------------
----
---- # Random sampling
----
---- TODO(scheatkode): Small description
----
------------------------------------------------------------
+--- # Random sampling {{{1
 
 --- Creates  an  iterator  that returns  random  values
 --- using `math.random()`. If `n` and `m` are set, then
@@ -826,13 +864,7 @@ local random = function (n, m)
 end
 exports.random = random
 
------------------------------------------------------------------------------
----
---- # Slicing
----
---- TODO(scheatkode): Small description
----
------------------------------------------------------------------------------
+--- # Slicing {{{1
 
 --- This  function returns  the `n`-th  element of  the
 --- iterator. If  the iterator does not  have an `n`-th
@@ -944,17 +976,9 @@ exports.cdr = exports.tail
 --- @return any
 function Iterator:tail()
    return tail(self.generator, self.parameter, self.state)
-   -- return self
-   -- return tail(self.generator, self.parameter, self.state)
 end
 
------------------------------------------------------------------------------
----
---- # Subsequences
----
---- TODO(scheatkode): Small description
----
------------------------------------------------------------------------------
+--- # Subsequences {{{1
 
 --- @param  i number
 --- @param  state_x any
@@ -1245,16 +1269,15 @@ local split = function (input, separator)
 end
 exports.split = split
 
---- TODO(scheatkode): Documentation
---- TODO(scheatkode): Fix this
+--- Return  an iterator  of substrings  separated by  a
+--- string.
 ---
 --- @param separator string
 ---
 --- @return nil
 --- @return table
 function Iterator:split(separator)
-   -- TODO(scheatkode): Figure this out
-   -- return split(self.generator, self.parameter, self.state)
+   return split(self.parameter, separator, self.state)
 end
 
 --- Splits a string based on a single space.
@@ -1268,13 +1291,13 @@ local words = function (input)
 end
 exports.words = words
 
---- TODO(scheatkode): Documentation
---- TODO(scheatkode): Fix this
+--- Splits a string based on a single space.
+--- An alias for split(input, ' ').
 ---
 --- @return nil
 --- @return table
 function Iterator:words()
-   return words()
+   return words(self.parameter, self.state)
 end
 
 --- Splits a string based on line separators.
@@ -1289,13 +1312,11 @@ local lines = function (input)
 end
 exports.lines = lines
 
------------------------------------------------------------------------------
 ---
---- # Indexing
+
+--- # Indexing {{{1
 ---
 --- This section contains functions to find elements by their values.
----
------------------------------------------------------------------------------
 
 --- Returns the  position of  the first element  in the
 --- given iterator which  is equal to `x`,  or `nil` if
@@ -1382,13 +1403,11 @@ function Iterator:indexes(x)
    return indexes(x, self.generator, self.parameter, self.state)
 end
 
------------------------------------------------------------------------------
---- # Filtering
+--- # Filtering {{{1
+---
 --- This section contains functions to filter values during iteration, using a
 --- predicate.
------------------------------------------------------------------------------
 
---- TODO(scheatkode): Documentation
 local filter1_generator = function (f, generator, parameter, state, a)
    while true do
       if state == nil or f(a) then
@@ -1401,12 +1420,10 @@ local filter1_generator = function (f, generator, parameter, state, a)
    return state, a
 end
 
---- TODO(scheatkode): Documentation
 local filterm_generator_shrink = function (f, generator, parameter, state)
    return filterm_generator(f, generator, parameter, generator(parameter, state))
 end
 
---- TODO(scheatkode): Documentation
 filterm_generator = function (f, generator, parameter, state, ...)
    if state == nil then
       return nil
@@ -1419,7 +1436,6 @@ filterm_generator = function (f, generator, parameter, state, ...)
    return filterm_generator_shrink(f, generator, parameter, state)
 end
 
---- TODO(scheatkode): Documentation
 local filter_detect = function (f, generator, parameter, state, ...)
    if select('#', ...) < 2 then
       return filter1_generator(f, generator, parameter, state, ...)
@@ -1428,7 +1444,6 @@ local filter_detect = function (f, generator, parameter, state, ...)
    end
 end
 
---- TODO(scheatkode): Documentation
 local filter_generator = function (parameter, state_x)
    local f, generator_x, parameter_x = parameter[1], parameter[2], parameter[3]
 
@@ -1511,17 +1526,13 @@ function Iterator:partition(predicate)
    return partition(predicate, self.generator, self.parameter, self.state)
 end
 
------------------------------------------------------------------------------
----
---- # Reducing
+--- # Reducing {{{1}
 ---
 --- This   section   contains  functions   to   analyze
 --- iteration values  and recombine,  through use  of a
 --- given   combining   operation,   the   results   of
 --- recursively   processing  its   constituent  parts,
 --- building up a return value.
----
------------------------------------------------------------------------------
 
 --- @param f function
 --- @param start any
@@ -2058,19 +2069,16 @@ local tomap = function (generator, parameter, state)
 end
 exports.tomap = export0(tomap)
 
---- Reduces the  iterator from  left to right  using by
---- doing `tab[val1] = val2`.
+--- Reduces the  iterator from  left to right  by
+--- doing `tab[val1] = val2` for each iteration.
 ---
 --- @return table
 function Iterator:tomap()
    return tomap(self.generator, self.parameter, self.state)
 end
 
------------------------------------------------------------------------------
--- Transformations
------------------------------------------------------------------------------
+--- # Transformations {{{1
 
---- TODO(scheatkode): Documentation
 local map_generator = function (parameter, state)
    local generator_x, parameter_x, f = parameter[1], parameter[2], parameter[3]
 
@@ -2101,8 +2109,6 @@ function Iterator:map(f)
    return map(f, self.generator, self.parameter, self.state)
 end
 
---- TODO(scheatkode): Documentation
--- local enumerate_generator_call = function (state, i, state_x, ...)
 local enumerate_generator_call = function (_, i, state_x, ...)
    if state_x == nil then
       return nil
@@ -2111,8 +2117,6 @@ local enumerate_generator_call = function (_, i, state_x, ...)
    return {i + 1, state_x}, i, ...
 end
 
---- TODO(scheatkode): Documentation
--- local enumerate_generator = function (generator, parameter, state)
 local enumerate_generator = function (_, parameter, state)
    local generator_x, parameter_x = parameter[1], parameter[2]
    local i, state_x = state[1], state[2]
@@ -2134,9 +2138,6 @@ local enumerate = function (generator, parameter, state)
 end
 exports.enumerate = export0(enumerate)
 
---- TODO(scheatkode): Check if this  is actually of any
---- use.
----
 --- Return a  new iterator by enumerating  all elements
 --- of  the given  iterator  and starting  from 1.  The
 --- mapping is performed  on the fly and  no values are
@@ -2147,7 +2148,6 @@ function Iterator:enumerate()
    return enumerate(self.generator, self.parameter, self.state)
 end
 
---- TODO(scheatkode): Documentation
 local intersperse_call = function (i, state_x, ...)
    if state_x == nil then
       return nil
@@ -2156,7 +2156,6 @@ local intersperse_call = function (i, state_x, ...)
    return {i + 1, state_x}, ...
 end
 
---- TODO(scheatkode): Documentation
 local intersperse_generator = function (parameter, state)
    local x, generator_x, parameter_x = parameter[1], parameter[2], parameter[3]
    local i, state_x = state[1], state[2]
@@ -2196,11 +2195,8 @@ function Iterator:intersperse(x)
    return intersperse(x, self.generator, self.parameter, self.state)
 end
 
------------------------------------------------------------------------------
--- Compositions
------------------------------------------------------------------------------
+--- # Compositions {{{1
 
---- TODO(scheatkode): Documentation
 local function zip_generator_r (parameter, state, state_new, ...)
    if #state_new == #parameter / 2 then
       return state_new, ...
@@ -2219,7 +2215,6 @@ local function zip_generator_r (parameter, state, state_new, ...)
    return zip_generator_r(parameter, state, state_new, v, ...)
 end
 
---- TODO(scheatkode): Documentation
 local zip_generator = function (parameter, state)
    return zip_generator_r(parameter, state, {})
 end
@@ -2270,7 +2265,6 @@ function Iterator:zip(...)
    return zip({self.generator, self.parameter, self.state}, ...)
 end
 
---- TODO(scheatkode): Documentation
 local cycle_generator_call = function (parameter, state_x, ...)
    if state_x == nil then
       local generator_x, parameter_x, state_x0 = parameter[1], parameter[2], parameter[3]
@@ -2281,7 +2275,6 @@ local cycle_generator_call = function (parameter, state_x, ...)
    return state_x, ...
 end
 
---- TODO(scheatkode): Documentation
 local cycle_generator = function (parameter, state_x)
    -- local generator_x, parameter_x, state_x0 = parameter[1], parameter[2], parameter[3]
    local generator_x, parameter_x = parameter[1], parameter[2]
@@ -2321,14 +2314,13 @@ function Iterator:cycle()
    return cycle(self.generator, self.parameter, self.state)
 end
 
---- TODO(scheatkode): Documentation
 -- call each other
 local chain_generator_r1
 local chain_generator_r2 = function (parameter, state, state_x, ...)
    if state_x == nil then
       local i = state[1] + 1
 
-      if parameter [3 * i - 1] == nil then
+      if parameter[3 * i - 1] == nil then
          return nil
       end
 
@@ -2340,7 +2332,6 @@ local chain_generator_r2 = function (parameter, state, state_x, ...)
    return { state[1], state_x }, ...
 end
 
---- TODO(scheatkode): Documentation
 chain_generator_r1 = function (parameter, state)
    local i, state_x = state[1], state[2]
    local generator_x, parameter_x = parameter[3 * i - 2], parameter[3 * i - 1]
@@ -2396,15 +2387,11 @@ function Iterator:chain(...)
    return chain({self.generator, self.parameter, self.state}, ...)
 end
 
------------------------------------------------------------------------------
--- Operators
------------------------------------------------------------------------------
+--- # Operators {{{1
 
 local operator = {
 
-   --------------------------------------------------------------------------
-   -- Comparison operators
-   --------------------------------------------------------------------------
+   --- ## Comparison operators {{{2
 
    lt = function (a, b) return a <  b end,
    le = function (a, b) return a <= b end,
@@ -2413,9 +2400,7 @@ local operator = {
    ge = function (a, b) return a >= b end,
    gt = function (a, b) return a >  b end,
 
-   --------------------------------------------------------------------------
-   -- Arithmetic operators
-   --------------------------------------------------------------------------
+   --- ## Arithmetic operators {{{2
 
    add = function (a, b) return a + b end,
    sub = function (a, b) return a - b end,
@@ -2433,16 +2418,12 @@ local operator = {
       if a >= 0 then return math.floor(q) else return math.ceil(q) end
    end,
 
-   --------------------------------------------------------------------------
-   -- String operators
-   --------------------------------------------------------------------------
+   --- ## String operators {{{2
 
    concat = function (a, b) return a .. b end,
    length = function (a) return #a end,
 
-   --------------------------------------------------------------------------
-   -- Logical operators
-   --------------------------------------------------------------------------
+   --- ## Logical operators {{{2
 
    land = function (a, b) return a and b end,
    lor  = function (a, b) return a or  b end,
@@ -2454,9 +2435,7 @@ local operator = {
 exports.operator = operator
 exports.op       = operator
 
------------------------------------------------------------------------------
--- Module definitions
------------------------------------------------------------------------------
+--- # Module definitions {{{1
 
 -- a special syntax sugar to export all functions to the global table
 setmetatable(exports, {
@@ -2480,4 +2459,5 @@ setmetatable(exports, {
 
 return exports
 
--- vim: set ft=lua:
+-- vim: set fdm=marker fdl=0:
+
