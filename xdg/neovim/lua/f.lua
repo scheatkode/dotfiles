@@ -2424,9 +2424,7 @@ exports.chain = chain
 ---
 --- @vararg ... Iterator
 --- @return Iterator
-function Iterator:chain(...)
-   return chain({self.generator, self.parameter, self.state}, ...)
-end
+Iterator.chain = chain
 
 --- # Operators {{{1
 
