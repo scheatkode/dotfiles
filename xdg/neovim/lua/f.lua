@@ -733,7 +733,11 @@ local range = function (start, stop, step)
    if step > 0 then
       return wrap(range_generator, {stop, step}, start - step)
    elseif step < 0 then
-      return wrap(range_rev_generator, {stop, step}, start - step)
+      if stop > start then
+         start, stop = stop, start
+      end
+
+      return wrap(range_reverse_generator, {stop, step}, start - step)
    end
 end
 exports.range = range
