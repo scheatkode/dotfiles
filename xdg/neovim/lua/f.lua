@@ -2304,9 +2304,7 @@ exports.zip = zip
 ---
 --- @vararg ... Iterator
 --- @return Iterator
-function Iterator:zip(...)
-   return zip({self.generator, self.parameter, self.state}, ...)
-end
+Iterator.zip = zip
 
 local cycle_generator_call = function (parameter, state_x, ...)
    if state_x == nil then
