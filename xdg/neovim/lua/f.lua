@@ -2398,16 +2398,16 @@ local chain = function (...)
    end
 
    local parameter = { [3 * n] = 0 }
-   local generator_x, parameter_x, state_x
+   local it
 
    for i = 1, n, 1 do
       local element = select(i, ...)
 
-      generator_x, parameter_x, state_x = iterate(element)
+      it = iterate(element)
 
-      parameter[3 * i - 2] = generator_x
-      parameter[3 * i - 1] = parameter_x
-      parameter[3 * i]     = state_x
+      parameter[3 * i - 2] = it.generator
+      parameter[3 * i - 1] = it.parameter
+      parameter[3 * i]     = it.state
    end
 
    return wrap(chain_generator_r1, parameter, {1, parameter[3]})
