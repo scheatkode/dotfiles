@@ -1276,9 +1276,11 @@ end
 ---
 --- @param  input string
 --- @param  separator string
+--- @param  state number
 --- @return Iterator
-local split = function (input, separator)
-   return wrap(string_split_generator, {input, separator}, 1)
+local split = function (input, separator, state)
+   assert(type(input) == 'string', 'split should be called only on strings')
+   return wrap(string_split_generator, {input, separator}, state or 1)
 end
 exports.split = split
 
@@ -1297,10 +1299,12 @@ end
 --- An alias for split(input, ' ').
 ---
 --- @param input any
+--- @param state number
 ---
---- @return any
-local words = function (input)
-   return split(input, ' ')
+--- @return nil
+--- @return table
+local words = function (input, state)
+   return split(input, ' ', state)
 end
 exports.words = words
 
@@ -1316,16 +1320,25 @@ end
 --- Splits a string based on line separators.
 --- An alias for split(input, '\n').
 ---
---- @param input any
+--- @param input string
+--- @param state number
 ---
---- @return any
-local lines = function (input)
+--- @return nil
+--- @return table
+local lines = function (input, state)
    -- TODO(scheatkode): platform specific linebreaks
-   return split(input, '\n')
+   return split(input, '\n', state)
 end
 exports.lines = lines
 
+--- Splits a string based on line separators.
+--- An alias for split(input, '\n').
 ---
+--- @return nil
+--- @return table
+function Iterator:lines()
+   return lines(self.parameter, self.state)
+end
 
 --- # Indexing {{{1
 ---
