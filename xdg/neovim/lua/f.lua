@@ -1171,6 +1171,16 @@ local drop_while = function(predicate, generator, parameter, state)
 
    return wrap(generator, parameter, state_previous)
 end
+exports.drop_while = export1(drop_while)
+
+--- Return  an  iterator  after  skipping  the  longest
+--- prefix of elements that satisfy predicate.
+---
+--- @param  predicate function
+--- @return Iterator
+function Iterator:drop_while(predicate)
+   return drop_while(predicate, self.generator, self.parameter, self.state)
+end
 
 --- An  alias for  `drop_n()`  and `drop_while()`  that
 --- autodetects   the   required  function   based   on
