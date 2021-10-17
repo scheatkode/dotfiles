@@ -1493,7 +1493,6 @@ local filter = function (predicate, generator, parameter, state)
    return wrap(filter_generator, {predicate, generator, parameter}, state)
 end
 exports.filter    = export1(filter)
-exports.remove_if = exports.filter
 
 --- Return  a  new  iterator  of  those  elements  that
 --- satisfy the given `predicate`.
