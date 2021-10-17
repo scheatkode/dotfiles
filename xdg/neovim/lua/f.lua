@@ -1378,7 +1378,7 @@ exports.elem_index = exports.index
 --- @param  x any
 --- @return nil
 --- @return number
-function Iterator:index_of(x)
+function Iterator:index(x)
    return index(x, self.generator, self.parameter, self.state)
 end
 
