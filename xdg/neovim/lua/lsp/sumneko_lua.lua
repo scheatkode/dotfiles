@@ -19,18 +19,20 @@ else
    print('‼ Unsupported system for sumneko\'s lua-language-server')
 end
 
--- set the path to the sumneko installation; if you previously installed via
--- the now deprecated :LspInstall, use
 local sumneko_root_path = fn.stdpath('data')
-   .. '/lspinstall'
-   .. '/lua'
-   .. '/sumneko-lua'
+   .. '/lsp_servers'
+   .. '/sumneko_lua'
    .. '/extension'
    .. '/server'
 
 local sumneko_binary = sumneko_root_path
    .. '/bin/' .. system_name
    .. '/lua-language-server'
+
+local runtime_path = vim.split(package.path, ';')
+
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
 
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
@@ -48,7 +50,7 @@ return {
             -- likely LuaJIT in the case of Neovim)
             version = 'LuaJIT',
             -- Setup your lua path
-            path    = vim.split(package.path, ';'),
+            path    = runtime_path,
          },
 
          diagnostics = {
@@ -65,10 +67,11 @@ return {
 
          workspace = {
             -- Make the server aware of Neovim runtime files
-            library = {
-               [fn.expand('$VIMRUNTIME/lua')]         = true,
-               [fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-            },
+            library = vim.api.nvim_get_runtime_file('', true),
+            -- library = {
+            --    [fn.expand('$VIMRUNTIME/lua')]         = true,
+            --    [fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+            -- },
          },
       },
    },
