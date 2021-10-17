@@ -2152,7 +2152,7 @@ function Iterator:map(f)
    return map(f, self.generator, self.parameter, self.state)
 end
 
-local enumerate_generator_call = function (_, i, state_x, ...)
+local enumerate_generator_call = function (i, state_x, ...)
    if state_x == nil then
       return nil
    end
@@ -2160,11 +2160,11 @@ local enumerate_generator_call = function (_, i, state_x, ...)
    return {i + 1, state_x}, i, ...
 end
 
-local enumerate_generator = function (_, parameter, state)
+local enumerate_generator = function (parameter, state)
    local generator_x, parameter_x = parameter[1], parameter[2]
    local i, state_x = state[1], state[2]
 
-   return enumerate_generator_call(state, i, generator_x(parameter_x, state_x))
+   return enumerate_generator_call(i, generator_x(parameter_x, state_x))
 end
 
 --- Return a  new iterator by enumerating  all elements
