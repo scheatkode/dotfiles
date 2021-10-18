@@ -1,6 +1,6 @@
 
 set rtp+=.
-set rtp+=tests/plenary
+set rtp+=plenary
 exec "set rtp+=" . stdpath('data') . "/site/pack/packer/opt/plenary"
 
 runtime plugin/plenary.vim
