@@ -1,4 +1,4 @@
---- @diagnostic disable: duplicate-set-field
+--- @diagnostic disable: duplicate-set-field, undefined-field
 
 local class = require('o')
 
@@ -45,27 +45,27 @@ describe('object oriented', function ()
       end)
 
       it('should throw an error when not called as a method', function ()
-         assert.error(function () c.include() end)
+         assert.error(function () c.implement() end)
       end)
 
       it('should throw an error when given something other than a table', function ()
-         assert.error(function () c:include('foobar') end)
+         assert.error(function () c:implement('foobar') end)
       end)
 
-      describe('subclass', function ()
+      describe('extend', function ()
          it('should throw an error when not called as a method', function ()
-            assert.error(function () c.subclass() end)
+            assert.error(function () c.extend() end)
          end)
 
          it('should throw an error when no name is given', function ()
-            assert.error(function () c:subclass() end)
+            assert.error(function () c:extend() end)
          end)
 
          local sub
 
          before_each(function ()
             function c.prototype:subclassed(other) self.prototype.child = other end
-            sub = c:subclass('some_subclass')
+            sub = c:extend('some_subclass')
          end)
 
          it('should return the correct name of the subclass', function ()
@@ -80,8 +80,8 @@ describe('object oriented', function ()
             assert.equal(sub, c.child)
          end)
 
-         it('should include the subclass in the subclass table', function ()
-            sub = c:subclass('some_subclass')
+         it('should implement the subclass in the subclass table', function ()
+            sub = c:extend('some_subclass')
             assert.is_true(c.subclasses[sub])
          end)
       end)
@@ -156,19 +156,19 @@ describe('object oriented', function ()
          assert.is_true(o:is_instance_of(Object))
       end)
 
-      describe('subclass', function ()
+      describe('extend', function ()
          it('should throw an error when not called as a method', function ()
-            assert.error(function () Object.subclass() end)
+            assert.error(function () Object.extend() end)
          end)
 
          it('should throw an error when no name is given', function ()
-            assert.error(function () Object:subclass() end)
+            assert.error(function () Object:extend() end)
          end)
 
          local sub
 
          before_each(function ()
-            sub = Object:subclass('subclass')
+            sub = Object:extend('subclass')
          end)
 
          it('should create a class with the correct name', function ()
@@ -176,12 +176,12 @@ describe('object oriented', function ()
          end)
 
          it('should create a class with the correct superclass', function ()
-            sub = Object:subclass('subclass')
+            sub = Object:extend('subclass')
             assert.equal(Object, sub.super)
          end)
 
          it('should be registered in the superclass table', function ()
-            sub = Object:subclass('subclass')
+            sub = Object:extend('subclass')
             assert.is_true(Object.subclasses[sub])
          end)
       end)
@@ -452,7 +452,7 @@ describe('object oriented', function ()
       before_each(function ()
          m1, m2 = {}, {}
 
-         function m1:included (c) c.includes_m1 = true end
+         function m1:implemented (c) c.includes_m1 = true end
          function m1:foo () return 'foo' end
          function m1:bar () return 'bar' end
 
@@ -461,20 +461,20 @@ describe('object oriented', function ()
 
          function m2:baz () return 'baz' end
 
-         c1 = class('c1'):include(m1, m2)
+         c1 = class('c1'):implement(m1, m2)
          function c1:foo () return 'foo1' end
 
          c2 = class('c2', c1)
          function c2:bar () return 'bar2' end
       end)
 
-      it('should invoke the "included" method when included', function ()
+      it('should invoke the "implemented" method when implemented', function ()
          assert.is_true(c1.includes_m1)
       end)
 
-      it('should have all methods except "included" copied to the target class', function ()
+      it('should have all methods except "implemented" copied to the target class', function ()
          assert.equal('bar', c1:bar())
-         assert.is_nil(c1.included)
+         assert.is_nil(c1.implemented)
       end)
 
       it('should make its functions available to subclasses', function ()

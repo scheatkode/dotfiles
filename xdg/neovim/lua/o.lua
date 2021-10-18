@@ -12,22 +12,22 @@
 
 --- @class Prototype
 --- @field allocate       function
---- @field include        function
+--- @field implement      function
 --- @field is_subclass_of function
 --- @field new            function
---- @field subclass       function
+--- @field extend         function
 --- @field subclassed     function
 
 --- @class Class
 --- @field allocate       function
 --- @field construct      function
---- @field include        function
+--- @field implement      function
 --- @field is_instance_of function
 --- @field is_subclass_of function
 --- @field name           string
 --- @field new            function
 --- @field prototype      Prototype
---- @field subclass       function
+--- @field extend         function
 --- @field subclassed     function
 --- @field subclasses     table
 
@@ -140,12 +140,12 @@ local function create_class(name, super)
 end
 
 -- TODO(scheatkode): Documentation
-local function include_mixin(c, mixin)
+local function implement_mixin(c, mixin)
    assert(type(mixin) == 'table', 'mixin must be a table')
 
    for name, method in pairs(mixin) do
       if
-             name ~= 'included'
+             name ~= 'implemented'
          and name ~= 'prototype'
       then
          c[name] = method
@@ -156,8 +156,8 @@ local function include_mixin(c, mixin)
       c.prototype[name] = method
    end
 
-   if type(mixin.included) == 'function' then
-      mixin:included(c)
+   if type(mixin.implemented) == 'function' then
+      mixin:implemented(c)
    end
 
    return c
@@ -191,8 +191,8 @@ local default_mixin = {
          return instance
       end,
 
-      subclass = function(self, name)
-         assert(type(self) == 'table',  [[Make sure that you are using 'Class:subclass' instead of 'Class.subclass']])
+      extend = function(self, name)
+         assert(type(self) == 'table',  [[Make sure that you are using 'Class:extend' instead of 'Class.extend']])
          assert(type(name) == 'string', 'You must provide a name for your class')
 
          local subclass = create_class(name, self)
@@ -227,11 +227,11 @@ local default_mixin = {
             )
       end,
 
-      include = function(self, ...)
-         assert(type(self) == 'table', [[Make sure you that you are using 'Class:include' instead of 'Class.include']])
+      implement = function(self, ...)
+         assert(type(self) == 'table', [[Make sure you that you are using 'Class:implement' instead of 'Class.implement']])
 
          for _, mixin in ipairs({...}) do
-            include_mixin(self, mixin)
+            implement_mixin(self, mixin)
          end
 
          return self
@@ -247,6 +247,6 @@ return function (name, super)
    assert(type(name) == 'string', 'A name is needed for the new class')
 
    return super
-      and super:subclass(name)
-      or  include_mixin(create_class(name), default_mixin)
+      and super:extend(name)
+      or  implement_mixin(create_class(name), default_mixin)
 end
