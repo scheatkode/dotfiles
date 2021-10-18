@@ -145,6 +145,24 @@
 
 --- # Initialization {{{1
 
+local mceil   = math.ceil
+local mfloor  = math.floor
+local mmax    = math.max
+local mmin    = math.min
+local mrandom = math.random
+local sfind   = string.find
+local sformat = string.format
+local ssub    = string.sub
+
+local assert       = assert
+local getmetatable = getmetatable
+local setmetatable = setmetatable
+local ipairs       = ipairs
+local pairs        = pairs
+local select       = select
+local type         = type
+local unpack       = unpack
+
 --- This will be used to export library utilities to be
 --- used functional style …
 ---
@@ -392,7 +410,7 @@ local raw_iterator = function (object, parameter, state)
       return string_generator, object, 0
    end
 
-   error(string.format(
+   error(sformat(
       'object %s of type "%s" is not iterable',
       object, type(object)
    ))
@@ -644,7 +662,7 @@ string_generator = function (parameter, state)
       return nil
    end
 
-   return state, string.sub(parameter, state, state)
+   return state, ssub(parameter, state, state)
 end
 
 --- Hashmap generator.
@@ -825,11 +843,11 @@ end
 exports.ones = ones
 
 local random_generator = function(parameter, _)
-   return 0, math.random(parameter[1], parameter[2])
+   return 0, mrandom(parameter[1], parameter[2])
 end
 
 local random_nil_generator = function (_, _)
-   return 0, math.random()
+   return 0, mrandom()
 end
 
 --- # Random sampling {{{1
@@ -887,7 +905,7 @@ local nth = function (n, generator, parameter, state)
       return parameter[n]
    elseif generator == string_generator then
       if n <= #parameter then
-         return string.sub(parameter, n, n)
+         return ssub(parameter, n, n)
       else
          return nil
       end
@@ -1259,7 +1277,7 @@ local string_split_generator = function (parameter, state)
       return nil
    end
 
-   local start, finish = string.find(input, separator, state, true)
+   local start, finish = sfind(input, separator, state, true)
 
    if not start then
       start  = length + 1
@@ -1517,7 +1535,7 @@ local grep = function (regex_or_predicate, generator, parameter, state)
    local f = regex_or_predicate
 
    if type(regex_or_predicate) == 'string' then
-      f = function (x) return string.find(x, regex_or_predicate) ~= nil end
+      f = function (x) return sfind(x, regex_or_predicate) ~= nil end
    end
 
    return filter(f, generator, parameter, state)
@@ -1772,8 +1790,8 @@ local every = function (predicate, generator, parameter, state)
 
    return state == nil
 end
-exports.every   = export1(every)
-exports.every = exports.every
+exports.every = export1(every)
+exports.all   = exports.every
 
 --- Returns `true`  if all return values  of `iterator`
 --- satisfy the given predicate.
@@ -1923,7 +1941,7 @@ local minimum = function (generator, parameter, state)
 
    if type(m) == 'number' then
       -- An optimization: use math.min for numbers
-      cmp = math.min
+      cmp = mmin
    else
       cmp = min_cmp
    end
@@ -1999,7 +2017,7 @@ local maximum = function (generator, parameter, state)
 
    if type(m) == 'number' then
       -- An optimization: use math.max for numbers
-      cmp = math.max
+      cmp = mmax
    else
       cmp = max_cmp
    end
@@ -2450,11 +2468,11 @@ local operator = {
 
    neg = function (a) return -a end,
 
-   floordiv = function (a, b) return math.floor(a / b) end,
+   floordiv = function (a, b) return mfloor(a / b) end,
    intdiv   = function (a, b)
       local q = a / b
 
-      if a >= 0 then return math.floor(q) else return math.ceil(q) end
+      if a >= 0 then return mfloor(q) else return mceil(q) end
    end,
 
    --- ## String operators {{{2
