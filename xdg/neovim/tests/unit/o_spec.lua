@@ -175,10 +175,12 @@ describe('object oriented', function ()
          end)
 
          it('should create a class with the correct superclass', function ()
+            sub = Object:subclass('subclass')
             assert.equal(Object, sub.super)
          end)
 
          it('should be registered in the superclass table', function ()
+            sub = Object:subclass('subclass')
             assert.is_true(Object.subclasses[sub])
          end)
       end)
