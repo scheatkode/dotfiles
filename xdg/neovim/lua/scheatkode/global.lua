@@ -3,7 +3,7 @@ local format = string.format
 local api = vim.api
 local fn  = vim.fn
 
-local f = require('f')
+local f = require('lib.f')
 
 ------------------------------------------------------------------------------
 -- global namespace

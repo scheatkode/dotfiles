@@ -6,7 +6,7 @@ local format = string.format
 
 local p = scheatkode.style.palette
 
-local f = require('f')
+local f = require('lib.f')
 
 local m = {}
 

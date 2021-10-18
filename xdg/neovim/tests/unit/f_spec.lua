@@ -1,4 +1,4 @@
-local f = require('f')
+local f = require('lib.f')
 
 describe('functional', function ()
    describe('iterators', function ()

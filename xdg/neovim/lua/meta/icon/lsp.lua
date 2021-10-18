@@ -1,4 +1,4 @@
-local f = require('f')
+local f = require('lib.f')
 
 local order = {
    'Text',     'Method', 'Function',  'Constructor', 'Field',

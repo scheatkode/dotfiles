@@ -167,19 +167,19 @@ local unpack       = unpack
 --- used functional style …
 ---
 --- <pre>
---- require 'f' ()
+--- local f = require 'lib.f'
 --- reduce(
----    operator.add,
----    0, map(
+---    f.operator.add,
+---    0, f.map(
 ---       function(x) return x ^ 2 end,
----       range(n)
+---       f.range(n)
 --- ))
 --- </pre>
 ---
 --- … and/or object-oriented style.
 ---
 --- <pre>
---- local f = require 'f'
+--- local f = require 'lib.f'
 --- f.range(n)
 ---  :map(function(x) return x ^ 2 end)
 ---  :reduce(operator.add, 0)

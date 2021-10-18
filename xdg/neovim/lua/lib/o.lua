@@ -182,12 +182,12 @@ local default_mixin = {
 
    prototype = {
       allocate = function(self)
-         assert(type(self) == 'table', [[Make sure that you are using 'Class:allocate' instead of 'Class.allocate']])
+         assert(type(self) == 'table', [[make sure that you are using 'Class:allocate' instead of 'Class.allocate']])
          return setmetatable({ class = self }, self.__instance_dictionary)
       end,
 
       new = function(self, ...)
-         assert(type(self) == 'table', [[Make sure that you are using 'Class:new' instead of 'Class.new']])
+         assert(type(self) == 'table', [[make sure that you are using 'Class:new' instead of 'Class.new']])
 
          local instance = self:allocate()
          instance:construct(...)
@@ -195,8 +195,8 @@ local default_mixin = {
       end,
 
       extend = function(self, name)
-         assert(type(self) == 'table',  [[Make sure that you are using 'Class:extend' instead of 'Class.extend']])
-         assert(type(name) == 'string', 'You must provide a name for your class')
+         assert(type(self) == 'table',  [[make sure that you are using 'Class:extend' instead of 'Class.extend']])
+         assert(type(name) == 'string', 'you must provide a name for your class')
 
          local subclass = create_class(name, self)
 
@@ -231,7 +231,7 @@ local default_mixin = {
       end,
 
       implement = function(self, ...)
-         assert(type(self) == 'table', [[Make sure you that you are using 'Class:implement' instead of 'Class.implement']])
+         assert(type(self) == 'table', [[make sure you that you are using 'Class:implement' instead of 'Class.implement']])
 
          for _, mixin in ipairs({...}) do
             implement_mixin(self, mixin)
@@ -247,7 +247,7 @@ local default_mixin = {
 --- @param super? Class
 --- @return Class
 return function (name, super)
-   assert(type(name) == 'string', 'A name is needed for the new class')
+   assert(type(name) == 'string', 'a name is needed for the new class')
 
    return super
       and super:extend(name)

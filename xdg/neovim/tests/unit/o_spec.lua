@@ -1,6 +1,6 @@
 --- @diagnostic disable: duplicate-set-field, undefined-field
 
-local class = require('o')
+local class = require('lib.o')
 
 describe('object oriented', function ()
    describe('constructor', function ()

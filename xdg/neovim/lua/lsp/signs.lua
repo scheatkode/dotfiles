@@ -1,5 +1,5 @@
 local fn = vim.fn
-local f  = require('f')
+local f  = require('lib.f')
 local m  = {}
 
 local defaults = {

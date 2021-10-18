@@ -1,6 +1,6 @@
 local lsp = vim.lsp
 
-local f = require('f')
+local f = require('lib.f')
 local m = {}
 
 local defaults = {
