@@ -81,6 +81,7 @@ describe('object oriented', function ()
          end)
 
          it('should include the subclass in the subclass table', function ()
+            sub = c:subclass('some_subclass')
             assert.is_true(c.subclasses[sub])
          end)
       end)
