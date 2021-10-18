@@ -12,26 +12,29 @@
 
 --- @class Prototype
 --- @field allocate       function
+--- @field extend         function
 --- @field implement      function
 --- @field is_subclass_of function
 --- @field new            function
---- @field extend         function
 --- @field subclassed     function
 
 --- @class Class
 --- @field allocate       function
 --- @field construct      function
+--- @field extend         function
 --- @field implement      function
 --- @field is_instance_of function
 --- @field is_subclass_of function
 --- @field name           string
 --- @field new            function
 --- @field prototype      Prototype
---- @field extend         function
 --- @field subclassed     function
 --- @field subclasses     table
 
-local m = {}
+local assert       = assert
+local setmetatable = setmetatable
+local tostring     = tostring
+local type         = type
 
 local function create_index_wrapper(c, f)
    if f == nil then
