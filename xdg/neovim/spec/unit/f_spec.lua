@@ -1265,11 +1265,11 @@ describe('functional', function ()
          local t = { 1, 2, 3, 4 }
          local r = f.iterate(t)
 
-         assert.same(nil, r:nth(5))
-         assert.same(nil, r:nth(6))
-         assert.same(nil, r:nth(7))
-         assert.same(nil, r:nth(8))
-         assert.same(nil, r:nth(9))
+         assert.is_nil(r:nth(5))
+         assert.is_nil(r:nth(6))
+         assert.is_nil(r:nth(7))
+         assert.is_nil(r:nth(8))
+         assert.is_nil(r:nth(9))
       end)
 
       it('should always return the first element of the iterator', function ()
