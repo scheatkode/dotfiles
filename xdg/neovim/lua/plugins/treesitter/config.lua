@@ -1,10 +1,20 @@
 -- configure treesitter {{{1
 
-local has_treesitter, treesitter = pcall(require, 'nvim-treesitter.configs')
+local has_treesitter,    treesitter = pcall(require, 'nvim-treesitter.configs')
+local has_textobjects,   _          = pcall(require, 'nvim-treesitter-textobjects')
+local has_commentstring, _          = pcall(require, 'ts_context_commentstring')
 
 if not has_treesitter then
    print('‼ Tried loading treesitter ... unsuccessfully.')
    return has_treesitter
+end
+
+if not has_textobjects then
+   print('‼ Tried loading treesitter-textobjects ... unsuccessfully.')
+end
+
+if not has_commentstring then
+   print('‼ Tried loading treesitter-comment-string ... unsuccessfully.')
 end
 
 -- additional parsers {{{1

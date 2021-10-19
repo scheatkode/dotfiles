@@ -14,15 +14,10 @@ return { 'nvim-treesitter/nvim-treesitter', opt = 'true',
 
    requires = {
       -- {'nvim-treesitter/nvim-tree-docs', after = 'nvim-treesitter'}, -- documentation generator
-      -- {'nvim-treesitter/playground'},     -- playground for treesitter
-      require('plugins.treesitter-textobjects'), -- "smart" textobjects
+      {'nvim-treesitter/playground'},     -- playground for treesitter
+      {'nvim-treesitter/nvim-treesitter-textobjects'}, -- "smart" textobjects
       -- {'romgrk/nvim-treesitter-context'},              -- keep current context visible
-      require('plugins.treesitter-comment-string')
-   },
-
-   wants = {
-      'treesitter-textobjects',
-      'treesitter-comment-string',
+      {'JoosepAlviste/nvim-ts-context-commentstring'},
    },
 
    run = '<cmd>TSUpdate<CR>',
