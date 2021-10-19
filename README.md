@@ -58,6 +58,6 @@ programming part still stands true.
       │   ├── pueue/              # Pueue configuration.
       │   ├── tmux/               # Tmux configuration.
       │   └── zsh/                # Zsh configuration.
-      ├── dotfiles                # Dotfiles management script.
+      ├── dotfiles.cmd            # Dotfiles management script.
       ├── LICENSE
-      └── README.org
+      └── README.md
