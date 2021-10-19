@@ -76,14 +76,17 @@ opt.eadirection = 'both' -- equal always option applies horizontally and vertica
 -- use in vertical diff mode, blank lines to keep sides aligned, ignore
 -- whitespace changes.
 
-opt.diffopt = opt.diffopt + {
+opt.diffopt = {
+   'internal',
+   'filler',
+   'closeoff',
    'vertical',
    'iwhite',
    'hiddenoff',
    'foldcolumn:0',
-   'context:4',
-   'algorithm:histogram',
+   'context:16',
    'indent-heuristic',
+   'algorithm:histogram',
 }
 
 -- format {{{1
