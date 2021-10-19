@@ -25,8 +25,18 @@ jobs:
       # —— Github Actions setup —————————————————————————————————————————————
 
       # https://github.com/actions/checkout (official)
-      - name: Checkout
+      - name: Dotfiles setup
         uses: actions/checkout@v2
+        with:
+          path: 'dotfiles'
+
+      # —— Plenary setup ————————————————————————————————————————————————————
+
+      - name: Plenary setup
+        uses: actions/checkout@v2
+        with:
+          path: 'plenary.nvim'
+          repository: 'nvim-lua/plenary.nvim'
 
       # —— Neovim setup —————————————————————————————————————————————————————
 
@@ -37,13 +47,9 @@ jobs:
           neovim:  true
           version: ${{ matrix.version }}
 
-      # —— Plenary setup ————————————————————————————————————————————————————
-
-      - name: Plenary setup
-        run: |
-          git clone https://github.com/nvim-lua/plenary.nvim plenary
-
       # —— Unit tests ———————————————————————————————————————————————————————
 
       - name: Unit tests
-        run: make headless-test
+        run: |
+          cd dotfiles
+          make headless-test
