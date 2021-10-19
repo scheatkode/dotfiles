@@ -532,9 +532,7 @@ local packer_manage_plugins = function ()
          config = function () require('config.plugins.bufdel') end,
       }
 
-      use {'folke/which-key.nvim',
-         config = function () require('config.plugins.whichkey') end,
-      }
+      use(require 'plugins.whichkey')
 
       use {'kevinhwang91/nvim-bqf'}
 
