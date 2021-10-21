@@ -1220,6 +1220,308 @@ describe('functional', function ()
          end)
       end)
 
+      describe('builtin operator', function ()
+         describe('comparison', function ()
+            it('lt should behave as designed', function ()
+               local t = {1, 2, 3, 4}
+               local u = {2, 3, 4, 5}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               ):every(f.operator.lt)
+
+               assert.is_truthy(result)
+            end)
+
+            it('le should behave as designed', function ()
+               local t = {1, 2, 3, 4}
+               local u = {2, 2, 3, 5}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               ):every(f.operator.le)
+
+               assert.is_truthy(result)
+            end)
+
+            it('eq should behave as designed', function ()
+               local t = {1, 2, 3, 4}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(t)
+               ):every(f.operator.eq)
+
+               assert.is_truthy(result)
+            end)
+
+            it('ne should behave as designed', function ()
+               local t = {1, 2, 3, 4}
+               local u = {2, 3, 4, 5}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               ):every(f.operator.ne)
+
+               assert.is_truthy(result)
+            end)
+
+            it('gt should behave as designed', function ()
+               local t = {2, 3, 4, 5}
+               local u = {1, 2, 3, 4}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               ):every(f.operator.gt)
+
+               assert.is_truthy(result)
+            end)
+
+            it('ge should behave as designed', function ()
+               local t = {2, 3, 4, 5}
+               local u = {2, 2, 3, 5}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               ):every(f.operator.ge)
+
+               assert.is_truthy(result)
+            end)
+
+            it('ge should behave as designed', function ()
+               local t = {2, 3, 4, 5}
+               local u = {2, 2, 3, 5}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               ):every(f.operator.ge)
+
+               assert.is_truthy(result)
+            end)
+         end)
+
+         describe('arithmetic', function ()
+            it('add should behave as designed', function ()
+               local t = {1, 1, 1, 1}
+               local u = {1, 2, 3, 4}
+               local v = {2, 3, 4, 5}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.add)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('sub should behave as designed', function ()
+               local t = {1, 2, 3, 4}
+               local u = {1, 1, 1, 1}
+               local v = {0, 1, 2, 3}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.sub)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('div should behave as designed', function ()
+               local t = {1,   4, 3, 5}
+               local u = {2,   2, 1, 2}
+               local v = {0.5, 2, 3, 2.5}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.div)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('mod should behave as designed', function ()
+               local t = {1, 4, 3, 5}
+               local u = {2, 2, 1, 2}
+               local v = {1, 0, 0, 1}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.mod)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('mul should behave as designed', function ()
+               local t = {1, 4, 3, 5}
+               local u = {2, 2, 1, 2}
+               local v = {2, 8, 3, 10}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.mul)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('pow should behave as designed', function ()
+               local t = {1, 4,  3, 5}
+               local u = {2, 2,  1, 2}
+               local v = {1, 16, 3, 25}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.pow)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('neg should behave as designed', function ()
+               local t = {1,  4,  3,  5}
+               local u = {-1, -4, -3, -5}
+
+               local result = f.iterate(t)
+                  :map(f.operator.neg)
+                  :totable()
+
+               assert.same(u, result)
+            end)
+
+            it('floordiv should behave as designed', function ()
+               local t = {1, 4, 3, 5}
+               local u = {2, 2, 1, 2}
+               local v = {0, 2, 3, 2}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.floordiv)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('intdiv should behave as designed', function ()
+               local t = {-1, -4, 3, -5}
+               local u = {2,  3,  2, 2}
+               local v = {0,  -1, 1, -2}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.intdiv)
+               :totable()
+
+               assert.same(v, result)
+            end)
+         end)
+
+         describe('string', function ()
+            it('concat should concatenate strings', function ()
+               local t = {'foo',    'hello'}
+               local u = {'bar',    ' world'}
+               local v = {'foobar', 'hello world'}
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.concat)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('length should concatenate strings', function ()
+               local t = {'foo',    'hello'}
+               local u = {3, 5}
+
+               local result = f.iterate(t)
+                  :map(f.operator.length)
+                  :totable()
+
+               assert.same(u, result)
+            end)
+         end)
+
+         describe('logical', function ()
+            it('and (land) should concatenate strings', function ()
+               local t = { false, false, true,  true }
+               local u = { false, true,  false, true }
+               local v = { false, false, false, true }
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.land)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('or (lor) should concatenate strings', function ()
+               local t = { false, false, true,  true }
+               local u = { false, true,  false, true }
+               local v = { false, true,  true,  true }
+
+               local result = f.zip(
+                  f.iterate(t),
+                  f.iterate(u)
+               )
+               :map(f.operator.lor)
+               :totable()
+
+               assert.same(v, result)
+            end)
+
+            it('not (lnot) should concatenate strings', function ()
+               local t = { false, true }
+               local u = { true,  false }
+
+               local result = f.iterate(t)
+                  :map(f.operator.lnot)
+                  :totable()
+
+               assert.same(u, result)
+            end)
+
+            it('truth should concatenate strings', function ()
+               local t = { false, true, 'foo', 123 }
+               local u = { false, true, true,  true }
+
+               local result = f.iterate(t)
+                  :map(f.operator.truth)
+                  :totable()
+
+               assert.same(u, result)
+            end)
+         end)
+      end)
+
       it('should be able to iterate through all elements of a table', function ()
          local t = { first = 1, second = 2, third = 3, fourth = 4 }
          local r = {}
