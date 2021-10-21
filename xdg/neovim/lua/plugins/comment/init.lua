@@ -1,7 +1,11 @@
 return {'numToStr/Comment.nvim', opt = true,
    keys = {
+      '<leader>/',
       'gcc',
       'gcb',
+      'gco',
+      'gcO',
+      'gcA',
    },
 
    wants = {
@@ -10,5 +14,6 @@ return {'numToStr/Comment.nvim', opt = true,
 
    config = function ()
       require('plugins.comment.config')
+      require('plugins.comment.keys')
    end
 }
