@@ -16,6 +16,7 @@ set -e
 set -u
 
 # TODO(scheatkode): check for binaries and print warning if they are not found.
+# TODO(scheatkode): add restoration functions
 
 if [ -z "${HOME+x}" ] ; then
    cat << EOF
@@ -101,7 +102,7 @@ act () {
 
    shift 2
 
-   if act_return="$("${act_command}" ${*} 2>&1)" ; then
+   if act_return="$("${act_command}" "${*}" 2>&1)" ; then
       succeed
    else
       fail "${act_return}"
@@ -212,6 +213,16 @@ dotfiles_setup_btop () {
       "${configuration_path}"
 }
 
+dotfiles_setup_lazygit () {
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/lazygit"
+
+   dotfiles_ensure_backup "${configuration_path}"
+
+   ln --symbolic                             \
+      "${DOTFILES_CURRENT_PATH}/xdg/lazygit" \
+      "${configuration_path}"
+}
+
 dotfiles_setup_neovim () {
    configuration_path="${DOTFILES_CONFIGURATION_PATH}/nvim"
 
@@ -283,13 +294,14 @@ usage () {
 
    scheatkode${DOTFILES_COLOR_NORMAL}'s dotfiles management script.
 
-   Usage: $(basename ${0}) [${DOTFILES_COLOR_YELLOW}sub-command${DOTFILES_COLOR_NORMAL}]
+   Usage: $(basename "${0}") [${DOTFILES_COLOR_YELLOW}sub-command${DOTFILES_COLOR_NORMAL}]
 
    ${DOTFILES_COLOR_YELLOW}Sub commands${DOTFILES_COLOR_NORMAL}:
       setup:alacritty   Setup alacritty configuration
       setup:alsa        Setup alsa configuration
       setup:awesome     Setup awesome configuration
       setup:btop        Setup btop configuration
+      setup:lazygit     Setup lazygit configuration
       setup:neovim      Setup neovim configuration
       setup:pueue       Setup pueue configuration
       setup:tmux        Setup tmux configuration
@@ -307,6 +319,7 @@ act_all () {
    act 'Setting up alsa'                    dotfiles_setup_alsa
    act 'Setting up awesome'                 dotfiles_setup_awesome
    act 'Setting up btop'                    dotfiles_setup_btop
+   act 'Setting up lazygit'                 dotfiles_setup_lazygit
    act 'Setting up neovim'                  dotfiles_setup_neovim
    act 'Setting up pueue'                   dotfiles_setup_pueue
    act 'Setting up tmux'                    dotfiles_setup_tmux
@@ -367,6 +380,10 @@ main () {
             act 'Setting up btop'                    dotfiles_setup_btop
             ;;
 
+         setup:lazygit)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up lazygit'                 dotfiles_setup_lazygit
+            ;;
          setup:neovim)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up neovim'                  dotfiles_setup_neovim
@@ -404,5 +421,4 @@ exit 0
 :WINDOWS_CMD_SCRIPT
 
 REM TODO(scheatkode): Handle windows case.
-REM TODO(scheatkode): Maybe break down the file and source system-specific scripts.
 
