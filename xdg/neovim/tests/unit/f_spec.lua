@@ -1,8 +1,26 @@
 local f = require('lib.f')
 
+local nil_gen = function () return nil end
+
 describe('functional', function ()
    describe('iterators', function ()
       describe('basic behaviour', function ()
+         it('should wrap an iterator triplet into a table', function ()
+            local wrapped = f.wrap(nil_gen, true, true)
+
+            assert.same(nil_gen, wrapped.generator)
+            assert.same(true,    wrapped.parameter)
+            assert.same(true,    wrapped.state)
+         end)
+
+         it('should unwrap an iterator metatable into the iterator triplet', function ()
+            local ungen, unparameter, unstate = f.unwrap(f.wrap(nil_gen, true, true))
+
+            assert.same(nil_gen, ungen)
+            assert.same(true,    unparameter)
+            assert.same(true,    unstate)
+         end)
+
          it('should run an iteration when called directly', function ()
             local t = {1, 2, 3, 4}
             local i = f.iterate(t)
@@ -13,7 +31,7 @@ describe('functional', function ()
             assert.same(1, i())
          end)
 
-         it('should sepecify that it is an iterator', function ()
+         it('should specify that it is an iterator', function ()
             local t = {1, 2, 3, 4}
             local i = f.iterate(t)
 
@@ -332,8 +350,6 @@ describe('functional', function ()
             end)
 
             it('should return nil when generating nil', function ()
-               local nil_gen = function () return nil end
-
                assert.same(nil, f.nth(5, f.iterate(nil_gen, nil, nil)))
             end)
          end)
@@ -347,9 +363,7 @@ describe('functional', function ()
             end)
 
             it('should always return nil', function ()
-               f.iterate(''):tail():foreach(function (x)
-                  assert.same(nil, x)
-               end)
+               f.iterate(''):tail():foreach(function (x) assert.same(nil, x) end)
             end)
          end)
       end)
@@ -363,9 +377,7 @@ describe('functional', function ()
             end)
 
             it('should return nil when iterator is exhausted', function ()
-               f.iterate('a'):tail():take_n(20):foreach(function (x)
-                  assert.same(nil, x)
-               end)
+               f.iterate('a'):tail():take_n(20):foreach(function (x) assert.same(nil, x) end)
             end)
 
             it('should keep iterating while the predicate is valid', function ()
@@ -402,9 +414,7 @@ describe('functional', function ()
             end)
 
             it('should return nil when iterator is exhausted', function ()
-               f.iterate('a'):drop_n(2):foreach(function (x)
-                  assert.same(nil, x)
-               end)
+               f.iterate('a'):drop_n(2):foreach(function (x) assert.same(nil, x) end)
             end)
 
             it('should keep skipping while the iterator is valid', function ()
@@ -419,9 +429,7 @@ describe('functional', function ()
             end)
 
             it('should return nil when the iterator is exhausted', function ()
-               f.iterate('a'):drop_while(function (x) return x == 'a' end):foreach(function (x)
-                  assert.same(nil, x)
-               end)
+               f.iterate('a'):drop_while(function (x) return x == 'a' end):foreach(function (x) assert.same(nil, x) end)
             end)
 
             it('should detect when given a number of elements to skip', function ()
@@ -571,10 +579,7 @@ describe('functional', function ()
             it('should not iterate at all when the iterator is empty', function ()
                local i = 0
 
-               f.filter(function (_)
-                  i = i + 1
-                  return true
-               end, f.range(0))
+               f.filter(function (_) i = i + 1 return true end, f.range(0))
 
                assert.same(0, i)
             end)
@@ -611,15 +616,11 @@ describe('functional', function ()
             end)
 
             it('should return nil when there is nothing to iterate over', function ()
-               local nil_gen = function () return nil, nil, nil end
+               local multi_nil_gen = function () return nil, nil end
                local i = 0
 
-               f.filter(
-                  function () return true end,
-                  nil_gen, nil, nil
-               )
-                  :take(5)
-                  :foreach(function () i = i + 1 end)
+               f.filter(function () return true end, multi_nil_gen, nil, nil)
+                  :take(5):foreach(function () i = i + 1 end)
 
                assert.same(0, i)
             end)
@@ -708,10 +709,12 @@ describe('functional', function ()
       describe('reducing', function ()
          describe('using reduce', function ()
             it('should accumulate the iterator', function ()
+               assert.same(15, f.reduce(function (acc, x) return acc + x end, 0,f.range(5)))
                assert.same(15, f.range(5):reduce(function (acc, x) return acc + x end, 0))
             end)
 
             it('should accumulate the iterator using predefined operators', function ()
+               assert.same(15, f.reduce(f.operator.add, 0, f.range(5)))
                assert.same(15, f.range(5):reduce(f.operator.add, 0))
             end)
          end)
@@ -847,13 +850,7 @@ describe('functional', function ()
          end)
 
          describe('using minimum_by', function ()
-            local function p (a, b)
-               if -a < -b then
-                  return a
-               else
-                  return b
-               end
-            end
+            local function p (a, b) if -a < -b then return a else return b end end
 
             it('should return the smallest number given a predicate', function ()
                assert.same(10, f.range(10):minimum_by(p))
@@ -867,13 +864,7 @@ describe('functional', function ()
          end)
 
          describe('using maximum_by', function ()
-            local function p (a, b)
-               if -a < -b then
-                  return a
-               else
-                  return b
-               end
-            end
+            local function p (a, b) if -a < -b then return a else return b end end
 
             it('should return the biggest number given a predicate', function ()
                assert.same(10, f.range(10):maximum_by(p))
