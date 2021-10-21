@@ -1,4 +1,4 @@
---- @meta [[
+--- @brief [[
 ---
 --- An adaptation  of `luafun`  for personal  use. Some
 --- documentation is the same  as the original `luafun`
@@ -141,7 +141,7 @@
 --- these concepts  make the foundation  for functional
 --- programming.
 ---
---- @meta ]]
+--- @brief ]]
 
 --- # Initialization {{{1
 
@@ -198,7 +198,8 @@ local filterm_generator
 
 --- # Iterator class {{{1
 ---
---- The `Iterator` is the basic primitive of this library.
+--- The  `Iterator`  is  the basic  primitive  of  this
+--- library.
 
 --- @class Iterator
 --- @field generator function
@@ -1360,7 +1361,8 @@ end
 
 --- # Indexing {{{1
 ---
---- This section contains functions to find elements by their values.
+--- This section contains functions to find elements by
+--- their values.
 
 --- Returns the  position of  the first element  in the
 --- given iterator which  is equal to `x`,  or `nil` if
@@ -1449,8 +1451,8 @@ end
 
 --- # Filtering {{{1
 ---
---- This section contains functions to filter values during iteration, using a
---- predicate.
+--- This  section contains  functions to  filter values
+--- during iteration, using a predicate.
 
 local filter1_generator = function (f, generator, parameter, state, a)
    while true do
@@ -1510,7 +1512,7 @@ end
 local filter = function (predicate, generator, parameter, state)
    return wrap(filter_generator, {predicate, generator, parameter}, state)
 end
-exports.filter    = export1(filter)
+exports.filter = export1(filter)
 
 --- Return  a  new  iterator  of  those  elements  that
 --- satisfy the given `predicate`.
