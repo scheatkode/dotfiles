@@ -1,26 +1,3 @@
--- local has_comment, comment = pcall(require, 'kommentary.config')
-
--- if not has_comment then
---    print('‼ Tried loading kommentary ... unsuccessfully.')
---    return has_comment
--- end
-
--- -- additional mappings for increasing/decreasing commenting level for the
--- -- current line.
--- comment.use_extended_mappings()
-
--- -- configure commenting behavior
-
--- comment.configure_language('default', {
---    prefer_single_line_comments = true,
---    use_consistent_indentation  = true,
---    ignore_whitespace           = true,
--- })
-
--- -- comment.configure_language('php', {
--- --    prefer_single_line_comments = false,
--- -- })
-
 local has_comment, comment = pcall(require, 'Comment')
 
 if not has_comment then
