@@ -39,23 +39,20 @@ tree.setup {
    -- `DirChanged` (when your run `:cd` usually).
    update_cwd          = false,
 
-   -- show lsp diagnostics in the signcolumn.
-   lsp_diagnostics     = true,
-
    -- update   the   focused    file   on   `BufEnter`,
    -- un-collapses  the  folders recursively  until  it
    -- finds the file.
    update_focused_file = {
 
       -- enables the feature.
-      enable      = false,
+      enable      = true,
 
       -- update the  root directory of the  tree to the
       -- one of  the folder containing the  file if the
       -- file is not under  the current root directory.
       -- only               relevant               when
       -- `update_focused_file.enable` is `true`.
-      update_cwd  = false,
+      update_cwd  = true,
 
       -- list of buffer names / filetypes that will not
       -- update the  cwd if the file  isn't found under
@@ -75,6 +72,11 @@ tree.setup {
 
       -- the command arguments as a list.
       args = {}
+   },
+
+   -- show lsp diagnostics in the signcolumn
+   diagnostics = {
+      enable = true,
    },
 
    view = {
@@ -107,33 +109,3 @@ tree.setup {
    },
 
 }
-
--- require('util').register_variables('g', {
---    nvim_tree_bindings = {
---       { key = {'<CR>', '<Tab>', 'o'}, cb = callback('edit') },
---       { key = {'<C-v>'},              cb = callback('edit_vsplit') },
---       { key = {'<C-x>'},              cb = callback('edit_split') },
---       { key = {'<C-t>'},              cb = callback('edit_tab') },
---       { key = {'<'},              cb = callback('prev_sibling') },
---       { key = {'>'},              cb = callback('next_sibling') },
---       { key = {'<S-CR>', '<BS>'},     cb = callback('close_node') },
---       { key = {'I'},                  cb = callback('toggle_ignored')},
---       { key = {'H'},                  cb = callback('toggle_dotfiles')},
---       { key = {'R'},                  cb = callback('refresh')},
---       { key = {'P'},                  cb = callback('preview')},
---       { key = {'<C-]>'},              cb = callback('cd')},
---       { key = {'a'},                  cb = callback('create')},
---       { key = {'d'},                  cb = callback('remove')},
---       { key = {'r'},                  cb = callback('rename')},
---       { key = {'<C-r>'},              cb = callback('full_rename')},
---       { key = {'<C-r>'},              cb = callback('full_rename')},
---       { key = {'x'},                  cb = callback('cut')},
---       { key = {'c'},                  cb = callback('copy')},
---       { key = {'p'},                  cb = callback('paste')},
---       { key = {'[c'},                 cb = callback('prev_git_item')},
---       { key = {']c'},                 cb = callback('next_git_item')},
---       { key = {'-'},                  cb = callback('dir_up')},
---       { key = {'<Esc>', 'q'},         cb = callback('close')},
---       { key = {'g?'},                 cb = callback('toggle_help')},
---    }
--- })

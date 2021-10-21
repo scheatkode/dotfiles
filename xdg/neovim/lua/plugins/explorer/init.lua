@@ -21,9 +21,6 @@ return {'kyazdani42/nvim-tree.lua', opt = true,
    wants    = { 'nvim-web-devicons'            },
    requires = { 'kyazdani42/nvim-web-devicons' },
 
-   setup = function ()
-      require('plugins.explorer.setup')
-   end,
    config = function ()
       require('plugins.explorer.config')
       require('plugins.explorer.keys')
