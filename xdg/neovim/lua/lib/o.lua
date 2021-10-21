@@ -31,10 +31,12 @@
 --- @field subclassed     function
 --- @field subclasses     table
 
+
 local assert       = assert
 local setmetatable = setmetatable
 local tostring     = tostring
 local type         = type
+
 
 local function create_index_wrapper(c, f)
    if f == nil then
@@ -65,6 +67,7 @@ local function create_index_wrapper(c, f)
    end
 end
 
+
 local function propagate_instance_method(c, name, f)
    f = (
           name == '__index'
@@ -81,6 +84,7 @@ local function propagate_instance_method(c, name, f)
    end
 end
 
+
 local function declare_instance_method(c, name, f)
    c.__declared_methods[name] = f
 
@@ -91,9 +95,11 @@ local function declare_instance_method(c, name, f)
    propagate_instance_method(c, name, f)
 end
 
+
 local function __tostring(self) return
    'class ' .. self.name
 end
+
 
 local function __call(self, ...) return
    self:new(...)
@@ -142,7 +148,7 @@ local function create_class(name, super)
    return c
 end
 
--- TODO(scheatkode): Documentation
+
 local function implement_mixin(c, mixin)
    assert(type(mixin) == 'table', 'mixin must be a table')
 
@@ -165,6 +171,7 @@ local function implement_mixin(c, mixin)
 
    return c
 end
+
 
 local default_mixin = {
        __tostring = function(self) return 'instance of ' .. tostring(self.class) end,
@@ -241,6 +248,7 @@ local default_mixin = {
       end
    }
 }
+
 
 --- Create a new class.
 --- @param name string
