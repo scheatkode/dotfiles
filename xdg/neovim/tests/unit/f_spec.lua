@@ -1277,4 +1277,12 @@ describe('functional', function ()
          assert.error(function () r:head() end)
       end)
    end)
+
+   describe('edge case', function ()
+      it('deepcopy should throw an error when given a wrong parameter', function ()
+         local p = coroutine.create(function () return true end)
+
+         assert.error(function () f.is_null(nil_gen, nil, p) end)
+      end)
+   end)
 end)
