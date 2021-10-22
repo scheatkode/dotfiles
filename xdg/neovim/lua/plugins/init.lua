@@ -4,9 +4,6 @@ local fn     = vim.fn
 local notify = vim.notify
 local format = string.format
 
-function _G.load_plugin_keymaps()
-end
-
 function _G.load_plugin_or_fail(plugin_path, use_whichkey)
    local has_whichkey, whichkey = pcall(require, 'which-key')
 
@@ -161,7 +158,7 @@ local packer_manage_plugins = function ()
       -- miscellaneous requirements {{{
 
       use(require 'plugins.devicons') -- powered by kyazdani42/nvim-web-devicons
-      use(require 'plugins.plenary') -- powered by nvim-lua/plenary.nvim
+      use(require 'plugins.plenary')  -- powered by nvim-lua/plenary.nvim
 
       -- }}}
       -- completion, lsp clients, debuggers, and snippets plugins {{{
@@ -173,7 +170,15 @@ local packer_manage_plugins = function ()
       use(require 'plugins.diagnostics') -- powered by folke/lsp-trouble
       use(require 'plugins.symbols')     -- powered by simrat39/symbols-outline
 
+      use(require 'plugins.snippets')    -- powered by L3MON4D3/LuaSnip
       use(require 'plugins.completion')  -- powered by hrsh7th/nvim-compe
+
+         use(require 'plugins.completion.buffer')
+         use(require 'plugins.completion.path')
+         use(require 'plugins.completion.lsp')
+         use(require 'plugins.completion.lua')
+         use(require 'plugins.completion.snip')
+
       -- use {'nvim-lua/lsp-status.nvim'}
       use {'rafamadriz/friendly-snippets'} -- TODO
 
@@ -186,7 +191,7 @@ local packer_manage_plugins = function ()
 
       -- fuzzy searching and file exploration plugins {{{
 
-      use(require 'plugins.explorer') -- tree-like file explorer
+      use(require 'plugins.explorer')  -- tree-like file explorer
       use(require 'plugins.telescope') -- fuzzy searching
 
       -- }}}
