@@ -1,8 +1,9 @@
 -- localize globals {{{1
 
-local api = vim.api
-local fn  = vim.fn
-local t   = scheatkode.replace_termcodes
+local vapi = vim.api
+local vfn  = vim.fn
+local ssub = string.sub
+local t    = scheatkode.replace_termcodes
 
 local log = require('log')
 
@@ -11,26 +12,38 @@ local log = require('log')
 local has_completion, completion = pcall(require, 'cmp')
 local has_snippets,   snippets   = pcall(require, 'luasnip')
 
-if not has_completion and not has_snippets then
+if not has_completion or not has_snippets then
    log.error('Tried loading plugin ... unsuccessfully ‼', 'nvim-cmp')
    return has_completion
 end
 
 local has_words_before = function ()
-   local line, column = unpack(api.nvim_win_get_cursor(0))
+   local line, column = unpack(vapi.nvim_win_get_cursor(0))
 
    return column ~= 0
-      and api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+      and vapi.nvim_buf_get_lines(0, line - 1, line, true)[1]
          :sub(column, column)
          :match("%s") == nil
 end
 
 -- configure plugin {{{1
 
+local sources = {
+     buffer = '[buf]',
+   nvim_lsp = '[lsp]',
+   nvim_lua = '[api]',
+       path = '[path]',
+    luasnip = '[snip]',
+}
+
+local maxwidth = 50
+
 completion.setup {
    formatting = {
-      format = function (_, item)
+      format = function (entry, item)
          item.kind = require('meta.icon.lsp').presets.default[item.kind]
+         item.menu = sources[entry.source.name]
+         item.abbr = ssub(item.abbr, 1, maxwidth)
 
          return item
       end,
@@ -59,7 +72,7 @@ completion.setup {
          if completion.visible() then
             completion.select_next_item()
          elseif snippets.expand_or_jumpable() then
-            fn.feedkeys(t('<Plug>luasnip-expand-or-jump'), '')
+            vfn.feedkeys(t('<Plug>luasnip-expand-or-jump'), '')
          elseif has_words_before() then
             completion.complete()
          else
@@ -71,7 +84,7 @@ completion.setup {
          if completion.visible() then
             completion.select_prev_item()
          elseif snippets.jumpable(-1) then
-            fn.feedkeys(t('<Plug>luasnip-jump-prev'), '')
+            vfn.feedkeys(t('<Plug>luasnip-jump-prev'), '')
          else
             fallback()
          end
@@ -79,12 +92,36 @@ completion.setup {
    },
 
    sources = {
-      { name = 'luasnip'  },
+      { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
       { name = 'path'     },
-      { name = 'buffer'   },
+      { name = 'luasnip'  },
+      { name = 'buffer', keyword_length = 5 },
    },
+
+   experimental = {
+      ghost_text = true,
+   }
 }
+
+-- TODO(scheatkode): Refactor this
+
+local h = require('scheatkode.highlight')
+
+h.set_hl('CmpItemMenu', {
+   link = 'NonText',
+   force = true,
+})
+
+h.set_hl('CmpItemKind', {
+   link = 'Special',
+   force = true,
+})
+
+h.set_hl('CmpItemAbbrDeprecated', {
+   link = 'Error',
+   force = true,
+})
 
 log.info('Plugin loaded', 'nvim-cmp')
 
