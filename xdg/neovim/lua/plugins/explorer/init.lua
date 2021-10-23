@@ -2,7 +2,7 @@ local has_whichkey, whichkey = pcall(require, 'which-key')
 
 if has_whichkey then
    whichkey.register({
-      ['<leader>ft'] = { 'Activate file tree explorer' }
+      ['<F1>'] = { 'Activate file tree explorer' }
    })
 end
 
@@ -15,7 +15,7 @@ return {'kyazdani42/nvim-tree.lua', opt = true,
    },
 
    keys = {
-      '<leader>ft',
+      '<F1>',
    },
 
    wants    = { 'nvim-web-devicons'            },
