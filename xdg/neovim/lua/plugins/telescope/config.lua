@@ -10,26 +10,39 @@ if not has_telescope then
 end
 
 local actions    = require('telescope.actions')
-local builtin    = require('telescope.builtin')
 local previewers = require('telescope.previewers')
-local themes     = require('telescope.themes')
 
-local m = {}
-
--- setup
+--- setup {{{1
 
 telescope.setup({
+
+   --- defaults {{{2
+
    defaults = {
-      file_previewer     = previewers.vim_buffer_cat.new,
-      grep_previewer     = previewers.vim_buffer_vimgrep.new,
-      qflist_previewer   = previewers.vim_buffer_qflist.new,
-      prompt_prefix      = '❯ ',
-      -- shorten_path       = true,
-      scroll_strategy    = 'cycle',
+
+        file_previewer = previewers.vim_buffer_cat.new,
+        grep_previewer = previewers.vim_buffer_vimgrep.new,
+      qflist_previewer = previewers.vim_buffer_qflist.new,
+
+         entry_prefix = '  ',
+        prompt_prefix = '❯ ',
+      selection_caret = '❯ ',
+
+      initial_mode = 'insert',
+
+      color_devicons = true,
+
+         scroll_strategy = 'cycle',
       selection_strategy = 'reset',
-      layout_stategy     = 'flex',
+        sorting_strategy = 'descending',
+          layout_stategy = 'flex',
+
+          winblend = 5,
+
+      dynamic_preview_title = true,
 
       path_display = {
+         truncate = 2,
       },
 
       borderchars = { -- rounded corners
@@ -42,20 +55,22 @@ telescope.setup({
 
       layout_config = {
          horizontal = {
-            width_padding  = 0.1,
-            height_padding = 0.1,
+            width  = { padding = 0.05 },
+            height = { padding = 0.05 },
             preview_width  = 0.6
          },
 
          vertical = {
-            width_padding  = 0.05,
-            height_padding = 1,
+            width  = { padding = 0.3 },
+            height = { padding = 0.05 },
             preview_height = 0.5
          }
       },
 
       mappings = {
          i = {
+            ['<c-h>'] = actions.which_key,
+
             ['<c-j>'] = actions.move_selection_next,
             ['<c-k>'] = actions.move_selection_previous,
 
@@ -64,71 +79,108 @@ telescope.setup({
             ['<c-s>'] = actions.select_horizontal,
             ['<c-x>'] = false,
 
-            -- ['<c-t>']  = actions.open_selected_files,
-            -- ['<c-a>']  = actions.cycle_previewers_prev,
-            -- ['<c-w>l'] = actions.preview_switch_window_right,
+            ['<c-n>'] = actions.cycle_history_next,
+            ['<c-p>'] = actions.cycle_history_prev,
 
             ['<c-u>'] = actions.preview_scrolling_up,
             ['<c-d>'] = actions.preview_scrolling_down,
 
-            -- ['<c-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
-            -- ['<a-q>'] = actions.smart_add_to_qflist  + actions.open_qflist,
+            ['<c-q>'] = actions.smart_send_to_qflist  + actions.open_qflist,
 
+            ['<c-a>'] = actions.toggle_all,
             ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
 
-            -- ['<c-c>'] = actions.close,
+            ['<c-t>'] = actions.move_to_top,
+            ['<c-z>'] = actions.move_to_middle,
+            ['<c-b>'] = actions.move_to_bottom,
+
+            ['<c-c>'] = actions.close,
             ['<esc>'] = actions.close,
          },
 
          n = {
+            ['<c-h>'] = actions.which_key,
+                ['?'] = actions.which_key,
+
             ['<c-j>'] = actions.move_selection_next,
             ['<c-k>'] = actions.move_selection_previous,
-            ['j']     = actions.move_selection_next,
-            ['k']     = actions.move_selection_previous,
+                ['j'] = actions.move_selection_next,
+                ['k'] = actions.move_selection_previous,
 
-            ['<cr>']  = actions.select_default + actions.center,
+             ['<cr>'] = actions.select_default + actions.center,
             ['<c-v>'] = actions.select_vertical,
             ['<c-s>'] = actions.select_horizontal,
             ['<c-x>'] = false,
 
-            ['<c-d>'] = actions.preview_scrolling_down,
-            ['<c-u>'] = actions.preview_scrolling_up,
+            ['<c-n>'] = actions.cycle_history_next,
+            ['<c-p>'] = actions.cycle_history_prev,
 
-            ['<c-q>'] = actions.send_to_qflist,
+            ['<c-u>'] = actions.preview_scrolling_up,
+            ['<c-d>'] = actions.preview_scrolling_down,
+
+            ['<c-q>'] = actions.smart_send_to_qflist  + actions.open_qflist,
+
+            ['<c-a>'] = actions.toggle_all,
+            ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
+
+            ['<c-t>'] = actions.move_to_top,
+               ['gg'] = actions.move_to_top,
+            ['<c-z>'] = actions.move_to_middle,
+               ['zz'] = actions.move_to_middle,
+            ['<c-b>'] = actions.move_to_bottom,
+                ['G'] = actions.move_to_bottom,
 
             ['<c-c>'] = actions.close,
             ['<esc>'] = actions.close,
-            ['q']     = actions.close,
-
-            ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
+                ['q'] = actions.close,
          },
       },
+   },
+
+   --- pickers {{{2
+
+   vimgrep_arguments = (function ()
+      if vim.fn.executable('rg') then
+         return {
+            'rg',
+               '--color=never',
+               '--no-heading',
+               '--with-filename',
+               '--line-number',
+               '--column',
+               '--smart-case',
+         }
+      end
+
+      if vim.fn.executable('grep') then
+         return {
+            'grep',
+               '-I',
+               '--with-filename',
+               '--line-number',
+               '--ignore-case',
+               '--recurse',
+         }
+      end
+   end)(),
+
+   file_ignore_patterns = {
+      '%.git'
    },
 
    pickers = {
-      buffers = {
-         sort_lastused = true,
-         theme         = 'dropdown',
-         previewer     = false,
-         mappings = {
-            i = {
-               ['<c-h>'] = 'which_key',
-               ['<c-x>'] = actions.delete_buffer,
-            },
-            n = {
-               ['?'] = 'which_key',
-               ['<c-x>'] = actions.delete_buffer,
-            },
-         },
+      find_files = {
+         file_ignore_patterns = { '%.png', '%.jpg', '%webp' },
+      },
+
+      file_explorer = {
+         file_ignore_patterns = { '%.png', '%.jpg', '%webp' },
       },
    },
 
-   extensions = {
-      fzy_native = {
-         override_generic_sorter = true,
-         override_file_sorter    = true,
-      },
+   --- extensions {{{2
 
+   extensions = {
       fzf = {
          override_generic_sorter = true,         -- override the generic sorter
          override_file_sorter    = true,         -- override the file sorter
@@ -155,79 +207,12 @@ telescope.setup({
          }
       },
    }
+   --- }}}
 })
 
--- pcall(telescope.load_extension, 'fzy_native')  -- superfast sorter
-pcall(telescope.load_extension, 'fzf')         -- other superfast sorter
-pcall(telescope.load_extension, 'frecency')    -- frecency
-pcall(telescope.load_extension, 'project')     -- project picker
--- pcall(telescope.load_extension, 'media_files') -- media preview
+pcall(telescope.load_extension, 'fzf')      -- other superfast sorter
+pcall(telescope.load_extension, 'frecency') -- frecency
+pcall(telescope.load_extension, 'project')  -- project picker
 
-m.grep_prompt = function ()
-   builtin.grep_string({
-      search = vim.fn.input('Grep string ❯ '),
-   })
-end
+--- vim: set fdm=marker fdl=0:
 
-m.files = function ()
-   builtin.find_files({
-      file_ignore_patterns = { '%.png', '%.jpg', '%webp' },
-   })
-end
-
-m.notes = function ()
-   builtin.find_files({
-      prompt_title = '< Notes >',
-               cwd = '~/brain/',
-   })
-end
-
-m.file_explorer = function ()
-   builtin.file_browser({
-      file_ignore_patterns = { '%.png', '%.jpg', '%webp' },
-      attach_mappings = function (_, _)
-         -- map('i', actions.)
-      end,
-   })
-end
-
-m.frecency = function ()
-   telescope.extensions.frecency.frecency()
-end
-
-m.buffer_fuzzy = function ()
-   builtin.current_buffer_fuzzy_find()
-end
-
-m.code_actions = function ()
-   builtin.lsp_code_actions()
-end
-
-m.projects = function ()
-   telescope.extensions.project.project({ display_type = 'full' })
-end
-
---- picker-specific
-
-m.buffers = function ()
-   builtin.buffers({
-      attach_mappings = function (_, map)
-         map('i', '<C-x>', actions.delete_buffer)
-         map('n', '<C-x>', actions.delete_buffer)
-
-         return true
-      end,
-   })
-end
-
---- return configuration
-
-return setmetatable({}, {
-   __index = function(_, k)
-      if m[k] then
-         return m[k]
-      else
-         return builtin[k]
-      end
-   end
-})
