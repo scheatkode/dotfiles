@@ -1,3 +1,5 @@
+local f = require('lib.f')
+
 local telescope = require('telescope')
 
 local actions = require('telescope.actions')
@@ -48,12 +50,16 @@ function m.find_files (hidden, no_ignore)
 end
 
 function m.project_or_find_files ()
-   local active_client = vim.lsp.get_active_clients()[1]
+   --- TODO(scheatkode): Generalize this and select the most *"generic"* from
+   --- the list of attached LSPs.
+   --- `buf_get_clients()` most likely won't return a contiguous list. This
+   --- gets the first active LSP.
+   local client = f.iterate(vim.lsp.buf_get_clients()):take(1)
 
-   if active_client then
+   if client and client.config then
       return builtin.find_files({
          prompt_title = 'Find Files in Project',
-         cwd = active_client.config.root_dir,
+         cwd = client.config.root_dir,
       })
    end
 
