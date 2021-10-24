@@ -50,13 +50,20 @@ function m.find_files (hidden, no_ignore)
 end
 
 function m.project_or_find_files ()
-   --- TODO(scheatkode): Generalize this and select the most *"generic"* from
-   --- the list of attached LSPs.
    --- `buf_get_clients()` most likely won't return a contiguous list. This
-   --- gets the first active LSP.
-   local client = f.iterate(vim.lsp.buf_get_clients()):take(1)
+   --- gets the most "generic" LSP client for the current buffer, using a dumb
+   --- string length comparison of the `root_dir` property.
+   local clients = f
+      .iterate(vim.lsp.buf_get_clients())
+      :filter(function (x) return x and x.config ~= nil end)
 
-   if client and client.config then
+   local has_clients, client = pcall(
+      f.minimum_by,
+      function (x, y) return #x.config.root_dir < #y.config.root_dir end,
+      clients
+   )
+
+   if has_clients then
       return builtin.find_files({
          prompt_title = 'Find Files in Project',
          cwd = client.config.root_dir,
