@@ -263,8 +263,8 @@ require('util').register_keymaps(convert_mappings({
 
    --- file operations
 
-   {'n', '<leader>fs', '<cmd>w<CR>', 'Save file'},
-   {'n', '<leader>fS', ':w ',        'Save file as', { silent = false }},
+   -- {'n', '<leader>fs', '<cmd>w<CR>', 'Save file'},
+   -- {'n', '<leader>fS', ':w ',        'Save file as', { silent = false }},
 
    --- buffer operations
 
@@ -412,6 +412,4 @@ if has_whichkey then
       [';;'] = 'which_key_ignore',
       ['vv'] = 'which_key_ignore',
    })
-else
-   require('log').warn('WhichKey not found', 'Keymaps')
 end
