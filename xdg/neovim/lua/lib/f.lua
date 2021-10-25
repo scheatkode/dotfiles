@@ -145,6 +145,8 @@
 
 --- # Initialization {{{1
 
+local compat = require('lib.compat')
+
 local mceil   = math.ceil
 local mfloor  = math.floor
 local mmax    = math.max
@@ -161,7 +163,7 @@ local ipairs       = ipairs
 local pairs        = pairs
 local select       = select
 local type         = type
-local unpack       = unpack
+local unpack       = compat.table_unpack
 
 --- This will be used to export library utilities to be
 --- used functional style …
