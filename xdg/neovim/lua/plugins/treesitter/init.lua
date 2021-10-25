@@ -1,4 +1,4 @@
-return { 'nvim-treesitter/nvim-treesitter', opt = 'true',
+return { 'nvim-treesitter/nvim-treesitter', opt = true,
    as = 'treesitter',
 
    branch = '0.5-compat',
