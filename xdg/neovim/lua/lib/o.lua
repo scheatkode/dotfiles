@@ -39,9 +39,7 @@ local type         = type
 
 
 local function create_index_wrapper(c, f)
-   if f == nil then
-      return c.__instance_dictionary
-   end
+   if f == nil then return c.__instance_dictionary end
 
    if type(f) == 'function' then
       return function(self, name)
