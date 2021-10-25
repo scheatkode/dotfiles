@@ -1,17 +1,8 @@
-" winblows compatibility
-if exists('+shellslash')
-   set shellslash
-endif
-
 " grab dotfiles code
 set rtp+=.
 
 " use local version of plenary (required for CI)
-if has('win32')
-   set rtp+=./plenary.nvim
-else
-   set rtp+=../plenary.nvim
-endif
+set rtp+=../plenary.nvim
 
 " when using packer
 set rtp+=~/.local/share/nvim/site/pack/packer/opt/plenary.nvim
