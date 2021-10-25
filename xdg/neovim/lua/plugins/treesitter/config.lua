@@ -54,9 +54,9 @@ treesitter.setup({
 
       keymaps = {
          init_selection    = '<leader>v',
-         node_incremental  = 'a',
-         scope_incremental = 's',
-         node_decremental  = 'i',
+         node_incremental  = '<leader>a',
+         scope_incremental = '<leader>s',
+         node_decremental  = '<leader>i',
       }
    },
 
