@@ -52,4 +52,4 @@ jobs:
       - name: Unit tests
         run: |
           cd dotfiles
-          make headless-test
+          make test
