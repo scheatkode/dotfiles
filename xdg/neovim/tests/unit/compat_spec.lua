@@ -20,7 +20,6 @@ describe('compatibilty', function ()
       end)
    end)
 
-   if compat.lua51 and not compat.luajit then
       describe('of package.searchpath', function ()
          it('should match the original function behaviour when a package is found', function ()
             local path = 'lua/?.lua'
@@ -54,5 +53,4 @@ describe('compatibilty', function ()
             )
          end)
       end)
-   end
 end)
