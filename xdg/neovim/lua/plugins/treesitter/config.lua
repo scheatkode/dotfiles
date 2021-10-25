@@ -43,6 +43,10 @@ treesitter.setup({
    context_commentstring = {
       enable         = true,
       enable_autocmd = false,
+
+      config = {
+         cs = '// %s',
+      }
    },
 
    incremental_selection = {
@@ -50,9 +54,9 @@ treesitter.setup({
 
       keymaps = {
          init_selection    = '<leader>v',
-         node_incremental  = '+',
-         scope_incremental = 'R',
-         node_decremental  = '-',
+         node_incremental  = 'a',
+         scope_incremental = 's',
+         node_decremental  = 'i',
       }
    },
 
