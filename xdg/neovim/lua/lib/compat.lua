@@ -280,7 +280,7 @@ if not package.searchpath then
       end
 
       return nil,
-         '\tno file \''
+         '\n\tno file \''
          .. table.concat(paths_tried, '\'\n\tno file \'')
          .. '\''
    end

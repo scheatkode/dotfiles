@@ -23,9 +23,12 @@ describe('compatibilty', function ()
    if compat.lua51 and not compat.luajit then
       describe('of package.searchpath', function ()
          it('should match the original function behaviour when a package is found', function ()
+            local path = 'lua/?.lua'
+
             assert.is_truthy(
-               compat.package_searchpath('lib.compat', package.path)
-               :match('lua[/\\]lib[/\\]compat')
+               compat
+                  .package_searchpath('lib.compat', path)
+                  :match('lua[/\\]lib[/\\]compat')
             )
          end)
 
@@ -36,7 +39,7 @@ describe('compatibilty', function ()
 
             assert.is_nil(ok)
             assert.same(
-               '\tno file \'some/some/file/name/random.path\'\n\tno file \'another/some/file/name.path\'',
+               '\n\tno file \'some/some/file/name/random.path\'\n\tno file \'another/some/file/name.path\'',
                err
             )
          end)
@@ -46,7 +49,7 @@ describe('compatibilty', function ()
 
             assert.is_nil(ok)
             assert.same(
-               '\tno file \'some/some.file.name/random.path\'\n\tno file \'another/some.file.name.path\'',
+               '\n\tno file \'some/some.file.name/random.path\'\n\tno file \'another/some.file.name.path\'',
                err
             )
          end)
