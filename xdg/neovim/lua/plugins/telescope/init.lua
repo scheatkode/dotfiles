@@ -107,7 +107,7 @@ return {'nvim-telescope/telescope.nvim', opt = true,
 
    wants = {
       'popup.nvim',
-      'plenary',
+      'plenary.nvim',
       'telescope-frecency.nvim',
       'telescope-project.nvim',
       'telescope-fzf-native.nvim',

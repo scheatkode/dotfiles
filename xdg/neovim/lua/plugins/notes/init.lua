@@ -4,7 +4,7 @@ return {'nvim-neorg/neorg', opt = true,
       'nvim-lua/plenary.nvim',
    },
    wants = {
-      'plenary',
+      'plenary.nvim',
    },
    config = function ()
       require('plugins.notes.config')

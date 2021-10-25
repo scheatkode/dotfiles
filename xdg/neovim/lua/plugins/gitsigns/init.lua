@@ -33,7 +33,7 @@ return {'lewis6991/gitsigns.nvim', opt = true,
    },
 
    wants = {
-      'plenary'
+      'plenary.nvim'
    },
 
    config = function ()

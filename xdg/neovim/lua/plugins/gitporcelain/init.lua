@@ -56,7 +56,7 @@ return {'TimUntersberger/neogit', opt = true,
    },
 
    wants = {
-      'plenary',
+      'plenary.nvim',
    },
 
    config = function ()
