@@ -24,12 +24,8 @@ describe('object oriented', function ()
       end)
    end)
 
-   describe('class', function ()
-      local c
-
-      before_each(function ()
-         c = class('some_class')
-      end)
+   describe('basic class', function ()
+      local c = class('some_class')
 
       it('should return the correct name', function ()
          assert.equal(c.name, 'some_class')
@@ -51,96 +47,88 @@ describe('object oriented', function ()
       it('should throw an error when given something other than a table', function ()
          assert.error(function () c:implement('foobar') end)
       end)
+   end)
 
-      describe('extend', function ()
-         it('should throw an error when not called as a method', function ()
-            assert.error(function () c.extend() end)
-         end)
+   describe('class extension', function ()
+      local c   = class('some_class')
+      function c.prototype:subclassed(other) self.prototype.child = other end
+      local sub = c:extend('some_subclass')
 
-         it('should throw an error when no name is given', function ()
-            assert.error(function () c:extend() end)
-         end)
-
-         local sub
-
-         before_each(function ()
-            function c.prototype:subclassed(other) self.prototype.child = other end
-            sub = c:extend('some_subclass')
-         end)
-
-         it('should return the correct name of the subclass', function ()
-            assert.equal(sub.name, 'some_subclass')
-         end)
-
-         it('should register the correct superclass', function ()
-            assert.equal(sub.super, c)
-         end)
-
-         it('should invoke the subclassed hook method', function ()
-            assert.equal(sub, c.child)
-         end)
-
-         it('should implement the subclass in the subclass table', function ()
-            sub = c:extend('some_subclass')
-            assert.is_true(c.subclasses[sub])
-         end)
+      it('should throw an error when not called as a method', function ()
+         assert.error(function () c.extend() end)
       end)
 
-      describe('attributes', function ()
-         local a, b
-
-         before_each(function ()
-            a = class('a')
-            b = class('b')
-
-            a.prototype.foo = 'bar'
-         end)
-
-         it('should be available after initialization', function ()
-            assert.equal('bar', a.foo)
-         end)
-
-         it('should be overridable by subclasses without affecting the superclass', function ()
-            b.prototype.foo = 'baz'
-
-            assert.equal(b.foo, 'baz')
-            assert.equal(a.foo, 'bar')
-         end)
+      it('should throw an error when no name is given', function ()
+         assert.error(function () c:extend() end)
       end)
 
-      describe('methods', function ()
-         local a, b
+      it('should return the correct name of the subclass', function ()
+         assert.equal(sub.name, 'some_subclass')
+      end)
 
-         before_each(function ()
-            a = class('a')
-            b = class('b', a)
+      it('should register the correct superclass', function ()
+         assert.equal(sub.super, c)
+      end)
 
-            function a.prototype:foo () return 'bar' end
-         end)
+      it('should invoke the subclassed hook method', function ()
+         assert.equal(sub, c.child)
+      end)
 
-         it('should be available after initialization', function ()
-            assert.equal(a:foo(), 'bar')
-         end)
+      it('should implement the subclass in the subclass table', function ()
+         assert.is_true(c.subclasses[sub])
+      end)
+   end)
 
-         it('should be available to subclasses', function ()
-            assert.equal(b:foo(), 'bar')
-         end)
+   describe('class attributes', function ()
+      local a, b
 
-         it('should be overridable by subclasses without affecting the superclass', function ()
-            function b.prototype:foo () return 'baz' end
+      before_each(function ()
+         a = class('a')
+         b = class('b')
 
-            assert.equal(b:foo(), 'baz')
-            assert.equal(a:foo(), 'bar')
-         end)
+         a.prototype.foo = 'bar'
+      end)
+
+      it('should be available after initialization', function ()
+         assert.equal('bar', a.foo)
+      end)
+
+      it('should be overridable by subclasses without affecting the superclass', function ()
+         b.prototype.foo = 'baz'
+
+         assert.equal(b.foo, 'baz')
+         assert.equal(a.foo, 'bar')
+      end)
+   end)
+
+   describe('class methods', function ()
+      local a, b
+
+      before_each(function ()
+         a = class('a')
+         b = class('b', a)
+
+         function a.prototype:foo () return 'bar' end
+      end)
+
+      it('should be available after initialization', function ()
+         assert.equal(a:foo(), 'bar')
+      end)
+
+      it('should be available to subclasses', function ()
+         assert.equal(b:foo(), 'bar')
+      end)
+
+      it('should be overridable by subclasses without affecting the superclass', function ()
+         function b.prototype:foo () return 'baz' end
+
+         assert.equal(b:foo(), 'baz')
+         assert.equal(a:foo(), 'bar')
       end)
    end)
 
    describe('default method', function ()
-      local Object
-
-      before_each(function ()
-         Object = class('Object')
-      end)
+      local Object = class('Object')
 
       it('should set the name correctly', function ()
          assert.equal('Object', Object.name)
@@ -155,244 +143,242 @@ describe('object oriented', function ()
 
          assert.is_true(o:is_instance_of(Object))
       end)
+   end)
 
-      describe('extend', function ()
-         it('should throw an error when not called as a method', function ()
-            assert.error(function () Object.extend() end)
+   describe('default method extension', function ()
+      local Object = class('Object')
+      local sub    = Object:extend('subclass')
+
+      it('should throw an error when not called as a method', function ()
+         assert.error(function () Object.extend() end)
+      end)
+
+      it('should throw an error when no name is given', function ()
+         assert.error(function () Object:extend() end)
+      end)
+
+      it('should create a class with the correct name', function ()
+         assert.equal('subclass', sub.name)
+      end)
+
+      it('should create a class with the correct superclass', function ()
+         sub = Object:extend('subclass')
+         assert.equal(Object, sub.super)
+      end)
+
+      it('should be registered in the superclass table', function ()
+         sub = Object:extend('subclass')
+         assert.is_true(Object.subclasses[sub])
+      end)
+   end)
+
+   describe('instance creation', function ()
+      local sub
+
+      before_each(function ()
+         sub = class('sub')
+         function sub:construct() self.mark = true end
+      end)
+
+      it('should allocate instances properly', function ()
+         local instance = sub:allocate()
+
+         assert.equal(sub, instance.class)
+         assert.equal('instance of ' .. tostring(sub), tostring(instance))
+      end)
+
+      it('should throw an error when not called as a method', function ()
+         assert.error(sub.allocate)
+      end)
+
+      it('should not call the constructor', function ()
+         local instance = sub:allocate()
+         assert.is_nil(instance.mark)
+      end)
+
+      it('should be overridden', function ()
+         local previous = sub.prototype.allocate
+
+         function sub.prototype:allocate ()
+            local instance = previous(sub)
+
+            instance.mark = true
+
+            return instance
+         end
+
+         local instance = sub:allocate()
+         assert.is_true(instance.mark)
+      end)
+
+      it('should construct instances properly', function ()
+         local instance = sub:new()
+         assert.equal(sub, instance.class)
+      end)
+
+      it('should throw an error when not used as a method', function ()
+         assert.error(sub.new)
+      end)
+
+      it('should call the constructor', function ()
+         local instance = sub:new()
+         assert.is_true(instance.mark)
+      end)
+   end)
+
+   describe('instances of primitives when used as classes', function ()
+      local Object = class('Object')
+      local o
+
+      before_each(function ()
+         o = Object:new()
+      end)
+
+      it ('object:is_instance_of(nil) should return false', function ()
+         assert.is_falsy(o:is_instance_of(nil))
+      end)
+
+      it ('object:is_instance_of(number) should return false', function ()
+         assert.is_falsy(o:is_instance_of(1))
+      end)
+
+      it ('object:is_instance_of(string) should return false', function ()
+         assert.is_falsy(o:is_instance_of('foobar'))
+      end)
+
+      it ('object:is_instance_of(table) should return false', function ()
+         assert.is_falsy(o:is_instance_of({}))
+      end)
+
+      it ('object:is_instance_of(function) should return false', function ()
+         assert.is_falsy(o:is_instance_of(function () end))
+      end)
+
+      it ('object:is_instance_of(Object) should return false', function ()
+         assert.is_falsy(o:is_instance_of(Object:new()))
+      end)
+   end)
+
+   describe('instances of primitives when used as instances', function ()
+      local Object = class('Object')
+
+      it ('Object.is_instance_of(nil, Object) should return false', function ()
+         assert.is_falsy(Object.is_instance_of(nil, Object))
+      end)
+
+      it ('Object.is_instance_of(number, Object) should return false', function ()
+         assert.is_falsy(Object.is_instance_of(1, Object))
+      end)
+
+      it ('Object.is_instance_of(string, Object) should return false', function ()
+         assert.is_falsy(Object.is_instance_of('foobar', Object))
+      end)
+
+      it ('Object.is_instance_of(table, Object) should return false', function ()
+         assert.is_falsy(Object.is_instance_of({}, Object))
+      end)
+
+      it ('Object.is_instance_of(function, Object) should return false', function ()
+         assert.is_falsy(Object.is_instance_of(function () end, Object))
+      end)
+   end)
+
+   describe('instances of an instance', function ()
+      local c1 = class('c1')
+      local c2 = class('c2', c1)
+      local c3 = class('c3', c2)
+
+      local unrelated = class('unrelated')
+
+      local o1 = c1:new()
+      local o2 = c2:new()
+      local o3 = c3:new()
+
+      it('should be true for its own class', function ()
+         assert.is_true(o1:is_instance_of(c1))
+         assert.is_true(o2:is_instance_of(c2))
+         assert.is_true(o3:is_instance_of(c3))
+      end)
+
+      it('should be true for its superclass', function ()
+         assert.is_true(o2:is_instance_of(c1))
+         assert.is_true(o3:is_instance_of(c1))
+         assert.is_true(o3:is_instance_of(c2))
+      end)
+
+      it('should be false for its subclasses', function ()
+         assert.is_false(o1:is_instance_of(c2))
+         assert.is_false(o1:is_instance_of(c3))
+         assert.is_false(o2:is_instance_of(c3))
+      end)
+
+      it('should be false for unrelated classes', function ()
+         assert.is_false(o1:is_instance_of(unrelated))
+         assert.is_false(o2:is_instance_of(unrelated))
+         assert.is_false(o3:is_instance_of(unrelated))
+      end)
+   end)
+
+   describe('subclasses of', function ()
+      local Object = class('Object')
+
+      it('should be false for instances', function ()
+         assert.is_false(Object:is_subclass_of(Object:new()))
+      end)
+
+      describe('primitives', function ()
+         it('should return false for nil', function ()
+            assert.is_false(Object:is_subclass_of(nil))
          end)
 
-         it('should throw an error when no name is given', function ()
-            assert.error(function () Object:extend() end)
+         it('should return false for number', function ()
+            assert.is_false(Object:is_subclass_of(1))
          end)
 
-         local sub
-
-         before_each(function ()
-            sub = Object:extend('subclass')
+         it('should return false for string', function ()
+            assert.is_false(Object:is_subclass_of('foobar'))
          end)
 
-         it('should create a class with the correct name', function ()
-            assert.equal('subclass', sub.name)
+         it('should return false for table', function ()
+            assert.is_false(Object:is_subclass_of({}))
          end)
 
-         it('should create a class with the correct superclass', function ()
-            sub = Object:extend('subclass')
-            assert.equal(Object, sub.super)
-         end)
-
-         it('should be registered in the superclass table', function ()
-            sub = Object:extend('subclass')
-            assert.is_true(Object.subclasses[sub])
+         it('should return false for function', function ()
+            assert.is_false(Object:is_subclass_of(function () end))
          end)
       end)
 
-      describe('instance creation', function ()
-         local sub
+      describe('any class', function ()
+         local c1 = class('c1')
+         local c2 = class('c2', c1)
+         local c3 = class('c3', c2)
 
-         before_each(function ()
-            sub = class('sub')
-            function sub:construct() self.mark = true end
+         local unrelated = class('unrelated')
+
+         it('should be true for its direct superclass', function ()
+            assert.is_true(c2:is_subclass_of(c1))
+            assert.is_true(c3:is_subclass_of(c2))
          end)
 
-         it('should allocate instances properly', function ()
-            local instance = sub:allocate()
-
-            assert.equal(sub, instance.class)
-            assert.equal('instance of ' .. tostring(sub), tostring(instance))
+         it('should be true for its ancestors', function ()
+            assert.is_true(c3:is_subclass_of(c1))
          end)
 
-         it('should throw an error when not called as a method', function ()
-            assert.error(sub.allocate)
-         end)
-
-         it('should not call the constructor', function ()
-            local instance = sub:allocate()
-            assert.is_nil(instance.mark)
-         end)
-
-         it('should be overridden', function ()
-            local previous = sub.prototype.allocate
-
-            function sub.prototype:allocate ()
-               local instance = previous(sub)
-
-               instance.mark = true
-
-               return instance
-            end
-
-            local instance = sub:allocate()
-            assert.is_true(instance.mark)
-         end)
-
-         it('should construct instances properly', function ()
-            local instance = sub:new()
-            assert.equal(sub, instance.class)
-         end)
-
-         it('should throw an error when not used as a method', function ()
-            assert.error(sub.new)
-         end)
-
-         it('should call the constructor', function ()
-            local instance = sub:new()
-            assert.is_true(instance.mark)
-         end)
-      end)
-
-      describe('instances of', function ()
-         describe('primitives', function ()
-            local o = Object:new()
-
-            describe('when used as classes', function ()
-               it ('object:is_instance_of(nil) should return false', function ()
-                  assert.is_falsy(o:is_instance_of(nil))
-               end)
-
-               it ('object:is_instance_of(number) should return false', function ()
-                  assert.is_falsy(o:is_instance_of(1))
-               end)
-
-               it ('object:is_instance_of(string) should return false', function ()
-                  assert.is_falsy(o:is_instance_of('foobar'))
-               end)
-
-               it ('object:is_instance_of(table) should return false', function ()
-                  assert.is_falsy(o:is_instance_of({}))
-               end)
-
-               it ('object:is_instance_of(function) should return false', function ()
-                  assert.is_falsy(o:is_instance_of(function () end))
-               end)
-
-               it ('object:is_instance_of(Object) should return false', function ()
-                  assert.is_falsy(o:is_instance_of(Object:new()))
-               end)
-            end)
-
-            describe('when used as instances', function ()
-               it ('Object.is_instance_of(nil, Object) should return false', function ()
-                  assert.is_falsy(Object.is_instance_of(nil, Object))
-               end)
-
-               it ('Object.is_instance_of(number, Object) should return false', function ()
-                  assert.is_falsy(Object.is_instance_of(1, Object))
-               end)
-
-               it ('Object.is_instance_of(string, Object) should return false', function ()
-                  assert.is_falsy(Object.is_instance_of('foobar', Object))
-               end)
-
-               it ('Object.is_instance_of(table, Object) should return false', function ()
-                  assert.is_falsy(Object.is_instance_of({}, Object))
-               end)
-
-               it ('Object.is_instance_of(function, Object) should return false', function ()
-                  assert.is_falsy(Object.is_instance_of(function () end, Object))
-               end)
-            end)
-         end)
-
-         describe('an instance', function ()
-            local c1 = class('c1')
-            local c2 = class('c2', c1)
-            local c3 = class('c3', c2)
-
-            local unrelated = class('unrelated')
-
-            local o1 = c1:new()
-            local o2 = c2:new()
-            local o3 = c3:new()
-
-            it('should be true for its own class', function ()
-               assert.is_true(o1:is_instance_of(c1))
-               assert.is_true(o2:is_instance_of(c2))
-               assert.is_true(o3:is_instance_of(c3))
-            end)
-
-            it('should be true for its superclass', function ()
-               assert.is_true(o2:is_instance_of(c1))
-               assert.is_true(o3:is_instance_of(c1))
-               assert.is_true(o3:is_instance_of(c2))
-            end)
-
-            it('should be false for its subclasses', function ()
-               assert.is_false(o1:is_instance_of(c2))
-               assert.is_false(o1:is_instance_of(c3))
-               assert.is_false(o2:is_instance_of(c3))
-            end)
-
-            it('should be false for unrelated classes', function ()
-               assert.is_false(o1:is_instance_of(unrelated))
-               assert.is_false(o2:is_instance_of(unrelated))
-               assert.is_false(o3:is_instance_of(unrelated))
-            end)
-         end)
-      end)
-
-      describe('subclasses of', function ()
-         it('should be false for instances', function ()
-            assert.is_false(Object:is_subclass_of(Object:new()))
-         end)
-
-         describe('primitives', function ()
-            it('should return false for nil', function ()
-               assert.is_false(Object:is_subclass_of(nil))
-            end)
-
-            it('should return false for number', function ()
-               assert.is_false(Object:is_subclass_of(1))
-            end)
-
-            it('should return false for string', function ()
-               assert.is_false(Object:is_subclass_of('foobar'))
-            end)
-
-            it('should return false for table', function ()
-               assert.is_false(Object:is_subclass_of({}))
-            end)
-
-            it('should return false for function', function ()
-               assert.is_false(Object:is_subclass_of(function () end))
-            end)
-         end)
-
-         describe('any class', function ()
-            local c1 = class('c1')
-            local c2 = class('c2', c1)
-            local c3 = class('c3', c2)
-
-            local unrelated = class('unrelated')
-
-            it('should be true for its direct superclass', function ()
-               assert.is_true(c2:is_subclass_of(c1))
-               assert.is_true(c3:is_subclass_of(c2))
-            end)
-
-            it('should be true for its ancestors', function ()
-               assert.is_true(c3:is_subclass_of(c1))
-            end)
-
-            it('should be false for unrelated classes', function ()
-               assert.is_false(c1:is_subclass_of(unrelated))
-               assert.is_false(c2:is_subclass_of(unrelated))
-               assert.is_false(c3:is_subclass_of(unrelated))
-            end)
+         it('should be false for unrelated classes', function ()
+            assert.is_false(c1:is_subclass_of(unrelated))
+            assert.is_false(c2:is_subclass_of(unrelated))
+            assert.is_false(c3:is_subclass_of(unrelated))
          end)
       end)
    end)
 
    describe('instance', function ()
       describe('attributes', function ()
-         local person
+         local person = class('person')
 
-         before_each(function ()
-            person = class('person')
-
-            function person:construct (name)
-               self.name = name
-            end
-         end)
+         function person:construct (name)
+            self.name = name
+         end
 
          it('should be available to the instance after initialization', function ()
             local alice = person:new('alice')
@@ -416,21 +402,17 @@ describe('object oriented', function ()
       end)
 
       describe('methods', function ()
-         local A, B, a, b
+         local A = class('A')
 
-         before_each(function ()
-            A = class('A')
+         function A:overridden() return 'foo' end
+         function A:regular() return 'regular' end
 
-            function A:overridden() return 'foo' end
-            function A:regular() return 'regular' end
+         local B = class('B', A)
 
-            B = class('B', A)
+         function B:overridden() return 'bar' end
 
-            function B:overridden() return 'bar' end
-
-            a = A:new()
-            b = B:new()
-         end)
+         local a = A:new()
+         local b = B:new()
 
          it('should be available to any instance', function ()
             assert.equal('foo', a:overridden())
@@ -447,26 +429,22 @@ describe('object oriented', function ()
    end)
 
    describe('mixin', function ()
-      local m1, m2, c1, c2
+      local m1, m2 = {}, {}
 
-      before_each(function ()
-         m1, m2 = {}, {}
+      function m1:implemented (c) c.includes_m1 = true end
+      function m1:foo () return 'foo' end
+      function m1:bar () return 'bar' end
 
-         function m1:implemented (c) c.includes_m1 = true end
-         function m1:foo () return 'foo' end
-         function m1:bar () return 'bar' end
+      m1.prototype = {}
+      m1.prototype.bazzz = function () return 'bazzz' end
 
-         m1.prototype = {}
-         m1.prototype.bazzz = function () return 'bazzz' end
+      function m2:baz () return 'baz' end
 
-         function m2:baz () return 'baz' end
+      local c1 = class('c1'):implement(m1, m2)
+      function c1:foo () return 'foo1' end
 
-         c1 = class('c1'):implement(m1, m2)
-         function c1:foo () return 'foo1' end
-
-         c2 = class('c2', c1)
-         function c2:bar () return 'bar2' end
-      end)
+      local c2 = class('c2', c1)
+      function c2:bar () return 'bar2' end
 
       it('should invoke the "implemented" method when implemented', function ()
          assert.is_true(c1.includes_m1)
@@ -496,12 +474,8 @@ describe('object oriented', function ()
    end)
 
    describe('default metamethod', function ()
-      local Alice, alice
-
-      before_each(function ()
-         Alice = class('Alice')
-         alice = Alice()
-      end)
+      local Alice = class('Alice')
+      local alice = Alice()
 
       it('should be accessible from classes', function ()
          assert.is_true(alice:is_instance_of(Alice))
@@ -538,7 +512,7 @@ describe('object oriented', function ()
          function Vector.__le(a, b) return a() <= b() end
 
          function Vector.__add(a, b)
-            return a.class:new(a.x + b.x, a.y + b.y ,a.z + b.z)
+            return a.class:new(a.x + b.x, a.y + b.y, a.z + b.z)
          end
 
          function Vector.__sub(a, b)
@@ -638,223 +612,350 @@ describe('object oriented', function ()
          collectgarbage()
          for k in pairs(u) do assert.not_table(k) end
       end)
+   end)
 
-      describe('inheritance', function ()
-         local Vector2, u2, v2
+   describe('custom metamethod inheritance', function ()
+      local Vector, Vector2, u2, v2
 
-         before_each(function ()
-            Vector2 = class('Vector2', Vector)
+      before_each(function ()
+         Vector = class('Vector')
 
-            function Vector2:construct (x, y, z)
-               Vector.construct(self, x, y, z)
-            end
+         function Vector.construct(a, x, y, z) a.x, a.y, a.z = x, y, z end
 
-            u2 = Vector2:new(1,2,3)
-            v2 = Vector2:new(2,4,6)
-         end)
+         function Vector.__tostring(a)
+            return a.class.name .. '[' .. a.x .. ',' .. a.y .. ',' .. a.z .. ']'
+         end
 
-         it('should work with __tostring', function ()
-            assert.equal('Vector2[1,2,3]', tostring(u2))
-         end)
+         function Vector.__eq(a, b)
+            return a.x == b.x
+               and a.y == b.y
+               and a.z == b.z
+         end
 
-         it('should work with __eq', function ()
-            assert.equal(u2, u2)
-         end)
+         function Vector.__lt(a, b) return a() <  b() end
+         function Vector.__le(a, b) return a() <= b() end
 
-         it('should work with __lt', function ()
-            assert.is_true(u2 < v2)
-         end)
+         function Vector.__add(a, b)
+            return a.class:new(a.x + b.x, a.y + b.y, a.z + b.z)
+         end
 
-         it('should work with __le', function ()
-            assert.is_true(u2 <= v2)
-         end)
+         function Vector.__sub(a, b)
+            return a.class:new(a.x - b.x, a.y - b.y, a.z - b.z)
+         end
 
-         it('should work with __add', function ()
-            assert.equal(Vector2(3,6,9), u2 + v2)
-         end)
+         function Vector.__div(a, s)
+            return a.class:new(a.x / s, a.y / s, a.z / s)
+         end
 
-         it('should work with __sub', function ()
-            assert.equal(Vector2(1,2,3), v2 - u2)
-         end)
+         function Vector.__unm(a)
+            return a.class:new(-a.x, -a.y, -a.z)
+         end
 
-         it('should work with __div', function ()
-            assert.equal(Vector2(1,2,3), v2 / 2)
-         end)
+         function Vector.__concat(a, b)
+            return a.x * b.x + a.y * b.y + a.z * b.z
+         end
 
-         it('should work with __unm', function ()
-            assert.equal(Vector2(-1, -2, -3), -u2)
-         end)
+         function Vector.__call(a)
+            return math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z)
+         end
 
-         it('should work with __concat', function ()
-            assert.equal(28, u2 .. v2)
-         end)
+         function Vector.__pow(a, b)
+            return a.class:new(
+               a.y * b.z - a.z * b.y,
+               a.z * b.x - a.x * b.z,
+               a.x * b.y - a.y * b.x
+            )
+         end
 
-         it('should work with __call', function ()
-            assert.equal(math.sqrt(14), u2())
-         end)
+         function Vector.__mul(a, b)
+            if type(b)=="number" then return a.class:new(a.x * b, a.y * b, a.z * b) end
+            if type(a)=="number" then return b.class:new(a * b.x, a * b.y, a * b.z) end
+         end
 
-         it('should work with __pow', function ()
-            assert.equal(Vector2(0,0,0), u2 ^ v2)
-         end)
+         Vector.__metatable = "metatable of a vector"
+         Vector.__mode      = "k"
 
-         it('should work with __mul', function ()
-            assert.equal(Vector2(4,8,12), 4 * u2)
-         end)
+         Vector2 = class('Vector2', Vector)
 
-         it('should work with __metatable', function ()
-            assert.equal('metatable of a vector', getmetatable(u2))
-         end)
+         function Vector2:construct (x, y, z)
+            Vector.construct(self, x, y, z)
+         end
 
-         it('should work with __mode', function ()
-            u2[{}] = true
-            collectgarbage()
-            for k in pairs(u2) do assert.not_table(k) end
-         end)
-
-         it('should allow further inheritance', function ()
-            local Vector3 = class('Vector3', Vector2)
-            local u3 = Vector3(1,2,3)
-            local v3 = Vector3(3,4,5)
-
-            assert.equal(Vector3(4,6,8), u3 + v3)
-         end)
-
-         describe('updates', function ()
-            it('should override __add', function ()
-               Vector2.__add = function (a, b) return Vector.__add(a, b) / 2 end
-               assert.equal(Vector2(1.5, 3, 4.5), u2 + v2)
-            end)
-
-            it('should update __add', function ()
-               Vector.__add = Vector.__sub
-               assert.equal(Vector2(-1, -2, -3), u2 + v2)
-            end)
-
-            it('should not update __add after overriding', function ()
-               Vector2.__add = function (a, b) return Vector.__add(a, b) / 2 end
-               Vector.__add  = Vector.__sub
-
-               assert.equal(Vector2(-0.5, -1, -1.5), u2 + v2)
-            end)
-
-            it('should revert __add overrides', function ()
-               Vector2.__add = function (a, b) return Vector.__add(a, b) / 2 end
-               Vector2.__add = nil
-
-               assert.equal(Vector2(3, 6, 9), u2 + v2)
-            end)
-         end)
+         u2 = Vector2:new(1,2,3)
+         v2 = Vector2:new(2,4,6)
       end)
 
-      describe('__index and __newindex', function ()
-         local Proxy, fallback, p
-
-         before_each(function ()
-            Proxy = class('Proxy')
-
-            fallback = { foo = 'bar', common = 'fallback' }
-
-            Proxy.__index    = fallback
-            Proxy.__newindex = fallback
-            Proxy.common     = 'class'
-
-            p = Proxy()
-         end)
-
-         it('should be used', function ()
-            assert.equal('bar', p.foo)
-         end)
-
-         it('should not be used when the requested field exists in the class', function ()
-            assert.equal('class', p.common)
-         end)
-
-         it('should be used', function ()
-            p.key = 'value'
-            assert.equal(fallback.key, 'value')
-         end)
-
-         it('should not be used when the requested field exists in the class', function ()
-            p.common = 'value'
-
-            assert.equal('class', p.common)
-            assert.equal('class', Proxy.common)
-            assert.equal('value', fallback.common)
-         end)
+      it('should work with __tostring', function ()
+         assert.equal('Vector2[1,2,3]', tostring(u2))
       end)
 
-      describe('functions', function ()
-         local Namespace, Rectangle, r
+      it('should work with __eq', function ()
+         assert.equal(u2, u2)
+      end)
 
-         before_each(function ()
-            Namespace = class('Namespace')
+      it('should work with __lt', function ()
+         assert.is_true(u2 < v2)
+      end)
 
-            function Namespace:__index(name)
-               local getter = self.class[name .. 'Getter']
+      it('should work with __le', function ()
+         assert.is_true(u2 <= v2)
+      end)
 
-               if getter then
-                  return getter(self)
-               end
+      it('should work with __add', function ()
+         assert.equal(Vector2(3,6,9), u2 + v2)
+      end)
+
+      it('should work with __sub', function ()
+         assert.equal(Vector2(1,2,3), v2 - u2)
+      end)
+
+      it('should work with __div', function ()
+         assert.equal(Vector2(1,2,3), v2 / 2)
+      end)
+
+      it('should work with __unm', function ()
+         assert.equal(Vector2(-1, -2, -3), -u2)
+      end)
+
+      it('should work with __concat', function ()
+         assert.equal(28, u2 .. v2)
+      end)
+
+      it('should work with __call', function ()
+         assert.equal(math.sqrt(14), u2())
+      end)
+
+      it('should work with __pow', function ()
+         assert.equal(Vector2(0,0,0), u2 ^ v2)
+      end)
+
+      it('should work with __mul', function ()
+         assert.equal(Vector2(4,8,12), 4 * u2)
+      end)
+
+      it('should work with __metatable', function ()
+         assert.equal('metatable of a vector', getmetatable(u2))
+      end)
+
+      it('should work with __mode', function ()
+         u2[{}] = true
+         collectgarbage()
+         for k in pairs(u2) do assert.not_table(k) end
+      end)
+
+      it('should allow further inheritance', function ()
+         local Vector3 = class('Vector3', Vector2)
+         local u3 = Vector3(1,2,3)
+         local v3 = Vector3(3,4,5)
+
+         assert.equal(Vector3(4,6,8), u3 + v3)
+      end)
+      end)
+
+   describe('updates', function ()
+      local Vector, Vector2, u2, v2
+
+      before_each(function ()
+         Vector = class('Vector')
+
+         function Vector.construct(a, x, y, z) a.x, a.y, a.z = x, y, z end
+
+         function Vector.__tostring(a)
+            return a.class.name .. '[' .. a.x .. ',' .. a.y .. ',' .. a.z .. ']'
+         end
+
+         function Vector.__eq(a, b)
+            return a.x == b.x
+               and a.y == b.y
+               and a.z == b.z
+         end
+
+         function Vector.__lt(a, b) return a() <  b() end
+         function Vector.__le(a, b) return a() <= b() end
+
+         function Vector.__add(a, b)
+            return a.class:new(a.x + b.x, a.y + b.y, a.z + b.z)
+         end
+
+         function Vector.__sub(a, b)
+            return a.class:new(a.x - b.x, a.y - b.y, a.z - b.z)
+         end
+
+         function Vector.__div(a, s)
+            return a.class:new(a.x / s, a.y / s, a.z / s)
+         end
+
+         function Vector.__unm(a)
+            return a.class:new(-a.x, -a.y, -a.z)
+         end
+
+         function Vector.__concat(a, b)
+            return a.x * b.x + a.y * b.y + a.z * b.z
+         end
+
+         function Vector.__call(a)
+            return math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z)
+         end
+
+         function Vector.__pow(a, b)
+            return a.class:new(
+               a.y * b.z - a.z * b.y,
+               a.z * b.x - a.x * b.z,
+               a.x * b.y - a.y * b.x
+            )
+         end
+
+         function Vector.__mul(a, b)
+            if type(b)=="number" then return a.class:new(a.x * b, a.y * b, a.z * b) end
+            if type(a)=="number" then return b.class:new(a * b.x, a * b.y, a * b.z) end
+         end
+
+         Vector.__metatable = "metatable of a vector"
+         Vector.__mode      = "k"
+
+         Vector2 = class('Vector2', Vector)
+
+         function Vector2:construct (x, y, z)
+            Vector.construct(self, x, y, z)
+         end
+
+         u2 = Vector2:new(1,2,3)
+         v2 = Vector2:new(2,4,6)
+      end)
+
+      it('should override __add', function ()
+         Vector2.__add = function (a, b) return Vector.__add(a, b) / 2 end
+         assert.equal(Vector2(1.5, 3, 4.5), u2 + v2)
+      end)
+
+      it('should update __add', function ()
+         Vector.__add = Vector.__sub
+         assert.equal(Vector2(-1, -2, -3), u2 + v2)
+      end)
+
+      it('should not update __add after overriding', function ()
+         Vector2.__add = function (a, b) return Vector.__add(a, b) / 2 end
+         Vector.__add  = Vector.__sub
+
+         assert.equal(Vector2(-0.5, -1, -1.5), u2 + v2)
+      end)
+
+      it('should revert __add overrides', function ()
+         Vector2.__add = function (a, b) return Vector.__add(a, b) / 2 end
+         Vector2.__add = nil
+
+         assert.equal(Vector2(3, 6, 9), u2 + v2)
+      end)
+   end)
+
+   describe('__index and __newindex', function ()
+      local Proxy, fallback, p
+
+      before_each(function ()
+         Proxy = class('Proxy')
+
+         fallback = { foo = 'bar', common = 'fallback' }
+
+         Proxy.__index    = fallback
+         Proxy.__newindex = fallback
+         Proxy.common     = 'class'
+
+         p = Proxy()
+      end)
+
+      it('should be used', function ()
+         assert.equal('bar', p.foo)
+      end)
+
+      it('should not be used when the requested field exists in the class', function ()
+         assert.equal('class', p.common)
+      end)
+
+      it('should be used', function ()
+         p.key = 'value'
+         assert.equal(fallback.key, 'value')
+      end)
+
+      it('should not be used when the requested field exists in the class', function ()
+         p.common = 'value'
+
+         assert.equal('class', p.common)
+         assert.equal('class', Proxy.common)
+         assert.equal('value', fallback.common)
+      end)
+   end)
+
+   describe('functions', function ()
+      local Namespace, Rectangle, r
+
+      before_each(function ()
+         Namespace = class('Namespace')
+
+         function Namespace:__index(name)
+            local getter = self.class[name .. 'Getter']
+
+            if getter then
+               return getter(self)
             end
+         end
 
-            function Namespace:__newindex (name, value)
-               local setter = self.class[name .. 'Setter']
+         function Namespace:__newindex (name, value)
+            local setter = self.class[name .. 'Setter']
 
-               if setter then
-                  setter(self, value)
-               else
-                  rawset(self, name, value)
-               end
+            if setter then
+               setter(self, value)
+            else
+               rawset(self, name, value)
             end
+         end
 
-            Rectangle = class('Rectangle', Namespace)
+         Rectangle = class('Rectangle', Namespace)
 
-            function Rectangle:construct (x, y, scale)
-               self._scale, self.x, self.y = 1, x, y
-               self.scale = scale
-            end
+         function Rectangle:construct (x, y, scale)
+            self._scale, self.x, self.y = 1, x, y
+            self.scale = scale
+         end
 
-            function Rectangle:scaleGetter () return self._scale end
-            function Rectangle:scaleSetter (w)
-               self.x = self.x * w / self._scale
-               self.y = self.y * w / self._scale
-               self._scale = w
-            end
+         function Rectangle:scaleGetter () return self._scale end
+         function Rectangle:scaleSetter (w)
+            self.x = self.x * w / self._scale
+            self.y = self.y * w / self._scale
+            self._scale = w
+         end
 
-            function Rectangle:areaGetter () return self.x * self.y end
+         function Rectangle:areaGetter () return self.x * self.y end
 
-            r = Rectangle(3, 4, 2)
-         end)
+         r = Rectangle(3, 4, 2)
+      end)
 
-         it('should use setters', function ()
-            assert.equal(6, r.x)
-            assert.equal(8, r.y)
+      it('should use setters', function ()
+         assert.equal(6, r.x)
+         assert.equal(8, r.y)
 
-            r.scale = 3
+         r.scale = 3
 
-            assert.equal(9,  r.x)
-            assert.equal(12, r.y)
-         end)
+         assert.equal(9,  r.x)
+         assert.equal(12, r.y)
+      end)
 
-         it('should use getters', function ()
-            assert.equal(2, r.scale)
-            assert.equal(48, r.area)
-         end)
+      it('should use getters', function ()
+         assert.equal(2, r.scale)
+         assert.equal(48, r.area)
+      end)
 
-         it('should inherit updates from superclass', function ()
-            function Namespace.__index () return 42 end
-            assert.equal(42, r.area)
+      it('should inherit updates from superclass', function ()
+         function Namespace.__index () return 42 end
+         assert.equal(42, r.area)
 
-            function Rectangle.__index () return 24 end
-            assert.equal(24, r.area)
+         function Rectangle.__index () return 24 end
+         assert.equal(24, r.area)
 
-            function Namespace.__index () return 96 end
-            assert.equal(24, r.area)
+         function Namespace.__index () return 96 end
+         assert.equal(24, r.area)
 
-            Rectangle.__index = nil
+         Rectangle.__index = nil
 
-            assert.equal(96, r.area)
-         end)
+         assert.equal(96, r.area)
       end)
    end)
 end)
