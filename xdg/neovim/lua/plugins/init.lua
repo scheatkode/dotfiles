@@ -4,23 +4,6 @@ local fn     = vim.fn
 local notify = vim.notify
 local format = string.format
 
-function _G.load_plugin_or_fail(plugin_path, use_whichkey)
-   local has_whichkey, whichkey = pcall(require, 'which-key')
-
-   if require(plugin_path .. '.config') == false then
-      require('util').error('Plugin configuration failed.', 'Packer')
-      return
-   end
-
-   if use_whichkey == true and has_whichkey then
-      whichkey.register(
-         require(plugin_path .. '.whichkey')
-      )
-   end
-
-   require('util').register_keymaps(require(plugin_path .. '.keys'))
-end
-
 --- check if packer is already installed
 --
 -- @return boolean whether packer is already installed
