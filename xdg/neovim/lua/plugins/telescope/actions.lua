@@ -7,6 +7,7 @@ local builtin = require('telescope.builtin')
 local themes  = require('plugins.telescope.themes')
 
 local mmin = math.min
+local vfn  = vim.fn
 
 local m = {}
 
@@ -70,12 +71,14 @@ function m.project_or_find_files ()
       })
    end
 
-   local git_dir = vim.fn.finddir('.git', ';')
+   local git_dir = vfn.finddir('.git', ';')
 
    if git_dir ~= '' then
-      return builtin.git_files({
+      local git_root = vfn.fnamemodify(git_dir, ':h')
+
+      return builtin.find_files({
          prompt_title = 'Find Files in Repository',
-         -- recurse_submodules = true,
+         cwd = git_root,
       })
    end
 
