@@ -50,12 +50,12 @@ return require('util').register_keymaps({
    {
       mode    = 'n',
       keys    = '<leader>ft',
-      command = '<cmd>lua require("plugins.telescope.actions").buffer_fuzzy(true)<CR>',
+      command = '<cmd>lua require("plugins.telescope.actions").buffer_fuzzy()<CR>',
    },
    {
       mode    = 'n',
       keys    = '<leader>Ft',
-      command = '<cmd>lua require("plugins.telescope.actions").buffer_fuzzy(true)<CR>',
+      command = '<cmd>lua require("plugins.telescope.actions").buffer_fuzzy()<CR>',
    },
 
    --- grep string {{{1
@@ -120,22 +120,22 @@ return require('util').register_keymaps({
    },
    {
       mode    = 'n',
-      keys    = '<leader>fr',
-      command = '<cmd>lua require("plugins.telescope.actions").frecency()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fr',
-      command = '<cmd>lua require("plugins.telescope.actions").frecency()<CR>'
-   },
-   {
-      mode    = 'n',
       keys    = '<leader>fR',
-      command = '<cmd>lua require("plugins.telescope.actions").oldfiles()<CR>'
+      command = '<cmd>lua require("plugins.telescope.actions").frecency()<CR>'
    },
    {
       mode    = 'n',
       keys    = '<leader>FR',
+      command = '<cmd>lua require("plugins.telescope.actions").frecency()<CR>'
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>fH',
+      command = '<cmd>lua require("plugins.telescope.actions").oldfiles()<CR>'
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>FH',
       command = '<cmd>lua require("plugins.telescope.actions").oldfiles()<CR>'
    },
 
@@ -327,27 +327,67 @@ return require('util').register_keymaps({
 
    --- registers {{{1
 
-   -- {
-   --    mode    = 'n',
-   --    keys    = '<leader>fR',
-   --    command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
-   -- },
-   -- {
-   --    mode    = 'n',
-   --    keys    = '<leader>FR',
-   --    command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
-   -- },
+   {
+      mode    = 'n',
+      keys    = '<leader>fvr',
+      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>Fvr',
+      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>vr',
+      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>Vr',
+      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>vR',
+      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>VR',
+      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
+   },
 
    --- keymaps {{{1
 
    {
       mode    = 'n',
-      keys    = '<leader>fk',
+      keys    = '<leader>fvk',
       command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
    },
    {
       mode    = 'n',
-      keys    = '<leader>Fk',
+      keys    = '<leader>Fvk',
+      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>vk',
+      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>Vk',
+      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>vK',
+      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>VK',
       command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
    },
 
@@ -355,12 +395,32 @@ return require('util').register_keymaps({
 
    {
       mode    = 'n',
-      keys    = '<leader>fa',
+      keys    = '<leader>fva',
       command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
    },
    {
       mode    = 'n',
-      keys    = '<leader>Fa',
+      keys    = '<leader>Fva',
+      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>va',
+      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>Va',
+      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>vA',
+      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>VA',
       command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
    },
 
@@ -382,12 +442,12 @@ return require('util').register_keymaps({
 
    {
       mode    = 'n',
-      keys    = '<leader>fR',
+      keys    = '<leader>fr',
       command = '<cmd>lua require("plugins.telescope.actions").lsp_references()<CR>',
    },
    {
       mode    = 'n',
-      keys    = '<leader>FR',
+      keys    = '<leader>Fr',
       command = '<cmd>lua require("plugins.telescope.actions").lsp_references()<CR>',
    },
 
@@ -439,7 +499,17 @@ return require('util').register_keymaps({
    },
    {
       mode    = 'n',
-      keys    = '<leader>Fi',
+      keys    = '<leader>Ca',
+      command = '<cmd>lua require("plugins.telescope.actions").lsp_code_actions()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>cA',
+      command = '<cmd>lua require("plugins.telescope.actions").lsp_code_actions()<CR>',
+   },
+   {
+      mode    = 'n',
+      keys    = '<leader>CA',
       command = '<cmd>lua require("plugins.telescope.actions").lsp_code_actions()<CR>',
    },
 
