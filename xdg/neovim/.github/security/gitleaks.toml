@@ -130,7 +130,10 @@ title = "gitleaks config"
    description = "Port"
    regex = '''(?i)port(.{0,4})?[0-9]{1,10}'''
    [rules.allowlist]
-      regexes = ['''(?i)port ''']
+      regexes = [
+         '''(?i)port ''',
+         '''(?i)export([ s0-9])*'''
+      ]
       description = "ignore export "
 
 
@@ -150,12 +153,17 @@ title = "gitleaks config"
    tags = ["key", "API", "generic"]
    # ignore leaks with specific identifiers like slack and aws
    [rules.allowlist]
-      description = "ignore slack, mailchimp, aws"
+      description = "ignore slack, mailchimp, aws, neovim"
       regexes = [
+          '''\.key[ ),]''',
+          '''(?i)which(_)?key''',
+          '''(?i)key(map|bind|word)''',
+          '''(?i)guide''',
           '''xox[baprs]-([0-9a-zA-Z]{10,48})''',
           '''(?i)(.{0,20})?['"][0-9a-f]{32}-us[0-9]{1,2}['"]''',
           '''(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}'''
       ]
+      files = ['''(?i)\/(test|spec)\/''']
 
 [[rules]]
    description = "High Entropy"
