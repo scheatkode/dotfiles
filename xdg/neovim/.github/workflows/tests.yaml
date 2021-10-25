@@ -17,7 +17,7 @@ jobs:
           - windows-latest
         version:
           - stable
-          - nightly
+          # - nightly
 
     runs-on: ${{ matrix.system }}
 
