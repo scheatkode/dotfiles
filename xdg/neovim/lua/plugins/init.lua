@@ -197,22 +197,9 @@ local packer_manage_plugins = function ()
       -- }}}
       -- git plugins {{{
 
-      use(require 'plugins.git') -- git file changes in the gutter
-
-      use {'TimUntersberger/neogit', opt = true,
-         cmd = 'Neogit',
-         requires = {
-            {'nvim-lua/plenary.nvim'},
-            -- {'sindrets/diffview.nvim'},
-         },
-         wants = {
-            'plenary',
-         },
-      } -- magit for neovim
-
-      use {'sindrets/diffview.nvim', opt = true, -- ediff-like diff view
-         cmd = 'DiffviewOpen',
-      }
+      use(require 'plugins.gitporcelain') -- magit for vim
+      use(require 'plugins.gitsigns')     -- git file changes in the gutter
+      use(require 'plugins.diff')         -- ediff-like diff viewing
 
       use {'rhysd/committia.vim', opt = true,
          ft = 'gitcommit',
