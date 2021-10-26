@@ -5,6 +5,7 @@
    <a href='https://github.com/scheatkode/dotfiles-neovim/blob/main/LICENSE'><img src='https://img.shields.io/github/license/scheatkode/dotfiles?color=blue&style=for-the-badge' alt='Project License: MIT  The project is distributed under the MIT license which can be found at the root of the project.' /></a>
    <a href='https:///github.com/scheatkode/dotfiles-neovim'><img src='https://img.shields.io/tokei/lines/github/scheatkode/dotfiles-neovim?style=for-the-badge' alt='Project size' /></a>
    <a href=''><img src='https://img.shields.io/github/languages/code-size/scheatkode/dotfiles-neovim?color=inactive&style=for-the-badge' /></a>
+   <a href=''><img src='https://img.shields.io/github/workflow/status/scheatkode/dotfiles-neovim/Continuous%20Integration?logo=github&style=for-the-badge' /></a>
 </p>
 
 <p align='center'>
