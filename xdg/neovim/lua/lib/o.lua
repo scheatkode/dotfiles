@@ -1,12 +1,12 @@
---- @meta [[
+--- @brief [[
 ---
---- This  file was  inspired  from `middleclass`  while
+--- This library was  inspired from `middleclass` while
 --- modifying  some terms  and functionality  to better
 --- suit    Lua's    *prototype-based*   approach    to
 --- object-oriented  programming  which,  in  turn,  is
 --- closer to JavaScript's own model.
 ---
---- @meta ]]
+--- @brief ]]
 
 --- @diagnostic disable: unused-local, unused-vararg
 

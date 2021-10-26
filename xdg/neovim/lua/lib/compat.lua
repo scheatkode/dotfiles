@@ -10,14 +10,18 @@
 
 --- @diagnostic disable: deprecated
 
+
 --- @class compat
 local compat = {}
+
 
 --- Boolean flag for lua 5.1 or luajit.
 compat.lua51 = _VERSION == 'Lua 5.1'
 
+
 --- Boolean flag for luajit.
 compat.luajit = (tostring(assert):match('builtin') ~= nil)
+
 
 --- Boolean flag for luajit  with lua 5.2 compatibility
 --- compiled in. Detection happens with `goto` since it
@@ -27,12 +31,15 @@ if compat.luajit then
    compat.luajit52 = not loadstring('local goto = 1')
 end
 
+
 --- The directory  separator character for  the current
 --- platform.
 compat.path_separator = _G.package.config:sub(1,1)
 
+
 --- Boolean flag for Windows detection.
 compat.is_windows = compat.path_separator == '\\'
+
 
 --- Execute  a  shell  command   in  a  compatible  and
 --- platform independent  way. This is  a compatibility
@@ -209,6 +216,8 @@ if not table.pack then
    function compat.table_pack (...)
       return { n = select('#', ...); ... }
    end
+else
+   compat.table_pack = table.pack
 end
 
 
@@ -227,6 +236,7 @@ local _unpack = table.unpack or unpack
 function compat.table_unpack (t, i, j)
    return _unpack(t, i or 1, j or t.n or #t)
 end
+
 
 if not package.searchpath then
    --- Get the full  path where a file  name would have
@@ -300,6 +310,7 @@ else
    compat.package_searchpath = package.searchpath
 end
 
+
 --- Global exported functions (for lua < 5.4) {{{1
 
 if not warn then
@@ -342,3 +353,6 @@ else
 end
 
 return compat
+
+--- vim: set fdm=marker fdl=0:
+
