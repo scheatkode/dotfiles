@@ -1,4 +1,4 @@
-name: Test suite
+name: Continuous Integration
 
 on:
   - push
@@ -29,8 +29,9 @@ jobs:
         with:
           path: 'dotfiles'
 
-      # —— Plenary setup ————————————————————————————————————————————————————
+      # —— Plenary.nvim setup ———————————————————————————————————————————————
 
+      # https://github.com/actions/checkout (official)
       - name: Plenary setup
         uses: actions/checkout@v2
         with:
