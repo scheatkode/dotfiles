@@ -1,7 +1,3 @@
--- baseline
-
-_G.unpack = rawget(table, 'unpack') or unpack
-
 -- leader key
 
 -- it's generally a good idea  to set this early on and
