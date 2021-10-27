@@ -30,6 +30,7 @@ end
 
 local sources = {
      buffer = '[buf]',
+       calc = '[calc]',
    nvim_lsp = '[lsp]',
    nvim_lua = '[api]',
        path = '[path]',
@@ -92,6 +93,7 @@ completion.setup {
    },
 
    sources = {
+      { name = 'calc'     },
       { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
       { name = 'path'     },

@@ -157,9 +157,10 @@ local packer_manage_plugins = function ()
       use(require 'plugins.completion')  -- powered by hrsh7th/nvim-compe
 
          use(require 'plugins.completion.buffer')
-         use(require 'plugins.completion.path')
+         use(require 'plugins.completion.calc')
          use(require 'plugins.completion.lsp')
          use(require 'plugins.completion.lua')
+         use(require 'plugins.completion.path')
          use(require 'plugins.completion.snip')
 
       -- use {'nvim-lua/lsp-status.nvim'}
