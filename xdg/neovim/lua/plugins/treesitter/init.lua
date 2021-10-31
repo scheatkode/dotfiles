@@ -9,7 +9,7 @@ return { 'nvim-treesitter/nvim-treesitter', opt = true,
    },
 
    event  = {
-      'VimEnter',
+      'BufEnter',
    },
 
    requires = {
