@@ -5,7 +5,7 @@ local lsp = vim.lsp
 
 --- required and optional dependencies
 
-local has_lspinstall, lspinstall = pcall(require, 'lspinstall')
+local has_lspinstall, lspinstall = pcall(require, 'nvim-lsp-installer')
 local has_lspconfig,  lspconfig  = pcall(require, 'lspconfig')
 local has_whichkey,   whichkey   = pcall(require, 'which-key')
 
@@ -418,11 +418,12 @@ end
 
 local configure_servers = function(language_list)
    local capabilities = require('lsp.capabilities')
+   local installer
 
    if not has_lspinstall then
       log.warn('Unable to install language servers automatically.', '‼ lsp')
    else
-      lspinstall.setup()
+      installer = require('nvim-lsp-installer.servers')
    end
 
    for _, server in pairs(language_list) do
@@ -434,6 +435,14 @@ local configure_servers = function(language_list)
             '‼ lsp'
          )
          goto continue
+      end
+
+      if has_lspinstall then
+         local has_lsp_server, lsp_server = installer.get_server(server)
+
+         if has_lsp_server and not lsp_server:is_installed() then
+            lsp_server:install()
+         end
       end
 
       settings.on_attach = function (client, bufnr)
