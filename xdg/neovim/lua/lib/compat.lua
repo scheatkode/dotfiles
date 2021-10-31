@@ -15,11 +15,11 @@
 local compat = {}
 
 
---- Boolean flag for lua 5.1 or luajit.
+--- Boolean flag for Lua 5.1 or LuaJit.
 compat.lua51 = _VERSION == 'Lua 5.1'
 
 
---- Boolean flag for luajit.
+--- Boolean flag for LuaJit.
 compat.luajit = type(jit) == 'table'
 
 
@@ -29,7 +29,7 @@ compat.neovim = type(vim) == 'table'
 --- Boolean flag for LuaJit  with Lua 5.2 compatibility
 --- compiled in. Detection happens with `goto` since it
 --- is considered  a keyword when 5.2  compatibility is
---- enabled in luajit.
+--- enabled in LuaJit.
 if compat.luajit then
    compat.luajit52 = not loadstring('local goto = 1')
 end
@@ -46,7 +46,7 @@ compat.is_windows = compat.path_separator == '\\'
 
 --- Execute  a  shell  command   in  a  compatible  and
 --- platform independent  way. This is  a compatibility
---- function that returns the same  for lua 5.1 and lua
+--- function that returns the same  for Lua 5.1 and Lua
 --- 5.2+.
 ---
 --- NOTE: Windows systems can use signed 32 bit integer
@@ -54,7 +54,7 @@ compat.is_windows = compat.path_separator == '\\'
 ---       in  the  [0..255]  range,  anything  else  is
 ---       considered undefined.
 ---
---- NOTE: In  lua5.2 and  5.3, a  Windows exit  code of
+--- NOTE: In  Lua5.2 and  5.3, a  Windows exit  code of
 ---       `-1`  would not  be  properly returned,  this
 ---       function  will  handle  it properly  for  all
 ---       versions.
@@ -67,7 +67,7 @@ function compat.execute (command)
 
    if r2 == 'No error' and r3 == 0 and compat.is_windows then
 
-      --- `os.execute` bug in lua 5.2/5.3 not reporting `-1` properly on
+      --- `os.execute` bug in Lua 5.2/5.3 not reporting `-1` properly on
       --- Windows was fixed in 5.4.
 
       r3 = -1
@@ -91,17 +91,17 @@ end
 
 
 if compat.lua51 then --- define lua 5.2 style `load()`
-   --- Get environment of a function (lua 5.1 compat).
+   --- Get environment of a function (Lua 5.1 compat).
    ---
    --- NOTE: Not 100% compatible, it  may return nil for a
-   ---       function  with no  global  references on  lua
+   ---       function  with no  global  references on  Lua
    ---       5.2.
    ---
    --- @param f function a function or a call stack reference.
    --- @function compat.getfenv
    compat.getfenv = getfenv
 
-   --- Set environment of a function (lua 5.1 compat).
+   --- Set environment of a function (Lua 5.1 compat).
    ---
    --- @param f function a function or a call stack reference.
    --- @param env table a table that becomes the new environment for `f`.
@@ -111,7 +111,7 @@ if compat.lua51 then --- define lua 5.2 style `load()`
    if not compat.luajit then --- but luajit's load *is* compatible.
       local lua51_load = load
 
-      --- Load lua  code as a  text or binary chunk  (lua 5.2
+      --- Load Lua  code as a  text or binary chunk  (Lua 5.2
       --- compat).
       ---
       --- @param str string|function code string or loader.
@@ -138,7 +138,7 @@ if compat.lua51 then --- define lua 5.2 style `load()`
          return chunk, err
       end
    else
-      --- Load lua  code as a  text or binary chunk  (lua 5.2
+      --- Load Lua  code as a  text or binary chunk  (Lua 5.2
       --- compat).
       ---
       --- @param str string|function code string or loader.
@@ -148,7 +148,7 @@ if compat.lua51 then --- define lua 5.2 style `load()`
       compat.load = load
    end
 else
-   --- Load lua  code as a  text or binary chunk  (lua 5.2
+   --- Load Lua  code as a  text or binary chunk  (Lua 5.2
    --- compat).
    ---
    --- @param str string|function code string or loader.
@@ -157,9 +157,9 @@ else
    --- @param env? table environment to load the chunk in.
    compat.load = load
 
-   --- `setfenv`/`getfenv` replacements for lua 5.2.
+   --- `setfenv`/`getfenv` replacements for Lua 5.2.
 
-   --- Set environment of a function (lua 5.1 compat).
+   --- Set environment of a function (Lua 5.1 compat).
    ---
    --- @param f function a function or a call stack reference.
    --- @param t table a table that becomes the new environment for `f`.
@@ -183,10 +183,10 @@ else
       if f ~= 0 then return f end
    end
 
-   --- Get environment of a function (lua 5.1 compat).
+   --- Get environment of a function (Lua 5.1 compat).
    ---
    --- NOTE: Not 100% compatible, it  may return nil for a
-   ---       function  with no  global  references on  lua
+   ---       function  with no  global  references on  Lua
    ---       5.2.
    ---
    --- @param f function a function or a call stack reference.
@@ -208,7 +208,7 @@ else
 end
 
 
---- Global exported functions (for lua 5.1 and luajit) {{{1
+--- Global exported functions (for Lua 5.1 and LuaJit) {{{1
 
 
 --- Pack an argument list into a table.
@@ -227,7 +227,7 @@ end
 local _unpack = table.unpack or unpack
 --- Unpack a table and return the elements.
 ---
---- NOTE:  This  implementation  differs from  the  lua
+--- NOTE:  This  implementation  differs from  the  Lua
 ---       implementation  in  the  way  that  this  one
 ---       honors the  `n` field in the  table `t`, such
 ---       that it is *nil-safe*.
@@ -243,9 +243,9 @@ end
 
 if not package.searchpath then
    --- Get the full  path where a file  name would have
-   --- matched.  This function  was  introduced in  lua
+   --- matched.  This function  was  introduced in  Lua
    --- 5.2. This compatibility version will be injected
-   --- in lua 5.1 engines.
+   --- in Lua 5.1 engines.
    ---
    --- @param name string file name, possibly dotted
    --- @param path string a path-template in the same form as `package.path` or `package.cpath`
@@ -300,9 +300,9 @@ if not package.searchpath then
 
 else
    --- Get the full  path where a file  name would have
-   --- matched.  This function  was  introduced in  lua
+   --- matched.  This function  was  introduced in  Lua
    --- 5.2. This compatibility version will be injected
-   --- in lua 5.1 engines.
+   --- in Lua 5.1 engines.
    ---
    --- @param name string file name, possibly dotted
    --- @param path string a path-template in the same form as `package.path` or `package.cpath`
@@ -314,14 +314,14 @@ else
 end
 
 
---- Global exported functions (for lua < 5.4) {{{1
+--- Global exported functions (for Lua < 5.4) {{{1
 
 if not warn then
    local enabled = false
 
    --- Raise a warning message.
    --- This function  mimics the `warn`  function added
-   --- in lua 5.4.
+   --- in Lua 5.4.
    ---
    --- @vararg ... any
    function compat.warn (arg1, ...)
@@ -349,7 +349,7 @@ if not warn then
 else
    --- Raise a warning message.
    --- This function  mimics the `warn`  function added
-   --- in lua 5.4.
+   --- in Lua 5.4.
    ---
    --- @vararg ... any
    compat.warn = warn
