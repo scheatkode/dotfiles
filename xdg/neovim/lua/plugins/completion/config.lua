@@ -31,6 +31,7 @@ end
 local sources = {
      buffer = '[buf]',
        calc = '[calc]',
+    cmdline = '[cmd]',
    nvim_lsp = '[lsp]',
    nvim_lua = '[api]',
        path = '[path]',
@@ -39,7 +40,7 @@ local sources = {
 
 local maxwidth = 50
 
-completion.setup {
+completion.setup({
    formatting = {
       format = function (entry, item)
          item.kind = require('meta.icon.lsp').presets.default[item.kind]
@@ -92,19 +93,34 @@ completion.setup {
       end, {'i', 's'})
    },
 
-   sources = {
+   sources = completion.config.sources({
       { name = 'calc'     },
       { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
       { name = 'path'     },
       { name = 'luasnip'  },
+   }, {
       { name = 'buffer', keyword_length = 5 },
-   },
+   }),
 
    experimental = {
       ghost_text = true,
    }
-}
+})
+
+completion.setup.cmdline('/', {
+   sources = {
+      { name = 'buffer' },
+   }
+})
+
+-- completion.setup.cmdline(':', {
+--    sources = completion.config.sources({
+--       { name = 'path' },
+--    }, {
+--       { name = 'cmdline' },
+--    })
+-- })
 
 -- TODO(scheatkode): Refactor this
 

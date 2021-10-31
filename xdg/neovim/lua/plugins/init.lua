@@ -158,6 +158,7 @@ local packer_manage_plugins = function ()
 
          use(require 'plugins.completion.buffer')
          use(require 'plugins.completion.calc')
+         use(require 'plugins.completion.cmd')
          use(require 'plugins.completion.lsp')
          use(require 'plugins.completion.lua')
          use(require 'plugins.completion.path')
