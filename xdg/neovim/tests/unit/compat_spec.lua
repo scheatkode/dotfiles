@@ -1,6 +1,13 @@
 local compat = require('lib.compat')
 
 describe('compatibilty', function ()
+   describe('of neovim', function ()
+      it('should detect being inside neovim', function ()
+         local should_detect_vim = not not vim
+         assert.same(should_detect_vim, compat.neovim)
+      end)
+   end)
+
    describe('of load', function ()
       local code_generator = coroutine.wrap(function ()
          local result = { 'ret', 'urn \'Hello there !\'' }
