@@ -20,10 +20,13 @@ compat.lua51 = _VERSION == 'Lua 5.1'
 
 
 --- Boolean flag for luajit.
-compat.luajit = (tostring(assert):match('builtin') ~= nil)
+compat.luajit = type(jit) == 'table'
 
 
---- Boolean flag for luajit  with lua 5.2 compatibility
+--- Boolean flag for Neovim.
+compat.neovim = type(vim) == 'table'
+
+--- Boolean flag for LuaJit  with Lua 5.2 compatibility
 --- compiled in. Detection happens with `goto` since it
 --- is considered  a keyword when 5.2  compatibility is
 --- enabled in luajit.
