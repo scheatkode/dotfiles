@@ -13,10 +13,8 @@ return { 'nvim-treesitter/nvim-treesitter', opt = true,
    },
 
    requires = {
-      -- {'nvim-treesitter/nvim-tree-docs', after = 'nvim-treesitter'}, -- documentation generator
-      {'nvim-treesitter/playground'},     -- playground for treesitter
+      {'nvim-treesitter/playground'},                  -- playground for treesitter
       {'nvim-treesitter/nvim-treesitter-textobjects'}, -- "smart" textobjects
-      -- {'romgrk/nvim-treesitter-context'},              -- keep current context visible
       {'JoosepAlviste/nvim-ts-context-commentstring'},
    },
 
