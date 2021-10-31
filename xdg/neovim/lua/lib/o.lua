@@ -33,6 +33,7 @@
 
 
 local assert       = assert
+local rawget       = rawget
 local setmetatable = setmetatable
 local tostring     = tostring
 local type         = type
