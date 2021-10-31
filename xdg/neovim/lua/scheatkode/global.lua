@@ -9,10 +9,6 @@ local f = require('lib.f')
 -- global namespace
 ------------------------------------------------------------------------------
 
--- compatibility with non-JIT Lua
-
-_G.unpack = rawget(table, 'unpack') or unpack
-
 _G.__scheatkode_global_functions = __scheatkode_global_functions or {}
 
 _G.scheatkode = {
