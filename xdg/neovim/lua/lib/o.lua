@@ -94,13 +94,13 @@ local function declare_instance_method(c, name, f)
 end
 
 
-local function __tostring(self) return
-   'class ' .. self.name
+local function __tostring(self)
+   return 'class ' .. self.name
 end
 
 
-local function __call(self, ...) return
-   self:new(...)
+local function __call(self, ...)
+   return self:new(...)
 end
 
 local function create_class(name, super)
