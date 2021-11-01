@@ -21,7 +21,7 @@ describe('functional', function ()
             assert.same(true,    unstate)
          end)
 
-         it('should run an iteration when called directly', function ()
+         it('should run the first iteration when called directly', function ()
             local t = {1, 2, 3, 4}
             local i = f.iterate(t)
 
@@ -29,6 +29,59 @@ describe('functional', function ()
             assert.same(1, i())
             assert.same(1, i())
             assert.same(1, i())
+         end)
+
+         it('should still iterate over the given object after being stateful', function ()
+            local t = {1, 2, 3, 4}
+            local i = 0
+
+            f.iterate(t):with_state():foreach(function (x)
+               i = i + 1
+               assert.same(t[i], x)
+            end)
+         end)
+
+         it('should iterate over the given object when called repeatedly after being stateful', function ()
+            local t = {1, 2, 3, 4}
+            local i = f.iterate(t):with_suppressed_state()
+
+            assert.same(1, i())
+            assert.same(2, i())
+            assert.same(3, i())
+            assert.same(4, i())
+         end)
+
+         it('should iterate over the given object when called repeatedly after being stateful', function ()
+            local t = {'a', 'b', 'c', 'd'}
+            local i = f.iterate(t):with_suppressed_state()
+
+            assert.same('a', i())
+            assert.same('b', i())
+            assert.same('c', i())
+            assert.same('d', i())
+         end)
+
+         it('should iterate over the given object when called repeatedly then return nil before dying, after being stateful', function ()
+            local t = {'a', 'b', 'c', 'd'}
+            local i = f.iterate(t):with_suppressed_state()
+
+            assert.same('a', i())
+            assert.same('b', i())
+            assert.same('c', i())
+            assert.same('d', i())
+            assert.same(nil, i())
+         end)
+
+         it('should iterate over the given object when called repeatedly then return nil before dying and raising an error after another call, after being stateful', function ()
+            local t = {'a', 'b', 'c', 'd'}
+            local i = f.iterate(t):with_suppressed_state()
+
+            assert.same('a', i())
+            assert.same('b', i())
+            assert.same('c', i())
+            assert.same('d', i())
+            assert.same(nil, i())
+            assert.error(i)
          end)
 
          it('should specify that it is an iterator', function ()
