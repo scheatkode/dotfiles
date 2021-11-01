@@ -147,15 +147,6 @@
 
 local compat = require('lib.compat')
 
-local mceil   = math.ceil
-local mfloor  = math.floor
-local mmax    = math.max
-local mmin    = math.min
-local mrandom = math.random
-local sfind   = string.find
-local sformat = string.format
-local ssub    = string.sub
-
 local assert       = assert
 local getmetatable = getmetatable
 local setmetatable = setmetatable
@@ -164,6 +155,16 @@ local pairs        = pairs
 local select       = select
 local type         = type
 local unpack       = compat.table_unpack
+
+local mceil   = math.ceil
+local mfloor  = math.floor
+local mmax    = math.max
+local mmin    = math.min
+local mrandom = math.random
+
+local sfind   = string.find
+local sformat = string.format
+local ssub    = string.sub
 
 --- This will be used to export library utilities to be
 --- used functional style …
@@ -245,30 +246,6 @@ end
 --- @return string
 function Iterator:__tostring()
    return '<iterator>'
-end
-
---- Execute `f` for each  iteration value. The function
---- is equivalent to the code below:
----
---- <pre>
---- for _, ... in iterate(generator, parameter, state) do
----    f(...)
---- end
---- </pre>
----
---- The  function   is  used  for  its   side  effects.
---- Implementation   directly   applies  `f`   to   all
---- iteration values without  returning a new iterator,
---- in contrast to functions like `map()`.
----
---- @param f function
---- @return nil
-function Iterator:foreach(f)
-   local parameter, state = self.parameter, self.state
-
-   repeat
-      state = call_if_not_empty(f, self.generator(parameter, state))
-   until state == nil
 end
 
 --- # Helper functions {{{1
@@ -379,28 +356,9 @@ local raw_iterator = function (object, parameter, state)
          return object.generator, object.parameter, object.state
       end
 
-      -- if is_array(object) then
-      --    return ipairs(object)
-      -- else
-      --    -- hash
-      --    return hashmap_generator, object, nil
-      -- end
-
-      -- if metatable ~= nil then
-      --    if metatable == iterator then
-      --       return object.generator, object.parameter, object.state
-      --    elseif metatable.__ipairs ~= nil then
-      --       return metatable.__ipairs(object)
-      --    elseif metatable.__pairs ~= nil then
-      --       return metatable.__pairs(object)
-      --    end
-      -- end
-
-      if #object > 0 then
-         -- array
+      if #object > 0 then -- array
          return ipairs(object)
-      else
-         -- hash
+      else -- hash
          return hashmap_generator, object, nil
       end
    elseif type(object) == 'function' then
@@ -520,9 +478,6 @@ end
 local iterate = function (object, parameter, state)
    return wrap(raw_iterator(object, parameter, state))
 end
-exports.iterate = iterate
-exports.wrap    = wrap
-exports.unwrap  = unwrap
 
 --- Make  `generator`,  `parameter`,  `state`  iterator
 --- from  the  given  iterable   object.  This  can  be
@@ -593,6 +548,177 @@ function Iterator:iterate(object)
    return iterate(object, self.parameter, self.state)
 end
 
+--- Execute `f` for each  iteration value. The function
+--- is equivalent to the code below:
+---
+--- <pre>
+--- for _, ... in iterate(generator, parameter, state) do
+---    f(...)
+--- end
+--- </pre>
+---
+--- The  function   is  used  for  its   side  effects.
+--- Implementation   directly   applies  `f`   to   all
+--- iteration values without  returning a new iterator,
+--- in contrast to functions like `map()`.
+---
+--- @param f function
+--- @param generator function
+--- @param parameter any
+--- @param state any
+--- @return nil
+local function foreach (f, generator, parameter, state)
+   repeat
+      state = call_if_not_empty(f, generator(parameter, state))
+   until state == nil
+end
+
+--- Execute `f` for each  iteration value. The function
+--- is equivalent to the code below:
+---
+--- <pre>
+--- for _, ... in iterate(generator, parameter, state) do
+---    f(...)
+--- end
+--- </pre>
+---
+--- The  function   is  used  for  its   side  effects.
+--- Implementation   directly   applies  `f`   to   all
+--- iteration values without  returning a new iterator,
+--- in contrast to functions like `map()`.
+---
+--- @param f function
+--- @return nil
+function Iterator:foreach (f)
+   return foreach(f, self.generator, self.parameter, self.state)
+end
+
+--- Transforms the  given iterator into a  stateful one
+--- to be  called repeatedly when  not being used  in a
+--- loop.
+---
+--- <pre>
+--- local iterator = with_state(iterate({'a', 'b', 'c'}))
+--- iterator() -- 1   'a'
+--- iterator() -- 2   'b'
+--- iterator() -- 3   'c'
+--- </pre>
+---
+--- The function is used  for its side effects, keeping
+--- tabs on  the state  internally. This  version keeps
+--- returning the state so it can be chained with other
+--- functions from this library.
+---
+--- <pre>
+--- foreach(print, with_state(generator, parameter, state))
+--- </pre>
+---
+--- @param generator function
+--- @param parameter any
+--- @param state any
+--- @return Iterator
+local with_state = function (generator, parameter, state)
+   local function return_and_retain_state(state_x, ...)
+      state = state_x
+
+      if state == nil then
+         return nil
+      end
+
+      return state_x, ...
+   end
+
+   local function state_generator ()
+      return return_and_retain_state(generator(parameter, state))
+   end
+
+   return wrap(state_generator)
+end
+
+--- Transforms the  given iterator into a  stateful one
+--- to be  called repeatedly when  not being used  in a
+--- loop.
+---
+--- The function is used  for its side effects, keeping
+--- tabs   on  the   state  internally.   This  version
+--- suppresses the state  which makes it non-compatible
+--- with other functions from this library.
+---
+--- <pre>
+--- local iterator = with_suppressed_state(iterate({'a', 'b', 'c'}))
+--- iterator() -- 'a'
+--- iterator() -- 'b'
+--- iterator() -- 'c'
+--- </pre>
+---
+--- @param generator function
+--- @param parameter any
+--- @param state any
+--- @return Iterator
+local with_suppressed_state = function (generator, parameter, state)
+   local function return_and_retain_state(state_x, ...)
+      state = state_x
+
+      if state == nil then
+         return nil
+      end
+
+      return ...
+   end
+
+   local function state_generator ()
+      return return_and_retain_state(generator(parameter, state))
+   end
+
+   return wrap(state_generator)
+end
+
+--- Transforms the  given iterator into a  stateful one
+--- to be  called repeatedly when  not being used  in a
+--- loop.
+---
+--- <pre>
+--- local iterator = iterate({'a', 'b', 'c'}):with_state()
+--- iterator() -- 1   'a'
+--- iterator() -- 2   'b'
+--- iterator() -- 3   'c'
+--- </pre>
+---
+--- The function is used  for its side effects, keeping
+--- tabs on  the state  internally. This  version keeps
+--- returning the state so it can be chained with other
+--- functions from this library.
+---
+--- <pre>
+--- with_state(generator, parameter, state):foreach(print)
+--- </pre>
+---
+--- @return Iterator
+function Iterator:with_state ()
+   return with_state(self.generator, self.parameter, self.state)
+end
+
+--- Transforms the  given iterator into a  stateful one
+--- to be  called repeatedly when  not being used  in a
+--- loop.
+---
+--- The function is used  for its side effects, keeping
+--- tabs   on  the   state  internally.   This  version
+--- suppresses the state  which makes it non-compatible
+--- with other functions from this library.
+---
+--- <pre>
+--- local iterator = iterate({'a', 'b', 'c'}):with_suppressed_state()
+--- iterator() -- 'a'
+--- iterator() -- 'b'
+--- iterator() -- 'c'
+--- </pre>
+---
+--- @return Iterator
+function Iterator:with_suppressed_state ()
+   return with_suppressed_state(self.generator, self.parameter, self.state)
+end
+
 -- TODO(scheatkode): Remove when no longer used
 local export0 = function (f)
    return function (generator, parameter, state)
@@ -613,6 +739,12 @@ local export2 = function (f)
       return f(arg1, arg2, raw_iterator(generator, parameter, state))
    end
 end
+
+exports.foreach  = export1(foreach)
+exports.iterate  = iterate
+exports.stateful = with_state
+exports.wrap     = wrap
+exports.unwrap   = unwrap
 
 --- # Finite generators {{{1
 ---
