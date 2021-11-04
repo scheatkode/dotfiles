@@ -108,20 +108,6 @@ completion.setup({
    }
 })
 
-completion.setup.cmdline('/', {
-   sources = {
-      { name = 'buffer' },
-   }
-})
-
--- completion.setup.cmdline(':', {
---    sources = completion.config.sources({
---       { name = 'path' },
---    }, {
---       { name = 'cmdline' },
---    })
--- })
-
 -- TODO(scheatkode): Refactor this
 
 local h = require('scheatkode.highlight')
