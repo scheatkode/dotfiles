@@ -50,8 +50,27 @@ return comment.setup {
 
    --- Pre-hook, called before commenting the line
    --- @type function|nil
-   pre_hook = function ()
-      return require('ts_context_commentstring.internal').calculate_commentstring()
+   pre_hook = function (context)
+      local u = require('Comment.utils')
+
+      --- determine whether to use linewise or blockwise commentsring.
+      local type = context.ctype == u.ctype.line
+         and '__default'
+         or  '__multiline'
+
+      --- determine the location from which to calculate the commentstring.
+      local location = nil
+
+      if context.ctype == u.ctype.block then
+         location = require('ts_context_commentstring.utils').get_cursor_location()
+      elseif context.cmation == u.cmotion.v or context.cmotion == u.cmotion.V then
+         location = require('ts_context_commentstring.utils').get_visual_start_location()
+      end
+
+      return require('ts_context_commentstring.internal').calculate_commentstring({
+              key = type,
+         location = location
+      })
    end,
 
    --- Post-hook, called after commenting is done
