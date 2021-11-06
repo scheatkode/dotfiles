@@ -45,11 +45,11 @@ signature.on_attach({
    floating_window_above_cur_line = true,
 
    hint_enable = true, -- virtual hint enable.
-   hint_prefix = "ⓘ ", -- icon.
-   hint_scheme = "String",
+   hint_prefix = 'ⓘ ', -- icon.
+   hint_scheme = 'String',
 
    -- how the parameter will be highlighted.
-   hi_parameter = "Search",
+   hi_parameter = 'Search',
 
    -- max height  of the signature floating  window, if
    -- content is more than `max_height`, you can scroll
@@ -61,7 +61,7 @@ signature.on_attach({
    max_width = 80,
 
    handler_opts = {
-      border = "single"   -- double, single, shadow, none
+      border = 'rounded'   -- double, single, shadow, none
    },
 
 })
