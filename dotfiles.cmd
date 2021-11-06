@@ -243,6 +243,16 @@ dotfiles_setup_pueue () {
       "${configuration_path}"
 }
 
+dotfiles_setup_rtorrent () {
+   configuration_path="${DOTFILES_CONFIGURATION_PATH}/rtorrent"
+
+   dotfiles_ensure_backup "${configuration_path}"
+
+   ln --symbolic                            \
+      "${DOTFILES_CURRENT_PATH}/xdg/rtorrent" \
+      "${configuration_path}"
+}
+
 dotfiles_setup_tmux () {
    configuration_path="${DOTFILES_CONFIGURATION_PATH}/tmux"
 
@@ -304,6 +314,7 @@ usage () {
       setup:lazygit     Setup lazygit configuration
       setup:neovim      Setup neovim configuration
       setup:pueue       Setup pueue configuration
+      setup:rtorrent    Setup rtorrent configuration
       setup:tmux        Setup tmux configuration
       setup:zsh         Setup zsh configuration
       setup:all         Alias to run all the above
@@ -322,6 +333,7 @@ act_all () {
    act 'Setting up lazygit'                 dotfiles_setup_lazygit
    act 'Setting up neovim'                  dotfiles_setup_neovim
    act 'Setting up pueue'                   dotfiles_setup_pueue
+   act 'Setting up rtorrent'                dotfiles_setup_rtorrent
    act 'Setting up tmux'                    dotfiles_setup_tmux
    act 'Setting up zsh'                     dotfiles_setup_zsh
 }
@@ -392,6 +404,11 @@ main () {
          setup:pueue)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up pueue'                   dotfiles_setup_pueue
+            ;;
+
+         setup:rtorrent)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up rtorrent'                dotfiles_setup_rtorrent
             ;;
 
          setup:tmux)
