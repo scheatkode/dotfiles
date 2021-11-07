@@ -6,6 +6,11 @@
 --- environment, the  user is  free to  do so  at their
 --- convenience.
 ---
+--- This library provides  compatibility only for Lua's
+--- standard  library  functions.  Extensions  are  not
+--- covered, therefore,  LuaJit's `ffi` library  is not
+--- supported.
+---
 --- @brief ]]
 
 --- @diagnostic disable: deprecated
