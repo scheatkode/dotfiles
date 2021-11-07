@@ -114,4 +114,12 @@ log.add_output = "info", "log"
 
 
 ## UI:
-ui.torrent_list.layout.set = "compact"
+ui.color.title.set  = "bold bright cyan"
+ui.color.footer.set = "bold bright cyan"
+
+## Traffic graphs
+network.history.depth.set = 120
+schedule2 = network_history_sampling, 2, 2, network.history.sample=
+schedule2 = bind_auto_scale, 0, 0, "ui.bind_key=download_list, =, network.history.auto_scale.ui_toggle="
+method.insert = network.history.auto_scale.toggle, simple|private, "branch=network.history.auto_scale=, \"network.history.auto_scale.set=0\", \"network.history.auto_scale=1\""
+method.insert = network.history.auto_scale.ui_toggle, simple|private, "network.history.auto_scale.toggle= ;network.history.refresh="
