@@ -4,63 +4,63 @@ local dap   = require('dap')
 return require('util').register_keymaps {
    {
       mode        = 'n',
-      keys        = '<leader>cdc',
+      keys        = '<leader>dc',
       command     = dap.continue,
       description = 'Continue',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdC',
+      keys        = '<leader>dC',
       command     = dap.run_to_cursor,
       description = 'Run to cursor',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdb',
+      keys        = '<leader>db',
       command     = dap.toggle_breakpoint,
       description = 'Toggle breakpoint',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdi',
+      keys        = '<leader>di',
       command     = dap.step_into,
       description = 'Step into',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdo',
+      keys        = '<leader>do',
       command     = dap.step_over,
       description = 'Step over',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdO',
+      keys        = '<leader>dO',
       command     = dap.step_out,
       description = 'Step out',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdp',
+      keys        = '<leader>dp',
       command     = dap.step_back,
       description = 'Step back',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdP',
+      keys        = '<leader>dP',
       command     = dap.pause,
       description = 'Pause',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdB',
+      keys        = '<leader>dB',
       command     = function ()
          dap.set_breakpoint(input('Breakpoint condition : '))
       end,
@@ -69,7 +69,7 @@ return require('util').register_keymaps {
 
    {
       mode        = 'n',
-      keys        = '<leader>cdl',
+      keys        = '<leader>dl',
       command     = function ()
          dap.set_breakpoint(nil, nil, input('Log point message : '))
       end,
@@ -78,49 +78,49 @@ return require('util').register_keymaps {
 
    {
       mode        = 'n',
-      keys        = '<leader>cdr',
+      keys        = '<leader>dr',
       command     = dap.repl.toggle,
       description = 'Toggle REPL',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdR',
+      keys        = '<leader>dR',
       command     = dap.run_last,
       description = 'Run last',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdQ',
+      keys        = '<leader>dQ',
       command     = dap.stop,
       description = 'Close session',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdD',
+      keys        = '<leader>dD',
       command     = dap.disconnect,
       description = 'Disconnect from session',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdq',
+      keys        = '<leader>dq',
       command     = dap.list_breakpoints,
       description = 'Send breakpoints to quicklist',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdu',
+      keys        = '<leader>du',
       command     = dap.up,
       description = 'Go up in stacktrace',
    },
 
    {
       mode        = 'n',
-      keys        = '<leader>cdd',
+      keys        = '<leader>dd',
       command     = dap.down,
       description = 'Go down in stacktrace',
    },
