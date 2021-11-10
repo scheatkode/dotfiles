@@ -60,10 +60,14 @@ completion.setup({
    mapping = {
           ['<C-p>'] = completion.mapping.select_prev_item(),
           ['<C-n>'] = completion.mapping.select_next_item(),
-          ['<C-d>'] = completion.mapping.scroll_docs(-4),
-          ['<C-f>'] = completion.mapping.scroll_docs(4),
-      ['<C-Space>'] = completion.mapping.complete(),
-          ['<C-e>'] = completion.mapping.close(),
+          ['<C-d>'] = completion.mapping(completion.mapping.scroll_docs(-4), {'i', 'c'}),
+          ['<C-f>'] = completion.mapping(completion.mapping.scroll_docs(4),  {'i', 'c'}),
+      ['<C-Space>'] = completion.mapping(completion.mapping.complete(),      {'i', 'c'}),
+
+      ['<C-e>'] = completion.mapping({
+         i = completion.mapping.abort(),
+         c = completion.mapping.close(),
+      }),
 
       ['<CR>'] = completion.mapping.confirm {
          behavior = completion.ConfirmBehavior.Replace,
