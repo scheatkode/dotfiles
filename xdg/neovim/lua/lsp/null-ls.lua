@@ -1,11 +1,11 @@
-local has_ls, ls = pcall(require, 'null-ls')
+local has_null, null = pcall(require, 'null-ls')
 
-if not has_ls then
+if not has_null then
    print('something') -- TODO
-   return has_ls
+   return has_null
 end
 
-local prettier = ls.builtins.formatting.prettier.with({
+local prettier = null.builtins.formatting.prettier.with({
    command = vim.fn.expand('~/.yarn/bin/prettier'),
 
    filetypes = {
@@ -31,22 +31,40 @@ local prettier = ls.builtins.formatting.prettier.with({
       'yaml',
 }})
 
-local stylua = ls.builtins.formatting.stylua.with({
+local stylua = null.builtins.formatting.stylua.with({
 
 })
 
-local vale = ls.builtins.diagnostics.vale.with({
+local vale = null.builtins.diagnostics.vale.with({
    'markdown',
    'tex',
 })
 
-ls.config {
+local hadolint = null.builtins.diagnostics.hadolint.with({
+   command = 'podman',
+   args = {
+      'run',
+      '--rm',
+      '-iv',
+      vim.loop.cwd() .. ':' .. vim.loop.cwd(),
+      -- ':/data',
+      -- '--workdir=/data',
+      'docker.io/hadolint/hadolint',
+      'hadolint',
+      '--no-fail',
+      '--format=json',
+      '$FILENAME',
+   },
+})
+
+null.config {
              debounce = 250,
       default_timeout = 5000,
    diagnostics_format = '#{m}',
 
    sources = {
       prettier,
+      hadolint,
       -- stylua,
       -- vale,
    }
