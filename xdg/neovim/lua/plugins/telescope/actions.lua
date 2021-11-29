@@ -64,7 +64,7 @@ function m.project_or_find_files ()
       clients
    )
 
-   if has_clients then
+   if has_clients and type(client) ~= 'boolean' then
       return builtin.find_files({
          prompt_title = 'Find Files in Project',
          cwd = client.config.root_dir,
