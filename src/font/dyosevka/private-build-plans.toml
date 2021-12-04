@@ -26,71 +26,80 @@ powerlineShiftY = -200 # vertical shift
 powerlineShiftX = -50  # horizontal shift
 
 [buildPlans.Dyosevka]
-family   = "Dyosevka"
-spacing  = "term"
-serifs   = "sans"
+family   = 'Dyosevka'
+spacing  = 'term'
+serifs   = 'sans'
 no-cv-ss = false
 
+# ---------------------------------------------------------------------------- #
+# Configure variants
+
 [buildPlans.Dyosevka.variants.design]
-capital-a = "curly-serifless"
-capital-g = "toothless-corner-serifless-hooked"
-capital-i = "serifed"
-capital-k = "curly-serifless"
-capital-n = "standard"
-capital-p = "closed"
-capital-q = "curly-tailed"
-capital-r = "curly"
-capital-s = "serifless"
-capital-v = "curly"
-capital-w = "curly"
-capital-x = "curly-serifless"
-capital-y = "curly-serifless"
-capital-z = "curly-serifed-with-crossbar"
-a = "single-storey-serifless"
-b = "toothless-rounded"
-d = "toothless-corner-serifless"
-e = "rounded"
-f = "flat-hook-tailed"
-g = "double-storey-open"
-i = "tailed"
-j = "serifless"
-k = "curly-serifless"
-l = "tailed"
-m = "earless-corner-double-arch-short-leg"
-n = "earless-corner-straight"
-p = "earless-corner"
-q = "earless-corner"
-r = "earless-rounded"
-t = "standard"
-u = "toothless-rounded"
-v = "curly"
-w = "curly"
-x = "curly-serifless"
-y = "cursive"
-z = "curly-serifless"
+capital-a = 'curly-serifless'
+capital-g = 'toothless-corner-serifless-hooked'
+capital-i = 'serifed'
+capital-k = 'curly-serifless'
+capital-n = 'standard'
+capital-p = 'closed'
+capital-q = 'curly-tailed'
+capital-r = 'curly'
+capital-s = 'serifless'
+capital-v = 'curly'
+capital-w = 'curly'
+capital-x = 'curly-serifless'
+capital-y = 'curly-serifless'
+capital-z = 'curly-serifed-with-crossbar'
+a = 'single-storey-serifless'
+b = 'toothless-rounded'
+d = 'toothless-corner-serifless'
+e = 'rounded'
+f = 'flat-hook-tailed'
+g = 'double-storey-open'
+i = 'tailed'
+j = 'serifless'
+k = 'curly-serifless'
+l = 'tailed'
+m = 'earless-corner-double-arch-short-leg'
+n = 'earless-corner-straight'
+p = 'earless-corner'
+q = 'earless-corner'
+r = 'earless-rounded'
+t = 'standard'
+u = 'toothless-rounded'
+v = 'curly'
+w = 'curly'
+x = 'curly-serifless'
+y = 'cursive'
+z = 'curly-serifless'
 
-ampersand      = "et-toothed"
-asterisk       = "turn-hex-low"
-at             = "short"
-bar            = "natural-slope"
-brace          = "curly"
-caret          = "low"
-dollar         = "open-cap"
-lig-ltgteq     = "slanted"
-lower-alpha    = "crossing"
-lower-lambda   = "curly"
-number-sign    = "slanted-open"
-paragraph-sign = "low"
-paren          = "large-contour"
-question       = "corner-flat-hooked"
-turn-v         = "curly"
+ampersand      = 'et-toothed'
+asterisk       = 'turn-hex-low'
+at             = 'short'
+bar            = 'natural-slope'
+brace          = 'curly'
+caret          = 'low'
+dollar         = 'open-cap'
+lig-ltgteq     = 'slanted'
+lower-alpha    = 'crossing'
+lower-lambda   = 'curly'
+number-sign    = 'slanted-open'
+paragraph-sign = 'low'
+paren          = 'large-contour'
+question       = 'corner-flat-hooked'
+turn-v         = 'curly'
 
-zero  = "dotted"
-two   = "curly-neck"
-five  = "oblique-upper-left-bar"
-six   = "open-contour"
-seven = "curly-serifed"
-eight = "crossing-asymmetric"
-nine  = "open-contour"
+zero  = 'dotted'
+two   = 'curly-neck'
+five  = 'oblique-upper-left-bar'
+six   = 'open-contour'
+seven = 'curly-serifed'
+eight = 'crossing-asymmetric'
+nine  = 'open-contour'
 
-punctuation-dot = "round"
+punctuation-dot = 'round'
+
+# ---------------------------------------------------------------------------- #
+# Metric overrides
+
+[buildPlans.Dyosevka.metric-override]
+# leading = 1250
