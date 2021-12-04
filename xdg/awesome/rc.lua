@@ -12,11 +12,12 @@ local    awesome_directory = xdg_config_directory .. '/awesome'
 
 local themes = {
    'gruvbox', -- 1 --
+   'gruvvy', -- 2 --
 }
 
 -- change this number to use a different theme.
 -- TODO(scheatkode): Add keybinding to automate this.
-local theme = themes[1]
+local theme = themes[2]
 
 ------------------------------------------------------
 -- affects the window appearance: title bar, buttons ...
@@ -143,6 +144,10 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
+local xresources = require('beautiful.xresources')
+local dpi = xresources.apply_dpi
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -170,7 +175,9 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+-- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+local theme_dir = os.getenv('HOME') .. '/.config/awesome/themes/' .. theme .. '/'
+beautiful.init(theme_dir .. 'theme.lua')
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
@@ -282,7 +289,7 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
+        gears.wallpaper.centered(wallpaper, s, '#282828')
     end
 end
 
@@ -321,13 +328,14 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "bottom", screen = s, height = dpi(16) })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
+            -- layout = wibox.layout.fixed.horizontal,
+            layout = wibox.layout.flex.horizontal,
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
@@ -618,7 +626,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -639,6 +647,10 @@ client.connect_signal("manage", function (c)
       and not c.size_hints.program_position then
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
+    end
+
+    c.shape = function (cr, w, h)
+       gears.shape.rounded_rect(cr, w, h, 6)
     end
 end)
 
