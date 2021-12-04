@@ -57,21 +57,33 @@ return {
             enable = true,
             -- Get the language server to recognize the `vim` global
             globals = {
+               -- Neovim specific
                'vim',
+               'use', -- Packer `use` keyword
+
+               -- Busted specific
                'describe',
                'it',
                'before_each',
                'after_each',
+
+               -- AwesomeWM specific
+               'awesome',
+               'client',
+               'root',
+               'screen',
             },
          },
 
          workspace = {
             -- Make the server aware of Neovim runtime files
-            library = vim.api.nvim_get_runtime_file('', true),
-            -- library = {
-            --    [fn.expand('$VIMRUNTIME/lua')]         = true,
-            --    [fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-            -- },
+            -- library = vim.api.nvim_get_runtime_file('', true),
+            library = {
+               [fn.expand('$VIMRUNTIME/lua')]         = true,
+               -- [fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+               [fn.expand('$VIMRUNTIME/lua/lsp')] = true,
+               [fn.expand('/usr/share/awesome/lib')] = true,
+            },
          },
       },
    },
