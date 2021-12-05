@@ -316,6 +316,7 @@ usage () {
       setup:pueue       Setup pueue configuration
       setup:rtorrent    Setup rtorrent configuration
       setup:tmux        Setup tmux configuration
+      setup:x           Setup x configuration
       setup:zsh         Setup zsh configuration
       setup:all         Alias to run all the above
 
@@ -335,6 +336,7 @@ act_all () {
    act 'Setting up pueue'                   dotfiles_setup_pueue
    act 'Setting up rtorrent'                dotfiles_setup_rtorrent
    act 'Setting up tmux'                    dotfiles_setup_tmux
+   act 'Setting up x'                       dotfiles_setup_x
    act 'Setting up zsh'                     dotfiles_setup_zsh
 }
 
@@ -414,6 +416,11 @@ main () {
          setup:tmux)
             act 'Setting up configuration directory' dotfiles_setup_xdg_config
             act 'Setting up tmux'                    dotfiles_setup_tmux
+            ;;
+
+         setup:x)
+            act 'Setting up configuration directory' dotfiles_setup_xdg_config
+            act 'Setting up x'                       dotfiles_setup_x
             ;;
 
          setup:zsh)
