@@ -82,12 +82,12 @@ static int authenticate_current_user(lua_State * L)
    return 1;
 }
 
-static const struct luaL_Reg lua_pam[] = {
+static const struct luaL_Reg lpam[] = {
    {"authenticate_current_user", authenticate_current_user}, {NULL, NULL}
 };
 
-int luaopen_liblua_pam(lua_State * L)
+int luaopen_liblpam(lua_State * L)
 {
-   export_module(L, lua_pam);
+   export_module(L, lpam);
    return 1;
 }

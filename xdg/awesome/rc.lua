@@ -1,5 +1,7 @@
 --[[
-TODO(scheatkode): Add ascii art here.
+-- ░█▀█░█░█░█▀▀░█▀▀░█▀█░█▄█░█▀▀
+-- ░█▀█░█▄█░█▀▀░▀▀█░█░█░█░█░█▀▀
+-- ░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 -- >> everything is bound together here.
 --]]
 
@@ -144,9 +146,11 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-
 local xresources = require('beautiful.xresources')
 local dpi = xresources.apply_dpi
+
+local lockscreen = require('components.lockscreen')
+-- lockscreen.init()
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -417,8 +421,10 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
-              {description = "increase master width factor", group = "layout"}),
+    awful.key({ modkey,           }, "l",     function () awful.spawn('awesome-client "_G.show_lockscreen()"', false) end,
+              {description = "lock screen", group = "launcher"}),
+    -- awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
+    --           {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
