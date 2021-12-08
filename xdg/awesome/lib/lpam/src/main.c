@@ -9,31 +9,48 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
-#define PAM_SERV_NAME "login"
-
 #if LUA_VERSION_NUM == 501
+
 #  define export_module(L, l) luaL_register(L, "lpam", l)
+
 #elif LUA_VERSION_NUM == 502
-#  define export_module(L, l) luaL_setfuncs(L, l, 0) // TODO(scheatkode): cleanup and and check metatable exists
+
+#  define export_module(L, l) do { \
+      lua_getglobal(L, "lpam");    \
+      if (lua_isnil(L, -1)) {      \
+         lua_pop(L, 1);            \
+         lua_newtable(L);          \
+      }                            \
+      luaL_setfuncs(L, l, 0);      \
+      lua_setglobal(L, "lpam");    \
+   } while(0)
+
 #elif LUA_VERSION_NUM > 502
+
 #  define export_module(L, l) luaL_newlib(L, l)
+
 #endif
 
 static struct pam_response * reply;
 
-static char * strdup(const char * s)
+static char * strdup(const char * source)
 {
-   size_t size = strlen(s);
-   char * new = (char *)malloc(size);
+   size_t len = strlen(source) + 1;
+   char * new = (char *) malloc(len);
 
-   if (new) {
-      memcpy(new, s, size);
+   if (new == NULL) {
+      return new;
    }
 
+   memcpy(new, source, len);
    return new;
 }
 
-static int simple_authentication_conversation(
+inline static int is_null_or_empty(const char * s) {
+   return s == NULL || s[0] == '\0';
+}
+
+static int converse_for_authentication(
    int                         message_number,
    const struct pam_message ** messages,
    struct pam_response **      response,
@@ -54,31 +71,40 @@ static int authenticate_current_user(lua_State * L)
 
    const char * password = luaL_checkstring(L, -1);
 
-   struct passwd * passwd   = getpwuid(getuid());
+   if (is_null_or_empty(password)) {
+      lua_pushboolean(L, 0);
+      return 1;
+   }
+
+   struct passwd * passwd     = getpwuid(getuid());
    const char    * username   = passwd->pw_name;
    pam_handle_t  * pam_handle = NULL;
 
    struct pam_conv conversation = {
-      simple_authentication_conversation, NULL
+      converse_for_authentication, NULL
    };
 
-   return_value = pam_start(PAM_SERV_NAME, username, &conversation, &pam_handle);
-   reply        = (struct pam_response *) malloc(sizeof(struct pam_response));
-
-   if (return_value == PAM_SUCCESS) {
-      reply->resp = strdup(password);
-      reply->resp_retcode = 0;
-
-      return_value = pam_authenticate(pam_handle, 0);
-      lua_pushboolean(L, 1);
-
-      free(reply->resp);
-   } else {
+   if (NULL == (reply = calloc(1, sizeof(struct pam_response)))) {
       lua_pushboolean(L, 0);
+      return 1;
    }
 
+   if (PAM_SUCCESS != pam_start("login", username, &conversation, &pam_handle)) {
+      lua_pushboolean(L, 0);
+      return 1;
+   }
+
+   reply->resp = strdup(password);
+   reply->resp_retcode = 0;
+
+   if (PAM_SUCCESS != (return_value = pam_authenticate(pam_handle, 0))) {
+      lua_pushboolean(L, 0);
+      return 1;
+   }
+
+   lua_pushboolean(L, 1);
    pam_end(pam_handle, return_value);
-   free(reply);
+
    return 1;
 }
 
