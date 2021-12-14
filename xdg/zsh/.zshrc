@@ -133,7 +133,7 @@ if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
 
    command mkdir -p "${ZINIT_HOME}" \
       && command chmod g-rwX "${ZINIT_HOME}"
-   command git clone --depth=1 https://github.com/zdharma/zinit "${ZINIT_HOME}" \
+   command git clone --depth=1 https://github.com/zdharma-continuum/zinit "${ZINIT_HOME}" \
       && print -P "%F{33}▒ %F{34}Installation successful.%f" \
       || print -P "%F{160}▒ The repository clone has failed.%f"
 fi
@@ -173,8 +173,6 @@ zinit light romkatv/powerlevel10k
 # ---------------------------------------------------------------------------- #
 
 
-zinit light zinit-zsh/z-a-bin-gem-node
-
 # load early to mitigate romkatv/powerlevel#716
 
 zinit snippet OMZ::lib/key-bindings.zsh
@@ -192,8 +190,8 @@ zinit wait:'0b' lucid light-mode for                              \
       OMZ::lib/spectrum.zsh                                       \
       OMZ::lib/termsupport.zsh                                    \
       OMZ::lib/theme-and-appearance.zsh                           \
-   atinit:"zicompinit; zicdreplay"                                \
-         zdharma/fast-syntax-highlighting                         \
+   atinit:'zicompinit; zicdreplay'                                \
+         zdharma-continuum/fast-syntax-highlighting               \
       OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
       OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
       OMZ::plugins/dotnet/dotnet.plugin.zsh                       \
