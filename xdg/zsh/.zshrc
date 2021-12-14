@@ -161,7 +161,7 @@ zinit wait:'0a' lucid for \
 
 # provide a simple prompt until the theme finishes loading.
 
-PS1="Loading prompt ... "
+PS1='Loading prompt ... '
 
 zinit ice lucid                                      \
    depth=1                                           \
@@ -194,60 +194,45 @@ zinit wait:'0b' lucid light-mode for                              \
          zdharma-continuum/fast-syntax-highlighting               \
       OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
       OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
+      OMZ::plugins/composer/composer.plugin.zsh                   \
       OMZ::plugins/dotnet/dotnet.plugin.zsh                       \
-  atload:"_zsh_autosuggest_start"                                 \
+  atload:'_zsh_autosuggest_start'                                 \
          zsh-users/zsh-autosuggestions
 
 zinit wait:'0b' lucid light-mode as:completion for \
       OMZ::plugins/docker/_docker                  \
       OMZ::plugins/ripgrep/_ripgrep                \
-      OMZ::plugins/flutter/_flutter                \
-      OMZ::plugins/composer/composer.plugin.zsh
+      OMZ::plugins/flutter/_flutter
 
 # recommended be loaded last.
 
-zinit ice wait'0c' blockf silent atpull'zinit creinstall -q .'
+zinit ice wait:'0c' blockf silent atpull:'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
 zinit wait:'1a' silent from:gh-r as:program light-mode for \
-     pick:'${ZPFX}/bin/(fzf|fzf-tmux)'                     \
-  atclone:'cp shell/completion.zsh _fzf_completion;        \
-      cp bin/(fzf|fzf-tmux) ${ZPFX}/bin'                   \
-     make:'PREFIX=${ZPFX} install'                         \
+     pick:'fzf'                                            \
          @junegunn/fzf                                     \
-     sbin:'lazygit'                                        \
+    bpick:'*Linux*86*64*'                                  \
    atload:'alias lg=lazygit'                               \
          @jesseduffield/lazygit                            \
-     sbin:'tldr'                                           \
-   atinit:'mv tldr* tldr 2> /dev/null'                     \
+    bpick:'*linux*86*64*'                                  \
+       mv:'tldr* -> tldr'                                  \
          @dbrgn/tealdeer                                   \
-     sbin:'ipinfo'                                         \
-   atinit:'mv ipinfo* ipinfo 2> /dev/null'                 \
-   atpull:'%atinit'                                        \
-  atclone:'%atinit'                                        \
+       mv:'ipinfo* -> ipinfo'                              \
          @ipinfo/cli                                       \
     bpick:'curlie*linux*64*gz'                             \
-   atinit:'mv curlie* curlie 2> /dev/null'                 \
-   atpull:'%atinit'                                        \
-  atclone:'%atinit'                                        \
          @rs/curlie                                        \
-   atinit:'mv sampler* sampler 2> /dev/null'               \
-   atpull:'%atinit'                                        \
-  atclone:'%atinit'                                        \
+       mv:'sampler* -> sampler'                            \
          @sqshq/sampler                                    \
     bpick:'duf*64*gz'                                      \
-   atinit:'mv duf* duf 2> /dev/null'                       \
-   atpull:'%atinit'                                        \
-  atclone:'%atinit'                                        \
          @muesli/duf
 
 zinit wait:'1b' silent from:gh-r as:program for \
-       mv:'bat* -> bat'                         \
-     pick:'bat*/bat'                            \
    atinit:'mv pueue-* pueue 2> /dev/null'       \
-  atclone:'%atinit'                             \
    atpull:'%atinit'                             \
    atload:'alias cat=bat'                       \
+       mv:'bat* -> bat'                         \
+     pick:'bat*/bat'                            \
             @sharkdp/bat                        \
        mv:'fd* -> fd'                           \
      pick:'fd/fd'                               \
@@ -255,56 +240,48 @@ zinit wait:'1b' silent from:gh-r as:program for \
        mv:'hyperfine*/hyperfine -> hyperfine'   \
      pick:'hyperfine*/hyperfine'                \
             @sharkdp/hyperfine                  \
-       mv:'exa* -> exa'                         \
-     pick:'bin/exa'                             \
    atload:'alias ls="exa --icons"'              \
+       mv:'bin/exa* -> exa'                     \
+     pick:'exa'                                 \
             @ogham/exa                          \
        mv:'ripgrep* -> ripgrep'                 \
      pick:'ripgrep/rg'                          \
             @BurntSushi/ripgrep                 \
-       mv:'procs* -> procs'                     \
     bpick:'*lnx*'                               \
             @dalance/procs                      \
-       mv:'bandwhich* -> bandwhich'             \
      pick:'imsnif/bandwhich'                    \
             @imsnif/bandwhich                   \
-       mv:'dust*/dust'                          \
-     pick:'dust*/dust'                          \
+       mv:'dust*/dust -> dust'                  \
+     pick:'dust'                                \
             @bootandy/dust                      \
     id-as:'pueue'                               \
     bpick:'pueue-*linux*64*'                    \
-   atinit:'mv pueue* pueue 2> /dev/null'        \
-  atclone:' ./pueue completions zsh .'          \
-   atpull:'%atclone'                            \
+   atpull:'./pueue completions zsh .'           \
    atload:'alias p=pueue'                       \
+       mv:'pueue* -> pueue'                     \
             @Nukesor/pueue                      \
     id-as:'pueued'                              \
     bpick:'pueued-*linux*64*'                   \
-   atinit:'mv pueued-* pueued 2> /dev/null'     \
-  atclone:'%atinit'                             \
-   atpull:'%atinit'                             \
    atload:'pueued --daemonize > /dev/null 2>&1' \
+       mv:'pueued-* -> pueued'                  \
             @Nukesor/pueue                      \
-     pick:'zoxide*/zoxide'                      \
    atload:'eval "$(zoxide init zsh)"'           \
+     pick:'zoxide'                              \
             @ajeetdsouza/zoxide                 \
-     pick:'delta/delta'                         \
-   atinit:'mv delta-* delta 2> /dev/null'       \
-  atclone:'%atinit'                             \
-   atpull:'%atinit'                             \
    atload:'alias diff="delta"'                  \
+     pick:'delta'                               \
+       mv:'delta-* -> delta'                    \
             @dandavison/delta                   \
-     pick:'bin/dog'                             \
-  atclone:'%atinit'                             \
-   atpull:'%atinit'                             \
-   atinit:'mv dog-* dog 2> /dev/null'           \
    atload:'alias dig="dog"'                     \
+     pick:'bin/dog'                             \
       src:'completions/dog.zsh'                 \
-            @ogham/dog
+            @ogham/dog                          \
+     pick:'htmlq'                               \
+            @mgdm/htmlq
 
 zinit wait:'1c' silent from:gh-r as:program for \
-   atinit:"tar xvf *.tbz > /dev/null 2>&1"      \
-    bpick:'*linux*86*64*'                       \
+   atinit:'tar xvf *.tbz > /dev/null 2>&1'      \
+    bpick:'*86*64*linux*'                       \
      pick:'bin/btop'                            \
             @aristocratos/btop
 
@@ -316,7 +293,7 @@ zinit creinstall pueue > /dev/null 2>&1
 
 # sharkdp/bat theme.
 
-export BAT_THEME="gruvbox-dark"
+export BAT_THEME='gruvbox-dark'
 
 # autosuggestion plugin options.
 
