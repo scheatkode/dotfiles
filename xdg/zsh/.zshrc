@@ -269,8 +269,7 @@ zinit wait:'1b' silent from:gh-r as:program for \
      pick:'zoxide'                              \
             @ajeetdsouza/zoxide                 \
    atload:'alias diff="delta"'                  \
-     pick:'delta'                               \
-       mv:'delta-* -> delta'                    \
+     pick:'delta*/delta'                        \
             @dandavison/delta                   \
    atload:'alias dig="dog"'                     \
      pick:'bin/dog'                             \
