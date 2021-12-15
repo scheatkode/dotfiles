@@ -190,12 +190,14 @@ zinit wait:'0b' lucid light-mode for                              \
       OMZ::lib/spectrum.zsh                                       \
       OMZ::lib/termsupport.zsh                                    \
       OMZ::lib/theme-and-appearance.zsh                           \
-   atinit:'zicompinit; zicdreplay'                                \
-         zdharma-continuum/fast-syntax-highlighting               \
+                                                                  \
       OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
       OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
       OMZ::plugins/composer/composer.plugin.zsh                   \
       OMZ::plugins/dotnet/dotnet.plugin.zsh                       \
+                                                                  \
+   atinit:'zicompinit; zicdreplay'                                \
+         zdharma-continuum/fast-syntax-highlighting               \
   atload:'_zsh_autosuggest_start'                                 \
          zsh-users/zsh-autosuggestions
 
