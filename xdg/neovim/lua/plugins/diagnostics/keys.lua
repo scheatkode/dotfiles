@@ -2,14 +2,14 @@ return require('util').register_keymaps({
    {
       mode        = 'n',
       keys        = '<leader>cltw',
-      command     = '<cmd>TroubleToggle lsp_workspace_diagnostics<CR>',
+      command     = '<cmd>TroubleToggle workspace_diagnostics<CR>',
       description = 'Show trouble in workspace'
    },
 
    {
       mode        = 'n',
       keys        = '<leader>cltd',
-      command     = '<cmd>TroubleToggle lsp_document_diagnostics<CR>',
+      command     = '<cmd>TroubleToggle document_diagnostics<CR>',
       description = 'Show trouble in document'
    },
 
