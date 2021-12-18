@@ -46,11 +46,11 @@ function themes.get_better_cursor (opts)
          preview_cutoff  = 1,
 
          width = function (_, max_columns, _)
-            return mmin(max_columns, 65)
+            return mmin(max_columns, 80)
          end,
 
          height = function (_, _, max_lines)
-            return mmin(max_lines, 2)
+            return mmin(max_lines, 7)
          end,
       },
 
