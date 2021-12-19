@@ -22,6 +22,18 @@ include_directories(
 )
 
 add_library(lpam SHARED "${SOURCE_DIR}/main.c")
-target_compile_options(lpam PRIVATE -Wall -Wextra -Wpedantic -Werror)
-target_compile_options(lpam PUBLIC -Wall -Wextra -Wpedantic -Werror)
+
+target_compile_options(lpam PUBLIC
+   -Wall
+   -Werror
+   -Wextra
+   -Wpedantic
+   -fPIC
+   -pipe
+   -s
+   -shared
+   -D_FORTIFY_SOURCE=2
+   -Os
+)
+
 target_link_libraries(lpam lua pam)
