@@ -90,7 +90,7 @@ static int converse_for_authentication(
  * given  a password,  authenticates  the current  user
  * using the PAM builtin "login" service.
  */
-static int authenticate_current_user(lua_State * L)
+int authenticate_current_user(lua_State * L)
 {
    const char * password = luaL_checkstring(L, -1);
 
