@@ -6,7 +6,8 @@
 
 #include <security/pam_appl.h> //! `pam_*()` and `PAM_*`
 
-#include "lauxlib.h"           //! `lua_*` and `luaL_*`
+#include <lua.h>
+#include <lauxlib.h>
 
 /*!
  * Different  Lua  versions  have  different  exporting
