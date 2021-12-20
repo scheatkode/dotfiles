@@ -278,7 +278,11 @@ zinit wait:'1b' silent from:gh-r as:program for \
       src:'completions/dog.zsh'                 \
             @ogham/dog                          \
      pick:'htmlq'                               \
-            @mgdm/htmlq
+            @mgdm/htmlq                         \
+     pick:'jq'                                  \
+   atload:'mv jq* jq > /dev/null 2>&1'          \
+       mv:'jq* -> jq'                           \
+            @stedolan/jq
 
 zinit wait:'1c' silent from:gh-r as:program for \
    atinit:'tar xvf *.tbz > /dev/null 2>&1'      \
