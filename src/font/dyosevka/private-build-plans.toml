@@ -12,27 +12,15 @@
 #                                                                              #
 # ---------------------------------------------------------------------------- #
 
-[iosevka]
-naming.copyright    = 'Copyright 2015-2021, scheatkode <scheatkode@gmail.com>'
-naming.licence      = '''This font is licenced under the MIT licence.'''
-naming.manufacturer = 'scheatkode'
-naming.designer     = 'scheatkode'
-naming.description  = 'Spatial efficient monospace font family for programming and enhanced readability. Built from code. http://be5invis.github.io/Iosevka'
-
-# powerline-specific parameters
-powerlineScaleY = 1    # vertical scale
-powerlineScaleX = 1    # horizontal scale
-powerlineShiftY = -200 # vertical shift
-powerlineShiftX = -50  # horizontal shift
-
 [buildPlans.Dyosevka]
 family   = 'Dyosevka'
-spacing  = 'term'
+spacing  = 'fixed'
 serifs   = 'sans'
 no-cv-ss = false
+no-ligation = true
 
 # ---------------------------------------------------------------------------- #
-# Configure variants
+# Variant overrides
 
 [buildPlans.Dyosevka.variants.design]
 capital-a = 'curly-serifless'
