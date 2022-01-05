@@ -39,9 +39,9 @@
 --- get the following result :
 ---
 --- <pre>
---  > generator, parameter, state =ipairs({'a', 'b', 'c'})
---  > = generator(parameter, state)
---  1       a
+--- > generator, parameter, state =ipairs({'a', 'b', 'c'})
+--- > = generator(parameter, state)
+--- 1       a
 --- </pre>
 ---
 --- The `generator`  function returned a new  state `1`
@@ -55,7 +55,7 @@
 --- example:
 ---
 --- <pre>
---  for _, x in ipairs({'a', 'b', 'c'}) do print(x) end
+--- for _, x in ipairs({'a', 'b', 'c'}) do print(x) end
 --- </pre>
 ---
 --- According  to the  Lua reference  manual, the  code
