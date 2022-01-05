@@ -137,7 +137,7 @@
 --- functions and  inline high-order functions.  All of
 --- these concepts  make the foundation  for functional
 --- programming.
-local exports = {}
+local module = {}
 
 --- # Initialization {{{1
 
@@ -712,11 +712,11 @@ local export2 = function (f)
    end
 end
 
-exports.foreach  = export1(foreach)
-exports.iterate  = iterate
-exports.stateful = with_state
-exports.wrap     = wrap
-exports.unwrap   = unwrap
+module.foreach  = export1(foreach)
+module.iterate  = iterate
+module.stateful = with_state
+module.wrap     = wrap
+module.unwrap   = unwrap
 
 --- # Finite generators {{{1
 ---
@@ -865,7 +865,7 @@ local range = function (start, stop, step)
       return wrap(range_reverse_generator, {stop, step}, start - step)
    end
 end
-exports.range = range
+module.range = range
 
 --- # Infinite generators {{{1
 ---
@@ -908,9 +908,9 @@ local duplicate = function (...)
       return wrap(duplicate_table_generator, {...}, 0)
    end
 end
-exports.duplicate = duplicate
-exports.replicate = duplicate
-exports.xrepeat   = duplicate
+module.duplicate = duplicate
+module.replicate = duplicate
+module.xrepeat   = duplicate
 
 --- The iterator  that returns `f(0)`,  `f(1)`, `f(2)`,
 --- ... values indefinitely.
@@ -928,8 +928,8 @@ local tabulate = function (f)
    assert(type(f) == 'function')
    return wrap(duplicate_function_generator, f, 0)
 end
-exports.tabulate = tabulate
-exports.from_function = tabulate
+module.tabulate      = tabulate
+module.from_function = tabulate
 
 --- Creates an infinite iterator  that will yield zeros
 --- as an alias to calling `duplicate(0)`.
@@ -938,7 +938,7 @@ exports.from_function = tabulate
 local zeros = function ()
    return wrap(duplicate_generator, 0, 0)
 end
-exports.zeros = zeros
+module.zeros = zeros
 
 --- Creates an  infinite iterator that will  yield ones
 --- as an alias to calling `duplicate(1)`.
@@ -947,7 +947,7 @@ exports.zeros = zeros
 local ones = function ()
    return wrap(duplicate_generator, 1, 0)
 end
-exports.ones = ones
+module.ones = ones
 
 local random_generator = function(parameter, _)
    return 0, mrandom(parameter[1], parameter[2])
@@ -990,7 +990,7 @@ local random = function (n, m)
 
    return wrap(random_generator, {n, m - 1}, 0)
 end
-exports.random = random
+module.random = random
 
 --- # Slicing {{{1
 
@@ -1028,7 +1028,7 @@ local nth = function (n, generator, parameter, state)
 
    return return_if_not_empty(generator(parameter, state))
 end
-exports.nth = export1(nth)
+module.nth = export1(nth)
 
 --- This  method  returns  the `n`-th  element  of  the
 --- iterator. If  the iterator does not  have an `n`-th
@@ -1064,8 +1064,8 @@ end
 local head = function (generator, parameter, state)
    return head_call(generator(parameter, state))
 end
-exports.head = export0(head)
-exports.car = exports.head
+module.head = export0(head)
+module.car  = module.head
 
 --- Extract the  first element of the  iterator. If the
 --- iterator is empty, an error is raised.
@@ -1093,8 +1093,8 @@ local tail = function (generator, parameter, state)
 
    return wrap(generator, parameter, state)
 end
-exports.tail = export0(tail)
-exports.cdr = exports.tail
+module.tail = export0(tail)
+module.cdr  = module.tail
 
 --- Return  a copy  of the  given iterator  without its
 --- first  element. If  the iterator  is empty  then an
@@ -1146,7 +1146,7 @@ local take_n = function (n, generator, parameter, state)
    assert(n >= 0,  'invalid first argument to take_n')
    return wrap(take_n_generator, {n, generator, parameter}, {0, state})
 end
-exports.take_n = export1(take_n)
+module.take_n = export1(take_n)
 
 --- Returns an iterator on the subsequence of first `n`
 --- elements.
@@ -1188,7 +1188,7 @@ local take_while = function (predicate, generator, parameter, state)
    assert(type(predicate) == 'function', 'invalid first argument to take_while')
    return wrap(take_while_generator, {predicate, generator, parameter}, state)
 end
-exports.take_while = export1(take_while)
+module.take_while = export1(take_while)
 
 --- Returns  an  iterator  on  the  longest  prefix  of
 --- elements  that satify  the given  function used  as
@@ -1213,7 +1213,7 @@ local take = function (n_or_predicate, generator, parameter, state)
    return take_while(n_or_predicate, generator, parameter, state)
    end
 end
-exports.take = export1(take)
+module.take = export1(take)
 
 --- An  alias for  `take_n()`  and `take_while()`  that
 --- autodetects   the   required  function   based   on
@@ -1247,7 +1247,7 @@ local drop_n = function (n, generator, parameter, state)
 
    return wrap(generator, parameter, state)
 end
-exports.drop_n = export1(drop_n)
+module.drop_n = export1(drop_n)
 
 --- Returns an  iterator after  skipping the  first `n`
 --- elements.
@@ -1296,7 +1296,7 @@ local drop_while = function(predicate, generator, parameter, state)
 
    return wrap(generator, parameter, state_previous)
 end
-exports.drop_while = export1(drop_while)
+module.drop_while = export1(drop_while)
 
 --- Return  an  iterator  after  skipping  the  longest
 --- prefix of elements that satisfy predicate.
@@ -1323,7 +1323,7 @@ local drop = function (n_or_predicate, generator, parameter, state)
       return drop_while(n_or_predicate, generator, parameter, state)
    end
 end
-exports.drop = export1(drop)
+module.drop = export1(drop)
 
 --- An  alias for  `drop_n()`  and `drop_while()`  that
 --- autodetects   the   required  function   based   on
@@ -1355,9 +1355,9 @@ local split_p = function (n_or_predicate, generator, parameter, state)
    return take(n_or_predicate, generator, parameter, state),
           drop(n_or_predicate, generator, parameter, state)
 end
-exports.split_p    = export1(split_p)
-exports.split_at = exports.split_p
-exports.span     = exports.split_p
+module.split_p  = export1(split_p)
+module.split_at = module.split_p
+module.span     = module.split_p
 
 --- Return  an  iterator  pair   where  the  first  one
 --- operates on the longest,  possible empty, prefix of
@@ -1407,7 +1407,7 @@ local split = function (input, separator, state)
    assert(type(input) == 'string', 'split should be called only on strings')
    return wrap(string_split_generator, {input, separator}, state or 1)
 end
-exports.split = split
+module.split = split
 
 --- Return  an iterator  of substrings  separated by  a
 --- string.
@@ -1431,7 +1431,7 @@ end
 local words = function (input, state)
    return split(input, ' ', state)
 end
-exports.words = words
+module.words = words
 
 --- Splits a string based on a single space.
 --- An alias for split(input, ' ').
@@ -1454,7 +1454,7 @@ local lines = function (input, state)
    -- TODO(scheatkode): platform specific linebreaks
    return split(input, '\n', state)
 end
-exports.lines = lines
+module.lines = lines
 
 --- Splits a string based on line separators.
 --- An alias for split(input, '\n').
@@ -1493,9 +1493,9 @@ local index = function (x, generator, parameter, state)
 
    return nil
 end
-exports.index      = export1(index)
-exports.index_of   = exports.index
-exports.elem_index = exports.index
+module.index      = export1(index)
+module.index_of   = module.index
+module.elem_index = module.index
 
 --- Returns the  position of  the first element  in the
 --- given iterator which  is equal to `x`,  or `nil` if
@@ -1543,8 +1543,8 @@ end
 local indexes = function (x, generator, parameter, state)
    return wrap(indexes_generator, {x, generator, parameter}, {0, state})
 end
-exports.indexes = export1(indexes)
-exports.indices = exports.indexes
+module.indexes = export1(indexes)
+module.indices = module.indexes
 
 --- Returns an iterator to  positions of elements which
 --- equal `x`.
@@ -1618,7 +1618,7 @@ end
 local filter = function (predicate, generator, parameter, state)
    return wrap(filter_generator, {predicate, generator, parameter}, state)
 end
-exports.filter = export1(filter)
+module.filter = export1(filter)
 
 --- Return  a  new  iterator  of  those  elements  that
 --- satisfy the given `predicate`.
@@ -1648,7 +1648,7 @@ local grep = function (regex_or_predicate, generator, parameter, state)
 
    return filter(f, generator, parameter, state)
 end
-exports.grep = export1(grep)
+module.grep = export1(grep)
 
 --- If `regex_or_predicate` is a string then it is used
 --- as  a  regular  expression  to  build  a  filtering
@@ -1682,7 +1682,7 @@ local partition = function (predicate, generator, parameter, state)
    return filter(predicate,  generator, parameter, state),
           filter(negative_p, generator, parameter, state)
 end
-exports.partition = export1(partition)
+module.partition = export1(partition)
 
 --- Returns two iterators where  elements do and do not
 --- satisfy the given predicate.
@@ -1743,8 +1743,8 @@ local reduce = function (accumulator, start, generator, parameter, state)
 
    return start
 end
-exports.reduce = export2(reduce)
-exports.foldl  = exports.reduce
+module.reduce = export2(reduce)
+module.foldl  = module.reduce
 
 --- Reduce the  iterator from  left to right  using the
 --- binary operator `accumulator` and the initial value
@@ -1806,7 +1806,7 @@ local length = function (generator, parameter, state)
 
    return length - 1
 end
-exports.length = export0(length)
+module.length = export0(length)
 
 --- Return the number of elements in the iterator. This
 --- is  equivalent to  using  `#object` for  elementary
@@ -1835,7 +1835,7 @@ end
 local is_null = function (generator, parameter, state)
    return generator(parameter, deepcopy(state)) == nil
 end
-exports.is_null = export0(is_null)
+module.is_null = export0(is_null)
 
 --- Returns  `true`  when  the  iterator  is  empty  or
 --- finished, `false` otherwise.
@@ -1870,7 +1870,7 @@ local is_prefix_of = function (iter_x, iter_y)
       end
    end
 end
-exports.is_prefix_of = is_prefix_of
+module.is_prefix_of = is_prefix_of
 
 --- Takes two iterators and returns `true` if the first
 --- iterator is a prefix of the second.
@@ -1898,8 +1898,8 @@ local every = function (predicate, generator, parameter, state)
 
    return state == nil
 end
-exports.every = export1(every)
-exports.all   = exports.every
+module.every = export1(every)
+module.all   = module.every
 
 --- Returns `true`  if all return values  of `iterator`
 --- satisfy the given predicate.
@@ -1928,8 +1928,8 @@ local any = function (predicate, generator, parameter, state)
 
    return not not v
 end
-exports.any  = export1(any)
-exports.some = exports.any
+module.any  = export1(any)
+module.some = module.any
 
 --- Returns  `true` if  at least  one return  values of
 --- iterator satisfy the given predicate. The iteration
@@ -1965,7 +1965,7 @@ local sum = function (generator, parameter, state)
 
    return s
 end
-exports.sum = export0(sum)
+module.sum = export0(sum)
 
 --- Sum  up all  iteration values.  An optimized  alias
 --- for:
@@ -2005,7 +2005,7 @@ local product = function (generator, parameter, state)
 
    return p
 end
-exports.product = export0(product)
+module.product = export0(product)
 
 --- Multiply  up  all  iteration values.  An  optimized
 --- alias for:
@@ -2060,7 +2060,7 @@ local minimum = function (generator, parameter, state)
 
    return m
 end
-exports.minimum = export0(minimum)
+module.minimum = export0(minimum)
 
 --- Returns the  smallest value  of the  iterator using
 --- `operator.min()` for numbers or `<` for other types
@@ -2094,7 +2094,7 @@ local minimum_by = function (predicate, generator, parameter, state)
 
    return m
 end
-exports.minimum_by = export1(minimum_by)
+module.minimum_by = export1(minimum_by)
 
 --- Returns the  smallest value  of the  iterator using
 --- `predicate` as a  comparison operator. The iterator
@@ -2136,7 +2136,7 @@ local maximum = function (generator, parameter, state)
 
    return m
 end
-exports.maximum = export0(maximum)
+module.maximum = export0(maximum)
 
 --- Returns the  biggest value from the  iterator using
 --- `operator.max()`  for  numbers  and `>`  for  other
@@ -2170,7 +2170,7 @@ local maximum_by = function (predicate, generator, parameter, state)
 
    return m
 end
-exports.maximum_by = export1(maximum_by)
+module.maximum_by = export1(maximum_by)
 
 --- Returns  the biggest  value of  the iterator  using
 --- `predicate` as a  comparison operator. The iterator
@@ -2204,7 +2204,7 @@ local totable = function (generator, parameter, state)
 
    return t
 end
-exports.totable = export0(totable)
+module.totable = export0(totable)
 
 --- Reduces  the  iterator  from left  to  right  using
 --- `table.insert`.
@@ -2236,7 +2236,7 @@ local tomap = function (generator, parameter, state)
 
    return t
 end
-exports.tomap = export0(tomap)
+module.tomap = export0(tomap)
 
 --- Reduces the  iterator from  left to right  by
 --- doing `tab[val1] = val2` for each iteration.
@@ -2266,7 +2266,7 @@ end
 local map = function (f, generator, parameter, state)
    return wrap(map_generator, {generator, parameter, f}, state)
 end
-exports.map = export1(map)
+module.map = export1(map)
 
 --- Return  a  new iterator  by  applying  `f` to  each
 --- element of  the iterator. The mapping  is performed
@@ -2305,7 +2305,7 @@ end
 local enumerate = function (generator, parameter, state)
    return wrap(enumerate_generator, {generator, parameter}, {1, state})
 end
-exports.enumerate = export0(enumerate)
+module.enumerate = export0(enumerate)
 
 --- Return a  new iterator by enumerating  all elements
 --- of  the given  iterator  and starting  from 1.  The
@@ -2351,7 +2351,7 @@ end
 local intersperse = function (x, generator, parameter, state)
    return wrap(intersperse_generator, {x, generator, parameter}, {0, state})
 end
-exports.intersperse = export1(intersperse)
+module.intersperse = export1(intersperse)
 
 --- Return  a  new  iterator  where the  `x`  value  is
 --- interspersed  between the  elements  of the  source
@@ -2420,7 +2420,7 @@ local zip = function (...)
 
    return wrap(zip_generator, parameter, state)
 end
-exports.zip = zip
+module.zip = zip
 
 --- Return a new iterator where the `i`-th return value
 --- contains  the  `i`-th  element  from  each  of  the
@@ -2465,7 +2465,7 @@ end
 local cycle = function (generator, parameter, state)
    return wrap(cycle_generator, {generator, parameter, state}, deepcopy(state))
 end
-exports.cycle = export0(cycle)
+module.cycle = export0(cycle)
 
 --- Make a new iterator  that returns elements from the
 --- given  iterator until  the end  and then  “restart”
@@ -2538,7 +2538,7 @@ local chain = function (...)
 
    return wrap(chain_generator_r1, parameter, {1, parameter[3]})
 end
-exports.chain = chain
+module.chain = chain
 
 --- Make  an iterator  that returns  elements from  the
 --- first given  iterator until  it is  exhausted, then
@@ -2605,12 +2605,12 @@ local operator = {
 
 }
 
-exports.operator = operator
-exports.op       = operator
+module.operator = operator
+module.op       = operator
 
 --- # Module exports {{{1
 
-return exports
+return module
 
 -- vim: set fdm=marker fdl=0:
 
