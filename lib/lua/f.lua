@@ -1,8 +1,5 @@
---- @brief [[
----
---- An adaptation  of `luafun`  for personal  use. Some
---- documentation is the same  as the original `luafun`
---- as well as some extra functions.
+--- A   functional   library  inspired   heavily   from
+--- `luafun`.
 ---
 --- It revolves  around the concept of  iterators which
 --- is the most basic  primitive after a function. Most
@@ -140,8 +137,7 @@
 --- functions and  inline high-order functions.  All of
 --- these concepts  make the foundation  for functional
 --- programming.
----
---- @brief ]]
+local exports = {}
 
 --- # Initialization {{{1
 
@@ -165,30 +161,6 @@ local mrandom = math.random
 local sfind   = string.find
 local sformat = string.format
 local ssub    = string.sub
-
---- This will be used to export library utilities to be
---- used functional style …
----
---- <pre>
---- local f = require 'f'
---- reduce(
----    f.operator.add,
----    0, f.map(
----       function(x) return x ^ 2 end,
----       f.range(n)
---- ))
---- </pre>
----
---- … and/or object-oriented style.
----
---- <pre>
---- local f = require 'f'
---- f.range(n)
----  :map(function(x) return x ^ 2 end)
----  :reduce(operator.add, 0)
---- </pre>
-
-local exports = {}
 
 --- # Early declarations {{{1
 
