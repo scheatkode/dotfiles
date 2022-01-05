@@ -2623,6 +2623,14 @@ local operator = {
 
    lnot  = function (a) return     not a end,
    truth = function (a) return not not a end,
+
+   --- ## Miscellaneous operators {{{2
+
+   id = function (...) return ... end,
+
+   skip_key   = function (_, v) return v end,
+   skip_value = function (k, _) return k end,
+
 }
 
 exports.operator = operator
