@@ -218,7 +218,7 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
    atload:'alias lg=lazygit'                               \
          @jesseduffield/lazygit                            \
     bpick:'*linux*86*64*'                                  \
-       mv:'tldr* -> tldr'                                  \
+       mv:'teal* -> tldr'                                  \
          @dbrgn/tealdeer                                   \
        mv:'ipinfo* -> ipinfo'                              \
          @ipinfo/cli                                       \
