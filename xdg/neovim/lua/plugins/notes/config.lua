@@ -11,23 +11,50 @@ if not has_neorg then
    return has_neorg
 end
 
-neorg.setup {
+neorg.setup({
    load = {
       ['core.defaults'] = {},
-      ['core.norg.concealer'] = {},
-      -- ['core.keybinds'] = {
-      --    config = {
-      --       default_keybinds = false,
-      --       neorg_leader     = neorg_leader,
-      --    }
-      -- },
-      -- ['core.norg.dirman'] = {
-      --    config = {
-      --       workspaces = {
-      --          brain = '~/brain'
-      --       }
-      --    }
-      -- }
+
+      ['core.norg.esupports'] = {
+         indent = true,
+      },
+
+      ['core.norg.concealer'] = {
+         icons = {
+            heading = {
+               level_1 = { enabled = true, icon = '•' },
+               level_2 = { enabled = true, icon = '•' },
+               level_3 = { enabled = true, icon = '•' },
+               level_4 = { enabled = true, icon = '•' },
+               level_5 = { enabled = true, icon = '•' },
+               level_6 = { enabled = true, icon = '•' },
+            },
+         },
+      },
+
+      ['core.keybinds'] = {
+         config = {
+            default_keybinds = false,
+            neorg_leader     = '<leader>o',
+         }
+      },
+
+      ['core.norg.dirman'] = {
+         config = {
+            workspaces = {
+               brain = '~/brain'
+            }
+         }
+      },
+
+      ['core.norg.completion'] = {
+         config = {
+            engine = 'nvim-cmp',
+         },
+      },
+
+      ['core.gtd.base'] = {},
+      ['core.gtd.ui']   = {},
    },
 
    hook = function ()
@@ -62,4 +89,4 @@ neorg.setup {
 
       end)
    end,
-}
+})
