@@ -60,7 +60,7 @@ completion.setup({
    mapping = {
           ['<C-p>'] = completion.mapping.select_prev_item(),
           ['<C-n>'] = completion.mapping.select_next_item(),
-          ['<C-d>'] = completion.mapping(completion.mapping.scroll_docs(-4), {'i', 'c'}),
+          ['<C-b>'] = completion.mapping(completion.mapping.scroll_docs(-4), {'i', 'c'}),
           ['<C-f>'] = completion.mapping(completion.mapping.scroll_docs(4),  {'i', 'c'}),
       ['<C-Space>'] = completion.mapping(completion.mapping.complete(),      {'i', 'c'}),
 
