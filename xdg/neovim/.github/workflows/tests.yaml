@@ -1,0 +1,55 @@
+name: Continuous Integration
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    name: Unit tests
+
+    strategy:
+      fail-fast: true
+      matrix:
+        system:
+          - ubuntu-latest
+          - macos-latest
+        version:
+          - stable
+          - nightly
+
+    runs-on: ${{ matrix.system }}
+
+    steps:
+      # —— Github Actions setup —————————————————————————————————————————————
+
+      # https://github.com/actions/checkout (official)
+      - name: Dotfiles setup
+        uses: actions/checkout@v2
+        with:
+          path: 'dotfiles'
+
+      # —— Plenary.nvim setup ———————————————————————————————————————————————
+
+      # https://github.com/actions/checkout (official)
+      - name: Plenary setup
+        uses: actions/checkout@v2
+        with:
+          path: 'plenary.nvim'
+          repository: 'nvim-lua/plenary.nvim'
+
+      # —— Neovim setup —————————————————————————————————————————————————————
+
+      # https://github.com/rhysd/action-setup-vim (community)
+      - name: Neovim setup
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim:  true
+          version: ${{ matrix.version }}
+
+      # —— Unit tests ———————————————————————————————————————————————————————
+
+      - name: Unit tests
+        run: |
+          cd dotfiles
+          make test
