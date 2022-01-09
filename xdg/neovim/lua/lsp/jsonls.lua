@@ -8,7 +8,19 @@ end
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
 return {
-   cmd       = { vim.fn.expand('~/.yarn/bin/jsonls'), '--stdio' },
+   cmd = {
+      vim.fn.expand(table.concat({'~',
+         '.local',
+         'share',
+         'nvim',
+         'lsp_servers',
+         'jsonls',
+         'node_modules',
+         '.bin',
+         'vscode-json-language-server',
+      }, '/')),
+      '--stdio'
+   },
    filetypes = { 'json' },
    root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd())
 }
