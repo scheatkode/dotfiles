@@ -1,5 +1,16 @@
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
 return {
-   cmd = { vim.fn.expand('~/.yarn/bin/intelephense'), '--stdio' },
+   cmd = {
+      vim.fn.stdpath('data') .. table.concat({
+         '.local',
+         'share',
+         'nvim',
+         'lsp_servers',
+         'php',
+         'node_modules',
+         '.bin',
+         'intelephense'
+      })
+   }
 }
