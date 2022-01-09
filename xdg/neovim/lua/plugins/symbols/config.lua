@@ -19,6 +19,8 @@ symbols.setup({
    highlight_hovered_item = true,  -- whether to highlight the currently hovered symbol
               show_guides = true,  -- whether to show outline guides
              auto_preview = false, -- whether to automatically show code preview
+                    width = 40,    -- Width of the side window
+           relative_width = false, -- whether the above width is relative to the current window
 
    keymaps = {
                close = {}, -- No need, autocommands handle this better
