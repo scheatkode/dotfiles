@@ -8,9 +8,26 @@ end
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
 return {
-   cmd     = { vim.fn.expand('~/.yarn/bin/bash-language-server'), 'start' },
+   cmd = { table.concat({
+      vim.fn.stdpath('data'),
+      'lsp_servers',
+      'bash',
+      'node_modules',
+      '.bin',
+      'bash-language-server'
+   }, '/'), 'start' },
+
    cmd_env = {
       GLOB_PATTERN = '*@(.sh|.inc|.bash|.command)',
    },
-   root_dir = lspconfig.util.root_pattern('main', '.git')
+
+   filetypes = {
+      'sh',
+      'bash',
+      'zsh',
+   },
+
+   root_dir = lspconfig.util.root_pattern('main', '.git'),
+
+   single_file_support = true,
 }
