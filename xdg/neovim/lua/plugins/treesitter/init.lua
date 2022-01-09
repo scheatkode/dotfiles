@@ -1,8 +1,6 @@
 return { 'nvim-treesitter/nvim-treesitter', opt = true,
    as = 'treesitter',
 
-   branch = '0.5-compat',
-
    cmd = {
       'TSUpdate',
       'TSInstall',
