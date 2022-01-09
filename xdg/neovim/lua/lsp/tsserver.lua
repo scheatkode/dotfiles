@@ -1,7 +1,7 @@
 local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
 
 if not has_lspconfig then
-   print('‼ Tried loading lspconfig for denols ... unsuccessfully.')
+   print('‼ Tried loading lspconfig for tsserver ... unsuccessfully.')
    return has_lspconfig
 end
 
@@ -9,7 +9,17 @@ end
 
 return {
    cmd = {
-      vim.fn.expand('~/.yarn/bin/typescript-language-server'),
+      vim.fn.expand(table.concat({'~',
+         '.local',
+         'share',
+         'nvim',
+         'lsp_servers',
+         'tsserver',
+         'node_modules',
+         'typescript-language-server',
+         'lib',
+         'cli.js',
+      }, '/')),
       '--stdio'
    },
 
