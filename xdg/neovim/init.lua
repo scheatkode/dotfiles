@@ -1,3 +1,23 @@
+-- setup package path
+
+-- to   prevent  code   duplication,  a   library  with
+-- utilities commonly used in lua has been extracted to
+-- a different location.
+
+do
+   local pack_path = (
+         os.getenv('XDG_CONFIG_HOME')
+      or os.getenv('HOME') .. '/.config'
+   ) .. '/lib/lua'
+
+   package.path = string.format(
+      '%s;%s/?.lua;%s/?/init.lua',
+      package.path,
+      pack_path,
+      pack_path
+   )
+end
+
 -- leader key
 
 -- it's generally a good idea  to set this early on and
