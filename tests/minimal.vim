@@ -15,10 +15,7 @@ runtime plugin/plenary.vim
 
 lua << EOF
    do
-      local pack_path = (
-            os.getenv('XDG_CONFIG_HOME')
-         or os.getenv('HOME') .. '/.config'
-      ) .. '/lib/lua'
+      local pack_path = './lib/lua'
 
       package.path = string.format(
          '%s;%s/?.lua;%s/?/init.lua',
