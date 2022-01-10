@@ -1,4 +1,4 @@
-<p align='center'><img width='256' src='.assets/neovim.svg' alt='Banner' /></p>
+<p align='center'><img width='256' src='../../assets/neovim.svg' alt='Banner' /></p>
 
 <p align='center'>
    <a href='https://www.repostatus.org/#wip'><img src='https://img.shields.io/badge/status-WIP-informational?style=for-the-badge&color=yellow' alt='Project Status: WIP  Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.' /></a>
