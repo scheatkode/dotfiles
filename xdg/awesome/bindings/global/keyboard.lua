@@ -69,7 +69,7 @@ keys['keyboard::awesome::lua execute prompt'] = {
 
 --- launcher {{{1
 
-keys['launcher::keyboard::run prompt'] = {
+keys['keyboard::launcher::run prompt'] = {
    modifiers   = { mod.super },
    key         = 'r',
    description = 'run prompt',
