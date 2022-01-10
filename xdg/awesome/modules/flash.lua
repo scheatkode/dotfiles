@@ -40,7 +40,7 @@ local enable = function ()
 end
 
 local disable = function ()
-   client.disconnect_signal('focus', flash)
+   client.disconnect_signal('unfocus', flash)
 end
 
 local setup = function (overrides)
