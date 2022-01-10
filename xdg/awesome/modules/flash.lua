@@ -1,9 +1,9 @@
-local gears = require('gears')
 local beautiful = require('beautiful')
-local tablex = require('tablex')
+local gears     = require('gears')
+local tablex    = require('tablex')
 
-local opacity = beautiful.flash_start_opacity or 0.7
-local step    = beautiful.flash_step or 0.01
+local opacity = beautiful.flash_start_opacity or 0.70
+local step    = beautiful.flash_step          or 0.01
 
 local flash = function (c)
    if c then
@@ -11,9 +11,9 @@ local flash = function (c)
 
       local q = opacity
       local g = gears.timer({
-         timeout = step,
-         call_now = false,
          autostart = true,
+          call_now = false,
+           timeout = step,
       })
 
       g:connect_signal('timeout', function ()
