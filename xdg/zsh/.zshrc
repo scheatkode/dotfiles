@@ -214,6 +214,7 @@ zinit ice wait:'0c' blockf silent atpull:'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
 zinit wait:'1a' silent from:gh-r as:program light-mode for \
+    bpick:'*linux*64*'                                     \
      pick:'fzf'                                            \
          @junegunn/fzf                                     \
     bpick:'*Linux*86*64*'                                  \
@@ -222,13 +223,15 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
     bpick:'*linux*86*64*'                                  \
        mv:'teal* -> tldr'                                  \
          @dbrgn/tealdeer                                   \
+    bpick:'*linux*64*'                                     \
        mv:'ipinfo* -> ipinfo'                              \
          @ipinfo/cli                                       \
     bpick:'curlie*linux*64*gz'                             \
          @rs/curlie                                        \
+    bpick:'*linux*64'                                      \
        mv:'sampler* -> sampler'                            \
          @sqshq/sampler                                    \
-    bpick:'duf*64*gz'                                      \
+    bpick:'*linux*64*gz'                                   \
          @muesli/duf
 
 zinit wait:'1b' silent from:gh-r as:program for \
@@ -238,8 +241,7 @@ zinit wait:'1b' silent from:gh-r as:program for \
        mv:'bat* -> bat'                         \
      pick:'bat*/bat'                            \
             @sharkdp/bat                        \
-       mv:'fd* -> fd'                           \
-     pick:'fd/fd'                               \
+     pick:'fd*/fd'                              \
             @sharkdp/fd                         \
        mv:'hyperfine*/hyperfine -> hyperfine'   \
      pick:'hyperfine*/hyperfine'                \
@@ -255,8 +257,7 @@ zinit wait:'1b' silent from:gh-r as:program for \
             @dalance/procs                      \
      pick:'imsnif/bandwhich'                    \
             @imsnif/bandwhich                   \
-       mv:'dust*/dust -> dust'                  \
-     pick:'dust'                                \
+     pick:'dust*/dust'                          \
             @bootandy/dust                      \
     id-as:'pueue'                               \
     bpick:'pueue-*linux*64*'                    \
@@ -276,17 +277,20 @@ zinit wait:'1b' silent from:gh-r as:program for \
      pick:'delta*/delta'                        \
             @dandavison/delta                   \
    atload:'alias dig="dog"'                     \
+    bpick:'*linux*'                             \
      pick:'bin/dog'                             \
       src:'completions/dog.zsh'                 \
             @ogham/dog                          \
+    bpick:'*linux*'                             \
      pick:'htmlq'                               \
             @mgdm/htmlq                         \
+    bpick:'*linux*64*'                          \
      pick:'jq'                                  \
    atload:'mv jq* jq > /dev/null 2>&1'          \
        mv:'jq* -> jq'                           \
             @stedolan/jq
 
-zinit wait:'1c' silent from:gh-r as:program for \
+zinit wait:'0a' silent from:gh-r as:program for \
    atinit:'tar xvf *.tbz > /dev/null 2>&1'      \
     bpick:'*86*64*linux*'                       \
      pick:'bin/btop'                            \
