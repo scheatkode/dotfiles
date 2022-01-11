@@ -7,7 +7,7 @@ require('awful.hotkeys_popup.keys')
 
 local menubar = require('menubar')
 
-local apps    = require('config.apps')
+local apps    = require('apps')
 local mod     = require('bindings.mod')
 local vars    = require('config.vars')
 local widgets = require('widgets')
