@@ -164,7 +164,6 @@ local packer_manage_plugins = function ()
          use(require 'plugins.completion.snip')
 
       -- use {'nvim-lua/lsp-status.nvim'}
-      use {'rafamadriz/friendly-snippets'} -- TODO
 
       use(require 'plugins.dap')
       use(require 'plugins.dapui')

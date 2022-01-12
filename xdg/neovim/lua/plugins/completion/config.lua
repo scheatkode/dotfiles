@@ -29,13 +29,13 @@ end
 -- configure plugin {{{1
 
 local sources = {
+    luasnip = '[snip]',
      buffer = '[buf]',
        calc = '[calc]',
     cmdline = '[cmd]',
    nvim_lsp = '[lsp]',
    nvim_lua = '[api]',
        path = '[path]',
-    luasnip = '[snip]',
 }
 
 local maxwidth = 50
@@ -98,11 +98,11 @@ completion.setup({
    },
 
    sources = completion.config.sources({
+      { name = 'luasnip'  },
       { name = 'calc'     },
       { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
       { name = 'path'     },
-      { name = 'luasnip'  },
    }, {
       { name = 'buffer', keyword_length = 5 },
    }),
