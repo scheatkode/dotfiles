@@ -196,8 +196,7 @@ local default_mixin = {
          assert(type(self) == 'table', [[make sure that you are using 'Class:new' instead of 'Class.new']])
 
          local instance = self:allocate()
-         instance:construct(...)
-         return instance
+         return instance:construct(...) or instance
       end,
 
       extend = function(self, name)
