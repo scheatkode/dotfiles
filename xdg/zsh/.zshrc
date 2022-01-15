@@ -235,8 +235,6 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
          @muesli/duf
 
 zinit wait:'1b' silent from:gh-r as:program for \
-   atinit:'mv pueue-* pueue 2> /dev/null'       \
-   atpull:'%atinit'                             \
    atload:'alias cat=bat'                       \
        mv:'bat* -> bat'                         \
      pick:'bat*/bat'                            \
@@ -261,9 +259,11 @@ zinit wait:'1b' silent from:gh-r as:program for \
             @bootandy/dust                      \
     id-as:'pueue'                               \
     bpick:'pueue-*linux*64*'                    \
+     pick:'pueue'                               \
    atpull:'./pueue completions zsh .'           \
    atload:'alias p=pueue'                       \
-       mv:'pueue* -> pueue'                     \
+      src:'_pueue'                              \
+       mv:'pueue-* -> pueue'                    \
             @Nukesor/pueue                      \
     id-as:'pueued'                              \
     bpick:'pueued-*linux*64*'                   \
