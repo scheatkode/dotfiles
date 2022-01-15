@@ -226,8 +226,9 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
     bpick:'*linux*64*'                                     \
        mv:'ipinfo* -> ipinfo'                              \
          @ipinfo/cli                                       \
-    bpick:'curlie*linux*64*gz'                             \
-         @rs/curlie                                        \
+    bpick:'*64*linux*'                                     \
+     pick:'xh-*/xh'                                        \
+         @ducaale/xh                                       \
     bpick:'*linux*64'                                      \
        mv:'sampler* -> sampler'                            \
          @sqshq/sampler                                    \
