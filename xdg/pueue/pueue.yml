@@ -15,7 +15,7 @@ daemon:
   callback: ~
   callback_log_lines: 10
   groups:
-    default: 5
+    default: 15
 shared:
   pueue_directory: /home/scheatkode/.local/share/pueue
   use_unix_socket: true
