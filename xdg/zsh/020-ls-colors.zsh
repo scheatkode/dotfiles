@@ -16,9 +16,3 @@ if command -v dircolors > /dev/null 2>&1 ; then
 else
    eval "$(command gdircolors --sh "$(dirname "${(%):-%N}")/gruvbox.dircolors")"
 fi
-
-# Local Variables:
-# tab-width: 3
-# mode: shell
-# End:
-# vim: set ft=zsh sw=3 ts=3 sts=3 et tw=78:
