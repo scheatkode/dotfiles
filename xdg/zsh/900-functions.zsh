@@ -120,3 +120,7 @@ split("░░x░░x░░",         font[" "], "x")
 }
    '
 }
+
+function calc () {
+   printf "%s\n" "${@}" | bc -l
+}
