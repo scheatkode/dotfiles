@@ -1,3 +1,4 @@
+local a = require('luassert')
 local s = require('say')
 
 local function contains (container, contained)
@@ -26,7 +27,7 @@ end
 s:set('assertion.contains.positive', 'Expected %s\n to contain\n%s')
 s:set('assertion.contains.negative', 'Expected %s\n to not contain\n%s')
 
-assert:register(
+a:register(
    'assertion',
    'contains',
    contains_for_luassert,

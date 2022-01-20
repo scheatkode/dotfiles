@@ -1,3 +1,4 @@
+local a = require('luassert')
 local s = require('say')
 
 -- TODO(scheatkode): fix circular references
@@ -53,7 +54,7 @@ end
 s:set('assertion.deep_equal.positive', 'Expected %s\n to equal\n%s')
 s:set('assertion.deep_equal.negative', 'Expected %s\n to not equal\n%s')
 
-assert:register(
+a:register(
    'assertion',
    'deep_equal',
    deep_equal_for_luassert,
