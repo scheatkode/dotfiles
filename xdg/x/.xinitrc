@@ -1,3 +1,3 @@
 setxkbmap -layout dvorak
-picom -bc
+picom --xrender-sync-fence -bc
 exec awesome
