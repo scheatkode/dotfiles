@@ -435,7 +435,7 @@ end
 ---     return mypairs_gen, max, 0
 --- end
 ---
---- > for _, a in iter(mypairs(3)) do print(a) end
+--- > for _, a in iterate(mypairs(3)) do print(a) end
 --- 1
 --- 2
 --- 3
@@ -691,28 +691,48 @@ function Iterator:with_suppressed_state ()
    return with_suppressed_state(self.generator, self.parameter, self.state)
 end
 
--- TODO(scheatkode): Remove when no longer used
-local export0 = function (f)
+--- Export  a  higher  order   function  that  takes  a
+--- function to call with the iterator triplet.
+---
+--- hoe stands for *higher order export*.
+---
+--- @param f fun(generator,parameter,state): Iterator
+--- @return fun(generator, parameter, state): Iterator
+local hoe_no_args = function (f)
    return function (generator, parameter, state)
       return f(raw_iterator(generator, parameter, state))
    end
 end
 
--- TODO(scheatkode): Remove when no longer used
-local export1 = function (f)
+--- Export  a  higher  order   function  that  takes  a
+--- function to  call with an  argument as well  as the
+--- iterator triplet.
+---
+--- hoe stands for *higher order export*.
+---
+--- @param f fun(arg1,generator,parameter,state): Iterator
+--- @return fun(arg1, generator, parameter, state): Iterator
+local hoe_1_arg = function (f)
    return function (arg1, generator, parameter, state)
       return f(arg1, raw_iterator(generator, parameter, state))
    end
 end
 
--- TODO(scheatkode): Remove when no longer used
-local export2 = function (f)
+--- Export  a  higher  order   function  that  takes  a
+--- function to call with two  arguments as well as the
+--- iterator triplet.
+---
+--- hoe stands for *higher order export*.
+---
+--- @param f fun(arg1,arg2,generator,parameter,state): Iterator
+--- @return fun(arg1, arg2, generator, parameter, state): Iterator
+local hoe_2_args = function (f)
    return function (arg1, arg2, generator, parameter, state)
       return f(arg1, arg2, raw_iterator(generator, parameter, state))
    end
 end
 
-module.foreach  = export1(foreach)
+module.foreach  = hoe_1_arg(foreach)
 module.iterate  = iterate
 module.stateful = with_state
 module.wrap     = wrap
@@ -752,6 +772,7 @@ local pairs_generator = pairs({})
 --- @param  _parameter any
 --- @param  _state     any
 --- @return nil
+--- @diagnostic disable-next-line: unused-local
 nil_generator = function (_parameter, _state)
    return nil
 end
@@ -1028,7 +1049,7 @@ local nth = function (n, generator, parameter, state)
 
    return return_if_not_empty(generator(parameter, state))
 end
-module.nth = export1(nth)
+module.nth = hoe_1_arg(nth)
 
 --- This  method  returns  the `n`-th  element  of  the
 --- iterator. If  the iterator does not  have an `n`-th
@@ -1064,7 +1085,7 @@ end
 local head = function (generator, parameter, state)
    return head_call(generator(parameter, state))
 end
-module.head = export0(head)
+module.head = hoe_no_args(head)
 module.car  = module.head
 
 --- Extract the  first element of the  iterator. If the
@@ -1093,7 +1114,7 @@ local tail = function (generator, parameter, state)
 
    return wrap(generator, parameter, state)
 end
-module.tail = export0(tail)
+module.tail = hoe_no_args(tail)
 module.cdr  = module.tail
 
 --- Return  a copy  of the  given iterator  without its
@@ -1146,7 +1167,7 @@ local take_n = function (n, generator, parameter, state)
    assert(n >= 0,  'invalid first argument to take_n')
    return wrap(take_n_generator, {n, generator, parameter}, {0, state})
 end
-module.take_n = export1(take_n)
+module.take_n = hoe_1_arg(take_n)
 
 --- Returns an iterator on the subsequence of first `n`
 --- elements.
@@ -1188,7 +1209,7 @@ local take_while = function (predicate, generator, parameter, state)
    assert(type(predicate) == 'function', 'invalid first argument to take_while')
    return wrap(take_while_generator, {predicate, generator, parameter}, state)
 end
-module.take_while = export1(take_while)
+module.take_while = hoe_1_arg(take_while)
 
 --- Returns  an  iterator  on  the  longest  prefix  of
 --- elements  that satify  the given  function used  as
@@ -1213,7 +1234,7 @@ local take = function (n_or_predicate, generator, parameter, state)
    return take_while(n_or_predicate, generator, parameter, state)
    end
 end
-module.take = export1(take)
+module.take = hoe_1_arg(take)
 
 --- An  alias for  `take_n()`  and `take_while()`  that
 --- autodetects   the   required  function   based   on
@@ -1247,7 +1268,7 @@ local drop_n = function (n, generator, parameter, state)
 
    return wrap(generator, parameter, state)
 end
-module.drop_n = export1(drop_n)
+module.drop_n = hoe_1_arg(drop_n)
 
 --- Returns an  iterator after  skipping the  first `n`
 --- elements.
@@ -1296,7 +1317,7 @@ local drop_while = function(predicate, generator, parameter, state)
 
    return wrap(generator, parameter, state_previous)
 end
-module.drop_while = export1(drop_while)
+module.drop_while = hoe_1_arg(drop_while)
 
 --- Return  an  iterator  after  skipping  the  longest
 --- prefix of elements that satisfy predicate.
@@ -1323,7 +1344,7 @@ local drop = function (n_or_predicate, generator, parameter, state)
       return drop_while(n_or_predicate, generator, parameter, state)
    end
 end
-module.drop = export1(drop)
+module.drop = hoe_1_arg(drop)
 
 --- An  alias for  `drop_n()`  and `drop_while()`  that
 --- autodetects   the   required  function   based   on
@@ -1355,7 +1376,7 @@ local split_p = function (n_or_predicate, generator, parameter, state)
    return take(n_or_predicate, generator, parameter, state),
           drop(n_or_predicate, generator, parameter, state)
 end
-module.split_p  = export1(split_p)
+module.split_p  = hoe_1_arg(split_p)
 module.split_at = module.split_p
 module.span     = module.split_p
 
@@ -1493,7 +1514,7 @@ local index = function (x, generator, parameter, state)
 
    return nil
 end
-module.index      = export1(index)
+module.index      = hoe_1_arg(index)
 module.index_of   = module.index
 module.elem_index = module.index
 
@@ -1543,7 +1564,7 @@ end
 local indexes = function (x, generator, parameter, state)
    return wrap(indexes_generator, {x, generator, parameter}, {0, state})
 end
-module.indexes = export1(indexes)
+module.indexes = hoe_1_arg(indexes)
 module.indices = module.indexes
 
 --- Returns an iterator to  positions of elements which
@@ -1618,7 +1639,7 @@ end
 local filter = function (predicate, generator, parameter, state)
    return wrap(filter_generator, {predicate, generator, parameter}, state)
 end
-module.filter = export1(filter)
+module.filter = hoe_1_arg(filter)
 
 --- Return  a  new  iterator  of  those  elements  that
 --- satisfy the given `predicate`.
@@ -1648,7 +1669,7 @@ local grep = function (regex_or_predicate, generator, parameter, state)
 
    return filter(f, generator, parameter, state)
 end
-module.grep = export1(grep)
+module.grep = hoe_1_arg(grep)
 
 --- If `regex_or_predicate` is a string then it is used
 --- as  a  regular  expression  to  build  a  filtering
@@ -1682,7 +1703,7 @@ local partition = function (predicate, generator, parameter, state)
    return filter(predicate,  generator, parameter, state),
           filter(negative_p, generator, parameter, state)
 end
-module.partition = export1(partition)
+module.partition = hoe_1_arg(partition)
 
 --- Returns two iterators where  elements do and do not
 --- satisfy the given predicate.
@@ -1743,7 +1764,7 @@ local reduce = function (accumulator, start, generator, parameter, state)
 
    return start
 end
-module.reduce = export2(reduce)
+module.reduce = hoe_2_args(reduce)
 module.foldl  = module.reduce
 
 --- Reduce the  iterator from  left to right  using the
@@ -1806,7 +1827,7 @@ local length = function (generator, parameter, state)
 
    return length - 1
 end
-module.length = export0(length)
+module.length = hoe_no_args(length)
 
 --- Return the number of elements in the iterator. This
 --- is  equivalent to  using  `#object` for  elementary
@@ -1835,7 +1856,7 @@ end
 local is_null = function (generator, parameter, state)
    return generator(parameter, deepcopy(state)) == nil
 end
-module.is_null = export0(is_null)
+module.is_null = hoe_no_args(is_null)
 
 --- Returns  `true`  when  the  iterator  is  empty  or
 --- finished, `false` otherwise.
@@ -1898,7 +1919,7 @@ local every = function (predicate, generator, parameter, state)
 
    return state == nil
 end
-module.every = export1(every)
+module.every = hoe_1_arg(every)
 module.all   = module.every
 
 --- Returns `true`  if all return values  of `iterator`
@@ -1928,7 +1949,7 @@ local any = function (predicate, generator, parameter, state)
 
    return not not v
 end
-module.any  = export1(any)
+module.any  = hoe_1_arg(any)
 module.some = module.any
 
 --- Returns  `true` if  at least  one return  values of
@@ -1965,7 +1986,7 @@ local sum = function (generator, parameter, state)
 
    return s
 end
-module.sum = export0(sum)
+module.sum = hoe_no_args(sum)
 
 --- Sum  up all  iteration values.  An optimized  alias
 --- for:
@@ -2005,7 +2026,7 @@ local product = function (generator, parameter, state)
 
    return p
 end
-module.product = export0(product)
+module.product = hoe_no_args(product)
 
 --- Multiply  up  all  iteration values.  An  optimized
 --- alias for:
@@ -2060,7 +2081,7 @@ local minimum = function (generator, parameter, state)
 
    return m
 end
-module.minimum = export0(minimum)
+module.minimum = hoe_no_args(minimum)
 
 --- Returns the  smallest value  of the  iterator using
 --- `operator.min()` for numbers or `<` for other types
@@ -2094,7 +2115,7 @@ local minimum_by = function (predicate, generator, parameter, state)
 
    return m
 end
-module.minimum_by = export1(minimum_by)
+module.minimum_by = hoe_1_arg(minimum_by)
 
 --- Returns the  smallest value  of the  iterator using
 --- `predicate` as a  comparison operator. The iterator
@@ -2136,7 +2157,7 @@ local maximum = function (generator, parameter, state)
 
    return m
 end
-module.maximum = export0(maximum)
+module.maximum = hoe_no_args(maximum)
 
 --- Returns the  biggest value from the  iterator using
 --- `operator.max()`  for  numbers  and `>`  for  other
@@ -2170,7 +2191,7 @@ local maximum_by = function (predicate, generator, parameter, state)
 
    return m
 end
-module.maximum_by = export1(maximum_by)
+module.maximum_by = hoe_1_arg(maximum_by)
 
 --- Returns  the biggest  value of  the iterator  using
 --- `predicate` as a  comparison operator. The iterator
@@ -2204,7 +2225,7 @@ local totable = function (generator, parameter, state)
 
    return t
 end
-module.totable = export0(totable)
+module.totable = hoe_no_args(totable)
 
 --- Reduces  the  iterator  from left  to  right  using
 --- `table.insert`.
@@ -2236,7 +2257,7 @@ local tomap = function (generator, parameter, state)
 
    return t
 end
-module.tomap = export0(tomap)
+module.tomap = hoe_no_args(tomap)
 
 --- Reduces the  iterator from  left to right  by
 --- doing `tab[val1] = val2` for each iteration.
@@ -2266,7 +2287,7 @@ end
 local map = function (f, generator, parameter, state)
    return wrap(map_generator, {generator, parameter, f}, state)
 end
-module.map = export1(map)
+module.map = hoe_1_arg(map)
 
 --- Return  a  new iterator  by  applying  `f` to  each
 --- element of  the iterator. The mapping  is performed
@@ -2305,7 +2326,7 @@ end
 local enumerate = function (generator, parameter, state)
    return wrap(enumerate_generator, {generator, parameter}, {1, state})
 end
-module.enumerate = export0(enumerate)
+module.enumerate = hoe_no_args(enumerate)
 
 --- Return a  new iterator by enumerating  all elements
 --- of  the given  iterator  and starting  from 1.  The
@@ -2351,7 +2372,7 @@ end
 local intersperse = function (x, generator, parameter, state)
    return wrap(intersperse_generator, {x, generator, parameter}, {0, state})
 end
-module.intersperse = export1(intersperse)
+module.intersperse = hoe_1_arg(intersperse)
 
 --- Return  a  new  iterator  where the  `x`  value  is
 --- interspersed  between the  elements  of the  source
@@ -2465,7 +2486,7 @@ end
 local cycle = function (generator, parameter, state)
    return wrap(cycle_generator, {generator, parameter, state}, deepcopy(state))
 end
-module.cycle = export0(cycle)
+module.cycle = hoe_no_args(cycle)
 
 --- Make a new iterator  that returns elements from the
 --- given  iterator until  the end  and then  “restart”
