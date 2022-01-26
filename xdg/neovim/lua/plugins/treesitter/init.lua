@@ -16,7 +16,7 @@ return { 'nvim-treesitter/nvim-treesitter', opt = true,
       {'JoosepAlviste/nvim-ts-context-commentstring'},
    },
 
-   run = '<cmd>TSUpdate<CR>',
+   run = ':TSUpdate',
 
    config = function ()
       require('plugins.treesitter.config')
