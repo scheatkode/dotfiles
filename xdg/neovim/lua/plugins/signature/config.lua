@@ -13,7 +13,7 @@ end
 
 -- configure plugin {{{1
 
-signature.on_attach({
+signature.setup({
 
    -- autoclose  signature  float   win  after  x  sec,
    -- disabled if `nil`.
