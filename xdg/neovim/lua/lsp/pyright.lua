@@ -7,8 +7,25 @@ end
 
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
+local pyright_exe = table.concat({
+   vim.fn.stdpath('data'),
+   'lsp_servers',
+   'python',
+   'node_modules',
+   '.bin',
+   'pyright-langserver',
+}, '/')
+
+if vim.fn.executable('pyright-langserver') then
+   pyright_exe = 'pyright-langserver'
+elseif vim.fn.executable('bin/pyright-langserver') then
+   pyright_exe = 'bin/pyright-langserver'
+end
+
 return {
-   cmd = { 'pyright-langserver', '--stdio' },
+   cmd = {
+      pyright_exe, '--stdio'
+   },
 
    filetypes = {
       'python'
@@ -17,8 +34,9 @@ return {
    root_dir = function (filename)
       return lspconfig.util.root_pattern(
          '.git',
-         'setup.py',
-         'requirements.txt'
+         'pyproject.toml',
+         'requirements.txt',
+         'setup.py'
       )(filename) or lspconfig.util.dirname(filename)
    end,
 
