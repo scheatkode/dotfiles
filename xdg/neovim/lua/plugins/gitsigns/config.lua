@@ -19,6 +19,34 @@ gitsigns.setup({
       changedelete = {hl = 'DiffChange', text = ' ', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
    },
 
+   -- TODO(scheatkode): activate this on v7.0
+   -- on_attach = function (bufnr)
+   --    local function map(mode, l, r, opts)
+   --       opts = opts or {}
+   --       opts.buffer = bufnr
+   --       vim.keymap.set(mode, l, r, opts)
+   --    end
+
+   --    -- navigation
+   --    map('n', ']h', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'")
+   --    map('n', '[h', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'")
+
+   --    -- actions
+   --    map({'n', 'v'}, '<leader>gs', gitsigns.stage_hunk)
+   --    map({'n', 'v'}, '<leader>gr', gitsigns.reset_hunk)
+   --    map('n', '<leader>gu', gitsigns.undo_stage_hunk)
+   --    map('n', '<leader>gS', gitsigns.stage_buffer)
+   --    map('n', '<leader>gR', gitsigns.reset_buffer)
+   --    map('n', '<leader>gp', gitsigns.preview_hunk)
+   --    map('n', '<leader>gb', function () gitsigns.blame_line({full = true}) end)
+   --    map('n', '<leader>gB', gitsigns.toggle_current_line_blame)
+   --    map('n', '<leader>gd', gitsigns.diff_this)
+   --    map('n', '<leader>gD', function () gitsigns.diff_this('~') end)
+
+   --    -- text object
+   --    map({'o', 'x'}, 'ih', ':<C-u>Gitsigns select_hunk<CR>')
+   -- end,
+
    keymaps = {
       -- Default keymap options
       noremap = true,
