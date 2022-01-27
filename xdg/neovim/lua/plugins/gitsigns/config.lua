@@ -44,7 +44,7 @@ gitsigns.setup({
 
    trouble = true,
 
-   watch_index = {
+   watch_gitdir = {
       interval = 1000,
    },
 
@@ -52,6 +52,8 @@ gitsigns.setup({
 
    sign_priority      = 6,
    status_formatter   = nil,
-   use_decoration_api = true,
-   use_internal_diff  = true,
+
+   diff_opts = {
+      internal = true,
+   }
 })
