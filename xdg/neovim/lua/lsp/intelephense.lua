@@ -2,15 +2,14 @@
 
 return {
    cmd = {
-      vim.fn.stdpath('data') .. table.concat({
-         '.local',
-         'share',
-         'nvim',
+       table.concat({
+         vim.fn.stdpath('data'),
          'lsp_servers',
          'php',
          'node_modules',
          '.bin',
          'intelephense'
-      })
+      }, '/'),
+      '--stdio'
    }
 }
