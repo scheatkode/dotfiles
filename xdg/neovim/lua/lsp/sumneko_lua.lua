@@ -25,8 +25,12 @@ local sumneko_root_path = fn.stdpath('data')
    .. '/extension'
    .. '/server'
 
+-- local sumneko_binary = sumneko_root_path
+--    .. '/bin/' .. system_name
+--    .. '/lua-language-server'
+
 local sumneko_binary = sumneko_root_path
-   .. '/bin/' .. system_name
+   .. '/bin'
    .. '/lua-language-server'
 
 local runtime_path = vim.split(package.path, ';')
