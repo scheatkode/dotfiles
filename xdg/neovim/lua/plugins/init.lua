@@ -479,6 +479,8 @@ local packer_manage_plugins = function ()
 
       --- miscellaneous plugins
 
+      use(require 'plugins.movement')
+
       use {'AckslD/nvim-revJ.lua', opt = true,
          config = function () require('config.plugins.revJ') end,
          keys   = {
