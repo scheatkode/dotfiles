@@ -545,6 +545,7 @@ if not is_packer_installed(install_path) then
       return false
    end
 
+   vim.cmd [[packadd packer.nvim]]
    packer_configure()
    packer_manage_plugins()
    require('packer').sync()
