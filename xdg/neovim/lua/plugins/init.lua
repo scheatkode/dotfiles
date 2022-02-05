@@ -33,6 +33,8 @@ local packer_autoinstall = function (install_path)
    local out = fn.system({
       'git',
       'clone',
+      '--depth',
+      '1',
       'https://github.com/wbthomason/packer.nvim',
       install_path
    })
