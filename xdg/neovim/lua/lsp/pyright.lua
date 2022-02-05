@@ -16,9 +16,9 @@ local pyright_exe = table.concat({
    'pyright-langserver',
 }, '/')
 
-if vim.fn.executable('pyright-langserver') then
+if vim.fn.executable('pyright-langserver') == 1 then
    pyright_exe = 'pyright-langserver'
-elseif vim.fn.executable('bin/pyright-langserver') then
+elseif vim.fn.executable('bin/pyright-langserver') == 1 then
    pyright_exe = 'bin/pyright-langserver'
 end
 
