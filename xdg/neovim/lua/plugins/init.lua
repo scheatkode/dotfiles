@@ -57,7 +57,7 @@ local packer_configure = function ()
 
    return packer.init({
       package_root         = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
-      compile_path         = util.join_paths(vim.fn.stdpath('data'), 'site', 'plugin', 'compiled.vim'),
+      compile_path         = util.join_paths(vim.fn.stdpath('data'), 'site', 'plugin', 'compiled.lua'),
 
       ensure_dependencies  = true, -- should packer install plugin dependencies?
 
