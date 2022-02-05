@@ -156,6 +156,7 @@ local packer_manage_plugins = function ()
       use(require 'plugins.symbols')     -- powered by simrat39/symbols-outline
 
       use(require 'plugins.snippets')    -- powered by L3MON4D3/LuaSnip
+      use(require 'plugins.snippets-catalog')
       use(require 'plugins.completion')  -- powered by hrsh7th/nvim-compe
 
          use(require 'plugins.completion.buffer')
