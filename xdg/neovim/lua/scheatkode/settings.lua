@@ -164,7 +164,7 @@ opt.breakindent    =  true -- keep visual blocks indented when wrapping
 opt.ruler          = false
 opt.cursorline     = false -- cursorline is highlighted conditionally
 opt.synmaxcol      =   200 -- don't syntax highlight long lines
-opt.signcolumn     = has_06 and 'auto:2-4' or 'number'
+opt.signcolumn     = has_06 and 'auto:1-2' or 'number'
 
 -- whitespace, indentation, and wrapping {{{1
 
