@@ -221,6 +221,7 @@ local packer_manage_plugins = function ()
       -- visual
 
       use(require 'plugins.colorizer')
+      use(require 'plugins.statusline')
 
       --- miscellaneous plugins
 
