@@ -16,18 +16,22 @@ neorg.setup({
       ['core.defaults'] = {},
 
       ['core.norg.esupports'] = {
-         indent = true,
+         config = {
+            indent = true,
+         },
       },
 
       ['core.norg.concealer'] = {
-         icons = {
-            heading = {
-               level_1 = { enabled = true, icon = '•' },
-               level_2 = { enabled = true, icon = '•' },
-               level_3 = { enabled = true, icon = '•' },
-               level_4 = { enabled = true, icon = '•' },
-               level_5 = { enabled = true, icon = '•' },
-               level_6 = { enabled = true, icon = '•' },
+         config = {
+            icons = {
+               heading = {
+                  level_1 = { enabled = true, icon = '•' },
+                  level_2 = { enabled = true, icon = '•' },
+                  level_3 = { enabled = true, icon = '•' },
+                  level_4 = { enabled = true, icon = '•' },
+                  level_5 = { enabled = true, icon = '•' },
+                  level_6 = { enabled = true, icon = '•' },
+               },
             },
          },
       },
@@ -42,7 +46,7 @@ neorg.setup({
       ['core.norg.dirman'] = {
          config = {
             workspaces = {
-               brain = '~/brain'
+               brain = '~/brain',
             }
          }
       },
@@ -53,7 +57,12 @@ neorg.setup({
          },
       },
 
-      ['core.gtd.base'] = {},
+      ['core.gtd.base'] = {
+         config = {
+            workspace = 'brain',
+         },
+      },
+
       ['core.gtd.ui']   = {},
    },
 
