@@ -476,6 +476,7 @@ local packer_manage_plugins = function ()
             })
          end,
       }
+      use(require 'plugins.colorizer')
 
       --- miscellaneous plugins
 
