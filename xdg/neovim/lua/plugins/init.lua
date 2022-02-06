@@ -11,7 +11,8 @@ local format = string.format
 local is_packer_installed = function (install_path)
    local directory_exists = fn.isdirectory(install_path)
 
-   if    directory_exists == 1
+   if
+         directory_exists == 1
       or directory_exists == true
    then
       return true
@@ -350,5 +351,5 @@ return setmetatable({}, {
    end,
 })
 
--- vim: set ft=lua fdm=marker fdl=0:
+-- vim: set fdm=marker fdl=0:
 
