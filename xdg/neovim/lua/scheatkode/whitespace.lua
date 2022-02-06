@@ -5,6 +5,7 @@ local fn = vim.fn
 local function is_invalid_buffer()
    return
              vim.bo.filetype == ''
+      or     vim.bo.filetype == 'norg'
       or     vim.bo.buftype  ~= ''
       or not vim.bo.modifiable
 end
