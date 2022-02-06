@@ -98,6 +98,7 @@ local function default_config ()
       special_return        = true,
       special_exception     = true,
       transparent           = false,
+      darken_sidebar        = true,
       dim_inactive          = true,
       overrides             = {},
       theme                 = 'default',
