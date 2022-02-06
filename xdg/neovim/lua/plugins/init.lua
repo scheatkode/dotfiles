@@ -520,11 +520,8 @@ local packer_manage_plugins = function ()
       use(require 'plugins.align') -- alignment made easy
       use(require 'plugins.comment') -- commenting plugin
 
-      -- use {'mbbill/undotree'}
-      -- use {'b3nj5m1n/kommentary'}      -- commenting plugin
       use {'dstein64/vim-startuptime'} -- startup time monitor
       use {'mhinz/vim-startify'}       -- start screen
-      -- use {'karb94/neoscroll.nvim'}    -- better smooth scrolling
       use {'lambdalisue/suda.vim'}     -- workaround for using `sudo`
       use {'kana/vim-operator-user'}   -- operator definitions for text objects
 
