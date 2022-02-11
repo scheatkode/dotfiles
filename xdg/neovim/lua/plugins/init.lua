@@ -172,6 +172,8 @@ local packer_manage_plugins = function ()
       use(require 'plugins.dap')
       use(require 'plugins.dapui')
 
+      use(require 'plugins.schema')
+
       -- }}}
 
       use(require 'plugins.pairs') -- powered by windwp/nvim-autopairs
