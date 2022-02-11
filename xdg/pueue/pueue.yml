@@ -14,12 +14,10 @@ daemon:
   pause_all_on_failure: false
   callback: ~
   callback_log_lines: 10
-  groups:
-    default: 15
 shared:
   pueue_directory: /home/scheatkode/.local/share/pueue
   use_unix_socket: true
-  unix_socket_path: /home/scheatkode/.local/share/pueue/pueue.socket
+  unix_socket_path: /home/scheatkode/.local/share/pueue/pueue_scheatkode.socket
   host: 127.0.0.1
   port: "6924"
   daemon_cert: /home/scheatkode/.local/share/pueue/certs/daemon.cert
