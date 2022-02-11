@@ -229,18 +229,7 @@ local packer_manage_plugins = function ()
       --- miscellaneous plugins
 
       use(require 'plugins.movement')
-
-      use {'AckslD/nvim-revJ.lua', opt = true,
-         config = function () require('config.plugins.revJ') end,
-         keys   = {
-            {'n', '<leader>ca'},
-            {'v', '<leader>ca'},
-         },
-         requires = {
-            'kana/vim-textobj-user',
-            'sgur/vim-textobj-parameter',
-      }}
-
+      use(require 'plugins.revj')
       use(require 'plugins.todo')
       use(require 'plugins.notes')
 
