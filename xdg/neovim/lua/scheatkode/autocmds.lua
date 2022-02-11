@@ -372,3 +372,33 @@ scheatkode.augroup('ToggleRelativeLineNumbers', {{
 
 -- vim: set fdm=marker fdl=0:
 
+-- lazy load builtin plugin {{{1
+
+-- automatically load builtin plugin
+-- @return function
+local function enable_plugin(plugin_name)
+   return function ()
+      local global_key = 'loaded_' .. plugin_name
+
+      if vim.g[global_key] == nil or vim.g[global_key] == 2 then
+         vim.g[global_key] = nil
+         vim.cmd('packadd ' .. plugin_name)
+      end
+   end
+end
+
+scheatkode.augroup('LoadMatchitBuiltinPlugin', {{
+   events = {
+      'BufReadPre',
+      'FileReadPre',
+   },
+
+   targets = {
+      '*.lua',
+      '*.html',
+      '*.tsx',
+   },
+
+   command = enable_plugin('matchit'),
+}})
+
