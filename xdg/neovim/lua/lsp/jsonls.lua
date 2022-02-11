@@ -7,6 +7,12 @@ end
 
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
+local has_schemastore, schemastore = pcall(require, 'schemastore')
+
+if not has_schemastore then
+   print('! Schemastore not found, autocompletion will be unavailable.')
+end
+
 return {
    cmd = {
       vim.fn.expand(table.concat({'~',
@@ -21,6 +27,19 @@ return {
       }, '/')),
       '--stdio'
    },
+
    filetypes = { 'json' },
-   root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd())
+   root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd()),
+
+   settings = (function ()
+      if not has_schemastore then
+         return nil
+      end
+
+      return {
+         json = {
+            schemas = schemastore.json.schemas(),
+         },
+      }
+   end)(),
 }
