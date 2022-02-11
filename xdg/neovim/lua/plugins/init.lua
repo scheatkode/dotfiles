@@ -153,6 +153,7 @@ local packer_manage_plugins = function ()
 
       use(require 'plugins.lspinstall')  -- powered by williamboman/nvim-lsp-installer
       use(require 'plugins.lspconfig')   -- powered by neovim/nvim-lspconfig
+      use(require 'plugins.lspstatus')   -- powered by nvim-lua/lsp-status.nvim
       use(require 'plugins.lint')
       use(require 'plugins.signature')   -- powered by xray/lsp_signature
       use(require 'plugins.diagnostics') -- powered by folke/lsp-trouble
@@ -168,8 +169,6 @@ local packer_manage_plugins = function ()
          use(require 'plugins.completion.lua')
          use(require 'plugins.completion.path')
          use(require 'plugins.completion.snip')
-
-      -- use {'nvim-lua/lsp-status.nvim'}
 
       use(require 'plugins.dap')
       use(require 'plugins.dapui')
