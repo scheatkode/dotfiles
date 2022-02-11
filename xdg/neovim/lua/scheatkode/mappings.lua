@@ -50,16 +50,17 @@ require('util').register_keymaps(convert_mappings({
 
    -- {'n', ';;', '<Esc>A;<Esc>', 'which_key_ignore', { nowait = true, silent = false }},
 
-   -- {'i', '_>',   '->',   'which_key_ignore', { nowait = true, silent = false }},
+   {'i', '_>',   '->',   'which_key_ignore', { nowait = true, silent = false }},
    -- {'i', '_.',   '->',   'which_key_ignore', { nowait = true, silent = false }},
    -- {'i', '-.',   '->',   'which_key_ignore', { nowait = true, silent = false }},
-   -- {'i', '+>',   '=>',   'which_key_ignore', { nowait = true, silent = false }},
+   {'i', '+>',   '=>',   'which_key_ignore', { nowait = true, silent = false }},
    -- {'i', '+.',   '=>',   'which_key_ignore', { nowait = true, silent = false }},
    -- {'i', '=.',   '=>',   'which_key_ignore', { nowait = true, silent = false }},
 
-   --- when there is no need for modifier keys
+   --- when modifier keys are redundant
 
-   {'i', ';;', '::', 'which_key_ignore', { nowait = true, silent = true }},
+   {'i', ';;',  '::',  'which_key_ignore', { nowait = true, silent = true }},
+   {'i', ';//', '://', 'which_key_ignore', { nowait = true, silent = true }},
 
    --- remove annoying ex-mode
 
@@ -74,13 +75,14 @@ require('util').register_keymaps(convert_mappings({
 
    {'t', '<Esc>', '<C-\\><C-n>', 'which_key_ignore'},
    {'i', 'jk',    '<Esc>',       'which_key_ignore'},
-   {'i', 'kj',    '<Esc>',       'which_key_ignore'},
+   {'v', 'jk',    '<Esc>',       'which_key_ignore'},
+   -- {'i', 'kj',    '<Esc>',       'which_key_ignore'},
    {'c', 'jk',    '<Esc>',       'which_key_ignore'},
-   {'c', 'kj',    '<Esc>',       'which_key_ignore'},
+   -- {'c', 'kj',    '<Esc>',       'which_key_ignore'},
    {'t', 'jk',    '<Esc>',       'which_key_ignore'},
-   {'t', 'kj',    '<Esc>',       'which_key_ignore'},
+   -- {'t', 'kj',    '<Esc>',       'which_key_ignore'},
    {'o', 'jk',    '<Esc>',       'which_key_ignore'},
-   {'o', 'kj',    '<Esc>',       'which_key_ignore'},
+   -- {'o', 'kj',    '<Esc>',       'which_key_ignore'},
 
    --- visual line 'shorthand'
 
@@ -209,7 +211,9 @@ require('util').register_keymaps(convert_mappings({
    {'c', '<C-k>', '<Up>',   'which_key_ignore', { nowait = true, silent = false }},
    {'c', '<C-j>', '<Down>', 'which_key_ignore', { nowait = true, silent = false }},
 
-   --- fast window movement
+   --- fast window and buffer movement
+
+   {'n', '<Tab>', '<C-^>', 'which_key_ignore'},
 
    {'n', '<M-h>', '<cmd>wincmd h<CR>', 'which_key_ignore'},
    {'n', '<M-l>', '<cmd>wincmd l<CR>', 'which_key_ignore'},
