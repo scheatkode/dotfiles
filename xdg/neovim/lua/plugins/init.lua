@@ -143,6 +143,8 @@ local packer_manage_plugins = function ()
 
       -- miscellaneous requirements {{{
 
+      use(require 'plugins.impatient') -- powered by lewis6991/impatient.nvim
+
       use(require 'plugins.devicons') -- powered by kyazdani42/nvim-web-devicons
       use(require 'plugins.plenary')  -- powered by nvim-lua/plenary.nvim
 
