@@ -233,12 +233,6 @@ local packer_manage_plugins = function ()
       use(require 'plugins.todo')
       use(require 'plugins.notes')
 
-      use {'kristijanhusak/orgmode.nvim', opt = true,
-         disable = true,
-         ft     = 'org',
-         config = function () require('config.plugins.orgmode') end,
-      }
-
       use {'ojroques/nvim-bufdel', opt = true, -- delete buffer without messing up layout
          cmd = {
             'BufDel',
