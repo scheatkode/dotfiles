@@ -4,7 +4,7 @@ local sf   = string.format
 local til  = tablex.is_list
 local type = type
 
-local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local has_lspconfig, _ = pcall(require, 'lspconfig')
 
 if not has_lspconfig then
    print('‼ Tried loading lspconfig for omnisharp ... unsuccessfully.')
@@ -142,7 +142,4 @@ return {
    },
 
    cmd_env  = flatten({}, 'OMNISHARP', '_', omnisharp_settings()),
-   root_dir = lspconfig.util.root_pattern('**/*.sln')
-           or lspconfig.util.root_pattern('**/*.csproj')
-           or lspconfig.util.root_pattern('.git'),
 }
