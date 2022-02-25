@@ -8,8 +8,6 @@ local fn  = vim.fn
 local opt = vim.opt
 local o   = vim.o
 
-local has_06 = scheatkode.has('nvim-0.6')
-
 -- compatibility {{{1
 
 opt.compatible = false
@@ -164,7 +162,7 @@ opt.breakindent    =  true -- keep visual blocks indented when wrapping
 opt.ruler          = false
 opt.cursorline     = false -- cursorline is highlighted conditionally
 opt.synmaxcol      =   200 -- don't syntax highlight long lines
-opt.signcolumn     = has_06 and 'auto:1-2' or 'number'
+opt.signcolumn     = 'auto:1-2'
 
 -- whitespace, indentation, and wrapping {{{1
 
@@ -238,9 +236,7 @@ opt.guicursor = {
    [[sm:block-blinkwait175-blinkoff150-blinkon175]],
 }
 
-if has_06 then
-   opt.cursorlineopt = 'screenline,number'
-end
+opt.cursorlineopt = 'screenline,number'
 
 -- utilities {{{1
 
