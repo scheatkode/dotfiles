@@ -219,6 +219,15 @@ return function (client, bufnr, settings)
 
       {
          mode         = 'n',
+         keys         = '<leader>cq',
+         description  = 'Send diagnostics to quickfix list',
+         command      = '<cmd>lua vim.diagnostic.setqflist()<CR>',
+         condition    = true,
+         options      = { buffer = bufnr },
+      },
+
+      {
+         mode         = 'n',
          keys         = '[d',
          description  = 'Go to previous diagnostic',
          command      = '<cmd>lua vim.diagnostic.goto_prev({popup_opts = {border = "rounded"}})<CR>',
