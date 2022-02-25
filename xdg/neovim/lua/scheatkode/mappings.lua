@@ -300,6 +300,7 @@ require('util').register_keymaps(convert_mappings({
    --- toggle operations
 
    -- {'n', '<leader>Ts', '<cmd>set scrollbind!<CR>', 'Toggle scroll bind'},
+   {'n', '<leader>qf', '<cmd>copen<CR>', 'Open quickfix list'},
 }))
 
 --- whichkey setup
