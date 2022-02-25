@@ -17,6 +17,7 @@ end
 --- @param sep string Separator to use for keys
 --- @param key string Current key
 --- @param value any Current value
+--- @return table _ flattened table
 local function flatten (acc, sep, key, value)
    if type(value) ~= 'table' then
       acc[key] = value
@@ -55,7 +56,7 @@ end
 --- memory after  its use,  when the  garbage collector
 --- sweeps for unreferenced objects.
 ---
---- @return table OmniSharp settings table
+--- @return table _ OmniSharp settings table
 local function omnisharp_settings ()
    return {
       useModernNet = true,
