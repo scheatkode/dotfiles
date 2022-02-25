@@ -75,22 +75,22 @@ local configure_servers = function(language_list)
          end
       end
 
-      local function run_hook (hook, client, bufnr)
+      local function run_hook (hook, client, bufnr, s)
          if typex(hook) == 'function' then
-            hook(client, bufnr, settings)
+            hook(client, bufnr, s)
          elseif typex(hook) == 'table' then
             f
             .iterate(hook)
             :foreach(function (_, h)
-               h(client, bufnr, settings)
+               h(client, bufnr, s)
             end)
          end
       end
 
       settings.on_attach = function (client, bufnr)
-         run_hook(settings.pre_attach,  client, bufnr)
-         run_hook(on_attach,            client, bufnr)
-         run_hook(settings.post_attach, client, bufnr)
+         run_hook(settings.pre_attach,  client, bufnr, settings)
+         run_hook(on_attach,            client, bufnr, settings)
+         run_hook(settings.post_attach, client, bufnr, settings)
 
          log.info('Started ' .. server, ' lsp')
       end
