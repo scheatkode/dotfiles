@@ -1,23 +1,3 @@
-local has_whichkey, whichkey = pcall(require, 'which-key')
-
-if has_whichkey then
-   whichkey.register({
-      ['<leader>ts']  = { 'Activate surrounding plugin' },
-      ['<leader>tsa'] = { 'Activate surrounding plugin' },
-      ['<leader>tsc'] = { 'Activate surrounding plugin' },
-      ['<leader>tsC'] = { 'Activate surrounding plugin' },
-      ['<leader>tsd'] = { 'Activate surrounding plugin' },
-      ['<leader>tsD'] = { 'Activate surrounding plugin' },
-   })
-
-   whichkey.register({
-      ['<leader>ts']  = { 'Activate surrounding plugin' },
-      ['<leader>tsa'] = { 'Activate surrounding plugin' },
-   }, {
-      mode = 'v'
-   })
-end
-
 return {'machakann/vim-sandwich', opt = true,
 
    keys = {
@@ -36,10 +16,7 @@ return {'machakann/vim-sandwich', opt = true,
    end,
 
    config = function ()
-      require('plugins.surround.whichkey')
       require('plugins.surround.keys')
-
-      require('log').info('Plugin loaded', 'surround')
    end,
 
 }

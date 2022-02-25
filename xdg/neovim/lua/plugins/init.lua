@@ -243,8 +243,6 @@ local packer_manage_plugins = function ()
          config = function () require('config.plugins.bufdel') end,
       }
 
-      use(require 'plugins.whichkey')
-
       use {'kevinhwang91/nvim-bqf'}
 
       use(require 'plugins.indent')
@@ -298,29 +296,6 @@ require('sol.vim').apply_keymaps({
    {'n', '<leader>Ps', '<cmd>PackerStatus<CR>'},
    {'n', '<leader>PS', '<cmd>PackerSync<CR>'},
 })
-
-
---- whichkey setup -----------------------------------------------------------
-
-local has_whichkey, whichkey = pcall(require, 'which-key')
-
-if has_whichkey then
-   whichkey.register({
-      ['<leader>P'] = {
-         name = '+plugins',
-
-         c = {'Compile plugins'},
-         C = {'Clean unused plugins'},
-         i = {'Install plugins'},
-         I = {'which_key_ignore'},
-         u = {'Update plugins'},
-         U = {'which_key_ignore'},
-         s = {'Show status'},
-         S = {'Synchronize plugins'},
-      },
-   })
-end
-
 
 --- convenience --------------------------------------------------------------
 

@@ -20,6 +20,5 @@ return { 'nvim-treesitter/nvim-treesitter', opt = true,
 
    config = function ()
       require('plugins.treesitter.config')
-      require('plugins.treesitter.whichkey')
    end,
 }

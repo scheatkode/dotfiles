@@ -1,4 +1,8 @@
-return { 'mfussenegger/nvim-dap', opt = true,
+return {
+   'mfussenegger/nvim-dap',
+
+   opt = true,
+
    keys = {
       '<leader>d',
       '<leader>dC',
@@ -23,6 +27,5 @@ return { 'mfussenegger/nvim-dap', opt = true,
    config  = function ()
       require('plugins.dap.config')
       require('plugins.dap.keys')
-      require('plugins.dap.whichkey')
    end,
 }

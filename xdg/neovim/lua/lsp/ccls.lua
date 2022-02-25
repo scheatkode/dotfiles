@@ -1,6 +1,5 @@
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
-local has_whichkey, whichkey = pcall(require, 'which-key')
 local register_keymap = require('util').register_single_keymap
 local has_saga = false
 
@@ -34,15 +33,6 @@ local normalize_keymaps = function (mappings)
             command = command,
             options = options,
          }
-
-         if has_whichkey then
-            whichkey.register({
-               [keys] = description
-            }, {
-               mode   = mode,
-               buffer = options.buffer
-            })
-         end
       end
    end
 end

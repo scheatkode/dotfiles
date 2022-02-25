@@ -38,6 +38,5 @@ return {'lewis6991/gitsigns.nvim', opt = true,
 
    config = function ()
       require('plugins.gitsigns.config')
-      require('plugins.gitsigns.whichkey')
    end,
 }
