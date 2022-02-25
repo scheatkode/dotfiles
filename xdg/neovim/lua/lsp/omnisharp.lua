@@ -126,6 +126,18 @@ local function omnisharp_settings ()
    }
 end
 
+--- Make the full environment to pass to OmniSharp.
+---
+--- @return table _ Flattened environment table for OmniSharp.
+local function make_environment()
+   local settings = flatten({}, '_', 'OMNISHARP', omnisharp_settings())
+   local home_env = {
+      OMNISHARPHOME = vim.fn.expand('$XDG_DATA_HOME') .. '/omnisharp'
+   }
+
+   return tablex.deep_extend('keep', settings, home_env)
+end
+
 return {
    cmd = {
       sf(
@@ -142,5 +154,5 @@ return {
       'vb'
    },
 
-   cmd_env  = flatten({}, 'OMNISHARP', '_', omnisharp_settings()),
+   cmd_env  = make_environment()
 }
