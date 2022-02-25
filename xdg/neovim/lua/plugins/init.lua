@@ -156,7 +156,6 @@ local packer_manage_plugins = function ()
       use(require 'plugins.lspstatus')   -- powered by nvim-lua/lsp-status.nvim
       use(require 'plugins.lint')
       use(require 'plugins.signature')   -- powered by xray/lsp_signature
-      use(require 'plugins.diagnostics') -- powered by folke/lsp-trouble
       use(require 'plugins.symbols')     -- powered by simrat39/symbols-outline
 
       use(require 'plugins.snippets')    -- powered by L3MON4D3/LuaSnip
