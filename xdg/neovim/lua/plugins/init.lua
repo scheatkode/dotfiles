@@ -171,6 +171,8 @@ local packer_manage_plugins = function ()
       use(require 'plugins.dap')
       use(require 'plugins.dapui')
 
+      use(require 'plugins.annotation')
+
       use(require 'plugins.schema')
 
       -- }}}
