@@ -396,6 +396,7 @@ scheatkode.augroup('LoadMatchitBuiltinPlugin', {{
    targets = {
       '*.lua',
       '*.html',
+      '*.md',
       '*.tsx',
    },
 
