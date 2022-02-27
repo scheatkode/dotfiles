@@ -30,7 +30,6 @@ end
 
 local sources = {
     luasnip = '[snip]',
-     buffer = '[buf]',
        calc = '[calc]',
     cmdline = '[cmd]',
    nvim_lsp = '[lsp]',
@@ -62,7 +61,6 @@ completion.setup({
           ['<C-n>'] = completion.mapping.select_next_item(),
           ['<C-b>'] = completion.mapping(completion.mapping.scroll_docs(-4), {'i', 'c'}),
           ['<C-f>'] = completion.mapping(completion.mapping.scroll_docs(4),  {'i', 'c'}),
-      ['<C-Space>'] = completion.mapping(completion.mapping.complete(),      {'i', 'c'}),
 
       ['<C-e>'] = completion.mapping({
          i = completion.mapping.abort(),
@@ -103,8 +101,6 @@ completion.setup({
       { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
       { name = 'path'     },
-   }, {
-      { name = 'buffer', keyword_length = 5 },
    }),
 
    experimental = {
