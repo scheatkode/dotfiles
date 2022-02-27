@@ -282,9 +282,9 @@ zinit wait:'1b' silent from:gh-r as:program for \
      pick:'bin/dog'                             \
       src:'completions/dog.zsh'                 \
             @ogham/dog                          \
-    bpick:'*linux*'                             \
-     pick:'htmlq'                               \
-            @mgdm/htmlq                         \
+    bpick:'*linux*amd64*'                       \
+     pick:'pup'                                 \
+            @ericchiang/pup                     \
     bpick:'*linux*64*'                          \
      pick:'jq'                                  \
    atload:'mv jq* jq > /dev/null 2>&1'          \
