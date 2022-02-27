@@ -285,6 +285,11 @@ zinit wait:'1b' silent from:gh-r as:program for \
     bpick:'*linux*amd64*'                       \
      pick:'pup'                                 \
             @ericchiang/pup                     \
+    bpick:'*linux*amd64'                        \
+     pick:'yq'                                  \
+   atload:'mv yq* yq > /dev/null 2>&1'          \
+       mv:'yq-* -> yq'                          \
+            @mikefarah/yq                       \
     bpick:'*linux*64*'                          \
      pick:'jq'                                  \
    atload:'mv jq* jq > /dev/null 2>&1'          \
