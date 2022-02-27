@@ -37,6 +37,14 @@ porcelain.setup({
    integrations = {
       diffview = true,
    },
+
+   mappings = {
+      status = {
+         ['S']  = '',
+         ['s']  = '',
+         ['gs'] = 'Stage',
+      }
+   }
 })
 
 log.info('Plugin loaded', 'neogit')
