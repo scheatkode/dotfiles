@@ -98,12 +98,38 @@ tree.setup {
          -- custom only false will  merge the list with
          -- the  default mappings.  if `true`,  it will
          -- only use your list to set the mappings.
-         custom_only = false,
+         custom_only = true,
 
          -- list  of  mappings  to   set  on  the  tree
          -- manually.
          list = {
-
+            { key = {'<CR>', 'o'}, action = 'edit'               },
+            { key = '<C-e>',       action = 'edit_in_place'      },
+            { key = '<C-]>',       action = 'cd'                 },
+            { key = '<C-v>',       action = 'vsplit'             },
+            { key = '<C-x>',       action = 'split'              },
+            { key = '<C-t>',       action = 'tabnew'             },
+            { key = '<BS>',        action = 'close_node'         },
+            { key = '<Tab>',       action = 'preview'            },
+            { key = 'I',           action = 'toggle_ignored'     },
+            { key = 'H',           action = 'toggle_dotfiles'    },
+            { key = 'R',           action = 'refresh'            },
+            { key = 'a',           action = 'create'             },
+            { key = 'd',           action = 'remove'             },
+            { key = 'D',           action = 'trash'              },
+            { key = 'r',           action = 'rename'             },
+            { key = '<C-r>',       action = 'full_rename'        },
+            { key = 'x',           action = 'cut'                },
+            { key = 'c',           action = 'copy'               },
+            { key = 'p',           action = 'paste'              },
+            { key = 'y',           action = 'copy_name'          },
+            { key = 'Y',           action = 'copy_path'          },
+            { key = 'gy',          action = 'copy_absolute_path' },
+            { key = '-',           action = 'dir_up'             },
+            { key = 'O',           action = 'system_open'        },
+            { key = 'q',           action = 'close'              },
+            { key = 'g?',          action = 'toggle_help'        },
+            { key = 'W',           action = 'collapse_all'       },
          }
       }
    },
