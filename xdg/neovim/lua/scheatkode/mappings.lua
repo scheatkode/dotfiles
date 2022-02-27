@@ -166,7 +166,7 @@ require('util').register_keymaps(convert_mappings({
    --- quick escape from quickfix
    --- TODO(scheatkode): Remove this.
 
-   {'n', '<Esc>', '&buftype==#"quickfix" ? "<cmd>cclose<CR>" : "<cmd>nohl<CR>"', 'which_key_ignore', { noremap = false, expr = true, nowait = true }},
+   {'n', '<Esc>', '&buftype==#"quickfix" ? "<cmd>cclose<CR>" : "<cmd>let @/=\'\'<CR>"', 'which_key_ignore', { noremap = false, expr = true, nowait = true }},
    {'n', 'q',     '&buftype==#"quickfix" ? "<cmd>cclose<CR>" : "q"', 'which_key_ignore', { noremap = false, expr = true, nowait = true }},
 
    --- saner undo break points
