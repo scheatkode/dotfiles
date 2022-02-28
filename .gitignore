@@ -109,3 +109,8 @@ tags
 
 # logs
 **/bpytop/error.log
+
+# —— PULSEAUDIO SPECIFIC ———————————————————————————————————————————————————————
+
+**/pulse/*
+!**/pulse/daemon.conf
