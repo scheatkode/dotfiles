@@ -6,6 +6,4 @@ if not has_plugin then
    return has_plugin
 end
 
-plugin.setup({
-   ignore_case = true,
-})
+plugin.setup()
