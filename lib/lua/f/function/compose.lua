@@ -7,12 +7,12 @@
 --- @see pipe
 ---
 --- ```lua
---- local flow = require('f.function.flow')
+--- local compose = require('f.function.compose')
 ---
 --- local length = function(s: string): number return #s    end
 --- local double = function(n: number): number return n * 2 end
 ---
---- local f = flow(length, double)
+--- local f = compose(length, double)
 ---
 --- assert.same(6, f('foo'))
 --- ```
@@ -57,7 +57,7 @@
 --- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O, fun(c: O): P, fun(c: P): Q, fun(c: Q): R): fun(...: any): R
 --- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O, fun(c: O): P, fun(c: P): Q, fun(c: Q): R, fun(c: R): S): fun(...: any): S
 --- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O, fun(c: O): P, fun(c: P): Q, fun(c: Q): R, fun(c: R): S, fun(c: S): T): fun(...: any): T
-local function flow (...)
+local function compose (...)
 
    -- unrolling the first 20 iterations of the loop  for  better
    -- performance; it's extremely rare that  anyone  would  need
@@ -67,7 +67,7 @@ local function flow (...)
    local count = select('#', ...)
    local funcs = { ... }
 
-   assert(count > 0, 'expected at least one function as argument to `flow`')
+   assert(count > 0, 'expected at least one function as argument to `compose`')
 
    if count < 11 then
       if count == 1 then return function (...) return funcs[1](...) end end
@@ -109,4 +109,4 @@ local function flow (...)
    end
 end
 
-return flow
+return compose
