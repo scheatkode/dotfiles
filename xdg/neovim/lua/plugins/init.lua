@@ -229,7 +229,7 @@ local packer_manage_plugins = function ()
       --- miscellaneous plugins
 
       use(require 'plugins.movement')
-      use(require 'plugins.revj')
+      use(require 'plugins.splitjoin')
       use(require 'plugins.todo')
       use(require 'plugins.notes')
 
