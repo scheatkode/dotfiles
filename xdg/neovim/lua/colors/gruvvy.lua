@@ -97,7 +97,7 @@ local function themes (theme)
             delimiter  = colors.neutral_blue,
             fn         = colors.bright_blue,
             identifier = colors.pale_yellow,
-            keyword    = colors.pale_aqua,
+            keyword    = colors.pale_red,
             number     = colors.pale_orange,
             operator   = colors.pale_red,
             preproc    = colors.pale_orange,
