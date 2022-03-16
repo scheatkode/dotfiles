@@ -80,6 +80,8 @@ require('scheatkode.autocmds')
 require('scheatkode.commands')
 require('scheatkode.mappings')
 
+require('diagnostics').setup()
+
 require('colors').load('gruvvy')
 
 if not require('plugins') then

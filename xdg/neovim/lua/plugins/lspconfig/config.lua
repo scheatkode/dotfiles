@@ -117,7 +117,6 @@ end
 
 require('lsp.protocol').setup()
 require('lsp.handlers').setup()
-require('lsp.signs').setup()
 
 configure_servers(languages)
 
