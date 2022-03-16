@@ -232,17 +232,7 @@ local packer_manage_plugins = function ()
       use(require 'plugins.splitjoin')
       use(require 'plugins.todo')
       use(require 'plugins.notes')
-
-      use {'ojroques/nvim-bufdel', opt = true, -- delete buffer without messing up layout
-         cmd = {
-            'BufDel',
-         },
-         keys = {
-            '<leader>bk',
-            '<leader>bK'
-         },
-         config = function () require('config.plugins.bufdel') end,
-      }
+      use(require 'plugins.bufdel')
 
       use {'kevinhwang91/nvim-bqf'}
 
