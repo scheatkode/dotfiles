@@ -140,8 +140,10 @@ end
 
 return {
    cmd = {
+      'dotnet',
+
       sf(
-         '%s/lsp_servers/omnisharp/OmniSharp',
+         '%s/lsp_servers/omnisharp/omnisharp/OmniSharp.dll',
          vim.fn.stdpath('data')
       ),
 
