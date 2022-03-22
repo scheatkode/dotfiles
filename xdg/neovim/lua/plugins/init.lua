@@ -242,7 +242,6 @@ local packer_manage_plugins = function ()
       use(require 'plugins.comment') -- commenting plugin
 
       use {'dstein64/vim-startuptime'} -- startup time monitor
-      use {'mhinz/vim-startify'}       -- start screen
       use {'lambdalisue/suda.vim'}     -- workaround for using `sudo`
       use {'kana/vim-operator-user'}   -- operator definitions for text objects
 
