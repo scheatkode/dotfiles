@@ -68,7 +68,45 @@ function m.alter (color, percent)
    return sf('#%02x%02x%02x', r, g, b)
 end
 
+---set autocommands to dim the active window when neovim loses
+---focus.
 ---
+---@param config table
+local function dim_on_focus_lost (config)
+   if not config.dim_on_focus_lost then return end
+
+   local last_laststatus = vim.opt.laststatus:get()
+
+   scheatkode.augroup('DimOnInactive', {{
+      events = {
+         'FocusLost'
+      },
+
+      targets = {
+         '*'
+      },
+
+      command = function ()
+         last_laststatus      = vim.opt.laststatus:get()
+         vim.opt.laststatus   = 0
+         vim.opt.winhighlight = 'Normal:NormalNC,CursorLine:NormalNC'
+      end
+   }, {
+      events = {
+         'FocusGained'
+      },
+
+      targets = {
+         '*'
+      },
+
+      command = function ()
+         vim.opt.laststatus   = last_laststatus
+         vim.opt.winhighlight = ''
+      end
+   }})
+end
+
 ---clear highlights.
 ---
 ---clear a highlight group if given its name as an argument, all
@@ -100,6 +138,7 @@ local function default_config ()
       transparent           = false,
       darken_sidebar        = true,
       dim_inactive          = true,
+      dim_on_focus_lost     = true,
       overrides             = {},
       theme                 = 'default',
    }
@@ -658,6 +697,7 @@ function m.load (colorscheme, config)
    local highlight_groups = generate_highlights(effective_colors, config)
 
    apply_highlight_groups(highlight_groups)
+   dim_on_focus_lost(config)
 end
 
 return m
