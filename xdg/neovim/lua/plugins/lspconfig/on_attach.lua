@@ -3,6 +3,8 @@
 local vapi = vim.api
 local vlsp = vim.lsp
 
+local extensions = require('lsp.extensions')
+
 local border = {
 
    --- rounded border
@@ -121,7 +123,7 @@ return function (client, bufnr, settings)
          mode         = 'n',
          keys         = '<leader>cR',
          description  = 'Rename symbol',
-         command      = '<cmd>lua vim.lsp.buf.rename()<CR>',
+         command      = extensions.rename,
          condition    = client.resolved_capabilities.rename,
          options      = { buffer = bufnr },
       },
