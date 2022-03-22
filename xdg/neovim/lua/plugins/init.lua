@@ -178,6 +178,7 @@ local packer_manage_plugins = function ()
       -- }}}
 
       use(require 'plugins.pairs') -- powered by windwp/nvim-autopairs
+      use(require 'plugins.autotag') -- powered by windwp/nvim-ts-autotag
 
       -- fuzzy searching and file exploration plugins {{{
 
