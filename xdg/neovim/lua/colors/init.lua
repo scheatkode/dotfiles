@@ -14,13 +14,13 @@ local sf = string.format
 
 local m = {}
 
---- Convert a hex color to rgb.
+---convert a hex color to rgb.
 ---
---- @param color string Hex string to convert
---- @return number r
---- @return number g
---- @return number b
-local function hex_to_rgb(color)
+---@param color string hex string to convert
+---@return number r
+---@return number g
+---@return number b
+local function hex_to_rgb (color)
    local hex = color:gsub('#', '')
 
    return
@@ -29,33 +29,33 @@ local function hex_to_rgb(color)
       tonumber(hex:sub(5),    16)
 end
 
---- Alter a color component by a given percentage.
+---alter a color component by a given percentage.
 ---
---- @param component number Component to alter
---- @param percent number Percentage by which to alter
---- @return number result Altered color component
-local function alterc(component, percent)
+---@param component number component to alter
+---@param percent number percentage by which to alter
+---@return number result altered color component
+local function alterc (component, percent)
    return mfloor(component * (100 + percent) / 100)
 end
 
---- Alter a given hex color.
+---alter a given hex color.
 ---
---- To darken a color:
---- <pre>
+---to darken a color:
+---```lua
 ---   alter('#123123', -40)
---- </pre>
+---```
 ---
---- To lighten a color:
---- <pre>
+---to lighten a color:
+---```lua
 ---   alter('#123123', 40)
---- </pre>
+---```
 ---
---- NOTE: Does not work for zero values.
+---NOTE: does not work for zero values.
 ---
---- @param color string
---- @param percent number
---- @return string
-function m.alter(color, percent)
+---@param color string
+---@param percent number
+---@return string
+function m.alter (color, percent)
    local r, g, b = hex_to_rgb(color)
 
    if not r or not g or not b then
@@ -68,24 +68,24 @@ function m.alter(color, percent)
    return sf('#%02x%02x%02x', r, g, b)
 end
 
---- Clear highlights.
 ---
---- Clear a  highlight group  if given  its name  as an
---- argument, all highlight groups otherwise.
+---clear highlights.
 ---
---- @param name string|nil Highlight group to clear
-function m.clear_hl(name)
+---clear a highlight group if given its name as an argument, all
+---highlight groups otherwise.
+---
+---@param name string|nil highlight group to clear
+function m.clear_hl (name)
    vcmd(sf('highlight clear %s', name or ''))
 end
 
---- The default configuration table.
+---the default configuration table.
 ---
---- Using  a function's  return  value  as a  temporary
---- variable to  avoid the  table lingering  around the
---- memory after  its use,  when the  garbage collector
---- sweeps for unreferenced objects.
+---using a function's return value as a  temporary  variable  to
+---avoid the table lingering around the memory  after  its  use,
+---when the garbage collector sweeps for unreferenced objects.
 ---
---- @return table Default configuration table
+---@return table default configuration table
 local function default_config ()
    return {
       undercurl             = true,
@@ -105,11 +105,11 @@ local function default_config ()
    }
 end
 
---- Generate color table.
+---generate color table.
 ---
---- @param cs table options containing colors and theme fields
---- @param config table? options containing colors and theme fields (optional)
---- @return table palette colors and theme colors merged with `config.overrides`
+---@param cs table options containing colors and theme fields
+---@param config table? options containing colors and theme fields (optional)
+---@return table palette colors and theme colors merged with `config.overrides`
 local function generate_colors (cs, config)
    local conf   = tde('force', default_config(),              config)
    local colors = tde('force', cs.palette(),                  conf.overrides)
@@ -138,10 +138,10 @@ local function apply_highlight_groups (hlgroups)
    end)
 end
 
---- Generate highlights.
+---generate highlights.
 ---
---- @param colors table color (theme) table created by `generate_colors`
---- @param config table|nil config options (optional)
+---@param colors table color (theme) table created by `generate_colors`
+---@param config table|nil config options (optional)
 local function generate_highlights (colors, config)
    local hlgroups = {
       Comment                           = { fg = colors.fg_comment, style = config.comment_style },
@@ -622,21 +622,20 @@ end
 
 local current_colorscheme = {}
 
---- Get the currently active colorscheme
+---get the currently active colorscheme
 ---
---- @return table colorscheme Current colorscheme
-function m.current() return current_colorscheme end
+---@return table colorscheme current colorscheme
+function m.current () return current_colorscheme end
 
---- Load a colorscheme.
+---load a colorscheme.
 ---
---- Given a colorscheme name and a configuration table,
---- will  generate  and   apply  opinionated  highlight
---- groups from the  colorscheme definition. Will raise
---- an  error had  the requested  colorscheme not  been
---- found.
+---given a colorscheme name  and  a  configuration  table,  will
+---generate and apply  opinionated  highlight  groups  from  the
+---colorscheme definition. will raise an error had the requested
+---colorscheme not been found.
 ---
---- @param colorscheme string Name of the colorscheme
---- @param config table Configuration to override the defaults with
+--- @param colorscheme string name of the colorscheme
+--- @param config table configuration to override the defaults with
 function m.load (colorscheme, config)
    local has_colors, colors = pcall(require, 'colors.' .. colorscheme)
 
