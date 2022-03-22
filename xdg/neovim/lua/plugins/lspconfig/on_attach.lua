@@ -3,7 +3,7 @@
 local vapi = vim.api
 local vlsp = vim.lsp
 
-local extensions = require('lsp.extensions')
+local extensions = require('lang.extensions')
 
 local border = {
 

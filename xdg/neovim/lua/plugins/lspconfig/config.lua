@@ -44,7 +44,7 @@ local languages = {
 -- server configuration {{{1
 
 local configure_servers = function(language_list)
-   local capabilities = require('lsp.capabilities')
+   local capabilities = require('lang.capabilities')
    local installer
 
    if not has_lspinstall then
@@ -56,7 +56,7 @@ local configure_servers = function(language_list)
    f
    .iterate(language_list)
    :foreach(function (_, server)
-      local has_settings, settings = pcall(require, 'lsp.' .. server)
+      local has_settings, settings = pcall(require, 'lang.servers.' .. server)
 
       if not has_settings then
          log.error(
@@ -115,8 +115,8 @@ if not has_lspconfig then
    return has_lspconfig
 end
 
-require('lsp.protocol').setup()
-require('lsp.handlers').setup()
+require('lang.protocol').setup()
+require('lang.handlers').setup()
 
 configure_servers(languages)
 

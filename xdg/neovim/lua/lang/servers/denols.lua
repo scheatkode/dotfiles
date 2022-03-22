@@ -8,7 +8,8 @@ end
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
 return {
-   cmd = { vim.fn.expand('~/.local/bin/deno'), 'lsp' },
+   -- cmd = { vim.fn.expand('~/.local/bin/deno'), 'lsp' },
+   cmd = { 'deno', 'lsp' },
 
    filetypes = {
       'javascript',
