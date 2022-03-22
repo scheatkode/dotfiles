@@ -1,6 +1,8 @@
 --- TODO(scheatkode): Add dissection function for packer
 --- TODO(scheatkode): Add soft navigation toggle
 
+local tinsert = table.insert
+
 local function convert_mapping(mapping)
    local mode, keys, command, description, options = unpack(mapping)
 
@@ -17,7 +19,7 @@ local function convert_mappings(mappings)
    local converted_table = {}
 
    for _, mapping in ipairs(mappings) do
-      table.insert(converted_table, convert_mapping(mapping))
+      tinsert(converted_table, convert_mapping(mapping))
    end
 
    return converted_table
@@ -45,16 +47,9 @@ require('util').register_keymaps(convert_mappings({
    --- auto correct me please
 
    --- TODO(scheatkode): kinda
-   --- TODO(scheatkode): look for another trigger
-
-   -- {'n', ';;', '<Esc>A;<Esc>', 'which_key_ignore', { nowait = true, silent = false }},
 
    {'i', '_>',   '->',   'which_key_ignore', { nowait = true, silent = false }},
-   -- {'i', '_.',   '->',   'which_key_ignore', { nowait = true, silent = false }},
-   -- {'i', '-.',   '->',   'which_key_ignore', { nowait = true, silent = false }},
    {'i', '+>',   '=>',   'which_key_ignore', { nowait = true, silent = false }},
-   -- {'i', '+.',   '=>',   'which_key_ignore', { nowait = true, silent = false }},
-   -- {'i', '=.',   '=>',   'which_key_ignore', { nowait = true, silent = false }},
 
    --- when modifier keys are redundant
 
@@ -73,15 +68,12 @@ require('util').register_keymaps(convert_mappings({
    --- faster escaping
 
    {'t', '<Esc>', '<C-\\><C-n>', 'which_key_ignore'},
+
    {'i', 'jk',    '<Esc>',       'which_key_ignore'},
    {'v', 'jk',    '<Esc>',       'which_key_ignore'},
-   -- {'i', 'kj',    '<Esc>',       'which_key_ignore'},
    {'c', 'jk',    '<Esc>',       'which_key_ignore'},
-   -- {'c', 'kj',    '<Esc>',       'which_key_ignore'},
    {'t', 'jk',    '<Esc>',       'which_key_ignore'},
-   -- {'t', 'kj',    '<Esc>',       'which_key_ignore'},
    {'o', 'jk',    '<Esc>',       'which_key_ignore'},
-   -- {'o', 'kj',    '<Esc>',       'which_key_ignore'},
 
    --- visual line 'shorthand'
 
@@ -183,8 +175,6 @@ require('util').register_keymaps(convert_mappings({
 
    --- insert-mode quick navigation
 
-   -- {'i', '<M-k>', '<Up>',    'which_key_ignore'},
-   -- {'i', '<M-j>', '<Down>',  'which_key_ignore'},
    {'i', '<M-h>', '<Left>',  'which_key_ignore'},
    {'i', '<M-l>', '<Right>', 'which_key_ignore'},
 
@@ -283,8 +273,6 @@ require('util').register_keymaps(convert_mappings({
 
    --- tab operations
 
-   -- {'n', '<leader>tf', '<cmd>tabfirst<CR>',    'First tab'},
-   -- {'n', '<leader>tl', '<cmd>tablast<CR>',     'Last tab'},
    {'n', '<leader>TL', '<cmd>tabs<CR>',        'List tabs'},
    {'n', '<leader>TN', '<cmd>tabnew<CR>',      'New tab'},
    {'n', '<leader>Tn', '<cmd>tabnext<CR>',     'Next tab'},
