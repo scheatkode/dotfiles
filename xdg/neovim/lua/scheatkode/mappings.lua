@@ -288,4 +288,5 @@ require('util').register_keymaps(convert_mappings({
 
    -- {'n', '<leader>Ts', '<cmd>set scrollbind!<CR>', 'Toggle scroll bind'},
    {'n', '<leader>qf', '<cmd>copen<CR>', 'Open quickfix list'},
+   {'n', '<leader>qo', '<cmd>copen<CR>', 'Open quickfix list'},
 }))
