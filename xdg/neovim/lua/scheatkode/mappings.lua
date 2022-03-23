@@ -3,6 +3,8 @@
 
 local tinsert = table.insert
 
+local tmux = require('scheatkode.tmux')
+
 local function convert_mapping(mapping)
    local mode, keys, command, description, options = unpack(mapping)
 
@@ -204,10 +206,10 @@ require('util').register_keymaps(convert_mappings({
 
    {'n', '<Tab>', '<C-^>', 'which_key_ignore'},
 
-   {'n', '<M-h>', '<cmd>wincmd h<CR>', 'which_key_ignore'},
-   {'n', '<M-l>', '<cmd>wincmd l<CR>', 'which_key_ignore'},
-   {'n', '<M-j>', '<cmd>wincmd j<CR>', 'which_key_ignore'},
-   {'n', '<M-k>', '<cmd>wincmd k<CR>', 'which_key_ignore'},
+   {'n', '<M-h>', tmux.jump('h'), 'Go to the pane on the left',  { nowait = true }},
+   {'n', '<M-l>', tmux.jump('l'), 'Go to the pane on the right', { nowait = true }},
+   {'n', '<M-j>', tmux.jump('j'), 'Go to the pane below',        { nowait = true }},
+   {'n', '<M-k>', tmux.jump('k'), 'Go to the pane above',        { nowait = true }},
 
    --- fast window resizing, optimized for dvorak
 
