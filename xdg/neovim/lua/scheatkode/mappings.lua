@@ -4,6 +4,7 @@
 local tinsert = table.insert
 
 local tmux = require('scheatkode.tmux')
+local qf   = require('quickfix')
 
 local function convert_mapping(mapping)
    local mode, keys, command, description, options = unpack(mapping)
@@ -289,6 +290,6 @@ require('util').register_keymaps(convert_mappings({
    --- toggle operations
 
    -- {'n', '<leader>Ts', '<cmd>set scrollbind!<CR>', 'Toggle scroll bind'},
-   {'n', '<leader>qf', '<cmd>copen<CR>', 'Open quickfix list'},
+   {'n', '<leader>qf', qf.setup(),       'Toggle quickfix list'},
    {'n', '<leader>qo', '<cmd>copen<CR>', 'Open quickfix list'},
 }))
