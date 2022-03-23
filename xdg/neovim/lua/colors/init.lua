@@ -75,7 +75,16 @@ end
 local function dim_on_focus_lost (config)
    if not config.dim_on_focus_lost then return end
 
+   local function t (code)
+      return vim.api.nvim_replace_termcodes(code, true, true, true)
+   end
+
    local last_laststatus = vim.opt.laststatus:get()
+
+   -- cache frequently used commands
+   local opt      = vim.opt
+   local up_cmd   = sf('normal! %s', t('<C-e>'))
+   local down_cmd = sf('normal! %s', t('<C-y>'))
 
    scheatkode.augroup('DimOnInactive', {{
       events = {
@@ -87,9 +96,10 @@ local function dim_on_focus_lost (config)
       },
 
       command = function ()
-         last_laststatus      = vim.opt.laststatus:get()
-         vim.opt.laststatus   = 0
-         vim.opt.winhighlight = 'Normal:NormalNC,CursorLine:NormalNC'
+         last_laststatus  = opt.laststatus:get()
+         opt.laststatus   = 0
+         opt.winhighlight = 'Normal:NormalNC,MsgArea:NormalNC'
+         vcmd(up_cmd)
       end
    }, {
       events = {
@@ -101,8 +111,9 @@ local function dim_on_focus_lost (config)
       },
 
       command = function ()
-         vim.opt.laststatus   = last_laststatus
-         vim.opt.winhighlight = ''
+         opt.laststatus   = last_laststatus
+         opt.winhighlight = ''
+         vcmd(down_cmd)
       end
    }})
 end
@@ -210,7 +221,8 @@ local function generate_highlights (colors, config)
       CursorLineNr                      = { fg = colors.diag.warning, bg = 'NONE', style = 'bold' },
       MatchParen                        = { fg = colors.diag.warning, bg = 'NONE', style = 'bold' },
       ModeMsg                           = { fg = colors.diag.warning, style = 'bold', bg = 'NONE' },
-      MsgArea                           = { fg = colors.fg_dark, bg = 'NONE' },
+      -- MsgArea                           = { fg = colors.fg_dark, bg = 'NONE' },
+      MsgArea                           = { link = 'NormalNC' },
       -- MsgSeparator                   = {},
       MoreMsg                           = { fg = colors.diag.info, bg = colors.bg, style = 'NONE' },
       NonText                           = { fg = colors.bg_light2 },
