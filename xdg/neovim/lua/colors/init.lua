@@ -443,6 +443,7 @@ local function generate_highlights (colors, config)
 
       -- Telescope                      = {},
       TelescopeBorder                   = { link = 'FloatBorder' },
+      TelescopeNormal                   = { link = 'NormalNC' },
 
       -- NvimTree                       = {},
       NvimTreeNormal                    = { link = 'NormalSB'},
