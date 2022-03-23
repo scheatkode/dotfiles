@@ -21,7 +21,7 @@ then
 
    if [ "${?}" = '2' ]
    then
-      (umask 066; ssh-agent > "${SSH_ENV}")
+      (umask 006; ssh-agent > "${SSH_ENV}")
       eval "$(<${SSH_ENV})" > /dev/null
    fi
 fi
