@@ -151,10 +151,7 @@ require('util').register_keymaps(convert_mappings({
 
    {'n', 'J', 'mzJ\'z', 'which_key_ignore'},
 
-   --- remove annoying persistent search highlighting
-   --- TODO(scheatkode): See if we can make this a conditional mapping.
-   ---                   Not handling `v:count` is annoying here.
-   ---                   At least make it fail silently.
+   --- remove search highlighting
 
    {'n', '<Esc>', ':let @/=""<CR>', 'which_key_ignore', {noremap = false}},
 
@@ -256,11 +253,6 @@ require('util').register_keymaps(convert_mappings({
    --- window deletion
 
    {'n', '<leader>wq', '<cmd>wincmd q<CR>', 'Close/Quit window'},
-
-   --- file operations
-
-   -- {'n', '<leader>fs', '<cmd>w<CR>', 'Save file'},
-   -- {'n', '<leader>fS', ':w ',        'Save file as', { silent = false }},
 
    --- buffer operations
 
