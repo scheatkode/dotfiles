@@ -3,8 +3,8 @@ local tablex = require('tablex')
 
 local defaults = {
    DiagnosticSignError = { text = '', texthl = 'DiagnosticError' },
-   DiagnosticSignWarn  = { text = '', texthl = 'DiagnosticWarn'  },
-   DiagnosticSignInfo  = { text = '', texthl = 'DiagnosticInfo'  },
+   DiagnosticSignWarn  = { text = '‼', texthl = 'DiagnosticWarn'  },
+   DiagnosticSignInfo  = { text = 'ℹ', texthl = 'DiagnosticInfo'  },
    DiagnosticSignHint  = { text = '', texthl = 'DiagnosticHint'  },
 }
 
