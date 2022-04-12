@@ -250,7 +250,7 @@ return function (client, bufnr, settings)
 
       {
          mode         = 'n',
-         keys         = '<leader>cS',
+         keys         = '<M-s>',
          description  = 'Signature help',
          command      = '<cmd>lua vim.lsp.buf.signature_help()<CR>',
          condition    = client.resolved_capabilities.signature_help,
