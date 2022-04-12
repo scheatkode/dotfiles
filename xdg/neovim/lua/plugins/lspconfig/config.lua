@@ -36,6 +36,8 @@ local languages = {
    yaml   = 'yamlls',
    cmake = 'cmake',
 
+   go = 'gopls',
+
    tailwindcss = 'tailwindcss',
 
    salt_ls = 'salt_ls'

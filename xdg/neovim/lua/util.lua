@@ -1,4 +1,5 @@
 local api = vim.api
+local compat = require('compat')
 local table = require('sol.table')
 
 local defaults = {
@@ -76,7 +77,7 @@ end
 m.register_single_keymap = function (mapping)
    local mode        = mapping.mode        or 'n'
    local keys        = mapping.keys        or error('No key combination given')
-   local command     = mapping.command     or error('No command given' .. dump(mapping))
+   local command     = mapping.command     or error('No command given' .. scheatkode.dump(mapping))
    local options     = mapping.options     or {}
    local buffer      = options.buffer
 
@@ -144,11 +145,19 @@ m.eat_char = function (pattern)
    return ''
 end
 
--- [[
--- ]]
--- TODO(scheatkode): clone emacs' text justifying functionality.
-m.justify = function ()
+
+---converts path parts to a string.
+---@param parts table parts to merge
+---@return string path merged path
+m.parts_to_path = function (parts)
+	return table.concat(parts, compat.path_separator)
 end
+
+
+---create a table from multiple parts.
+---@vararg ...
+---@return table
+m.parts_to_table = function (...) return { ... } end
 
 _G.callbacks = callbacks
 return m
