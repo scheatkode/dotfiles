@@ -161,11 +161,11 @@ treesitter.setup({
          enable    = true,
 
          swap_next = {
-            ['<leader>cps'] = '@parameter.inner',
+            ['<leader>cs'] = '@swappable',
          },
 
          swap_previous = {
-            ['<leader>cpS'] = '@parameter.inner',
+            ['<leader>cS'] = '@swappable',
          },
       },
    },
