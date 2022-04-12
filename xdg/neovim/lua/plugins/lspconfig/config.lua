@@ -40,7 +40,8 @@ local languages = {
 
    tailwindcss = 'tailwindcss',
 
-   salt_ls = 'salt_ls'
+   salt_ls = 'salt_ls',
+   ltex = 'ltex',
 }
 
 -- server configuration {{{1
