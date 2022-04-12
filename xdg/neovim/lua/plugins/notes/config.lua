@@ -15,12 +15,6 @@ neorg.setup({
    load = {
       ['core.defaults'] = {},
 
-      ['core.norg.esupports'] = {
-         config = {
-            indent = true,
-         },
-      },
-
       ['core.norg.concealer'] = {
          config = {
             icons = {
