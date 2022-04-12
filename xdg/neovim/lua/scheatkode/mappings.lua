@@ -51,11 +51,14 @@ require('util').register_keymaps(convert_mappings({
 
    --- TODO(scheatkode): kinda
 
-   {'i', '_>',   '->',   'which_key_ignore', { nowait = true, silent = false }},
-   {'i', '+>',   '=>',   'which_key_ignore', { nowait = true, silent = false }},
+   {'i', '!+',  '!=',    'which_key_ignore', { nowait = true, silent = true }},
+   {'i', '_>',   '->',   'which_key_ignore', { nowait = true, silent = true }},
+   {'i', '+>',   '=>',   'which_key_ignore', { nowait = true, silent = true }},
 
    --- when modifier keys are redundant
 
+   {'i', ',-',  '<-',  'which_key_ignore', { nowait = true, silent = true }},
+   {'i', ';=',  ':=',  'which_key_ignore', { nowait = true, silent = true }},
    {'i', ';;',  '::',  'which_key_ignore', { nowait = true, silent = true }},
    {'i', ';//', '://', 'which_key_ignore', { nowait = true, silent = true }},
 
