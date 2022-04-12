@@ -19,12 +19,12 @@ neorg.setup({
          config = {
             icons = {
                heading = {
-                  level_1 = { enabled = true, icon = '•' },
-                  level_2 = { enabled = true, icon = '•' },
-                  level_3 = { enabled = true, icon = '•' },
-                  level_4 = { enabled = true, icon = '•' },
-                  level_5 = { enabled = true, icon = '•' },
-                  level_6 = { enabled = true, icon = '•' },
+                  level_1 = { enabled = true, icon = '█' },
+                  level_2 = { enabled = true, icon = '██' },
+                  level_3 = { enabled = true, icon = '███' },
+                  level_4 = { enabled = true, icon = '████' },
+                  level_5 = { enabled = true, icon = '█████' },
+                  level_6 = { enabled = true, icon = '██████' },
                },
             },
          },
@@ -82,10 +82,10 @@ neorg.setup({
             n = { -- Bind keys in normal mode.
 
                -- Keys for managing `TODO` items and setting their states.
-               { 'gtd', 'core.norg.qol.todo_items.todo.task_done' },
-               { 'gtu', 'core.norg.qol.todo_items.todo.task_undone' },
-               { 'gtp', 'core.norg.qol.todo_items.todo.task_pending' },
-               { '<C-Space>', 'core.norg.qol.todo_items.todo.task_cycle' }
+               { 'gtd',       'core.norg.qol.todo_items.todo.task_done'    },
+               { 'gtu',       'core.norg.qol.todo_items.todo.task_undone'  },
+               { 'gtp',       'core.norg.qol.todo_items.todo.task_pending' },
+               { '<C-Space>', 'core.norg.qol.todo_items.todo.task_cycle'   },
 
             },
          }, { silent = true, noremap = true })
