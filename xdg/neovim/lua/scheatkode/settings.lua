@@ -175,6 +175,8 @@ opt.shiftwidth  =     3 -- `>` inserts 3 spaces
 opt.autoindent  =  true -- automatic indentation
 opt.cindent     =  true -- c-style indentation
 opt.smartindent =  true -- follow previous indentation level
+
+opt.list        =  true -- enable visual queues for invisible characters
 opt.joinspaces  = false -- whoever thought this was a good idea ?
 opt.wrap        = false -- don't wrap lines
 opt.shiftround  =  true -- round indentation to multiple of `shiftwidth`
@@ -195,7 +197,9 @@ opt.listchars = {
         tab = '│ ',
     extends = '›',
    precedes = '‹',
+ multispace = '.',
       trail = '•',
+       nbsp = '␣',
 }
 
 opt.backspace = { -- backspace acts as it should
