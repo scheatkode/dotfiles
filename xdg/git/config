@@ -1,0 +1,31 @@
+[user]
+   name       = scheatkode
+   email      = scheatkode@gmail.com
+   signingkey = 0550819B9F997638
+[commit]
+   gpgsign  = true
+   cleanup  = strip
+   template = ~/.config/git/message
+   verbose  = true
+[push]
+   default = current
+[pull]
+   ff     = only
+   rebase = true
+[rebase]
+   autoStash = true
+[init]
+   defaultBranch = main
+[core]
+   editor = nvim
+   pager  = delta
+[delta]
+   line-numbers = true
+   syntax-theme = gruvbox
+[alias]
+   st       = status -sb
+   b        = branch --format='%(color:magenta)%(authorname)%(color:reset) %(HEAD) %(align:right,15)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(contents:subject) %(color:green)(%(committerdate:relative))%(color:reset)' --sort=-committerdate
+   history  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+   last     = log -1 HEAD --stat
+   unstage  = reset HEAD --
+   uncommit = reset HEAD^
