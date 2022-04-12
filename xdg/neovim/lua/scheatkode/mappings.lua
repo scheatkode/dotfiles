@@ -82,6 +82,12 @@ require('util').register_keymaps(convert_mappings({
 
    {'n', 'vv', 'V', 'which_key_ignore'},
 
+   --- macro
+
+   -- disable autocommands when running macros for better performance.
+
+	{'n', '@', '<cmd>execute "noautocmd norm! " . v:count1 . "@" . getcharstr()<CR>', 'which_key_ignore'},
+
    --- soft navigation
 
    -- {'n', 'j', 'gj', modifiers},
