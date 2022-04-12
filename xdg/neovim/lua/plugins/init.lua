@@ -211,6 +211,7 @@ local packer_manage_plugins = function ()
       -- syntax plugins {{{
 
       use(require 'plugins.treesitter')
+      use(require 'plugins.treesitter-playground')
       use(require 'plugins.treesitter-textobjects')
       use(require 'plugins.treesitter-comment-string')
 

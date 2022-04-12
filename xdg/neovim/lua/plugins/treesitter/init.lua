@@ -11,7 +11,6 @@ return { 'nvim-treesitter/nvim-treesitter', opt = true,
    },
 
    requires = {
-      {'nvim-treesitter/playground'},                  -- playground for treesitter
       {'nvim-treesitter/nvim-treesitter-textobjects'}, -- "smart" textobjects
       {'JoosepAlviste/nvim-ts-context-commentstring'},
    },
