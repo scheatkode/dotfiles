@@ -42,6 +42,7 @@ treesitter.setup({
       'css',
       'dockerfile',
       'dot',
+      'go',
       'hcl',
       'html',
       'http',
