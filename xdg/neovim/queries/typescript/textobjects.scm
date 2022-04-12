@@ -1,0 +1,1 @@
+(arguments (_) @swappable)
