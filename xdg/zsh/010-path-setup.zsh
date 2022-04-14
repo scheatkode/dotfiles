@@ -4,4 +4,4 @@
 #       ░▀░░░▀░▀░░▀░░▀░▀░░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░░
 #
 
-export PATH=${HOME}/.local/bin:/usr/local/bin:${PATH}
+export PATH="${HOME}/.local/bin:${XDG_DATA_HOME}/npm/bin:/usr/local/bin:${PATH}"
