@@ -3,6 +3,8 @@ local api = vim.api
 
 local contains = vim.tbl_contains
 
+local pipe = require('f.function.pipe')
+
 -- ensure all autocommands are cleared {{{1
 
 api.nvim_exec([[
@@ -370,8 +372,6 @@ scheatkode.augroup('ToggleRelativeLineNumbers', {{
    command = disable_relative_number,
 }})
 
--- vim: set fdm=marker fdl=0:
-
 -- lazy load builtin plugin {{{1
 
 -- automatically load builtin plugin
@@ -402,4 +402,102 @@ scheatkode.augroup('LoadMatchitBuiltinPlugin', {{
 
    command = enable_plugin('matchit'),
 }})
+
+-- prevent large files from causing too much noticeable overhead {{{1
+
+local function handle_large_file ()
+   local threshold = 10485760 -- 10 MiB
+
+   local backup
+   local complete
+   local eventignore
+   local writebackup
+   local undolevels
+
+   return function ()
+      local size = pipe(
+         '<afile>',
+         fn.expand,
+         fn.getfsize
+      )
+
+      if size < threshold then return end
+
+      backup      = vim.opt.backup:get()
+      complete    = vim.opt.complete:get()
+      eventignore = vim.opt.eventignore:get()
+      undolevels  = vim.opt.undolevels:get()
+      writebackup = vim.opt.writebackup:get()
+
+      vim.opt.complete:remove('wbuU')
+      vim.opt.backup      = false
+      vim.opt.eventignore = 'FileType'
+      vim.opt.undolevels  = -1
+      vim.opt.writebackup = false
+
+      vim.bo.bufhidden  = 'unload'
+      vim.bo.swapfile   = false
+      vim.wo.foldenable = false
+      vim.wo.foldmethod = 'manual'
+      vim.wo.wrap       = false
+
+      print('Large file detected, disabling features to prevent slowdowns')
+
+      scheatkode.augroup('LargeFileCleanup', {{
+         events = {
+            'LargeFile'
+         },
+
+         targets = {
+            'BufEnter',
+         },
+
+         modifiers = {
+            '<buffer>',
+         },
+
+         command = function ()
+            vim.opt.complete:remove('wbuU')
+            vim.opt.eventignore = 'FileType'
+            vim.opt.backup      = false
+            vim.opt.undolevels  = -1
+            vim.opt.writebackup = false
+         end,
+      }, {
+         events = {
+            'LargeFile'
+         },
+
+         targets = {
+            'BufEnter',
+         },
+
+         modifiers = {
+            '<buffer>',
+         },
+
+         command = function ()
+            vim.opt.backup      = backup
+            vim.opt.complete    = complete
+            vim.opt.eventignore = eventignore
+            vim.opt.undolevels  = undolevels
+            vim.opt.writebackup = writebackup
+         end,
+      }})
+   end
+end
+
+scheatkode.augroup('LargeFile', {{
+   events = {
+      'BufReadPre',
+   },
+
+   targets = {
+      '*',
+   },
+
+   command = handle_large_file(),
+}})
+
+-- vim: set fdm=marker fdl=0:
 
