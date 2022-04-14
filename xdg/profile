@@ -1,0 +1,39 @@
+#
+#                 ░█▀█░█▀▄░█▀█░█▀▀░▀█▀░█░░░█▀▀
+#                 ░█▀▀░█▀▄░█░█░█▀▀░░█░░█░░░█▀▀
+#                 ░▀░░░▀░▀░▀▀▀░▀░░░▀▀▀░▀▀▀░▀▀▀
+#
+
+export  XDG_CACHE_HOME="${XDG_CACHE_HOME:-"${HOME}/.cache"}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"${HOME}/.config"}"
+export   XDG_DATA_HOME="${XDG_DATA_HOME:-"${HOME}/.local/share"}"
+export  XDG_STATE_HOME="${XDG_STATE_HOME:-"${HOME}/.local/state"}"
+
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/${UID}"}"
+
+# x11-specific
+export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"
+export    XINITRC="${XDG_CONFIG_HOME}/x11/initrc"
+
+# zsh-specific
+export ZDOTDIR="${ZDOTDIR:-"${XDG_CONFIG_HOME}/zsh"}"
+
+if                                    \
+      [ -d "${XDG_CACHE_HOME}"      ] \
+   || [ -d "${XDG_CONFIG_HOME}"     ] \
+   || [ -d "${XDG_DATA_HOME}"       ] \
+   || [ -d "${XDG_STATE_HOME}"      ] \
+   || [ -d "${XDG_RUNTIME_DIR}"     ]
+then
+   original_umask="$(umask)"
+
+   umask 077
+   mkdir --parent "${XDG_CACHE_HOME}"
+   mkdir --parent "${XDG_CONFIG_HOME}"
+   mkdir --parent "${XDG_DATA_HOME}"
+   mkdir --parent "${XDG_STATE_HOME}"
+   mkdir --parent "${XDG_RUNTIME_DIR}"
+   umask "${original_umask}"
+
+   unset original_umask
+fi
