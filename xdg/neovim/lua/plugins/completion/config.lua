@@ -39,7 +39,28 @@ local sources = {
 
 local maxwidth = 50
 
+local borders = {
+    '╭',
+    '─',
+    '╮',
+    '│',
+    '╯',
+    '─',
+    '╰',
+    '│',
+}
+
 completion.setup({
+   window = {
+      completion = {
+         border    = borders,
+      },
+
+      documentation = {
+         border    = borders,
+      },
+   },
+
    formatting = {
       format = function (entry, item)
          item.kind = require('meta.icon.lsp').presets.default[item.kind]
