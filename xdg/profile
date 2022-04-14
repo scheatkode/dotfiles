@@ -37,3 +37,5 @@ then
 
    unset original_umask
 fi
+
+export PATH="${HOME}/.local/bin:${PATH}"
