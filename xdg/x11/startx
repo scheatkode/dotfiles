@@ -1,0 +1,294 @@
+#!/bin/sh
+
+#
+#                   ░█▀▀░▀█▀░█▀█░█▀▄░▀█▀░█░█
+#                   ░▀▀█░░█░░█▀█░█▀▄░░█░░▄▀▄
+#                   ░▀▀▀░░▀░░▀░▀░▀░▀░░▀░░▀░▀
+#
+
+set -e
+set -u
+
+unset SESSION_MANAGER
+
+user_clientrc="${XINITRC:-"${HOME}/.xinitrc"}"
+sys_clientrc='/etc/X11/xinit/xinitrc'
+
+user_serverrc="${XSERVERRC:-"${HOME}/.xserverrc"}"
+sys_serverrc='/etc/X11/xinit/xserverrc'
+
+default_client="${TERM:-xterm}"
+default_client_args=''
+default_display=''
+default_server='/usr/bin/X'
+default_server_args=''
+
+client=''
+client_args=''
+display=''
+enable_xauth=1
+server=''
+server_args=''
+vt_arg=''
+
+# find an unused `${DISPLAY}`
+d=0
+while true
+do
+   [ -e "/tmp/.X${d}-lock" ] || [ -S "/tmp/.X11-unix/X${d}" ] || break
+   d=$((d + 1))
+done
+
+default_display=":${d}"
+unset d
+
+whose_args='client'
+while [ -n "${1+x}" ]
+do
+   case "${1}" in
+      # '' required to prevent cpp from treating "/*" as
+      # a c comment.
+      /''*|\./''*)
+      if [ "${whose_args}" = "client" ]
+      then
+         if                           \
+               [ -z "${client}"     ] \
+            && [ -z "${client_args}" ]
+         then
+            client="${1}"
+         else
+            client_args="${client_args} ${1}"
+         fi
+      else
+         if                             \
+               [ "${server}"     = '' ] \
+            && [ "${server_args}" = '' ]
+         then
+            server="${1}"
+         else
+            server_args="${server_args} ${1}"
+         fi
+      fi
+      ;;
+
+   --)
+      whose_args='server'
+      ;;
+
+   *)
+      if [ "${whose_args}" = 'client' ]
+      then
+         client_args="${client_args} ${1}"
+      else
+         # display must be the first server argument
+         if                           \
+               [ -z "${server_args}" ] \
+            && expr "${1}" : ':[0-9][0-9]*$' > /dev/null 2>&1
+         then
+            display="${1}"
+         else
+            server_args="${server_args} ${1}"
+         fi
+      fi
+      ;;
+esac
+shift
+done
+
+# process client arguments
+if [ -z "${client}" ]
+then
+   client="${default_client}"
+
+   # for compatibility reasons, only use `startxrc` if there
+   # were no client command line arguments
+   if [ -z "${client_args}" ]
+   then
+      if [ -f "${user_clientrc}" ]
+      then
+         client="${user_clientrc}"
+      elif [ -f "${sys_clientrc}" ]
+      then
+         client="${sys_clientrc}"
+      fi
+   fi
+fi
+
+# if no client arguments, use defaults
+if [ -z "${client_args}" ]
+then
+   client_args="${default_client_args}"
+fi
+
+# process server arguments
+if [ -z "${server}" ]
+then
+   server="${default_server}"
+
+   # when starting the default server, start X on the current
+   # tty to avoid the startx session being seen as inactive:
+   # "https://bugzilla.redhat.com/show_bug.cgi?id=806491"
+   tty="$(tty)"
+
+   if expr "${tty}" : '/dev/tty[0-9][0-9]*$' > /dev/null
+   then
+      tty_num="$(echo "${tty}" | grep -oE '[0-9]+$')"
+      vt_arg="vt${tty_num} -keeptty"
+   fi
+
+
+   # for compatibility reasons, only use xserverrc if there were
+   # no server command line arguments
+   if                           \
+         [ -z "${server_args}" ] \
+      && [ -z "${display}"    ]
+   then
+      if [ -f "${user_serverrc}" ]
+      then
+         server="${user_serverrc}"
+      elif [ -f "${sys_serverrc}" ]
+      then
+         server="${sys_serverrc}"
+      fi
+   fi
+fi
+
+# if no server arguments, use defaults
+if [ -z "${server_args}" ]
+then
+   server_args="${default_server_args}"
+fi
+
+# if no vt is specified add vt_arg (which may be empty)
+have_vt_arg='no'
+
+for i in ${server_args}
+do
+   if expr "${i}" : 'vt[0-9][0-9]*$' > /dev/null
+   then
+      have_vt_arg='yes'
+   fi
+done
+
+if [ "${have_vt_arg}" = 'no' ]
+then
+   server_args="${server_args} ${vt_arg}"
+fi
+
+# if no display, use default
+if [ -z "${display}" ]
+then
+   display="${default_display}"
+fi
+
+if [ "${enable_xauth}" = '1' ]
+then
+   export XAUTHORITY="${XAUTHORITY:-"${HOME}/.Xauthority"}"
+
+   removelist=
+
+   # set up default xauth info for this machine
+   hostname="$(uname -n)"
+   auth_display="${display:-:0}"
+   mcookie="$(/usr/bin/mcookie)"
+
+   if [ -z "${mcookie}" ]
+   then
+      echo "Couldn't create cookie"
+      exit 1
+   fi
+
+   dummy=0
+
+   # create a file with auth information for the server. `:0` is
+   # a dummy.
+   xserver_auth_file="$(mktemp -p /tmp serverauth.XXXXXXXXXX)"
+
+   #shellcheck disable=2064
+   trap "rm -f '${xserver_auth_file}'" HUP INT QUIT ILL TRAP BUS TERM
+   xauth -q -f "${xserver_auth_file}" << EOF
+add :${dummy} . ${mcookie}
+EOF
+
+   server_args="${server_args} -auth ${xserver_auth_file}"
+
+
+   # now add the same credentials to the client authority file
+   # if `${display_name}` already exists do not overwrite it as
+   # another server may need it. add them to the
+   # `${xserver_auth_file}` instead.
+   for display_name in ${auth_display} ${hostname}/unix${auth_display}
+   do
+      auth_cookie="$(
+              xauth list "${display_name}" \
+            | sed -n "s/.*${hostname}\/unix${auth_display}[[:space:]*].*[[:space:]*]//p"
+         )" 2>/dev/null
+
+      if [ -z "${auth_cookie}" ]
+      then
+         xauth -q << EOF
+add ${display_name} . ${mcookie}
+EOF
+
+         removelist="${display_name} ${removelist}"
+      else
+         dummy=$((dummy + 1))
+         xauth -q -f "${xserver_auth_file}" << EOF
+add :${dummy} . ${auth_cookie}
+EOF
+      fi
+   done
+fi
+
+#shellcheck disable=2086,2248
+xinit "${client}" ${client_args} -- "${server}" ${display} ${server_args}
+
+retval="${?}"
+
+if [ "${enable_xauth}" = '1' ]
+then
+   if [ -n "${removelist}" ]
+   then
+      xauth remove "${removelist}"
+   fi
+
+   if [ -n "${xserver_auth_file}" ]
+   then
+      rm -f "${xserver_auth_file}"
+   fi
+fi
+
+if command -v deallocvt > /dev/null 2>&1
+then
+   deallocvt
+fi
+
+unset auth_cookie
+unset auth_display
+unset client_args
+unset default_client
+unset default_client_args
+unset default_display
+unset default_server
+unset default_server_args
+unset display
+unset display_name
+unset dummy
+unset enable_xauth
+unset have_vt_arg
+unset hostname
+unset mcookie
+unset removelist
+unset server
+unset server_args
+unset sys_clientrc
+unset sys_serverrc
+unset tty
+unset tty_num
+unset user_clientrc
+unset user_serverrc
+unset vt_arg
+unset whose_args
+unset xserver_auth_file
+
+exit "${retval}"
