@@ -21,7 +21,7 @@
    pager  = delta
 [delta]
    line-numbers = true
-   syntax-theme = gruvbox
+   syntax-theme = gruvbox-dark
 [alias]
    st       = status -sb
    b        = branch --format='%(color:magenta)%(authorname)%(color:reset) %(HEAD) %(align:right,15)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(contents:subject) %(color:green)(%(committerdate:relative))%(color:reset)' --sort=-committerdate
