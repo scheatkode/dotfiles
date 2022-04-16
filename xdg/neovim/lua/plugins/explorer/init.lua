@@ -15,6 +15,6 @@ return {'kyazdani42/nvim-tree.lua', opt = true,
 
    config = function ()
       require('plugins.explorer.config')
-      require('plugins.explorer.keys')
+      require('plugins.explorer.keys').setup()
    end,
 }

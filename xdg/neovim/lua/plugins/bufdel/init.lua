@@ -12,6 +12,6 @@ return { -- delete buffer without messing up layout
 
    config = function ()
       require('plugins.bufdel.config')
-      require('plugins.bufdel.keys')
+      require('plugins.bufdel.keys').setup()
    end,
 }

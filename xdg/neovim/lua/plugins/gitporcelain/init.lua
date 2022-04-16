@@ -61,6 +61,6 @@ return {'TimUntersberger/neogit', opt = true,
 
    config = function ()
       require('plugins.gitporcelain.config')
-      require('plugins.gitporcelain.keys')
+      require('plugins.gitporcelain.keys').setup()
    end
 }

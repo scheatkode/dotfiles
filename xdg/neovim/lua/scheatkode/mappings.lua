@@ -1,296 +1,192 @@
---- TODO(scheatkode): Add dissection function for packer
 --- TODO(scheatkode): Add soft navigation toggle
 
-local tinsert = table.insert
+local function setup ()
+   local tmux = require('scheatkode.tmux')
+   local qf   = require('quickfix')
 
-local tmux = require('scheatkode.tmux')
-local qf   = require('quickfix')
+   --- shortcut for the current file's directory, better than
+   --- manually typing `%:p:h` every time.
 
-local function convert_mapping(mapping)
-   local mode, keys, command, description, options = unpack(mapping)
+   vim.keymap.set('c', ',,e', '<C-r>=expand("%:p:h") . "/"<CR>', {nowait = true})
 
-   return {
-      mode        = mode,
-      keys        = keys,
-      command     = command,
-      description = description,
-      options     = options,
-   }
-end
-
-local function convert_mappings(mappings)
-   local converted_table = {}
-
-   for _, mapping in ipairs(mappings) do
-      tinsert(converted_table, convert_mapping(mapping))
-   end
-
-   return converted_table
-end
-
-require('util').register_keymaps(convert_mappings({
-
-   --- TODO(scheatkode): Move this somewhere else
-   --- shortcut for the current file's directory, better than manually typing
-   --- `%:p:h` every time.
-
-   {'c', ',,e', '<C-r>=expand("%:p:h") . "/"<CR>', 'which_key_ignore', { nowait = true, silent = false }},
-
-   --- TODO(scheatkode): Move this somewhere else
-   --- TODO(scheatkode): Better documentation
    --- Swap ` and ' for marks
 
-   {'n', "'", '`', 'which_key_ignore', { nowait = true, silent = false }},
-   {'n', '`', "'", 'which_key_ignore', { nowait = true, silent = false }},
+   vim.keymap.set('n', "'", '`', {nowait = true})
+   vim.keymap.set('n', "`", "'", {nowait = true})
 
    --- be consistent with the shell
 
-   {'i', '<M-d>', '<Esc>ldwi', 'which_key_ignore', { nowait = true, silent = true }},
+   vim.keymap.set('i', '<M-d>', '<Esc>ldwi', {nowait = true})
 
    --- auto correct me please
 
-   --- TODO(scheatkode): kinda
-
-   {'i', '!+',  '!=',    'which_key_ignore', { nowait = true, silent = true }},
-   {'i', '_>',   '->',   'which_key_ignore', { nowait = true, silent = true }},
-   {'i', '+>',   '=>',   'which_key_ignore', { nowait = true, silent = true }},
+   vim.keymap.set('i', '!+', '!=', {nowait = true, silent = true})
+   vim.keymap.set('i', '_>', '->', {nowait = true, silent = true})
+   vim.keymap.set('i', '+>', '=>', {nowait = true, silent = true})
 
    --- when modifier keys are redundant
 
-   {'i', ',-',  '<-',  'which_key_ignore', { nowait = true, silent = true }},
-   {'i', ';=',  ':=',  'which_key_ignore', { nowait = true, silent = true }},
-   {'i', ';;',  '::',  'which_key_ignore', { nowait = true, silent = true }},
-   {'i', ';//', '://', 'which_key_ignore', { nowait = true, silent = true }},
-
-   --- remove annoying ex-mode
-
-   {'n', 'Q',  '<NOP>', 'which_key_ignore'},
-   {'n', 'q:', '<NOP>', 'which_key_ignore'},
-
-   --- make 'Y' behaviour more consistent with 'D'
-
-   {'n', 'Y', 'y$', 'which_key_ignore'},
+   vim.keymap.set('i', ',-',  '<-',  {nowait = true, silent = true})
+   vim.keymap.set('i', ';=',  ':=',  {nowait = true, silent = true})
+   vim.keymap.set('i', ';;',  '::',  {nowait = true, silent = true})
+   vim.keymap.set('i', ';//', '://', {nowait = true, silent = true})
 
    --- faster escaping
 
-   {'t', '<Esc>', '<C-\\><C-n>', 'which_key_ignore'},
+   vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+   vim.keymap.set({'i', 'v', 'c', 'o'}, 'jk', '<Esc>')
+   vim.keymap.set({'i', 'v', 'c', 'o'}, '<C-c>', '<Esc>')
 
-   {'i', 'jk',    '<Esc>',       'which_key_ignore'},
-   {'v', 'jk',    '<Esc>',       'which_key_ignore'},
-   {'c', 'jk',    '<Esc>',       'which_key_ignore'},
-   {'t', 'jk',    '<Esc>',       'which_key_ignore'},
-   {'o', 'jk',    '<Esc>',       'which_key_ignore'},
+   --- visual 'shorthand'
 
-   --- visual line 'shorthand'
-
-   {'n', 'vv', 'V', 'which_key_ignore'},
+   vim.keymap.set('n', 'vv',  'V',     {desc = 'visual line shorthand'})
+   vim.keymap.set('n', 'vvv', '<C-v>', {desc = 'visual block shorthand'})
 
    --- macro
 
-   -- disable autocommands when running macros for better performance.
+   -- disable autocommands when running macros for better
+   -- performance.
 
-	{'n', '@', '<cmd>execute "noautocmd norm! " . v:count1 . "@" . getcharstr()<CR>', 'which_key_ignore'},
+   vim.keymap.set('n', '@', '<cmd>execute "noautocmd normal! " . v:count1 . "@" . getcharstr()<CR>')
 
    --- soft navigation
 
-   -- {'n', 'j', 'gj', modifiers},
-   -- {'x', 'j', 'gj', modifiers},
-   -- {'n', 'k', 'gk', modifiers},
-   -- {'x', 'k', 'gk', modifiers},
-   -- {'n', '0', 'g0', modifiers},
-   -- {'x', '0', 'g0', modifiers},
-   -- {'n', '^', 'g^', modifiers},
-   -- {'x', '^', 'g^', modifiers},
-   -- {'n', '$', 'g$', modifiers},
-   -- {'x', '$', 'g$', modifiers},
+   -- vim.keymap.set({'n', 'x'}, 'j', 'gj')
+   -- vim.keymap.set({'n', 'x'}, 'k', 'gk')
+   -- vim.keymap.set({'n', 'x'}, '0', 'g0')
+   -- vim.keymap.set({'n', 'x'}, '^', 'g^')
+   -- vim.keymap.set({'n', 'x'}, '$', 'g$')
 
-    --- better line navigation
-    --- TODO(scheatkode): clean this up
-    --- INFO(scheatkode): lookup `smart home`
+   --- better line navigation
 
-    {'n', 'H', "col('.') == match(getline('.'), '\\S')+1 ? '0' : '^'", 'which_key_ignore', {expr = true}},
-    {'x', 'H', "col('.') == match(getline('.'), '\\S')+1 ? '0' : '^'", 'which_key_ignore', {expr = true}},
-    {'o', 'H', "col('.') == match(getline('.'), '\\S')+1 ? '0' : '^'", 'which_key_ignore', {expr = true}},
-
-    {'n', 'L', '$', 'which_key_ignore'},
-    {'x', 'L', '$', 'which_key_ignore'},
-    {'o', 'L', '$', 'which_key_ignore'},
+   vim.keymap.set({'n', 'x', 'o'}, 'H', "col('.') == match(getline('.'), '\\S')+1 ? '0' : '^'", {expr = true})
+   vim.keymap.set({'n', 'x', 'o'}, 'L', '$')
 
    --- don't lose selection when indenting or outdenting
    -- https://github.com/mhinz/vim-galore#dont-lose-selection-when-shifting-sidewards
 
-   {'x', '<', '<gv', 'which_key_ignore'},
-   {'x', '>', '>gv', 'which_key_ignore'},
+   vim.keymap.set('x', '<', '<gv')
+   vim.keymap.set('x', '>', '>gv')
 
-   --- saner behavior of n and N (search forward and backward, respectively)
+   --- saner behavior of n and N (search forward and backward,
+   --- respectively)
    -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 
-   {'', '<SID>(search-forward)',  "'Nn'[v:searchforward]", 'which_key_ignore', { expr = true }},
-   {'', '<SID>(search-backward)', "'nN'[v:searchforward]", 'which_key_ignore', { expr = true }},
+   vim.keymap.set('', '<Plug>(search-forward)',  "'Nn'[v:searchforward]", {expr = true})
+   vim.keymap.set('', '<Plug>(search-backward)', "'nN'[v:searchforward]", {expr = true})
 
-   {'n', 'n', '<SID>(search-forward)zzzv', 'which_key_ignore', { noremap = false }},
-   {'x', 'n', '<SID>(search-forward)zzzv', 'which_key_ignore', { noremap = false }},
-   {'o', 'n', '<SID>(search-forward)zzzv', 'which_key_ignore', { noremap = false }},
+   vim.keymap.set({'n', 'x', 'o'}, 'n', '<Plug>(search-forward)zzzv')
+   vim.keymap.set({'n', 'x', 'o'}, 'N', '<Plug>(search-backward)zzzv')
 
-   {'n', 'N', '<SID>(search-backward)zzzv', 'which_key_ignore', { noremap = false }},
-   {'x', 'N', '<SID>(search-backward)zzzv', 'which_key_ignore', { noremap = false }},
-   {'o', 'N', '<SID>(search-backward)zzzv', 'which_key_ignore', { noremap = false }},
+   --- saner behavior of ; and , (search character forward and
+   --- backward, respectively)
 
-   --- saner behavior of ; and , (search character forward and backward, respectively)
+   vim.keymap.set('', '<Plug>(user-character-search-forward)',  "getcharsearch().forward ? ';':','", {expr = true})
+   vim.keymap.set('', '<Plug>(user-character-search-backward)', "getcharsearch().forward ? ',':';'", {expr = true})
 
-   --- TODO(scheatkode): Move this somewhere else
-   --- TODO(scheatkode): Better documentation
-   --- swap : and ; for command and character movement
+   vim.keymap.set({'n', 'x', 'o'}, ':', '<Plug>(user-character-search-forward)')
+   vim.keymap.set({'n', 'x', 'o'}, ',', '<Plug>(user-character-search-backward)')
 
-   {'n', ';', ':', 'which_key_ignore', { nowait = true, silent = false }},
-   {'x', ';', ':', 'which_key_ignore', { nowait = true, silent = false }},
+   --- ; is faster than : to run commands
 
-   {'', '<SID>(character-search-forward)',  "getcharsearch().forward ? ';':','", 'which_key_ignore', { expr = true }},
-   {'', '<SID>(character-search-backward)', "getcharsearch().forward ? ',':';'", 'which_key_ignore', { expr = true }},
-
-   {'n', ':', '<SID>(character-search-forward)', 'which_key_ignore', { noremap = false }},
-   {'x', ':', '<SID>(character-search-forward)', 'which_key_ignore', { noremap = false }},
-   {'o', ':', '<SID>(character-search-forward)', 'which_key_ignore', { noremap = false }},
-
-   {'n', ',', '<SID>(character-search-backward)', 'which_key_ignore', { noremap = false }},
-   {'x', ',', '<SID>(character-search-backward)', 'which_key_ignore', { noremap = false }},
-   {'o', ',', '<SID>(character-search-backward)', 'which_key_ignore', { noremap = false }},
+   vim.keymap.set({'n', 'x'}, ';', ':', {nowait = true})
 
    --- saner behavior of J
 
-   {'n', 'J', 'mzJ\'z', 'which_key_ignore'},
+   vim.keymap.set('n', 'J', 'mzJ\'z')
 
    --- remove search highlighting
 
-   {'n', '<Esc>', ':let @/=""<CR>', 'which_key_ignore', {noremap = false}},
-
-   --- quick escape from quickfix
-   --- TODO(scheatkode): Remove this.
-
-   {'n', '<Esc>', '&buftype==#"quickfix" ? "<cmd>cclose<CR>" : "<cmd>let @/=\'\'<CR>"', 'which_key_ignore', { noremap = false, expr = true, nowait = true }},
-   {'n', 'q',     '&buftype==#"quickfix" ? "<cmd>cclose<CR>" : "q"', 'which_key_ignore', { noremap = false, expr = true, nowait = true }},
+   vim.keymap.set('n', '<Esc>', '<cmd>let @/=""<CR>', {remap = true, silent = true})
 
    --- saner undo break points
 
-   {'i', ',', ',<C-g>u', 'which_key_ignore'},
-   -- {'i', '.', '.<C-g>u', 'which_key_ignore'},
-   {'i', '!', '!<C-g>u', 'which_key_ignore'},
-   {'i', '?', '?<C-g>u', 'which_key_ignore'},
+   vim.keymap.set('i', ',', ',<C-g>u')
+   vim.keymap.set('i', '!', '!<C-g>u')
+   vim.keymap.set('i', '?', '?<C-g>u')
 
-   --- saner jumplist triggers
+   --- jumplist triggers
 
-   {'n', 'k', '(v:count1 > 5 ? "m\'" . v:count : "") . "k"', 'which_key_ignore', { expr = true }},
-   {'n', 'j', '(v:count1 > 5 ? "m\'" . v:count : "") . "j"', 'which_key_ignore', { expr = true }},
+   vim.keymap.set('n', 'k', '(v:count1 > 5 ? "m\'" . v:count : "") . "k"', {expr = true})
+   vim.keymap.set('n', 'j', '(v:count1 > 5 ? "m\'" . v:count : "") . "j"', {expr = true})
 
    --- insert-mode quick navigation
 
-   {'i', '<M-h>', '<Left>',  'which_key_ignore'},
-   {'i', '<M-l>', '<Right>', 'which_key_ignore'},
+   vim.keymap.set('i', '<M-h>', '<Left>')
+   vim.keymap.set('i', '<M-l>', '<Right>')
 
    --- insert-mode quick screen centering
 
-   {'i', '<M-z><M-z>', '<C-o>zz', 'which_key_ignore'},
+   vim.keymap.set('i', '<M-z><M-z>', '<C-o>zz')
 
+   --- quick and convenient text movement that doesn't mess with
+   --- registers.
 
-   --- quick and convenient text movement, doesn't fuck up with registers.
-   --- TODO(scheatkode): better documentation.
+   vim.keymap.set('n', '<C-j>', '<cmd>execute "move .+" .  v:count1      . " <bar> normal! =="<CR>')
+   vim.keymap.set('n', '<C-k>', '<cmd>execute "move .-" . (v:count1 + 1) . " <bar> normal! =="<CR>')
 
-   {'n', '<C-j>', '<cmd>execute "move .+" .  v:count1      . " <bar> normal! =="<CR>', 'which_key_ignore'},
-   {'n', '<C-k>', '<cmd>execute "move .-" . (v:count1 + 1) . " <bar> normal! =="<CR>', 'which_key_ignore'},
+   vim.keymap.set('i', '<M-j>', '<cmd>move .+1 <bar> normal! ==<CR>')
+   vim.keymap.set('i', '<M-k>', '<cmd>move .-2 <bar> normal! ==<CR>')
 
-   {'i', '<M-j>', '<cmd>move .+1 <bar> normal! ==<CR>', 'which_key_ignore'},
-   {'i', '<M-k>', '<cmd>move .-2 <bar> normal! ==<CR>', 'which_key_ignore'},
-
-   {'x', '<C-j>', ':move \'>+1<CR>gv=gv', 'which_key_ignore'},
-   {'x', '<C-k>', ':move \'<-2<CR>gv=gv', 'which_key_ignore'},
+   vim.keymap.set('x', '<C-j>', ':move \'>+1<CR>gv=gv')
+   vim.keymap.set('x', '<C-k>', ':move \'<-2<CR>gv=gv')
 
    --- making mappings more consistent for command-mode
 
-   {'c', '<C-k>', '<Up>',   'which_key_ignore', { nowait = true, silent = false }},
-   {'c', '<C-j>', '<Down>', 'which_key_ignore', { nowait = true, silent = false }},
+   vim.keymap.set('c', '<C-k>', '<Up>',   {nowait = true})
+   vim.keymap.set('c', '<C-j>', '<Down>', {nowait = true})
 
    --- fast window and buffer movement
 
-   {'n', '<Tab>', '<C-^>', 'which_key_ignore'},
+   vim.keymap.set('n', '<Tab>', '<C-^>', {desc = 'Switch to alternate file'})
 
-   {'n', '<M-h>', tmux.jump('h'), 'Go to the pane on the left',  { nowait = true }},
-   {'n', '<M-l>', tmux.jump('l'), 'Go to the pane on the right', { nowait = true }},
-   {'n', '<M-j>', tmux.jump('j'), 'Go to the pane below',        { nowait = true }},
-   {'n', '<M-k>', tmux.jump('k'), 'Go to the pane above',        { nowait = true }},
+   vim.keymap.set('n', '<M-h>', tmux.jump('h'), {nowait = true, desc = 'Go to the pane on the left'})
+   vim.keymap.set('n', '<M-l>', tmux.jump('l'), {nowait = true, desc = 'Go to the pane on the right'})
+   vim.keymap.set('n', '<M-j>', tmux.jump('j'), {nowait = true, desc = 'Go to the pane below'})
+   vim.keymap.set('n', '<M-k>', tmux.jump('k'), {nowait = true, desc = 'Go to the pane above'})
 
    --- fast window resizing, optimized for dvorak
 
-   {'n', '<M-->', '<cmd>wincmd -<CR>', 'which_key_ignore'},
-   {'n', '<M-=>', '<cmd>wincmd +<CR>', 'which_key_ignore'},
-   {'n', '<M-.>', '<cmd>wincmd ><CR>', 'which_key_ignore'},
-   {'n', '<M-,>', '<cmd>wincmd <<CR>', 'which_key_ignore'},
-
-   --- window navigation with leader-key prefix
-
-   {'n', '<leader>ww', '<cmd>wincmd w<CR>', 'Go to window next'},
-   {'n', '<leader>wk', '<cmd>wincmd k<CR>', 'Go to window above'},
-   {'n', '<leader>wj', '<cmd>wincmd j<CR>', 'Go to window below'},
-   {'n', '<leader>wh', '<cmd>wincmd h<CR>', 'Go to window left'},
-   {'n', '<leader>wl', '<cmd>wincmd l<CR>', 'Go to window right'},
-
-   --- pane splitting
-
-   {'n', '<leader>wv', '<cmd>wincmd v<CR>', 'Split window vertically'},
-   {'n', '<leader>ws', '<cmd>wincmd s<CR>', 'Split window horizontally'},
-
-   --- window rotating
-
-   {'n', '<leader>wRb', '<cmd>wincmd r<CR>', 'Rotate windows down/right'},
-   {'n', '<leader>wRu', '<cmd>wincmd R<CR>', 'Rotate windows up/left'},
-
-   --- window resizing with leader-key prefix
-
-   {'n', '<leader>w+', '<cmd>wincmd +<CR>', 'Balance windows'},
-   {'n', '<leader>w-', '<cmd>wincmd -<CR>', 'Increase window height'},
-   {'n', '<leader>w<', '<cmd>wincmd <<CR>', 'Decrease window height'},
-   {'n', '<leader>w>', '<cmd>wincmd ><CR>', 'Increase window width'},
-   {'n', '<leader>w=', '<cmd>wincmd =<CR>', 'Decrease window width'},
-
-   --- window movement
-
-   {'n', '<leader>wmx', '<cmd>wincmd x<CR>', 'Exchange windows'},
-   {'n', '<leader>wmh', '<cmd>wincmd h<CR>', 'Move window left'},
-   {'n', '<leader>wmj', '<cmd>wincmd j<CR>', 'Move window below'},
-   {'n', '<leader>wmk', '<cmd>wincmd k<CR>', 'Move window above'},
-   {'n', '<leader>wml', '<cmd>wincmd l<CR>', 'Move window right'},
+   vim.keymap.set('n', '<M-->', '<cmd>wincmd -<CR>')
+   vim.keymap.set('n', '<M-=>', '<cmd>wincmd +<CR>')
+   vim.keymap.set('n', '<M-.>', '<cmd>wincmd ><CR>')
+   vim.keymap.set('n', '<M-,>', '<cmd>wincmd <<CR>')
 
    --- window deletion
 
-   {'n', '<leader>wq', '<cmd>wincmd q<CR>', 'Close/Quit window'},
+   vim.keymap.set('n', '<leader>wq', '<cmd>wincmd q<CR>', {desc = 'Close/Quit window'})
 
    --- buffer operations
 
-   {'n', '<leader>bn', '<cmd>bnext<CR>',     'Next buffer'},
-   {'n', '<leader>bp', '<cmd>bprevious<CR>', 'Previous buffer'},
-   {'n', '<leader>bl', '<cmd>buffers<CR>',   'List buffers'},
-   {'n', '<leader>bL', '<cmd>buffers!<CR>',  'List all buffers'},
-   {'n', '<leader>bN', '<cmd>enew<CR>',      'New empty buffer'},
-   {'n', '<leader>bw', '<cmd>bwipeout!<CR>', 'Wipe buffer'},
-   {'n', '<leader>bq', '<cmd>bunload<CR>',   'Quit/Close buffer'},
-   {'n', '<leader>br', '<cmd>e<CR>',         'Reload buffer'},
-   {'n', '<leader>bR', '<cmd>e!<CR>',        'Reload buffer forcefully'},
+   vim.keymap.set('n', '<leader>bn', '<cmd>bnext<CR>',     {desc = 'Next buffer'})
+   vim.keymap.set('n', '<leader>bp', '<cmd>bprevious<CR>', {desc = 'Previous buffer'})
+   vim.keymap.set('n', '<leader>bl', '<cmd>buffers<CR>',   {desc = 'List buffers'})
+   vim.keymap.set('n', '<leader>bL', '<cmd>buffers!<CR>',  {desc = 'List all buffers'})
+   vim.keymap.set('n', '<leader>bN', '<cmd>enew<CR>',      {desc = 'New empty buffer'})
+   vim.keymap.set('n', '<leader>bw', '<cmd>bwipeout!<CR>', {desc = 'Wipe buffer'})
+   vim.keymap.set('n', '<leader>bq', '<cmd>bunload<CR>',   {desc = 'Quit/Close buffer'})
+   vim.keymap.set('n', '<leader>br', '<cmd>e<CR>',         {desc = 'Reload buffer'})
+   vim.keymap.set('n', '<leader>bR', '<cmd>e!<CR>',        {desc = 'Reload buffer forcefully'})
 
    --- tab operations
 
-   {'n', '<leader>TL', '<cmd>tabs<CR>',        'List tabs'},
-   {'n', '<leader>TN', '<cmd>tabnew<CR>',      'New tab'},
-   {'n', '<leader>Tn', '<cmd>tabnext<CR>',     'Next tab'},
-   {'n', '<leader>Tp', '<cmd>tabprevious<CR>', 'Prevous tab'},
-   {'n', '<leader>Tq', '<cmd>tabclose<CR>',    'Quit/Close tab'},
+   vim.keymap.set('n', '<leader>TL', '<cmd>tabs<CR>',        {desc = 'List tabs'})
+   vim.keymap.set('n', '<leader>TN', '<cmd>tabnew<CR>',      {desc = 'New tab'})
+   vim.keymap.set('n', '<leader>Tn', '<cmd>tabnext<CR>',     {desc = 'Next tab'})
+   vim.keymap.set('n', '<leader>Tp', '<cmd>tabprevious<CR>', {desc = 'Prevous tab'})
+   vim.keymap.set('n', '<leader>Tq', '<cmd>tabclose<CR>',    {desc = 'Quit/Close tab'})
 
-   --- closing operations
+   --- shame on you
 
-   {'n', '<leader>qq', '<cmd>quitall<CR>',  'Quit Neovim'},
-   {'n', '<leader>qQ', '<cmd>quitall!<CR>', 'Quit Neovim forcefully'},
+   vim.keymap.set('n', '<leader>qq', '<cmd>quitall<CR>',  {desc = 'Quit Neovim'})
+   vim.keymap.set('n', '<leader>qQ', '<cmd>quitall!<CR>', {desc = 'Quit Neovim forcefully'})
 
-   --- toggle operations
+   --- qf operations
 
-   -- {'n', '<leader>Ts', '<cmd>set scrollbind!<CR>', 'Toggle scroll bind'},
-   {'n', '<leader>qf', qf.setup(),       'Toggle quickfix list'},
-   {'n', '<leader>qo', '<cmd>copen<CR>', 'Open quickfix list'},
-}))
+   vim.keymap.set('n', '<leader>qf', qf.setup(),       {desc = 'Toggle quickfix list'})
+   vim.keymap.set('n', '<leader>qo', '<cmd>copen<CR>', {desc = 'Open quickfix list'})
+end
+
+return {
+   setup = setup
+}

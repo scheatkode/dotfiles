@@ -13,6 +13,6 @@ return {
 
    config  = function ()
       require('plugins.dapui.config')
-      require('plugins.dapui.keys')
+      require('plugins.dapui.keys').setup()
    end,
 }

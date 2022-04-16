@@ -15,6 +15,6 @@ return {
 
    config = function ()
       require('plugins.annotation.config')
-      require('plugins.annotation.keys')
+      require('plugins.annotation.keys').setup()
    end
 }

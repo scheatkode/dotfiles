@@ -1,13 +1,8 @@
-return require('util').register_keymaps {{
-   mode        = 'n',
-   keys        = '<leader>/',
-   command     = 'gcc',
-   description = 'Comment current line',
-   options     = { noremap = false, silent = false },
-}, {
-   mode        = 'v',
-   keys        = '<leader>/',
-   command     = 'gc',
-   description = 'Comment lines',
-   options     = { noremap = false, silent = false },
-}}
+local function setup ()
+   vim.keymap.set('n', '<leader>/', 'gcc', {remap = true, desc = 'Comment current line'})
+   vim.keymap.set('v', '<leader>/', 'gc',  {remap = true, desc = 'Comment lines'})
+end
+
+return {
+   setup = setup
+}

@@ -16,7 +16,7 @@ return {'machakann/vim-sandwich', opt = true,
    end,
 
    config = function ()
-      require('plugins.surround.keys')
+      require('plugins.surround.keys').setup()
    end,
 
 }

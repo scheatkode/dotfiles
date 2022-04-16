@@ -1,22 +1,8 @@
-return require('util').register_keymaps {
-   {
-      mode        = 'n',
-      keys        = '<leader>dv',
-      command     = require('dapui').toggle,
-      description = 'Toggle visuals',
-   },
+local function setup ()
+   vim.keymap.set('n',        '<leader>dv', require('dapui').toggle, {desc = 'Toggle debugging visuals'})
+   vim.keymap.set({'n', 'v'}, '<leader>de', require('dapui').eval,   {desc = 'Evaluate'})
+end
 
-   {
-      mode        = 'n',
-      keys        = '<leader>de',
-      command     = require('dapui').eval,
-      description = 'Evaluate',
-   },
-
-   {
-      mode        = 'v',
-      keys        = '<leader>de',
-      command     = require('dapui').eval,
-      description = 'Evaluate',
-   },
+return {
+   setup = setup
 }

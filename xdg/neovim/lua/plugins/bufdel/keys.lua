@@ -1,15 +1,8 @@
-return require('util').register_keymaps {
-   {
-      mode        = 'n',
-      keys        = '<leader>bk',
-      command     = '<cmd>BufDel<CR>',
-      description = 'Delete current buffer, keeping layout',
-   },
+local function setup ()
+   vim.keymap.set('n', '<leader>bk', '<cmd>BufDel<CR>',  {desc = 'Delete current buffer, keeping layout'})
+   vim.keymap.set('n', '<leader>bK', '<cmd>BufDel!<CR>', {desc = 'Force delete current buffer, keeping layout'})
+end
 
-   {
-      mode        = 'n',
-      keys        = '<leader>bK',
-      command     = '<cmd>BufDel!<CR>',
-      description = 'Force delete current buffer, keeping layout',
-   },
+return {
+   setup = setup
 }

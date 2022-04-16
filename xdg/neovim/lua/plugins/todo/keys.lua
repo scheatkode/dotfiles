@@ -1,29 +1,10 @@
-return require('util').register_keymaps {
-   {
-      mode        = 'n',
-      keys        = '<leader>ctq',
-      command     = '<cmd>TodoQuickFix<CR>',
-      description = 'Show todos in quickfix window',
-   },
+local function setup ()
+   vim.keymap.set('n', '<leader>ctq', '<cmd>TodoQuickFix<CR>',  {desc = 'Show todos in quickfix window'})
+   vim.keymap.set('n', '<leader>ctd', '<cmd>TodoTrouble<CR>',   {desc = 'Show todos in diagnostics buffer'})
+   vim.keymap.set('n', '<leader>ctt', '<cmd>TodoTelescope<CR>', {desc = 'Show todos in Telescope'})
+   vim.keymap.set('n', '<leader>st',  '<cmd>TodoTelescope<CR>', {desc = 'Search todos'})
+end
 
-   {
-      mode        = 'n',
-      keys        = '<leader>ctd',
-      command     = '<cmd>TodoTrouble<CR>',
-      description = 'Show todos in diagnostics buffer',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>ctt',
-      command     = '<cmd>TodoTelescope<CR>',
-      description = 'Show todos in Telescope',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>st',
-      command     = '<cmd>TodoTelescope<CR>',
-      description = 'Search todos',
-   },
+return {
+   setup = setup
 }

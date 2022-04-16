@@ -1,145 +1,19 @@
-return require('util').register_keymaps {
-   {
-      mode        = 'n',
-      keys        = '<leader>tsd',
-      command     = '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)',
-      description = 'Delete surrounding character',
-      options     = { noremap = false },
-   },
+local function setup ()
+   vim.keymap.set('n', '<leader>tsd', '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)',  {remap = true, desc = 'Delete surrounding character'})
+   vim.keymap.set('n', '<leader>tsD', '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',   {remap = true, desc = 'Delete surrounding character automatically'})
+   vim.keymap.set('n', '<leader>tsc', '<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)', {remap = true, desc = 'Change surrounding character'})
+   vim.keymap.set('n', '<leader>tsC', '<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',  {remap = true, desc = 'Change surrounding character automatically'})
 
-   {
-      mode        = 'n',
-      keys        = '<leader>tsD',
-      command     = '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',
-      description = 'Delete surrounding character automatically',
-      options     = { noremap = false },
-   },
+   vim.keymap.set({'n', 'x'}, '<leader>tsa', '<Plug>(operator-sandwich-add)', {remap = true, desc = 'Add surrounding character'})
 
-   {
-      mode        = 'n',
-      keys        = '<leader>tsc',
-      command     = '<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)',
-      description = 'Change surrounding character',
-      options     = { noremap = false },
-   },
+   vim.keymap.set({'x', 'o'}, 'is', '<Plug>(textobj-sandwich-query-i)',         {remap = true, desc = 'Select inside surrounding character'})
+   vim.keymap.set({'x', 'o'}, 'as', '<Plug>(textobj-sandwich-query-a)',         {remap = true, desc = 'Select around surrounding character'})
+   vim.keymap.set({'x', 'o'}, 'iS', '<Plug>(textobj-sandwich-auto-i)',          {remap = true, desc = 'Select inside surrounding character automatically'})
+   vim.keymap.set({'x', 'o'}, 'aS', '<Plug>(textobj-sandwich-auto-a)',          {remap = true, desc = 'Select around surrounding character automatically'})
+   vim.keymap.set({'x', 'o'}, 'im', '<Plug>(textobj-sandwich-literal-query-i)', {remap = true, desc = 'Select inside surrounding character literally'})
+   vim.keymap.set({'x', 'o'}, 'am', '<Plug>(textobj-sandwich-literal-query-a)', {remap = true, desc = 'Select around surrounding character literally'})
+end
 
-   {
-      mode        = 'n',
-      keys        = '<leader>tsC',
-      command     = '<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',
-      description = 'Change surrounding character automatically',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>tsa',
-      command     = '<Plug>(operator-sandwich-add)',
-      description = 'Add surrounding character',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'x',
-      keys        = '<leader>tsa',
-      command     = '<Plug>(operator-sandwich-add)',
-      description = 'Add surrounding character',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'x',
-      keys        = 'is',
-      command     = '<Plug>(textobj-sandwich-query-i)',
-      description = 'Select inside surrounding character',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'x',
-      keys        = 'as',
-      command     = '<Plug>(textobj-sandwich-query-a)',
-      description = 'Select around surrounding character',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'o',
-      keys        = 'is',
-      command     = '<Plug>(textobj-sandwich-query-i)',
-      description = 'Select inside surrounding character',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'o',
-      keys        = 'as',
-      command     = '<Plug>(textobj-sandwich-query-a)',
-      description = 'Select around surrounding character',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'x',
-      keys        = 'iS',
-      command     = '<Plug>(textobj-sandwich-auto-i)',
-      description = 'Select inside surrounding character automatically',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'x',
-      keys        = 'aS',
-      command     = '<Plug>(textobj-sandwich-auto-a)',
-      description = 'Select around surrounding character automatically',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'o',
-      keys        = 'iS',
-      command     = '<Plug>(textobj-sandwich-auto-i)',
-      description = 'Select inside surrounding character automatically',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'o',
-      keys        = 'aS',
-      command     = '<Plug>(textobj-sandwich-auto-a)',
-      description = 'Select around surrounding character automatically',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'x',
-      keys        = 'im',
-      command     = '<Plug>(textobj-sandwich-literal-query-i)',
-      description = 'Select inside surrounding character literally',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'x',
-      keys        = 'am',
-      command     = '<Plug>(textobj-sandwich-literal-query-a)',
-      description = 'Select around surrounding character literally',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'o',
-      keys        = 'im',
-      command     = '<Plug>(textobj-sandwich-literal-query-i)',
-      description = 'Select inside surrounding character literally',
-      options     = { noremap = false },
-   },
-
-   {
-      mode        = 'o',
-      keys        = 'am',
-      command     = '<Plug>(textobj-sandwich-literal-query-a)',
-      description = 'Select around surrounding character literally',
-      options     = { noremap = false },
-   },
+return {
+   setup = setup
 }

@@ -115,6 +115,6 @@ return {'nvim-telescope/telescope.nvim', opt = true,
 
    config = function ()
       require('plugins.telescope.config')
-      require('plugins.telescope.keys')
+      require('plugins.telescope.keys').setup()
    end,
 }

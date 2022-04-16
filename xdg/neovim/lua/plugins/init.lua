@@ -278,16 +278,14 @@ end
 
 --- keymaps ------------------------------------------------------------------
 
-require('sol.vim').apply_keymaps({
-   {'n', '<leader>Pc', '<cmd>PackerCompile<CR>'},
-   {'n', '<leader>PC', '<cmd>PackerClean<CR>'},
-   {'n', '<leader>Pi', '<cmd>PackerInstall<CR>'},
-   {'n', '<leader>PI', '<cmd>PackerInstall<CR>'},
-   {'n', '<leader>Pu', '<cmd>PackerUpdate<CR>'},
-   {'n', '<leader>PU', '<cmd>PackerUpdate<CR>'},
-   {'n', '<leader>Ps', '<cmd>PackerStatus<CR>'},
-   {'n', '<leader>PS', '<cmd>PackerSync<CR>'},
-})
+vim.keymap.set('n', '<leader>Pc', '<cmd>PackerCompile<CR>')
+vim.keymap.set('n', '<leader>PC', '<cmd>PackerClean<CR>')
+vim.keymap.set('n', '<leader>Pi', '<cmd>PackerInstall<CR>')
+vim.keymap.set('n', '<leader>PI', '<cmd>PackerInstall<CR>')
+vim.keymap.set('n', '<leader>Pu', '<cmd>PackerUpdate<CR>')
+vim.keymap.set('n', '<leader>PU', '<cmd>PackerUpdate<CR>')
+vim.keymap.set('n', '<leader>Ps', '<cmd>PackerStatus<CR>')
+vim.keymap.set('n', '<leader>PS', '<cmd>PackerSync<CR>')
 
 --- convenience --------------------------------------------------------------
 

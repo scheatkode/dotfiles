@@ -1,28 +1,13 @@
-local annotation = require('neogen')
+local function setup ()
+   local annotation = require('neogen')
 
-return require('util').register_keymaps {
-   {
-      mode        = 'n',
-      keys        = '<leader>cn',
-      command     = annotation.generate,
-      description = 'Generate annotation for current node'
-   },
-   {
-      mode        = 'n',
-      keys        = '<leader>cnf',
-      command     = function () annotation.generate({ type = 'func' }) end,
-      description = 'Generate annotation for current function'
-   },
-   {
-      mode        = 'n',
-      keys        = '<leader>cnc',
-      command     = function () annotation.generate({ type = 'class' }) end,
-      description = 'Generate annotation for current class'
-   },
-   {
-      mode        = 'n',
-      keys        = '<leader>cnt',
-      command     = function () annotation.generate({ type = 'type' }) end,
-      description = 'Generate annotation for current type'
-   }
+   vim.keymap.set('n', '<leader>cn', annotation.generate, {desc = 'Generate annotation for current node'})
+
+   vim.keymap.set('n', '<leader>cnf', function () annotation.generate({type = 'func'}) end,  {desc = 'Generate annotation for current function'})
+   vim.keymap.set('n', '<leader>cnc', function () annotation.generate({type = 'class'}) end, {desc = 'Generate annotation for current class'})
+   vim.keymap.set('n', '<leader>cnt', function () annotation.generate({type = 'type'}) end,  {desc = 'Generate annotation for current type'})
+end
+
+return {
+   setup = setup
 }

@@ -29,35 +29,6 @@ local border = {
 
 }
 
-local register_keymap = require('util').register_single_keymap
-
-local normalize_keymaps = function (mappings)
-   for _, mapping in ipairs(mappings) do
-      local mode         = mapping.mode
-      local keys         = mapping.keys
-      -- local description  = mapping.description
-      local command      = mapping.command
-      local condition    = mapping.condition
-      local options      = mapping.options
-
-      local is_command_valid =
-             command ~= nil
-         and command ~= false
-         and command ~= ''
-
-      local is_condition_valid = condition ~= nil and condition ~= false
-
-      if is_command_valid and is_condition_valid then
-         register_keymap {
-            mode    = mode,
-            keys    = keys,
-            command = command,
-            options = options,
-         }
-      end
-   end
-end
-
 return function (client, bufnr, settings)
 
    -- omnifunc setup {{{2
@@ -71,275 +42,81 @@ return function (client, bufnr, settings)
 
    -- mappings {{{2
 
-   normalize_keymaps {
+   -- declaration {{{3
+   if client.resolved_capabilities.declaration then
+      vim.keymap.set('n', '<leader>cD', vim.lsp.buf.declaration, {buffer = bufnr, desc = 'Go to declaration'})
+   end
 
-      -- declaration {{{3
+   -- definition {{{3
+   if client.resolved_capabilities.goto_definition then
+      vim.keymap.set('n', '<leader>cd', vim.lsp.buf.definition, {buffer = bufnr, desc = 'Go to definition'})
+   end
 
-      {
-         mode         = 'n',
-         keys         = '<leader>cD',
-         description  = 'Declaration',
-         command      = '<cmd>lua vim.lsp.buf.declaration()<CR>',
-         condition    = client.resolved_capabilities.declaration,
-         options      = { buffer = bufnr },
-      },
+   -- type definition {{{3
+   if client.resolved_capabilities.type_definition then
+      vim.keymap.set('n', '<leader>cT', vim.lsp.buf.type_definition, {buffer = bufnr, desc = 'Go to type definition'})
+   end
 
-      -- definition {{{3
+   -- implementation {{{3
+   if client.resolved_capabilities.implementation then
+      vim.keymap.set('n', '<leader>ci', vim.lsp.buf.implementation, {buffer = bufnr, desc = 'Go to implementation'})
+   end
 
-      {
-         mode         = 'n',
-         keys         = '<leader>cd',
-         description  = 'Definition',
-         command      = '<cmd>lua vim.lsp.buf.definition()<CR>',
-         condition    = client.resolved_capabilities.goto_definition,
-         options      = { buffer = bufnr },
-      },
+   -- rename symbol {{{3
+   if client.resolved_capabilities.rename then
+      vim.keymap.set('n', '<leader>cR', extensions.rename, {buffer = bufnr, desc = 'Rename symbol under cursor'})
+   end
 
-      -- type definition {{{3
+   -- references {{{3
+   if client.resolved_capabilities.references then
+      vim.keymap.set('n', '<leader>cr', vim.lsp.buf.references, {buffer = bufnr, desc = 'Show references'})
+   end
 
-      {
-         mode         = 'n',
-         keys         =  '<leader>cT',
-         description  = 'Type definition',
-         command      = '<cmd>lua vim.lsp.buf.type_definition()<CR>',
-         condition    = client.resolved_capabilities.type_definition,
-         options      = { buffer = bufnr },
-      },
+   -- code action {{{3
+   if client.resolved_capabilities.code_action then
+      vim.keymap.set('x', '<leader>ca', vim.lsp.buf.code_action, {buffer = bufnr, desc = 'Code actions'})
+   end
 
-      -- implementation {{{3
+   -- hover documentation {{{3
+   if client.resolved_capabilities.hover then
+      vim.keymap.set('n', '<leader>ch', vim.lsp.buf.hover, {buffer = bufnr, desc = 'Show documentation'})
+      vim.keymap.set('n', 'K',          vim.lsp.buf.hover, {buffer = bufnr, desc = 'Show documentation'})
+   end
 
-      {
-         mode         = 'n',
-         keys         = '<leader>ci',
-         description  = 'Implementation',
-         command      = '<cmd>lua vim.lsp.buf.implementation()<CR>',
-         condition    = client.resolved_capabilities.implementation,
-         options      = { buffer = bufnr },
-      },
+   -- call hierarchy {{{3
+   if client.resolved_capabilities.call_hierarchy then
+      vim.keymap.set('n', '<leader>cI', vim.lsp.buf.incoming_calls,    {buffer = bufnr, desc = 'Incoming calls'})
+      vim.keymap.set('n', '<leader>cO', vim.lsp.buf.outoutgoing_calls, {buffer = bufnr, desc = 'Outgoing calls'})
+   end
 
-      -- rename symbol {{{3
+   -- diagnostics {{{3
+   vim.keymap.set('n', '<leader>cl', function () vim.diagnostic.open_float(nil, {border = 'rounded'}) end, {buffer = bufnr, desc = 'Show line diagnostics'})
 
-      {
-         mode         = 'n',
-         keys         = '<leader>cR',
-         description  = 'Rename symbol',
-         command      = extensions.rename,
-         condition    = client.resolved_capabilities.rename,
-         options      = { buffer = bufnr },
-      },
+   vim.keymap.set('n', '<leader>cL', vim.diagnostic.setloclist, {buffer = bufnr, desc = 'Send diagnostics to loclist'})
+   vim.keymap.set('n', '<leader>cq', vim.diagnostic.setqflist,  {buffer = bufnr, desc = 'Send diagnostics to qflist'})
 
-      -- references {{{3
+   vim.keymap.set('n', '[d', function () vim.diagnostic.goto_prev({popup_opts = {border = 'ronded'}}) end, {buffer = bufnr, desc = 'Go to previous diagnostic'})
+   vim.keymap.set('n', ']d', function () vim.diagnostic.goto_next({popup_opts = {border = 'ronded'}}) end, {buffer = bufnr, desc = 'Go to next diagnostic'})
 
-      {
-         mode         = 'n',
-         keys         = '<leader>cr',
-         description  = 'References',
-         command      = '<cmd>lua vim.lsp.buf.references()<CR>',
-         condition    = client.resolved_capabilities.references,
-         options      = { buffer = bufnr },
-      },
+   -- signature help {{{3
+   if client.resolved_capabilities.signature_help then
+      vim.keymap.set({'n', 'x'}, '<M-s>', vim.lsp.buf.signature_help, {buffer = bufnr, desc = 'Show signature help'})
+   end
 
-      -- code action {{{3
+   -- workspace management {{{3
+   if client.resolved_capabilities.workspace_folder_properties then
+      vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder,    {buffer = bufnr, desc = 'Add folder to workspace'})
+      vim.keymap.set('n', '<leader>cwd', vim.lsp.buf.remove_workspace_folder, {buffer = bufnr, desc = 'Remove folder from workspace'})
+      vim.keymap.set('n', '<leader>cwl', vim.lsp.buf.list_workspace_folders,  {buffer = bufnr, desc = 'Remove folder from workspace'})
+   end
 
-      -- {
-      --    mode         = 'n',
-      --    keys         = '<leader>ca',
-      --    description  = 'Code action',
-      --    command      = '<cmd>lua vim.lsp.buf.code_action()<CR>',
-      --    condition    = client.resolved_capabilities.code_action,
-      --    options      = { buffer = bufnr },
-      -- },
+   -- code formatting {{{3
+   if client.resolved_capabilities.document_formatting or client.resolved_capabilities.document_range_formatting then
+      vim.keymap.set({'n', 'x'}, '<leader>cf', vim.lsp.buf.formatting, {buffer = bufnr, desc = 'Format code in current buffer'})
+      vim.keymap.set({'n', 'x'}, '<leader>=',  vim.lsp.buf.formatting, {buffer = bufnr, desc = 'Format code in current buffer'})
+   end
 
-      {
-         mode         = 'x',
-         keys         = '<leader>ca',
-         description  = 'Code action',
-         command      = '<cmd>lua vim.lsp.buf.code_action()<CR>',
-         condition    = client.resolved_capabilities.code_action,
-         options      = { buffer = bufnr },
-      },
-
-      -- hover documentation {{{3
-
-      {
-         mode         = 'n',
-         keys         = '<leader>ch',
-         description  = 'Hover documentation',
-         command      = '<cmd>lua vim.lsp.buf.hover()<CR>',
-         condition    = client.resolved_capabilities.hover,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = 'K',
-         description  = 'Hover documentation',
-         command      = '<cmd>lua vim.lsp.buf.hover()<CR>',
-         condition    = client.resolved_capabilities.hover,
-         options      = { buffer = bufnr },
-      },
-
-      -- call hierarchy {{{3
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cI',
-         description  = 'Incoming calls',
-         command      = '<cmd>lua vim.lsp.buf.incoming_calls()<CR>',
-         condition    = client.resolved_capabilities.call_hierarchy,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cO',
-         description  = 'Outgoing calls',
-         command      = '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>',
-         condition    = client.resolved_capabilities.call_hierarchy,
-         options      = { buffer = bufnr },
-      },
-
-      -- diagnostics {{{3
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cl',
-         description  = 'Line diagnostics',
-         command      = '<cmd>lua vim.diagnostic.open_float(nil, {border = "rounded"})<CR>',
-         condition    = true,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cL',
-         description  = 'Send diagnostics to loclist',
-         command      = '<cmd>lua vim.diagnostic.setloclist()<CR>',
-         condition    = true,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cq',
-         description  = 'Send diagnostics to quickfix list',
-         command      = '<cmd>lua vim.diagnostic.setqflist()<CR>',
-         condition    = true,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = '[d',
-         description  = 'Go to previous diagnostic',
-         command      = '<cmd>lua vim.diagnostic.goto_prev({popup_opts = {border = "rounded"}})<CR>',
-         condition    = true,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = ']d',
-         description  = 'Go to next diagnostic',
-         command      = '<cmd>lua vim.diagnostic.goto_next({popup_opts = {border = "rounded"}})<CR>',
-         condition    = true,
-         options      = { buffer = bufnr },
-      },
-
-      -- signature help {{{3
-
-      {
-         mode         = 'n',
-         keys         = '<M-s>',
-         description  = 'Signature help',
-         command      = '<cmd>lua vim.lsp.buf.signature_help()<CR>',
-         condition    = client.resolved_capabilities.signature_help,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'i',
-         keys         = '<M-s>',
-         description  = 'Signature help',
-         command      = '<cmd>lua vim.lsp.buf.signature_help()<CR>',
-         condition    = client.resolved_capabilities.signature_help,
-         options      = { buffer = bufnr },
-      },
-
-      -- workspace management {{{3
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cwa',
-         description  = 'Add folder to workspace',
-         command      = '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
-         condition    = client.resolved_capabilities.workspace_folder_properties,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cwd',
-         description  = 'Remove folder from workspace',
-         command      = '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
-         condition    = client.resolved_capabilities.workspace_folder_properties,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cwl',
-         description  = 'List folders in workspace',
-         command      = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
-         condition    = client.resolved_capabilities.workspace_folder_properties,
-         options      = { buffer = bufnr },
-      },
-
-      -- code formatting {{{3
-
-      {
-         mode         = 'n',
-         keys         = '<leader>cf',
-         description  = 'Format code',
-         command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
-         condition    = client.resolved_capabilities.document_formatting
-            or client.resolved_capabilities.document_range_formatting,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'n',
-         keys         = '<leader>=',
-         description  = 'Format code',
-         command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
-         condition    = client.resolved_capabilities.document_formatting
-            or client.resolved_capabilities.document_range_formatting,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'x',
-         keys         = '<leader>cf',
-         description  = 'Format code',
-         command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
-         condition    = client.resolved_capabilities.document_formatting
-            or client.resolved_capabilities.document_range_formatting,
-         options      = { buffer = bufnr },
-      },
-
-      {
-         mode         = 'x',
-         keys         = '<leader>=',
-         description  = 'Format code',
-         command      = '<cmd>lua vim.lsp.buf.formatting()<CR>',
-         condition    = client.resolved_capabilities.document_formatting
-            or client.resolved_capabilities.document_range_formatting,
-         options      = { buffer = bufnr },
-      },
-
-      -- }}}
-
-   }
+   -- }}}
 
    -- autocommands {{{2
 

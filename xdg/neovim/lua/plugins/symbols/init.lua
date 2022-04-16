@@ -1,4 +1,5 @@
 return {'simrat39/symbols-outline.nvim',
+
    cmd      = { 'SymbolsOutline'        },
    keys     = { '<leader>co'            },
 
@@ -7,6 +8,6 @@ return {'simrat39/symbols-outline.nvim',
 
    config   = function ()
       require('plugins.symbols.config')
-      require('plugins.symbols.keys')
+      require('plugins.symbols.keys').setup()
    end,
 }

@@ -1,6 +1,7 @@
-return require('util').register_keymaps({{
-   mode        = 'n',
-   keys        = '<F1>',
-   command     = '<Cmd>NvimTreeToggle<CR>',
-   description = 'Toggle file tree explorer'
-}})
+local function setup ()
+   vim.keymap.set('n', '<F1>', '<cmd>NvimTreeToggle<CR>', {desc = 'Toggle file explorer'})
+end
+
+return {
+   setup = setup
+}

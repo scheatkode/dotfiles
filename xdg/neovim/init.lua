@@ -78,7 +78,7 @@ require('scheatkode.global')
 require('scheatkode.settings')
 require('scheatkode.autocmds')
 require('scheatkode.commands')
-require('scheatkode.mappings')
+require('scheatkode.mappings').setup()
 
 require('scheatkode.providers').disable()
 

@@ -1,6 +1,7 @@
-return require('util').register_keymaps {{
-   mode        = 'n',
-   keys        = '<leader>gg',
-   command     = '<cmd>Neogit<CR>',
-   description = 'Open git porcelain',
-}}
+local function setup ()
+   vim.keymap.set('n', '<leader>gg', '<cmd>Neogit<CR>', {desc = 'Open git porcelain'})
+end
+
+return {
+	setup = setup
+}

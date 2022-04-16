@@ -22,10 +22,10 @@ return {
       '<leader>du',
    },
 
-   modules  = { 'dap' },
+   modules = { 'dap' },
 
-   config  = function ()
+   config = function ()
       require('plugins.dap.config')
-      require('plugins.dap.keys')
+      require('plugins.dap.keys').setup()
    end,
 }

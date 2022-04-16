@@ -1,578 +1,165 @@
-return require('util').register_keymaps({
-   --- project {{{1
+local function setup ()
+   local actions = require('plugins.telescope.actions')
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fp',
-      command = '<cmd>lua require("plugins.telescope.actions").projects()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fp',
-      command = '<cmd>lua require("plugins.telescope.actions").projects()<CR>',
-   },
+   -- project
+   vim.keymap.set('n', '<leader>fp', actions.projects)
+   vim.keymap.set('n', '<leader>Fp', actions.projects)
+   -- shorthand
+   vim.keymap.set('n', '<leader>pp', actions.projects)
+   vim.keymap.set('n', '<leader>Pp', actions.projects)
 
-   --- shorthand keymaps
+   -- live grep
+   vim.keymap.set('n', '<leader>fg', actions.live_grep)
+   vim.keymap.set('n', '<leader>Fg', actions.live_grep)
+   vim.keymap.set('n', '<leader>fG', function () actions.live_grep(true) end)
+   vim.keymap.set('n', '<leader>FG', function () actions.live_grep(true) end)
+   vim.keymap.set('n', '<leader>ft', actions.buffer_fuzzy)
+   vim.keymap.set('n', '<leader>Ft', actions.buffer_fuzzy)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>pp',
-      command = '<cmd>lua require("plugins.telescope.actions").projects()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Pp',
-      command = '<cmd>lua require("plugins.telescope.actions").projects()<CR>',
-   },
+   -- grep string
+   vim.keymap.set('n', '<leader>f/', actions.grep_string)
+   vim.keymap.set('n', '<leader>F/', actions.grep_string)
 
-   --- live grep {{{1
+   -- find files
+   vim.keymap.set('n', '<leader><leader>', actions.project_or_find_files)
+   vim.keymap.set('n', '<leader>ff', actions.find_files)
+   vim.keymap.set('n', '<leader>Ff', actions.find_files)
+   vim.keymap.set('n', '<leader>fF', function () actions.find_files(true) end)
+   vim.keymap.set('n', '<leader>FF', function () actions.find_files(true) end)
+   vim.keymap.set('n', '<leader>fn', actions.find_notes)
+   vim.keymap.set('n', '<leader>Fn', actions.find_notes)
+   vim.keymap.set('n', '<leader>fe', actions.file_explorer)
+   vim.keymap.set('n', '<leader>Fe', actions.file_explorer)
+   vim.keymap.set('n', '<leader>fR', actions.frecency)
+   vim.keymap.set('n', '<leader>FR', actions.frecency)
+   vim.keymap.set('n', '<leader>fH', actions.oldfiles)
+   vim.keymap.set('n', '<leader>FH', actions.oldfiles)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fg',
-      command = '<cmd>lua require("plugins.telescope.actions").live_grep()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fg',
-      command = '<cmd>lua require("plugins.telescope.actions").live_grep()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fG',
-      command = '<cmd>lua require("plugins.telescope.actions").live_grep(true)<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>FG',
-      command = '<cmd>lua require("plugins.telescope.actions").live_grep(true)<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>ft',
-      command = '<cmd>lua require("plugins.telescope.actions").buffer_fuzzy()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Ft',
-      command = '<cmd>lua require("plugins.telescope.actions").buffer_fuzzy()<CR>',
-   },
+   -- find files
+   vim.keymap.set('n', '<leader>fb', actions.buffers)
+   vim.keymap.set('n', '<leader>Fb', actions.buffers)
+   vim.keymap.set('n', '<leader>fB', function () actions.buffers(true) end)
+   vim.keymap.set('n', '<leader>FB', function () actions.buffers(true) end)
+   -- shorthand
+   vim.keymap.set('n', '<leader>bb', actions.buffers)
+   vim.keymap.set('n', '<leader>Bb', actions.buffers)
+   vim.keymap.set('n', '<leader>bB', function () actions.buffers(true) end)
+   vim.keymap.set('n', '<leader>BB', function () actions.buffers(true) end)
 
-   --- grep string {{{1
+   -- git commit
+   vim.keymap.set('n', '<leader>fgc', actions.git_commits)
+   vim.keymap.set('n', '<leader>fgf', actions.git_current_file_commits)
+   vim.keymap.set('n', '<leader>fgb', actions.git_branches)
+   -- shorthand
+   vim.keymap.set('n', '<leader>gc', actions.git_commits)
+   vim.keymap.set('n', '<leader>Gc', actions.git_commits)
+   vim.keymap.set('n', '<leader>gf', actions.git_current_file_commits)
+   vim.keymap.set('n', '<leader>Gf', actions.git_current_file_commits)
+   vim.keymap.set('n', '<leader>gb', actions.git_branches)
+   vim.keymap.set('n', '<leader>Gb', actions.git_branches)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>f/',
-      command = '<cmd>lua require("plugins.telescope.actions").grep_string()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>F/',
-      command = '<cmd>lua require("plugins.telescope.actions").grep_string()<CR>',
-   },
+   -- commands
+   vim.keymap.set('n', '<leader>fc', actions.commands)
+   vim.keymap.set('n', '<leader>Fc', actions.commands)
 
-   --- find files {{{1
+   -- qflist & loclist
+   vim.keymap.set('n', '<leader>fq', actions.quickfix)
+   vim.keymap.set('n', '<leader>Fq', actions.quickfix)
+   vim.keymap.set('n', '<leader>fl', actions.loclist)
+   vim.keymap.set('n', '<leader>Fl', actions.loclist)
 
-   {
-      mode    = 'n',
-      keys    = '<leader><leader>',
-      command = '<cmd>lua require("plugins.telescope.actions").project_or_find_files()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>ff',
-      command = '<cmd>lua require("plugins.telescope.actions").find_files()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Ff',
-      command = '<cmd>lua require("plugins.telescope.actions").find_files()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fF',
-      command = '<cmd>lua require("plugins.telescope.actions").find_files(true)<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>FF',
-      command = '<cmd>lua require("plugins.telescope.actions").find_files(true)<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fn',
-      command = '<cmd>lua require("plugins.telescope.actions").find_notes()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fn',
-      command = '<cmd>lua require("plugins.telescope.actions").find_notes()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fe',
-      command = '<cmd>lua require("plugins.telescope.actions").file_explorer()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fe',
-      command = '<cmd>lua require("plugins.telescope.actions").file_explorer()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fR',
-      command = '<cmd>lua require("plugins.telescope.actions").frecency()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>FR',
-      command = '<cmd>lua require("plugins.telescope.actions").frecency()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fH',
-      command = '<cmd>lua require("plugins.telescope.actions").oldfiles()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>FH',
-      command = '<cmd>lua require("plugins.telescope.actions").oldfiles()<CR>'
-   },
+   -- vim options
+   vim.keymap.set('n', '<leader>fo', actions.vim_options)
+   vim.keymap.set('n', '<leader>Fo', actions.vim_options)
 
-   --- buffers {{{1
+   -- help tags
+   vim.keymap.set('n', '<leader>fh', actions.help_tags)
+   vim.keymap.set('n', '<leader>Fh', actions.help_tags)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fb',
-      command = '<cmd>lua require("plugins.telescope.actions").buffers()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fb',
-      command = '<cmd>lua require("plugins.telescope.actions").buffers()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fB',
-      command = '<cmd>lua require("plugins.telescope.actions").buffers(true)<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>FB',
-      command = '<cmd>lua require("plugins.telescope.actions").buffers(true)<CR>'
-   },
+   -- man pages
+   vim.keymap.set('n', '<leader>fM', actions.man_pages)
+   vim.keymap.set('n', '<leader>FM', actions.man_pages)
 
-   --- shorthand keymaps
+   -- marks
+   vim.keymap.set('n', '<leader>fm', actions.marks)
+   vim.keymap.set('n', '<leader>Fm', actions.marks)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>bb',
-      command = '<cmd>lua require("plugins.telescope.actions").buffers()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Bb',
-      command = '<cmd>lua require("plugins.telescope.actions").buffers()<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>bB',
-      command = '<cmd>lua require("plugins.telescope.actions").buffers(true)<CR>'
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>BB',
-      command = '<cmd>lua require("plugins.telescope.actions").buffers(true)<CR>'
-   },
+   -- registers
+   vim.keymap.set('n', '<leader>fvr', actions.registers)
+   vim.keymap.set('n', '<leader>Fvr', actions.registers)
+   -- shorthand
+   vim.keymap.set('n', '<leader>vr', actions.registers)
+   vim.keymap.set('n', '<leader>Vr', actions.registers)
+   vim.keymap.set('n', '<leader>vR', actions.registers)
+   vim.keymap.set('n', '<leader>VR', actions.registers)
 
-   --- git commit {{{1
+   -- keymaps
+   vim.keymap.set('n', '<leader>fvk', actions.keymaps)
+   vim.keymap.set('n', '<leader>Fvk', actions.keymaps)
+   -- shorthand
+   vim.keymap.set('n', '<leader>vk', actions.keymaps)
+   vim.keymap.set('n', '<leader>Vk', actions.keymaps)
+   vim.keymap.set('n', '<leader>vK', actions.keymaps)
+   vim.keymap.set('n', '<leader>VK', actions.keymaps)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fgc',
-      command = '<cmd>lua require("plugins.telescope.actions").git_commits()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fgf',
-      command = '<cmd>lua require("plugins.telescope.actions").git_current_file_commits()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>fgb',
-      command = '<cmd>lua require("plugins.telescope.actions").git_branches()<CR>',
-   },
+   -- autocommands
+   vim.keymap.set('n', '<leader>fva', actions.autocommands)
+   vim.keymap.set('n', '<leader>Fva', actions.autocommands)
+   -- shorthand
+   vim.keymap.set('n', '<leader>va', actions.autocommands)
+   vim.keymap.set('n', '<leader>Va', actions.autocommands)
+   vim.keymap.set('n', '<leader>vA', actions.autocommands)
+   vim.keymap.set('n', '<leader>VA', actions.autocommands)
 
-   -- shortened keymaps
+   -- spell
+   vim.keymap.set('n', '<leader>fS', actions.spell_suggest)
+   vim.keymap.set('n', '<leader>FS', actions.spell_suggest)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>gc',
-      command = '<cmd>lua require("plugins.telescope.actions").git_commits()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Gc',
-      command = '<cmd>lua require("plugins.telescope.actions").git_commits()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>gf',
-      command = '<cmd>lua require("plugins.telescope.actions").git_current_file_commits()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Gf',
-      command = '<cmd>lua require("plugins.telescope.actions").git_current_file_commits()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>gb',
-      command = '<cmd>lua require("plugins.telescope.actions").git_branches()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Gb',
-      command = '<cmd>lua require("plugins.telescope.actions").git_branches()<CR>',
-   },
+   -- lsp
 
-   --- commands {{{1
+      -- references
+      vim.keymap.set('n', '<leader>fr', actions.lsp_references)
+      vim.keymap.set('n', '<leader>Fr', actions.lsp_references)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fc',
-      command = '<cmd>lua require("plugins.telescope.actions").commands()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fc',
-      command = '<cmd>lua require("plugins.telescope.actions").commands()<CR>',
-   },
+      -- definitions
+      vim.keymap.set('n', '<leader>fd', actions.lsp_definitions)
+      vim.keymap.set('n', '<leader>Fd', actions.lsp_definitions)
 
-   --- quickfix & loclist {{{1
+      -- type definitions
+      vim.keymap.set('n', '<leader>fT', actions.lsp_type_definitions)
+      vim.keymap.set('n', '<leader>FT', actions.lsp_type_definitions)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fq',
-      command = '<cmd>lua require("plugins.telescope.actions").quickfix()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fq',
-      command = '<cmd>lua require("plugins.telescope.actions").quickfix()<CR>',
-   },
+      -- implementations
+      vim.keymap.set('n', '<leader>fi', actions.lsp_implementations)
+      vim.keymap.set('n', '<leader>Fi', actions.lsp_implementations)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fl',
-      command = '<cmd>lua require("plugins.telescope.actions").loclist()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fl',
-      command = '<cmd>lua require("plugins.telescope.actions").loclist()<CR>',
-   },
+      -- code_actions
+      vim.keymap.set('n', '<leader>ca', actions.lsp_code_actions)
+      vim.keymap.set('n', '<leader>Ca', actions.lsp_code_actions)
+      vim.keymap.set('n', '<leader>cA', actions.lsp_code_actions)
+      vim.keymap.set('n', '<leader>CA', actions.lsp_code_actions)
 
-   --- vim options {{{1
+      -- document symbols
+      vim.keymap.set('n', '<leader>fds', actions.lsp_document_symbols)
+      vim.keymap.set('n', '<leader>Fds', actions.lsp_document_symbols)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fo',
-      command = '<cmd>lua require("plugins.telescope.actions").vim_options()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fo',
-      command = '<cmd>lua require("plugins.telescope.actions").vim_options()<CR>',
-   },
+      -- workspace symbols
+      vim.keymap.set('n', '<leader>fws', actions.lsp_workspace_symbols)
+      vim.keymap.set('n', '<leader>Fws', actions.lsp_workspace_symbols)
 
-   --- help tags {{{1
+      -- document diagnostics
+      vim.keymap.set('n', '<leader>fdd', actions.lsp_document_diagnostics)
+      vim.keymap.set('n', '<leader>Fdd', actions.lsp_document_diagnostics)
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fh',
-      command = '<cmd>lua require("plugins.telescope.actions").help_tags()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fh',
-      command = '<cmd>lua require("plugins.telescope.actions").help_tags()<CR>',
-   },
+      -- workspace diagnostics
+      vim.keymap.set('n', '<leader>fws', actions.lsp_workspace_diagnostics)
+      vim.keymap.set('n', '<leader>Fws', actions.lsp_workspace_diagnostics)
 
-   --- man pages {{{1
+   -- command history
+   vim.keymap.set('c', '<C-r><C-r>', '<Plug>(TelescopeFuzzyCommandSearch)', {remap = true, nowait = true})
 
-   {
-      mode    = 'n',
-      keys    = '<leader>fM',
-      command = '<cmd>lua require("plugins.telescope.actions").man_pages()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>FM',
-      command = '<cmd>lua require("plugins.telescope.actions").man_pages()<CR>',
-   },
+end
 
-   --- marks {{{1
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fm',
-      command = '<cmd>lua require("plugins.telescope.actions").marks()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fm',
-      command = '<cmd>lua require("plugins.telescope.actions").marks()<CR>',
-   },
-
-   --- registers {{{1
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fvr',
-      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fvr',
-      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>vr',
-      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Vr',
-      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>vR',
-      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>VR',
-      command = '<cmd>lua require("plugins.telescope.actions").registers()<CR>',
-   },
-
-   --- keymaps {{{1
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fvk',
-      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fvk',
-      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>vk',
-      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Vk',
-      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>vK',
-      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>VK',
-      command = '<cmd>lua require("plugins.telescope.actions").keymaps()<CR>',
-   },
-
-   --- autocommands {{{1
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fva',
-      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fva',
-      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>va',
-      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Va',
-      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>vA',
-      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>VA',
-      command = '<cmd>lua require("plugins.telescope.actions").autocommands()<CR>',
-   },
-
-   --- autocommands {{{1
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fS',
-      command = '<cmd>lua require("plugins.telescope.actions").spell_suggest()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>FS',
-      command = '<cmd>lua require("plugins.telescope.actions").spell_suggest()<CR>',
-   },
-
-   --- lsp {{{1
-   --- references {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fr',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_references()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fr',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_references()<CR>',
-   },
-
-   --- definitions {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fd',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_definitions()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fd',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_definitions()<CR>',
-   },
-
-   --- type definitions {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fT',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_type_definitions()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>FT',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_type_definitions()<CR>',
-   },
-
-   --- implementations {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fi',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_implementations()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fi',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_implementations()<CR>',
-   },
-
-   --- code_actions {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>ca',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_code_actions()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Ca',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_code_actions()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>cA',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_code_actions()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>CA',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_code_actions()<CR>',
-   },
-
-   --- document symbols {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fds',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_document_symbols()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fds',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_document_symbols()<CR>',
-   },
-
-   --- workspace symbols {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fws',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_workspace_symbols()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fws',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_workspace_symbols()<CR>',
-   },
-
-   --- document diagnostics {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fdd',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_document_diagnostics()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fdd',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_document_diagnostics()<CR>',
-   },
-
-   --- workspace diagnostics {{{2
-
-   {
-      mode    = 'n',
-      keys    = '<leader>fwd',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_workspace_diagnostics()<CR>',
-   },
-   {
-      mode    = 'n',
-      keys    = '<leader>Fwd',
-      command = '<cmd>lua require("plugins.telescope.actions").lsp_workspace_diagnostics()<CR>',
-   },
-
-   {
-      mode    = 'c',
-      keys    = '<c-r><c-r>',
-      command = '<Plug>(TelescopeFuzzyCommandSearch)',
-      options = {
-         noremap = false,
-         nowait  = true,
-         silent  = false
-      }
-   },
-})
+return {
+   setup = setup
+}

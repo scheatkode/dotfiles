@@ -1,127 +1,30 @@
-local input = vim.fn.input
-local dap   = require('dap')
+local dap    = require('dap')
+-- local dapvar = require('dap.ui.variables')
+-- local dapwid = require('dap.ui.widgets')
 
-return require('util').register_keymaps {
-   {
-      mode        = 'n',
-      keys        = '<leader>dc',
-      command     = dap.continue,
-      description = 'Continue',
-   },
+local function setup ()
+	vim.keymap.set('n', '<leader>dc', {desc = 'Continue'})
+	vim.keymap.set('n', '<leader>dC', {desc = 'Run to cursor'})
+	vim.keymap.set('n', '<leader>db', {desc = 'Toggle breakpoint'})
+	vim.keymap.set('n', '<leader>di', {desc = 'Step into'})
+	vim.keymap.set('n', '<leader>do', {desc = 'Step over'})
+	vim.keymap.set('n', '<leader>dO', {desc = 'Step out'})
+	vim.keymap.set('n', '<leader>dp', {desc = 'Step back'})
+	vim.keymap.set('n', '<leader>dP', {desc = 'Pause'})
+	vim.keymap.set('n', '<leader>dr', {desc = 'Toggle REPL'})
+	vim.keymap.set('n', '<leader>dR', {desc = 'Run last'})
+	vim.keymap.set('n', '<leader>dQ', {desc = 'Close session'})
+	vim.keymap.set('n', '<leader>dD', {desc = 'Disconnect from session'})
+	vim.keymap.set('n', '<leader>dq', {desc = 'Send breakpoints to quicklist'})
+	vim.keymap.set('n', '<leader>du', {desc = 'Go up in stacktrace'})
+	vim.keymap.set('n', '<leader>dd', {desc = 'Go down in stacktrace'})
+	vim.keymap.set('n', '<leader>dk', {desc = 'Hover'})
+	vim.keymap.set('n', '<leader>dK', {desc = 'Hover'})
 
-   {
-      mode        = 'n',
-      keys        = '<leader>dC',
-      command     = dap.run_to_cursor,
-      description = 'Run to cursor',
-   },
+	vim.keymap.set('n', '<leader>dB', function () dap.set_breakpoint(vim.fn.input('Breakpoint condition : ')) end, {desc = 'Set breakpoint with condition'})
+	vim.keymap.set('n', '<leader>dl', function () dap.set_breakpoint(nil, nil, vim.fn.input('Log point message : ')) end, {desc = 'Set log point'})
+end
 
-   {
-      mode        = 'n',
-      keys        = '<leader>db',
-      command     = dap.toggle_breakpoint,
-      description = 'Toggle breakpoint',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>di',
-      command     = dap.step_into,
-      description = 'Step into',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>do',
-      command     = dap.step_over,
-      description = 'Step over',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dO',
-      command     = dap.step_out,
-      description = 'Step out',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dp',
-      command     = dap.step_back,
-      description = 'Step back',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dP',
-      command     = dap.pause,
-      description = 'Pause',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dB',
-      command     = function ()
-         dap.set_breakpoint(input('Breakpoint condition : '))
-      end,
-      description = 'Set breakpoint with condition',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dl',
-      command     = function ()
-         dap.set_breakpoint(nil, nil, input('Log point message : '))
-      end,
-      description = 'Set log point',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dr',
-      command     = dap.repl.toggle,
-      description = 'Toggle REPL',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dR',
-      command     = dap.run_last,
-      description = 'Run last',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dQ',
-      command     = dap.stop,
-      description = 'Close session',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dD',
-      command     = dap.disconnect,
-      description = 'Disconnect from session',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dq',
-      command     = dap.list_breakpoints,
-      description = 'Send breakpoints to quicklist',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>du',
-      command     = dap.up,
-      description = 'Go up in stacktrace',
-   },
-
-   {
-      mode        = 'n',
-      keys        = '<leader>dd',
-      command     = dap.down,
-      description = 'Go down in stacktrace',
-   },
+return {
+	setup = setup
 }

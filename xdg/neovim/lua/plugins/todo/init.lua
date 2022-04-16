@@ -4,6 +4,7 @@ return {'folke/todo-comments.nvim', opt = true,
       'TodoTrouble',
       'TodoTelescope',
    },
+
    keys = {
       '<leader>ct',
       '<leader>ctt',
@@ -11,9 +12,11 @@ return {'folke/todo-comments.nvim', opt = true,
       '<leader>ctq',
       '<leader>ctd',
    },
+
    requires = { 'folke/lsp-trouble.nvim' },
+
    config = function ()
       require('plugins.todo.config')
-      require('plugins.todo.keys')
+      require('plugins.todo.keys').setup()
    end,
 }
