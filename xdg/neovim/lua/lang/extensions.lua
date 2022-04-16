@@ -1,19 +1,15 @@
 local sf   = string.format
-local vfun = vim.fn
-local vlsp = vim.lsp
-local vlsu = vlsp.util
-local vui  = vim.ui
 
 local function rename ()
-   local current    = vfun.expand('<cword>')
-   local parameters = vlsu.make_position_params()
+   local current    = vim.fn.expand('<cword>')
+   local parameters = vim.lsp.util.make_position_params()
 
    local function rename_handler (_, result, context, _)
       if not result then return end
 
       -- apply renames
-      local client = vlsp.get_client_by_id(context.client_id)
-      vlsu.apply_workspace_edit(result, client.offset_encoding)
+      local client = vim.lsp.get_client_by_id(context.client_id)
+      vim.lsp.util.apply_workspace_edit(result, client.offset_encoding)
 
       -- print renames
       local changed_files_count     = 0
@@ -45,7 +41,7 @@ local function rename ()
       if not new or #new == 0 or current == new then return end
 
       parameters.newName = new
-      vlsp.buf_request(0, 'textDocument/rename', parameters, rename_handler)
+      vim.lsp.buf_request(0, 'textDocument/rename', parameters, rename_handler)
    end
 
    local opts = {
@@ -53,7 +49,7 @@ local function rename ()
       default = current,
    }
 
-   vui.input(opts, input_handler)
+   vim.ui.input(opts, input_handler)
 end
 
 return {

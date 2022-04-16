@@ -9,10 +9,8 @@ end
 
 return {
    cmd = {
-      vim.fn.expand(table.concat({'~',
-         '.local',
-         'share',
-         'nvim',
+      vim.fn.expand(table.concat({
+         vim.fn.stdpath('data'),
          'lsp_servers',
          'cmake',
          'venv',
