@@ -1,7 +1,6 @@
 --- localise global variables
 
 local fn     = vim.fn
-local notify = vim.notify
 local format = string.format
 
 --- check if packer is already installed
@@ -25,13 +24,11 @@ end
 -- @return boolean whether a sync is required
 --
 local packer_autoinstall = function (install_path)
-   local confirm = require('sol.util').confirm
+	if vim.fn.input('Looks empty here, should I brighten the place up ? (y/n): ') ~= 'y' then
+		return false
+	end
 
-   if not confirm('Download Packer ?') then return false end
-
-   notify('Downloading packer.nvim ...')
-
-   local out = fn.system({
+   vim.fn.system({
       'git',
       'clone',
       '--depth',
@@ -39,8 +36,6 @@ local packer_autoinstall = function (install_path)
       'https://github.com/wbthomason/packer.nvim',
       install_path
    })
-
-   notify(out)
 
    return true
 end
