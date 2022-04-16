@@ -18,16 +18,6 @@ do
    )
 end
 
--- startup improvement
-
-do
-   local has_impatient, _ = pcall(require, 'impatient')
-
-   if not has_impatient then
-      print('impatient.nvim not found, startup optimizations unavailable')
-   end
-end
-
 -- leader key
 
 -- it's generally a good idea  to set this early on and
