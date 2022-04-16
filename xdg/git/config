@@ -38,7 +38,7 @@
    			--decorate      \
    			--abbrev-commit \
    			--date=relative \
-   		--pretty=tformat:'%C(red)%h%C(reset)}%C(dim white)%C(bold yellow)(%ar)%C(reset)}—}%C(bold blue)%an%C(reset):}%C(white)%s%C(reset) %C(dim white) %C(bold yellow)%d%C(reset)' \
+   		--pretty=tformat:'%C(red)%h%C(reset)}%C(dim yellow)(%ar)%C(reset)}—}%C(bold cyan)%an%C(reset):}%C(white)%s%C(reset) %C(dim white) %C(bold yellow)%d%C(reset)' \
    		${@} \
    	| sed                                        \
 			-e \"s/:adhesive_bandage:/🩹/g\"          \
@@ -126,7 +126,7 @@
    		--decorate      \
    		--abbrev-commit \
    		--date=relative \
-   	--pretty=tformat:'%C(red)%h%C(reset)}%C(dim white)%C(bold yellow)(%ar)%C(reset)}—}%C(bold blue)%an%C(reset):}%C(white)%s%C(reset) %C(dim white) %C(bold yellow)%d%C(reset)' \
+   	--pretty=tformat:'%C(red)%h%C(reset)}%C(dim yellow)(%ar)%C(reset)}—}%C(bold cyan)%an%C(reset):}%C(white)%s%C(reset) %C(dim white) %C(bold yellow)%d%C(reset)' \
 		| column -s \"}\" -t \
 		| ${PAGER}"
 
