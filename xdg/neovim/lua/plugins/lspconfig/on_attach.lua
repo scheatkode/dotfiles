@@ -82,8 +82,8 @@ return function (client, bufnr, settings)
 
    -- call hierarchy {{{3
    if client.resolved_capabilities.call_hierarchy then
-      vim.keymap.set('n', '<leader>cI', vim.lsp.buf.incoming_calls,    {buffer = bufnr, desc = 'Incoming calls'})
-      vim.keymap.set('n', '<leader>cO', vim.lsp.buf.outoutgoing_calls, {buffer = bufnr, desc = 'Outgoing calls'})
+      vim.keymap.set('n', '<leader>cI', vim.lsp.buf.incoming_calls, {buffer = bufnr, desc = 'Incoming calls'})
+      vim.keymap.set('n', '<leader>cO', vim.lsp.buf.outgoing_calls, {buffer = bufnr, desc = 'Outgoing calls'})
    end
 
    -- diagnostics {{{3
