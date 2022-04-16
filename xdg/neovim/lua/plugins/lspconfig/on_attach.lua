@@ -1,8 +1,5 @@
 --- localise vim globals
 
-local vapi = vim.api
-local vlsp = vim.lsp
-
 local extensions = require('lang.extensions')
 
 local border = {
@@ -37,8 +34,8 @@ return function (client, bufnr, settings)
 
    -- border customization {{{2
 
-   vlsp.handlers['textDocument/hover']         = vlsp.with(vlsp.handlers.hover, {border = border})
-   vlsp.handlers['textDocument/signatureHelp'] = vlsp.with(vlsp.handlers.hover, {border = border})
+   vim.lsp.handlers['textDocument/hover']         = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+   vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
 
    -- mappings {{{2
 
@@ -121,17 +118,9 @@ return function (client, bufnr, settings)
    -- autocommands {{{2
 
    if client.resolved_capabilities.document_highlight then
-      vapi.nvim_exec([[
-         :hi LspReferenceRead  cterm=bold ctermbg=red guibg=LightYellow
-         :hi LspReferenceText  cterm=bold ctermbg=red guibg=LightYellow
-         :hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-
-         augroup lsp_document_highlight
-         autocmd! *           <buffer>
-         autocmd  CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
-         autocmd  CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-         augroup End
-      ]], false)
+      local augroup = vim.api.nvim_create_augroup('lsp_document_highlight', {clear = true})
+      vim.api.nvim_create_autocmd('CursorHold',  {buffer = 0, group = augroup, callback = vim.lsp.buf.document_highlight})
+      vim.api.nvim_create_autocmd('CursorMoved', {buffer = 0, group = augroup, callback = vim.lsp.buf.clear_references})
    end
 
    -- plugins {{{2

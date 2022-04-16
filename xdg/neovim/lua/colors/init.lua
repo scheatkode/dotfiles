@@ -82,40 +82,29 @@ local function dim_on_focus_lost (config)
    local last_laststatus = vim.opt.laststatus:get()
 
    -- cache frequently used commands
-   local opt      = vim.opt
    local up_cmd   = sf('normal! %s', t('<C-e>'))
    local down_cmd = sf('normal! %s', t('<C-y>'))
 
-   scheatkode.augroup('DimOnInactive', {{
-      events = {
-         'FocusLost'
-      },
+	local augroup = vim.api.nvim_create_augroup('DimOnInactive', {clear = true})
 
-      targets = {
-         '*'
-      },
+	vim.api.nvim_create_autocmd('FocusLost', {
+		group    = augroup,
+		callback = function ()
+			last_laststatus      = vim.opt.laststatus:get()
+         vim.opt.laststatus   = 0
+         vim.opt.winhighlight = 'Normal:NormalNC,MsgArea:NormalNC'
+         vim.cmd(up_cmd)
+		end,
+	})
 
-      command = function ()
-         last_laststatus  = opt.laststatus:get()
-         opt.laststatus   = 0
-         opt.winhighlight = 'Normal:NormalNC,MsgArea:NormalNC'
-         vcmd(up_cmd)
-      end
-   }, {
-      events = {
-         'FocusGained'
-      },
-
-      targets = {
-         '*'
-      },
-
-      command = function ()
-         opt.laststatus   = last_laststatus
-         opt.winhighlight = ''
-         vcmd(down_cmd)
-      end
-   }})
+	vim.api.nvim_create_autocmd('FocusGained', {
+		group    = augroup,
+		callback = function ()
+			vim.opt.laststatus   = last_laststatus
+         vim.opt.winhighlight = ''
+         vim.cmd(down_cmd)
+		end,
+	})
 end
 
 ---clear highlights.

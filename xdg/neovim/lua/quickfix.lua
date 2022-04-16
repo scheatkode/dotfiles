@@ -4,30 +4,29 @@
 ---
 ---@return function toggle_quickfix function to toggle quickfix
 local function setup ()
-   local vcmd       = vim.cmd
    local qf_is_open = false
-
-   local function follow_open_quickfix  () qf_is_open = true  end
-   local function follow_close_quickfix () qf_is_open = false end
 
    local function toggle_quickfix ()
       if qf_is_open then
-         vcmd('cclose')
+         vim.cmd('cclose')
          return
       end
 
-      vcmd('copen')
+      vim.cmd('copen')
    end
 
-   scheatkode.augroup('QuickFixToggle', {{
-      command = follow_open_quickfix,
-      events  = {'BufWinEnter'},
-      targets = {'quickfix'},
-   }, {
-      command = follow_close_quickfix,
-      events  = {'BufWinLeave'},
-      targets = {'*'},
-   }})
+   local augroup = vim.api.nvim_create_augroup('QuickFixToggle', {clear = true})
+
+   vim.api.nvim_create_autocmd('BufWinEnter', {
+      group    = augroup,
+      pattern  = 'quickfix',
+      callback = function () qf_is_open = true end,
+   })
+
+   vim.api.nvim_create_autocmd('BufWinLeave', {
+      group    = augroup,
+      callback = function () qf_is_open = false end,
+   })
 
    return toggle_quickfix
 end

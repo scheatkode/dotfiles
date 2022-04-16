@@ -1,7 +1,5 @@
 local h = require('scheatkode.highlight')
 
-local fn = vim.fn
-
 local function is_invalid_buffer()
    return
              vim.bo.filetype == ''
@@ -15,7 +13,6 @@ local function toggle_trailing(mode)
 
    if is_invalid_buffer() or scheatkode.is_floating_window() then
       vim.wo.list = false
-
       return
    end
 
@@ -28,55 +25,30 @@ local function toggle_trailing(mode)
       or  [[\s\+$]]
 
    if vim.w.whitespace_match_number then
-      fn.matchdelete(vim.w.whitespace_match_number)
-      fn.matchadd('ExtraWhitespace', pattern, 10, vim.w.whitespace_match_number)
+      vim.fn.matchdelete(vim.w.whitespace_match_number)
+      vim.fn.matchadd('ExtraWhitespace', pattern, 10, vim.w.whitespace_match_number)
 
       return
    end
 
-   vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
+   vim.w.whitespace_match_number = vim.fn.matchadd('ExtraWhitespace', pattern)
 end
 
 h.set_hl('ExtraWhitespace', { guifg = 'red' })
 
-scheatkode.augroup('WhitespaceHighlight', {{
-   events = {
-      'ColorScheme',
-   },
+local augroup = vim.api.nvim_create_augroup('WhitespaceHighlight', {clear = true})
 
-   targets = {
-      '*'
-   },
+vim.api.nvim_create_autocmd('ColorScheme', {
+	group    = augroup,
+	callback = function () h.set_hl('ExtraWhitespace', {guifg = 'red'}) end,
+})
 
-   command = function ()
-      h.set_hl('ExtraWhitespace', { guifg = 'red' })
-   end,
-}, {
-   events = {
-      'BufEnter',
-      'FileType',
-      'InsertLeave',
-   },
+vim.api.nvim_create_autocmd({'BufEnter', 'FileType', 'InsertLeave'}, {
+	group    = augroup,
+	callback = function () toggle_trailing('n') end,
+})
 
-   targets = {
-      '*',
-   },
-
-   command = function ()
-      toggle_trailing('n')
-   end,
-}, {
-   events = {
-      'InsertEnter',
-   },
-
-   targets = {
-      '*',
-   },
-
-   command = function ()
-      toggle_trailing('i')
-   end,
-}})
-
--- vim: set ft=lua:
+vim.api.nvim_create_autocmd('InsertEnter', {
+	group    = augroup,
+	callback = function () toggle_trailing('i') end,
+})
