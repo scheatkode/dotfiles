@@ -70,14 +70,12 @@ end
 vim.cmd('packadd justify') -- i simply cannot live without this
 vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 
-vim.cmd([[:command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G']])
-
 -- configuration
 
 require('scheatkode.global')
 require('scheatkode.settings')
 require('scheatkode.autocmds').setup()
-require('scheatkode.commands')
+require('scheatkode.commands').setup()
 require('scheatkode.mappings').setup()
 
 require('scheatkode.providers').disable()
