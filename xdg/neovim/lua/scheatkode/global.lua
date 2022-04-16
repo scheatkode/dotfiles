@@ -240,12 +240,6 @@ function scheatkode.is_directory(path)
    return fn.isdirectory(path) > 0
 end
 
---- Verify if the current window is a popup.
---- @return boolean
-function scheatkode.is_floating_window()
-   return fn.win_gettype() == 'popup'
-end
-
 --- Verify if a given number is truthy.
 --- @param value number
 function scheatkode.is_truthy(value)

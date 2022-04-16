@@ -11,7 +11,7 @@ end
 local function toggle_trailing(mode)
    assert(mode == 'n' or mode == 'i', 'Invalid mode: ' .. mode)
 
-   if is_invalid_buffer() or scheatkode.is_floating_window() then
+   if is_invalid_buffer() or vim.fn.win_gettype() == 'popup' then
       vim.wo.list = false
       return
    end

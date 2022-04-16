@@ -186,7 +186,7 @@ local function setup ()
    local function number_is_ignored()
       return
             vim.tbl_contains(number_buftype_ignored, vim.bo.buftype)
-         or scheatkode.is_floating_window()
+         or vim.fn.win_gettype() == 'popup'
    end
 
    --- Block list certain plugins and buffer types.
