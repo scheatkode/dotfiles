@@ -75,34 +75,19 @@ end
 local function dim_on_focus_lost (config)
    if not config.dim_on_focus_lost then return end
 
-   local function t (code)
-      return vim.api.nvim_replace_termcodes(code, true, true, true)
-   end
-
-   local last_laststatus = vim.opt.laststatus:get()
-
-   -- cache frequently used commands
-   local up_cmd   = sf('normal! %s', t('<C-e>'))
-   local down_cmd = sf('normal! %s', t('<C-y>'))
-
 	local augroup = vim.api.nvim_create_augroup('DimOnInactive', {clear = true})
 
 	vim.api.nvim_create_autocmd('FocusLost', {
 		group    = augroup,
 		callback = function ()
-			last_laststatus      = vim.opt.laststatus:get()
-         vim.opt.laststatus   = 0
          vim.opt.winhighlight = 'Normal:NormalNC,MsgArea:NormalNC'
-         vim.cmd(up_cmd)
 		end,
 	})
 
 	vim.api.nvim_create_autocmd('FocusGained', {
 		group    = augroup,
 		callback = function ()
-			vim.opt.laststatus   = last_laststatus
          vim.opt.winhighlight = ''
-         vim.cmd(down_cmd)
 		end,
 	})
 end
@@ -234,7 +219,7 @@ local function generate_highlights (colors, config)
       SpellLocal                        = { style = 'undercurl', guisp = colors.diag.warning },
       SpellRare                         = { style = 'undercurl', guisp = colors.diag.warning },
       StatusLine                        = { fg = colors.fg_dark, bg = colors.bg_status, style = 'NONE' },
-      StatusLineNC                      = { fg = colors.fg_comment, bg = colors.bg_status, style = 'NONE' },
+      StatusLineNC                      = { fg = colors.fg_comment, bg = colors.bg_dim, style = 'NONE' },
       TabLine                           = { bg = colors.bg_dark, fg = colors.bg_light3, style = 'NONE' },
       TabLineFill                       = { bg = colors.bg, style = 'NONE' },
       TabLineSel                        = { fg = colors.fg_dark, bg = colors.bg_light1, style = 'NONE' },
