@@ -1,6 +1,9 @@
 local function setup ()
-   vim.keymap.set('n',        '<leader>dv', require('dapui').toggle, {desc = 'Toggle debugging visuals'})
-   vim.keymap.set({'n', 'v'}, '<leader>de', require('dapui').eval,   {desc = 'Evaluate'})
+	local dapui = require('dapui')
+
+   vim.keymap.set('n',        '<leader>df', dapui.float_element, {desc = 'Toggle debugging visuals'})
+   vim.keymap.set('n',        '<leader>dv', dapui.toggle, {desc = 'Toggle debugging visuals'})
+   vim.keymap.set({'n', 'v'}, '<leader>de', dapui.eval,   {desc = 'Evaluate'})
 end
 
 return {

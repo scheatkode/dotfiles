@@ -26,33 +26,39 @@ dapui.setup {
       open   = { 'o', '<CR>' },
       remove = 'd',
       edit   = 'e',
+      repl   = 'r',
+      toggle = 't',
    },
 
    sidebar = {
-      open_on_start = true,
       elements      = {
-         'scopes',
-         'breakpoints',
-         'stacks',
-         'watches',
+         {id = 'scopes',      size = 0.25},
+         {id = 'breakpoints', size = 0.25},
+         {id = 'stacks',      size = 0.25},
+         {id = 'watches',     size = 0.25},
       },
       position = 'left',
-      width    = 40,
+      size     = 40,
    },
 
    tray = {
-      open_on_start = true,
-      elements      = {
-         'repl'
-      },
+      elements      = { 'repl' },
       position = 'bottom',
-      height   = 4,
+      size     = 10,
    },
 
    floating = {
       max_height = nil, -- These can be integers or a float between 0 and 1.
-      max_width  = nil   -- Floats will be treated as percentage of your screen.
-   }
+      max_width  = nil,  -- Floats will be treated as percentage of your screen.
+      border     = 'rounded',
+      mappings   = {
+      	close = {'q', '<Esc>'},
+      }
+   },
+
+   windows = {indent = 1},
+
+   render = {max_type_length = nil},
 }
 
 -- }}}
