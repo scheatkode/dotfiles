@@ -17,18 +17,6 @@ if not has_commentstring then
    print('‼ Tried loading treesitter-comment-string ... unsuccessfully.')
 end
 
--- additional parsers {{{1
-
-local treesitter_configs = require('nvim-treesitter.parsers').get_parser_configs()
-
-treesitter_configs.norg = {
-   install_info = {
-         url = 'https://github.com/vhyrro/tree-sitter-norg',
-       files = { 'src/parser.c', 'src/scanner.cc' },
-      branch = 'main'
-   }
-}
-
 -- setup {{{1
 
 treesitter.setup({
