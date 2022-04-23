@@ -45,6 +45,7 @@ treesitter.setup({
       'perl',
       'php',
       'python',
+      'query',
       'regex',
       'rust',
       'toml',
