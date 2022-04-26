@@ -58,7 +58,8 @@ return function (_, bufnr, settings)
    vim.keymap.set('n', '<leader>cr', vim.lsp.buf.references, {buffer = bufnr, desc = 'Show references'})
 
    -- code action {{{3
-   vim.keymap.set('x', '<leader>ca', vim.lsp.buf.code_action, {buffer = bufnr, desc = 'Code actions'})
+   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,       {buffer = bufnr, desc = 'Code actions'})
+   vim.keymap.set('x', '<leader>ca', vim.lsp.buf.range_code_action, {buffer = bufnr, desc = 'Range code actions'})
 
    -- hover documentation {{{3
    vim.keymap.set('n', '<leader>ch', vim.lsp.buf.hover, {buffer = bufnr, desc = 'Show documentation'})

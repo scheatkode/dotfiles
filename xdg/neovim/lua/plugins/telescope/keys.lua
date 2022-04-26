@@ -133,12 +133,6 @@ local function setup ()
       vim.keymap.set('n', '<leader>fi', actions.lsp_implementations)
       vim.keymap.set('n', '<leader>Fi', actions.lsp_implementations)
 
-      -- code_actions
-      vim.keymap.set('n', '<leader>ca', actions.lsp_code_actions)
-      vim.keymap.set('n', '<leader>Ca', actions.lsp_code_actions)
-      vim.keymap.set('n', '<leader>cA', actions.lsp_code_actions)
-      vim.keymap.set('n', '<leader>CA', actions.lsp_code_actions)
-
       -- document symbols
       vim.keymap.set('n', '<leader>fds', actions.lsp_document_symbols)
       vim.keymap.set('n', '<leader>Fds', actions.lsp_document_symbols)
