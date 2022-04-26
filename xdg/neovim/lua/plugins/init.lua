@@ -24,9 +24,13 @@ end
 -- @return boolean whether a sync is required
 --
 local packer_autoinstall = function (install_path)
-	if vim.fn.input('Looks empty here, should I brighten the place up ? (y/n): ') ~= 'y' then
-		return false
+	local choice = vim.fn.input('Looks empty here, should I brighten the place up ? (yes/no): '):lower()
+
+	while choice ~= 'yes' and choice ~= 'no' do
+		choice = vim.fn.input('Just type the full word so that I make sure (yes/no): '):lower()
 	end
+
+	if choice == 'no' then return false end
 
    vim.fn.system({
       'git',
