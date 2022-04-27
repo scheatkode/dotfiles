@@ -177,9 +177,9 @@ local function generate_highlights (colors, config)
       CursorLine                        = { bg = colors.bg_light0 },
       CursorColumn                      = { link = 'CursorLine' },
       Directory                         = { fg = colors.fn },
-      DiffAdd                           = { fg = 'NONE', bg = colors.diff.add },
-      DiffChange                        = { fg = 'NONE', bg = colors.diff.change },
-      DiffDelete                        = { fg = colors.git.removed, bg = colors.diff.delete, style = 'none' },
+      DiffAdd                           = { bg = m.alter(colors.git.added, -70) },
+      DiffChange                        = { bg = m.alter(colors.git.changed, -70) },
+      DiffDelete                        = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70), style = 'none' },
       DiffText                          = { fg = 'NONE', bg = colors.diff.text },
       EndOfBuffer                       = { fg = colors.bg },
       -- TermCursor                     = {},
@@ -195,7 +195,6 @@ local function generate_highlights (colors, config)
       CursorLineNr                      = { fg = colors.diag.warning, bg = 'NONE', style = 'bold' },
       MatchParen                        = { fg = colors.diag.warning, bg = 'NONE', style = 'bold' },
       ModeMsg                           = { fg = colors.diag.warning, style = 'bold', bg = 'NONE' },
-      -- MsgArea                           = { fg = colors.fg_dark, bg = 'NONE' },
       MsgArea                           = { link = 'NormalNC' },
       -- MsgSeparator                   = {},
       MoreMsg                           = { fg = colors.diag.info, bg = colors.bg, style = 'NONE' },
@@ -397,9 +396,9 @@ local function generate_highlights (colors, config)
       -- illuminatedCurWord             = {},
 
       -- Git
-      diffAdded                         = { fg = colors.git.added },
-      diffRemoved                       = { fg = colors.git.removed },
-      diffDeleted                       = { fg = colors.git.removed },
+      diffAdded                         = { fg = colors.git.added,   bg = m.alter(colors.git.added,   -70) },
+      diffRemoved                       = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
+      diffDeleted                       = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
       diffChanged                       = { fg = colors.git.changed },
       diffOldFile                       = { fg = colors.git.removed },
       diffNewFile                       = { fg = colors.git.added },
@@ -408,13 +407,13 @@ local function generate_highlights (colors, config)
       -- diffIndexLine                  = { link = 'Identifier' },
 
       -- Neogit
-      -- NeogitBranch                   = {},
-      -- NeogitRemote                   = {},
-      -- NeogitHunkHeader               = {},
-      -- NeogitHunkHeaderHighlight      = {},
-      -- NeogitDiffContextHighlight     = {},
-      -- NeogitDiffDeleteHighlight      = {},
-      -- NeogitDiffAddHighlight         = {},
+      NeogitBranch                   = { fg = colors.constant },
+      NeogitRemote                   = { fg = colors.type },
+      NeogitHunkHeader               = { bg = colors.bg_dim },
+      NeogitHunkHeaderHighlight      = { bg = colors.bg_dim },
+      NeogitDiffContextHighlight     = { bg = colors.bg_dark, fg = colors.fg_dark },
+      NeogitDiffDeleteHighlight      = { fg = m.alter(colors.git.removed, -5), bg = m.alter(colors.git.removed, -65) },
+      NeogitDiffAddHighlight         = { fg = m.alter(colors.git.added,   -5), bg = m.alter(colors.git.added,   -65) },
 
       -- GitGutter
       -- GitGutterAdd                   = {},
@@ -422,9 +421,9 @@ local function generate_highlights (colors, config)
       -- GitGutterDelete                = {},
 
       -- GitSigns
-      GitSignsAdd                       = { link = 'diffAdded' },
-      GitSignsChange                    = { link = 'diffChanged' },
-      GitSignsDelete                    = { link = 'diffDeleted' },
+      GitSignsAdd                       = { fg = colors.git.added },
+      GitSignsChange                    = { fg = colors.git.changed },
+      GitSignsDelete                    = { fg = colors.git.removed },
       GitSignsDeleteLn                  = { fg = 'NONE', bg = colors.diff.delete },
 
       -- Telescope                      = {},
