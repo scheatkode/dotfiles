@@ -44,8 +44,6 @@ gitsigns.setup({
    linehl = false,
    numhl  = false,
 
-   trouble = true,
-
    watch_gitdir = {
       interval = 1000,
    },
