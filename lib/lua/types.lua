@@ -1,0 +1,22 @@
+--- @generic A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T
+---
+--- @alias A A
+--- @alias B B
+--- @alias C C
+--- @alias D D
+--- @alias E E
+--- @alias F F
+--- @alias G G
+--- @alias H H
+--- @alias I I
+--- @alias J J
+--- @alias K K
+--- @alias L L
+--- @alias M M
+--- @alias N N
+--- @alias O O
+--- @alias P P
+--- @alias Q Q
+--- @alias R R
+--- @alias S S
+--- @alias T T

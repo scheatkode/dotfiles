@@ -20,7 +20,7 @@ vim.diagnostic.config({
 ---apply the given diagnostic signs configuration, or the
 ---defaults otherwise.
 ---
----@param overrides table options table
+---@param overrides? table options table
 local function setup (overrides)
    local options = tablex.deep_extend('force', defaults, overrides or {})
 

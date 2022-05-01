@@ -660,7 +660,7 @@ function m.current () return current_colorscheme end
 ---colorscheme not been found.
 ---
 --- @param colorscheme string name of the colorscheme
---- @param config table configuration to override the defaults with
+--- @param config? table configuration to override the defaults with
 function m.load (colorscheme, config)
    local has_colors, colors = pcall(require, 'colors.' .. colorscheme)
 

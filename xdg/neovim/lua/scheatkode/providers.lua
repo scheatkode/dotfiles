@@ -10,7 +10,7 @@ local defaults = {
 }
 
 ---disable neovim providers. by default, disables all providers.
----@param overrides table providers to keep.
+---@param overrides? table providers to keep.
 local function disable(overrides)
    local providers = tablex.deep_extend('force', defaults, overrides or {})
 

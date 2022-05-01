@@ -17,46 +17,25 @@
 --- assert.same(6, f('foo'))
 --- ```
 ---
---- @generic A
---- @generic B
---- @generic C
---- @generic D
---- @generic E
---- @generic F
---- @generic G
---- @generic H
---- @generic I
---- @generic J
---- @generic K
---- @generic L
---- @generic M
---- @generic N
---- @generic O
---- @generic P
---- @generic Q
---- @generic R
---- @generic S
---- @generic T
----
---- @type fun(ab: fun(...: any): B): fun(...: any): B
---- @type fun(ab: fun(...: any): B, fun(b: B): C): fun(...: any): C
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D): fun(...: any): D
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E): fun(...: any): E
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F): fun(...: any): F
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G): fun(...: any): G
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H): fun(...: any): H
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I): fun(...: any): I
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J): fun(...: any): J
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K): fun(...: any): K
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L): fun(...: any): L
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M): fun(...: any): M
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N): fun(...: any): N
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O): fun(...: any): O
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O, fun(c: O): P): fun(...: any): P
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O, fun(c: O): P, fun(c: P): Q): fun(...: any): Q
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O, fun(c: O): P, fun(c: P): Q, fun(c: Q): R): fun(...: any): R
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O, fun(c: O): P, fun(c: P): Q, fun(c: Q): R, fun(c: R): S): fun(...: any): S
---- @type fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(c: D): E, fun(c: E): F, fun(c: F): G, fun(c: G): H, fun(c: H): I, fun(c: I): J, fun(c: J): K, fun(c: K): L, fun(c: L): M, fun(c: M): N, fun(c: N): O, fun(c: O): P, fun(c: P): Q, fun(c: Q): R, fun(c: R): S, fun(c: S): T): fun(...: any): T
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L, fun(l: L): M, fun(m: M): N, fun(n: N): O, fun(o: O): P, fun(p: P): Q, fun(q: Q): R, fun(r: R): S, fun(s: S): T): T
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L, fun(l: L): M, fun(m: M): N, fun(n: N): O, fun(o: O): P, fun(p: P): Q, fun(q: Q): R, fun(r: R): S): S
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L, fun(l: L): M, fun(m: M): N, fun(n: N): O, fun(o: O): P, fun(p: P): Q, fun(q: Q): R): R
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L, fun(l: L): M, fun(m: M): N, fun(n: N): O, fun(o: O): P, fun(p: P): Q): Q
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L, fun(l: L): M, fun(m: M): N, fun(n: N): O, fun(o: O): P): P
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L, fun(l: L): M, fun(m: M): N, fun(n: N): O): O
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L, fun(l: L): M, fun(m: M): N): N
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L, fun(l: L): M): M
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K, fun(k: K): L): L
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J, fun(j: J): K): K
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I, fun(i: I): J): J
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H, fun(h: H): I): I
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G, fun(g: G): H): H
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F, fun(f: F): G): G
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E, fun(e: E): F): F
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D, fun(d: D): E): E
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C, fun(c: C): D): D
+--- @overload fun(ab: fun(...: any): B, fun(b: B): C): C
+--- @overload fun(ab: fun(...: any): B): B
 local function compose (...)
 
    -- unrolling the first 20 iterations of the loop  for  better
