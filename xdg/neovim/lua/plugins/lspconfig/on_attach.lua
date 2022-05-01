@@ -26,7 +26,7 @@ local border = {
 
 }
 
-return function (_, bufnr, settings)
+return function (client, bufnr, settings)
 
    -- omnifunc setup {{{2
 
@@ -94,9 +94,11 @@ return function (_, bufnr, settings)
 
    -- autocommands {{{2
 
-   local augroup = vim.api.nvim_create_augroup('lsp_document_highlight', {clear = true})
-   vim.api.nvim_create_autocmd('CursorHold',  {buffer = 0, group = augroup, callback = vim.lsp.buf.document_highlight})
-   vim.api.nvim_create_autocmd('CursorMoved', {buffer = 0, group = augroup, callback = vim.lsp.buf.clear_references})
+   if client.server_capabilities.documentHighlightProvider then
+   	local augroup = vim.api.nvim_create_augroup('lsp_document_highlight', {clear = true})
+   	vim.api.nvim_create_autocmd('CursorHold',  {buffer = 0, group = augroup, callback = vim.lsp.buf.document_highlight})
+   	vim.api.nvim_create_autocmd('CursorMoved', {buffer = 0, group = augroup, callback = vim.lsp.buf.clear_references})
+   end
 
    -- plugins {{{2
 
