@@ -1,3 +1,6 @@
+" Vim syntax file
+" Language: Cisco configuration
+
 " for version 5.x: clear all syntax items
 " for later versions: quit when a syntax file was already loaded
 if version < 600
@@ -4620,41 +4623,27 @@ syntax match   keyword                 /cable upstream/
 syntax match   keyword                 /cable dhcp-giaddr/
 syntax match   keyword                 /cable downstream/
 
-" define the default highlighting.
-" for version 5.7 and earlier: only when not done already
-" for version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_cisco_syntax_inits")
-   if version < 508
-      let did_cisco_syntax_inits = 1
-      command -nargs=+ HiLink hi link <args>
-   else
-      command -nargs=+ HiLink hi def link <args>
-   endif
-
-   HiLink ciscoaction          Error
-   HiLink ciscoargument        String
-   HiLink ciscocomment         Comment
-   HiLink ciscocondition       Type
-   HiLink ciscoconfiguration   Identifier
-   HiLink ciscodanger          Error
-   HiLink ciscodescription     keyword
-   HiLink ciscodescriptiontext Comment
-   HiLink ciscofunctionality   Function
-   HiLink ciscoidentifier      String
-   HiLink ciscointerface       keyword
-   HiLink ciscointerfacename   String
-   HiLink ciscoip              Type
-   HiLink ciscoip6             Type
-   HiLink ciscokeyword         keyword
-   HiLink ciscono              Tag
-   HiLink ciscoprotocol        Type
-   HiLink ciscoroute           keyword
-   HiLink ciscorouteip         Type
-   HiLink ciscoroutemask       Type
-   HiLink ciscostring          String
-
-   delcommand HiLink
-endif
+hi def link ciscoaction          Error
+hi def link ciscoargument        String
+hi def link ciscocomment         Comment
+hi def link ciscocondition       Type
+hi def link ciscoconfiguration   Identifier
+hi def link ciscodanger          Error
+hi def link ciscodescription     keyword
+hi def link ciscodescriptiontext Comment
+hi def link ciscofunctionality   Function
+hi def link ciscoidentifier      String
+hi def link ciscointerface       keyword
+hi def link ciscointerfacename   String
+hi def link ciscoip              Type
+hi def link ciscoip6             Type
+hi def link ciscokeyword         keyword
+hi def link ciscono              Tag
+hi def link ciscoprotocol        Type
+hi def link ciscoroute           keyword
+hi def link ciscorouteip         Type
+hi def link ciscoroutemask       Type
+hi def link ciscostring          String
 
 let &cpo = s:keepcpo
 unlet s:keepcpo
