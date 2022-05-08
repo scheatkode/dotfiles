@@ -33,3 +33,15 @@
 ;; //        ╰─ captures ─╯
 ;; ```
 (named_imports (import_specifier) @swappable)
+
+;; properties of objects
+;;
+;; ```typescript
+;; const obj = { property1: 1, property2: 2 }
+;; //            ╰──────────╯  ╰──────────╯
+;; //                 ╰─ captures ─╯
+;; func({ property1, property2 })
+;; //     ╰───────╯  ╰───────╯
+;; //        ╰─ captures ─╯
+;; ```
+(object (_) @swappable)
