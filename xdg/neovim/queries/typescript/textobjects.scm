@@ -1,3 +1,12 @@
+;; formal parameters in function declarations
+;;
+;; ```typescript
+;; const func = (x: number,  y = 0) => 2 * x + y
+;; //            ╰───────╯   ╰───╯
+;; //              ╰─ captures ─╯
+;; ```
+(formal_parameters (_) @swappable)
+
 ;; arguments in function call expressions
 ;;
 ;; ```typescript
