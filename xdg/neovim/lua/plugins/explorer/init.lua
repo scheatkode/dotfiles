@@ -1,20 +1,33 @@
-return {'kyazdani42/nvim-tree.lua', opt = true,
-   cmd = {
-      'NvimTreeToggle',
-      'NvimTreeOpen',
-      'NvimTreeClose',
-      'NvimTreeFindFile',
-   },
+return {
 
-   keys = {
-      '<F1>',
-   },
+	'nvim-neo-tree/neo-tree.nvim',
+	branch = 'v2.x',
 
-   wants    = { 'nvim-web-devicons'            },
-   requires = { 'kyazdani42/nvim-web-devicons' },
+	opt = true,
 
-   config = function ()
-      require('plugins.explorer.config')
-      require('plugins.explorer.keys').setup()
-   end,
+	cmd  = 'Neotree',
+	keys = {
+		'<F1>',
+	},
+
+	wants = {
+		'nvim-web-devicons',
+		'nui.nvim',
+	},
+
+	requires = {
+		'nvim-lua/plenary.nvim',
+		'kyazdani42/nvim-web-devicons',
+		'MunifTanjim/nui.nvim',
+	},
+
+	setup = function()
+		vim.g.neo_tree_remove_legacy_commands = 1
+	end,
+
+	config = function()
+		require('plugins.explorer.config').setup()
+		require('plugins.explorer.keys').setup()
+	end,
+
 }
