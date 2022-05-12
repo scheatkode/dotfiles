@@ -74,9 +74,7 @@ require('diagnostics').setup()
 
 require('colors').load('gruvvy')
 
-if not require('plugins') then
-   return false
-end
+require('plugins').setup()
 
 require('scheatkode.whitespace')
 -- require('scheatkode.numbers')
