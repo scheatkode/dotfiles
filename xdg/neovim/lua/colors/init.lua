@@ -446,6 +446,49 @@ local function generate_highlights (colors, config)
       NvimTreeGitStaged                 = { fg = colors.git.added },
       NvimTreeOpenedFile                = { fg = colors.special, style = 'italic'},
 
+      -- NeoTree
+		NeoTreeBufferNumber       = { fg = colors.constant }, -- The buffer number shown in the buffers source.
+		-- NeoTreeCursorLine          = {}, -- |hl-CursorLine| override in Neo-tree window.
+		NeoTreeDimText            = { link = 'NormalNC' }, -- Greyed out text used in various places.
+		-- NeoTreeDirectoryIcon      = {}, -- Directory icon.
+		-- NeoTreeDirectoryName      = {}, -- Directory name.
+		-- NeoTreeDotfile            = {}, -- Used for icons and names when dotfiles are filtered.
+		-- NeoTreeFileIcon           = {}, -- File icon, when not overriden by devicons.
+		-- NeoTreeFileName           = {}, -- File name, when not overwritten by another status.
+		-- NeoTreeFileNameOpened     = {}, -- File name when the file is open.
+		-- NeoTreeFilterTerm         = {}, -- The filter term, as displayed in the root node.
+		NeoTreeFloatBorder        = { link = 'FloatBorder' }, -- The border for pop-up windows.
+		-- NeoTreeFloatTitle         = {}, -- Used for the title text of pop-ups when the border-style
+		--                           is set to another style than "NC". This is derived
+		--                           from NeoTreeFloatBorder.
+		-- NeoTreeTitleBar           = {}, -- Used for the title bar of pop-ups, when the border-style
+		--                           is set to "NC". This is derived from NeoTreeFloatBorder.
+		-- NeoTreeGitAdded           = {}, -- File name when the git status is added.
+		-- NeoTreeGitConflict        = {}, -- File name when the git status is conflict.
+		-- NeoTreeGitDeleted         = {}, -- File name when the git status is deleted.
+		-- NeoTreeGitIgnored         = {}, -- File name when the git status is ignored.
+		-- NeoTreeGitModified        = {}, -- File name when the git status is modified.
+		-- NeoTreeGitUnstaged        = {}, -- Used for git unstaged symbol.
+		-- NeoTreeGitUntracked       = {}, -- File name when the git status is untracked.
+		-- NeoTreeGitStaged          = {}, -- Used for git staged symbol.
+		-- NeoTreeHiddenByName       Used for icons and names when `hide_by_name` is used.
+		NeoTreeIndentMarker       = { fg = colors.bg_light1 }, -- The style of indentation markers (guides). By default,
+		--                           the "Normal" highlight is used.
+		NeoTreeExpander           = config.darken_sidebar and {fg = colors.fg_dark} or { fg = colors.fg }, -- Used for collapsed/expanded icons.
+		NeoTreeNormal             = { link = 'NormalSB' }, -- |hl-Normal| override in Neo-tree window.
+		NeoTreeNormalNC           = { link = 'NormalSB' }, -- |hl-NormalNC| override in Neo-tree window.
+		-- NeoTreeSignColumn         = {}, -- |hl-SignColumn| override in Neo-tree window.
+		-- NeoTreeStatusLine         = {}, -- |hl-StatusLine| override in Neo-tree window.
+		-- NeoTreeStatusLineNC       = {}, -- |hl-StatusLineNC| override in Neo-tree window.
+		-- NeoTreeVertSplit          = {}, -- |hl-VertSplit| override in Neo-tree window.
+		-- NeoTreeWinSeparator       = {}, -- |hl-WinSeparator| override in Neo-tree window.
+		-- NeoTreeEndOfBuffer        = {}, -- |hl-EndOfBuffer| override in Neo-tree window.
+		-- NeoTreeRootName           = {}, -- The name of the root node.
+		-- NeoTreeSymbolicLinkTarget = {}, -- Symbolic link target.
+		-- NeoTreeTitleBar           = {}, -- Used for the title bar of pop-ups, when the border-style
+		--                           is set to "NC". This is derived from NeoTreeFloatBorder.
+		-- NeoTreeWindowsHidden      = {}, -- Used for icons and names that are hidden on Windows.
+
       -- Fern
       -- FernBranchText                 = {},
 
