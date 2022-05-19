@@ -45,3 +45,12 @@
 ;; //        ╰─ captures ─╯
 ;; ```
 (object (_) @swappable)
+
+;; type arguments
+;;
+;; ```typescript
+;; const defaults: Omit<'some_options', Options> = {}
+;; //                    ╰──────────╯  ╰──────╯
+;; //                        ╰─ captures ─╯
+;; ```
+(type_arguments (_) @swappable)
