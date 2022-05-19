@@ -6,6 +6,7 @@ return {
 		require('user.mappings.custom.command').setup()
 		require('user.mappings.custom.escape').setup()
 		require('user.mappings.custom.highlight').setup()
+		require('user.mappings.custom.jumplist').setup()
 		require('user.mappings.custom.lines').setup()
 		require('user.mappings.custom.macro').setup()
 		require('user.mappings.custom.modifiers').setup()
