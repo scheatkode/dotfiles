@@ -344,7 +344,7 @@ local function setup()
 				['<C-s>'] = 'open_split',
 				['<C-v>'] = 'open_vsplit',
 				['C']     = 'close_node',
-				['z']     = 'close_all_nodes',
+				['Z']     = 'close_all_nodes',
 				['R']     = 'refresh',
 
 				['a'] = {
