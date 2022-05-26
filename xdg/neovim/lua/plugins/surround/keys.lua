@@ -6,6 +6,13 @@ local function setup ()
 
    vim.keymap.set({'n', 'x'}, '<leader>tsa', '<Plug>(operator-sandwich-add)', {remap = true, desc = 'Add surrounding character'})
 
+   vim.keymap.set('n', '<leader>sd', '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)',  {remap = true, desc = 'Delete surrounding character'})
+   vim.keymap.set('n', '<leader>sD', '<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',   {remap = true, desc = 'Delete surrounding character automatically'})
+   vim.keymap.set('n', '<leader>sc', '<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)', {remap = true, desc = 'Change surrounding character'})
+   vim.keymap.set('n', '<leader>sC', '<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',  {remap = true, desc = 'Change surrounding character automatically'})
+
+   vim.keymap.set({'n', 'x'}, '<leader>sa', '<Plug>(operator-sandwich-add)', {remap = true, desc = 'Add surrounding character'})
+
    vim.keymap.set({'x', 'o'}, 'is', '<Plug>(textobj-sandwich-query-i)',         {remap = true, desc = 'Select inside surrounding character'})
    vim.keymap.set({'x', 'o'}, 'as', '<Plug>(textobj-sandwich-query-a)',         {remap = true, desc = 'Select around surrounding character'})
    vim.keymap.set({'x', 'o'}, 'iS', '<Plug>(textobj-sandwich-auto-i)',          {remap = true, desc = 'Select inside surrounding character automatically'})
