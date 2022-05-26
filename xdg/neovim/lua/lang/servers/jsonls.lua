@@ -28,7 +28,11 @@ return {
       '--stdio'
    },
 
-   filetypes = { 'json' },
+   filetypes = {
+   	'json',
+   	'jsonc',
+   },
+
    root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd()),
 
    settings = (function ()
