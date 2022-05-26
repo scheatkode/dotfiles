@@ -39,6 +39,7 @@ local languages = {
    go = 'gopls',
 
    tailwindcss = 'tailwindcss',
+   svelte = 'svelte',
 
    salt_ls = 'salt_ls',
    ltex = 'ltex',
