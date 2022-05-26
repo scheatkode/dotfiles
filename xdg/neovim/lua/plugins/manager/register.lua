@@ -105,7 +105,7 @@ local function setup()
 		use(require 'plugins.notes')
 		use(require 'plugins.bufdel')
 
-		use { 'kevinhwang91/nvim-bqf' }
+		use(require 'plugins.quickfix')
 
 		use(require 'plugins.indent')
 		use(require 'plugins.align')   -- alignment made easy
