@@ -651,17 +651,23 @@ local function generate_highlights(colors, config)
 		-- HopNextKey2                    = {},
 		-- HopUnmatched                   = {},
 
-		-- Lightspeed
-		LightspeedLabel                   = { fg = colors.number, style = 'bold,underline' },
-		LightspeedLabelDistant            = { fg = colors.string, style = 'bold,underline' },
-		LightspeedLabelDistantOverlapped  = { fg = colors.string, style = 'underline' },
-		LightspeedLabelOverlapped         = { fg = colors.number, style = 'underline' },
-		LightspeedMaskedChar              = { bg = colors.identifier },
-		LightspeedOneCharMatch            = { bg = colors.number, fg = colors.fg, style = 'bold' },
-		LightspeedPendingOpArea           = { bg = colors.number, fg = colors.fg },
-		LightspeedShortcut                = { bg = colors.number, fg = colors.fg, style = 'bold,underline' },
-		LightspeedUnlabeledMatch          = { fg = colors.type, style = 'bold' },
-		-- LightspeedGreyWash             = { link = 'Comment' },
+		-- -- Lightspeed
+		-- LightspeedLabel                   = { fg = colors.number, style = 'bold,underline' },
+		-- LightspeedLabelDistant            = { fg = colors.string, style = 'bold,underline' },
+		-- LightspeedLabelDistantOverlapped  = { fg = colors.string, style = 'underline' },
+		-- LightspeedLabelOverlapped         = { fg = colors.number, style = 'underline' },
+		-- LightspeedMaskedChar              = { bg = colors.identifier },
+		-- LightspeedOneCharMatch            = { bg = colors.number, fg = colors.fg, style = 'bold' },
+		-- LightspeedPendingOpArea           = { bg = colors.number, fg = colors.fg },
+		-- LightspeedShortcut                = { bg = colors.number, fg = colors.fg, style = 'bold,underline' },
+		-- LightspeedUnlabeledMatch          = { fg = colors.type, style = 'bold' },
+		-- -- LightspeedGreyWash             = { link = 'Comment' },
+
+		-- Leap
+		LeapMatch                         = { fg = colors.fg, bg = colors.number, style = 'bold' },
+		LeapLabelPrimary                  = { fg = colors.fg, bg = colors.number, style = 'bold' },
+		LeapLabelSecondary                = { fg = colors.type, style = 'bold' },
+		LeapBackdrop                      = { fg = colors.fg_comment, style = 'italic' },
 
 		-- Cmp
 		CmpDocumentation                  = { fg = colors.fg, bg = colors.bg_popup },
