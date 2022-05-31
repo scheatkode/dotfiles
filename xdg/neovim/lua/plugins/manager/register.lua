@@ -100,6 +100,7 @@ local function setup()
 		--- miscellaneous plugins
 
 		use(require 'plugins.movement')
+		use(require 'plugins.harpoon')
 		use(require 'plugins.splitjoin')
 		use(require 'plugins.todo')
 		use(require 'plugins.notes')
