@@ -1,4 +1,4 @@
-return {'ggandor/lightspeed.nvim', opt = true,
+return {'ggandor/leap.nvim', opt = true,
    keys = {
       's',
       'S',
