@@ -66,6 +66,7 @@ BEGIN {
    font["y"][0] = ""
    font["z"][0] = ""
    font[" "][0] = ""
+   font["-"][0] = ""
 
 split("░▀█░x░░█░x░▀▀▀",   font["1"], "x")
 split("░▀▀▄x░▄▀░x░▀▀▀",   font["2"], "x")
@@ -104,6 +105,7 @@ split("░█░█x░▄▀▄x░▀░▀",   font["x"], "x")
 split("░█░█x░░█░x░░▀░",   font["y"], "x")
 split("░▀▀█x░▄▀░x░▀▀▀",   font["z"], "x")
 split("░░x░░x░░",         font[" "], "x")
+split("░░░░x░▀▀▀x░░░░",   font["-"], "x")
 
 }
 
