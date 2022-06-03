@@ -29,7 +29,7 @@ describe('compatibilty', function ()
 
       describe('of package.searchpath', function ()
          it('should match the original function behaviour when a package is found', function ()
-            local path = 'lib/lua/?.lua'
+            local path = 'lib/lua/?/init.lua'
 
             assert.is_truthy(
                compat
