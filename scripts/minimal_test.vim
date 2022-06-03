@@ -24,4 +24,6 @@ lua << EOF
          pack_path
       )
    end
+
+	require('plenary.test_harness').test_directory('.')
 EOF

@@ -1,13 +1,7 @@
 test:
-	@nvim                                            \
-		--headless                                    \
-		--noplugin                                    \
-		--clean                                       \
-		-u tests/minimal.vim                          \
-		-c "                                          \
-			PlenaryBustedDirectory tests               \
-				{ minimal_init = 'tests/minimal.vim' }, \
-				{ sequential }                          \
-			"                                          \
+	@nvim                          \
+		--headless                  \
+		--noplugin                  \
+		--clean                     \
+		-u scripts/minimal_test.vim \
 		-c "qa"
-
