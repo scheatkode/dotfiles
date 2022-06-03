@@ -24,4 +24,6 @@ bind-key -n M-a set-option key-table prefix
 bind-key q      set-option key-table root
 bind-key Escape set-option key-table root
 
+# To avoid confusion, we return to the root "insert" mode
+# whenever the client is detached.
 set-hook -g client-detached[0] 'set-option key-table root'

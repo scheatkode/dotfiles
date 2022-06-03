@@ -32,8 +32,8 @@ set-option -sa terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256
 
 # Events and monitoring.
 
-set-option -s  escape-time      0
-set-option -s  focus-events     on
+set-option -s escape-time  0
+set-option -s focus-events on
 
 set-option -wg bell-action      none
 set-option -g  visual-activity  off
@@ -42,10 +42,10 @@ set-option -g  visual-silence   on
 set-option -wg monitor-activity on
 set-option -wg monitor-bell     off
 
-set-option -g  repeat-time      150
+set-option -g repeat-time 150
 
-set-option -s  exit-empty       off
-set-option -s  buffer-limit     200
+set-option -s exit-empty   off
+set-option -s buffer-limit 200
 
 # Search options.
 
@@ -58,8 +58,8 @@ set-option -g wrap-search     on
 set-option -qg  status-utf8 on
 set-option -qwg utf8        on
 
-set-option -g   editor      nvim
-set-option -g   mouse       off # keyboard masterrace
+set-option -g editor nvim
+set-option -g mouse  off # keyboard masterrace
 
 set-option -g detach-on-destroy off
 
@@ -71,13 +71,12 @@ set-option -g mode-keys     vi
 
 # UI options.
 
-set-option -g  base-index      1
-set-option -wg pane-base-index 1
-
-set-option -wg automatic-rename on
+set-option -g  base-index       1
+set-option -wg pane-base-index  1
 set-option -g  renumber-windows on
 
-set-option -g set-titles on
+set-option -wg automatic-rename on
+set-option -g  set-titles       on
 
 set-option -g display-panes-time 1500
 set-option -g display-time       500

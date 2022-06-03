@@ -101,8 +101,6 @@ set-option -g message-style fg=${pale_yellow}
 
 # Panes.
 
-# set-option -g pane-border-lines        off
-# set-option -g pane-border-lines        ""
 set-option -g pane-border-status       off
 set-option -g pane-border-style        fg=${dark0_dim},bg=${dark0_dim}
 set-option -g pane-active-border-style fg=${dark0_dim},bg=${dark0_dim}

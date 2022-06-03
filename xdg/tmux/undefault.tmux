@@ -11,6 +11,13 @@
 #                                                              #
 #==============================================================#
 
+# TMUX's defaults suffer like most software's keybindings in
+# that it requires the user to blindly learn them by heart since
+# there is no logic to them.
+#
+# This unbinds most of the defaults so we have a clean slate to
+# work with.
+
 unbind-key "\$"      # rename-session
 unbind-key ","       # rename-window
 unbind-key "%"       # split-window -h
