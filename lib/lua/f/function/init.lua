@@ -1,11 +1,15 @@
 return {
-   apply     = require('f.function.apply'),
-   identity  = require('f.function.identity'),
-   flip      = require('f.function.flip'),
+	apply    = require('f.function.apply'),
+	flip     = require('f.function.flip'),
+	identity = require('f.function.identity'),
 
-   increment = require('f.function.increment'),
-   decrement = require('f.function.decrement'),
+	decrement = require('f.function.decrement'),
+	increment = require('f.function.increment'),
 
-   flow      = require('f.function.flow'),
-   pipe      = require('f.function.pipe'),
+	compose = require('f.function.compose'),
+	pipe    = require('f.function.pipe'),
+
+	-- operators
+
+	not_equal = require('f.function.not_equal')
 }
