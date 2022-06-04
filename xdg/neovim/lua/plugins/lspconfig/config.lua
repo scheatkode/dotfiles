@@ -43,6 +43,8 @@ local languages = {
 
    salt_ls = 'salt_ls',
    ltex = 'ltex',
+
+   texlab = 'texlab'
 }
 
 -- server configuration {{{1
