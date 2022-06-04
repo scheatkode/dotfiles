@@ -21,7 +21,8 @@ ps -o state= -o comm= -t '#{pane_tty}' \
 bind-key \; command-prompt
 
 # Scratch terminal for quick commands.
-bind-key t popup -E \; set-option key-table root
+bind-key t display-popup -E -b rounded -d '#{pane_current_path}' \; \
+	set-option key-table root
 
 # Reload configuration.
 bind-key M-r \
