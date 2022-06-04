@@ -229,6 +229,9 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
     bpick:'*64*linux*'                                     \
      pick:'xh-*/xh'                                        \
          @ducaale/xh                                       \
+   atpull:'mv gomplate* gomplate > /dev/null 2>&1'         \
+    bpick:'*linux*amd64*slim'                              \
+         @hairyhenderson/gomplate                          \
     bpick:'*linux*64'                                      \
        mv:'sampler* -> sampler'                            \
          @sqshq/sampler                                    \
@@ -269,6 +272,7 @@ zinit wait:'1b' silent from:gh-r as:program for \
     id-as:'pueued'                              \
     bpick:'pueued-*linux*64*'                   \
    atload:'pueued --daemonize > /dev/null 2>&1' \
+   atpull:'mv pueue* pueued > /dev/null 2>&1'   \
        mv:'pueued-* -> pueued'                  \
             @Nukesor/pueue                      \
    atload:'eval "$(zoxide init zsh)"'           \
