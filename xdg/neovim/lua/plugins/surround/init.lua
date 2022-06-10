@@ -6,6 +6,7 @@ return {'machakann/vim-sandwich', opt = true,
       { 'n', '<leader>sd'  },
       { 'n', '<leader>sC'  },
       { 'n', '<leader>sD'  },
+      { 'v', '<leader>sa'  },
 
       { 'n', '<leader>ts'  },
       { 'n', '<leader>tsa' },
