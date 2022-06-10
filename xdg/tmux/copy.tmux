@@ -34,9 +34,9 @@ if 'command -v xsel > /dev/null' {
 
 if 'command -v xclip > /dev/null' {
    bind-key p run \
-      'tmux set-buffer "$(xclip -out -selection clipboard)"; tmux paste-buffer'
+      'tmux set-buffer "$(xclip -out -selection clipboard)"; tmux paste-buffer \; set-option key-table root'
 }
 if 'command -v xsel > /dev/null' {
    bind-key p run \
-      'tmux set-buffer "$(xsel -i --clipboard); tmux paste-buffer'
+      'tmux set-buffer "$(xsel -i --clipboard); tmux paste-buffer \; set-option key-table root'
 }
