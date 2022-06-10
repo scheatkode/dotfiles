@@ -71,14 +71,14 @@ set-option -g status-style    bg=${dark0_dim},fg=${light1},none
 
 set-option -g status-left-length 25
 set-option -g status-left "\
-#[fg=${pale_aqua}#,bg=${dark0_dim}]#{?#{==:#{client_key_table},prefix},#[fg=${faded_orange}],} ●   \
-#[fg=${dark1}#,bg=${dark0_dim}] %H:%M │ \
-%d-%m-%y"
+#[fg=${pale_aqua}#,bg=${dark0_dim}]#{?#{==:#{client_key_table},prefix},#[fg=${faded_orange}],} ●"
 
 # Right side of status bar.
 
 set-option -g status-right-length 30
-set-option -g status-right '' # TODO(scheatkode): CPU monitor
+set-option -g status-right "\
+#[fg=${dark1}#,bg=${dark0_dim}] %H:%M │ \
+%d/%m/%Y   "
 
 # Window tab style.
 
