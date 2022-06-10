@@ -38,6 +38,7 @@ local languages = {
 
    go = 'gopls',
 
+   eslint     = 'eslint',
    tailwindcss = 'tailwindcss',
    svelte = 'svelte',
 	css = 'cssls',
