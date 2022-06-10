@@ -40,6 +40,7 @@ local languages = {
 
    tailwindcss = 'tailwindcss',
    svelte = 'svelte',
+	css = 'cssls',
 
    salt_ls = 'salt_ls',
    ltex = 'ltex',
