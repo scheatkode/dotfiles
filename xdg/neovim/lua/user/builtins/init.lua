@@ -2,12 +2,15 @@
 ---startup performance. Whenever needed, these can be manually
 ---loaded.
 local function setup(overrides)
+	local fmt = string.format
+	local set = vim.api.nvim_set_var
 	local defaults = {
 		['2html_plugin']  = false,
 		getscript         = false,
 		getscriptPlugin   = false,
 		gzip              = false,
 		logipat           = false,
+		man               = false,
 		matchit           = false,
 		matchparen        = false,
 		netrw             = false,
@@ -18,6 +21,7 @@ local function setup(overrides)
 		spellfile_plugin  = false,
 		tar               = false,
 		tarPlugin         = false,
+		tutor_mode_plugin = false,
 		vimball           = false,
 		vimballPlugin     = false,
 		zip               = false,
@@ -26,8 +30,8 @@ local function setup(overrides)
 
 	local builtins = vim.tbl_extend('force', defaults, overrides or {})
 
-	for _, plugin in ipairs(builtins) do
-		vim.g['loaded_' .. plugin] = 2
+	for name, enabled in pairs(builtins) do
+		if enabled == false then set(fmt('loaded_%s', name), 2) end
 	end
 end
 
