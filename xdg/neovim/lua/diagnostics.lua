@@ -15,6 +15,9 @@ vim.diagnostic.config({
    virtual_text     = {
       spacing = 3,
    },
+   float = {
+   	source = 'always',
+   },
 })
 
 ---apply the given diagnostic signs configuration, or the
