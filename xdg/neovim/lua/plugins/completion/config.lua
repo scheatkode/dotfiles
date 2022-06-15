@@ -116,6 +116,11 @@ completion.setup({
       end, {'i', 's'})
    },
 
+   performance = {
+		debounce = 500,
+		throttle = 500,
+   },
+
    sources = completion.config.sources({
       { name = 'luasnip'  },
       { name = 'calc'     },
