@@ -89,6 +89,9 @@ neorg.setup({
 				toc_split_placement = 'right',
 			},
 		},
+
+		['core.export'] = {},
+		['core.export.markdown'] = {},
 	},
 
 	hook = function()
