@@ -99,12 +99,12 @@ treesitter.setup({
          set_jumps = true,
 
          goto_next_start = {
-            [']f'] = '@function.inner',
-            [']c'] = '@class.outer',
-            [']b'] = '@block.outer',
-            [']C'] = '@comment.outer',
-            [']i'] = '@conditional.outer',
-            [']l'] = '@loop.outer',
+            [']f'] = {'@function.inner'},
+            [']c'] = {'@class.outer'},
+            [']b'] = {'@block.outer'},
+            [']C'] = {'@comment.outer'},
+            [']i'] = {'@conditional.outer'},
+            [']l'] = {'@loop.outer'},
          },
 
          goto_next_end = {
@@ -112,12 +112,12 @@ treesitter.setup({
          },
 
          goto_previous_start = {
-            ['[f'] = '@function.inner',
-            ['[c'] = '@class.outer',
-            ['[b'] = '@block.outer',
-            ['[C'] = '@comment.outer',
-            ['[i'] = '@conditional.outer',
-            ['[l'] = '@loop.outer',
+            ['[f'] = {'@function.inner'},
+            ['[c'] = {'@class.outer'},
+            ['[b'] = {'@block.outer'},
+            ['[C'] = {'@comment.outer'},
+            ['[i'] = {'@conditional.outer'},
+            ['[l'] = {'@loop.outer'},
          },
 
          goto_previous_end = {
@@ -150,11 +150,11 @@ treesitter.setup({
          enable    = true,
 
          swap_next = {
-            ['<leader>cs'] = '@swappable',
+            ['<leader>cs'] = {'@swappable'},
          },
 
          swap_previous = {
-            ['<leader>cS'] = '@swappable',
+            ['<leader>cS'] = {'@swappable'},
          },
       },
    },
