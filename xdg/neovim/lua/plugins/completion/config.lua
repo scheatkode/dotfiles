@@ -117,7 +117,7 @@ completion.setup({
    },
 
    performance = {
-		debounce = 500,
+		debounce = 200,
 		throttle = 500,
    },
 
