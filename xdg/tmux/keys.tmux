@@ -195,6 +195,11 @@ bind-key -T copy-mode-vi M-j select-pane -D
 bind-key -T copy-mode-vi M-k select-pane -U
 bind-key -T copy-mode-vi M-l select-pane -R
 
+# Sending panes to other windows.
+
+bind-key -T window-table f command-prompt -p "get pane from window #:" "join-pane -s ':%%'"
+bind-key -T window-table t command-prompt -p "send pane to window #:"  "join-pane -t ':%%'"
+
 # Choose sub-table {{{1
 
 bind-key c switch-client -T choose-table
