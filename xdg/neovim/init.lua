@@ -38,7 +38,7 @@ vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 require('user.builtins').setup()
 
 require('scheatkode.global')
-require('scheatkode.settings')
+require('user.settings').setup()
 require('scheatkode.autocmds').setup()
 require('scheatkode.commands').setup()
 require('user.mappings').setup()
