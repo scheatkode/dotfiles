@@ -23,5 +23,9 @@ return {
 			'cursor',
 			'folds'
 		}
+
+		vim.opt.clipboard = {
+			'unnamedplus', -- unified clipboard, yay ~
+		}
 	end
 }
