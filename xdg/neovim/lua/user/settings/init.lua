@@ -6,8 +6,10 @@
 
 return {
 	setup = function()
-		vim.g.do_filetype_lua    = 1
-		vim.g.did_load_filetypes = 0
+		if vim.fn.has('nvim-0.8') == 0 then
+			vim.g.do_filetype_lua    = 1
+			vim.g.did_load_filetypes = 0
+		end
 
 		require('user.settings.compat').setup()
 		require('user.settings.interface').setup()
