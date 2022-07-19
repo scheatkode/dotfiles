@@ -137,3 +137,43 @@ function stopwatch () {
 		sleep 0.2
 	done
 }
+
+function compress-pdf () {
+	if ! command -v gs > /dev/null 2>&1
+	then
+		echo 'You need to install ghostscript to proceed'
+		return 1
+	fi
+
+	if [ -z "${1}" ]
+	then
+		echo 'I need a file to work on'
+		return 1
+	fi
+
+	for filename in "${@}"
+	do
+		__compress-one-pdf "${filename}"
+	done
+}
+
+function __compress-one-pdf () {
+	gs                                            \
+			-q                                      \
+			-dNOPAUSE                               \
+			-dBATCH                                 \
+			-dSAFER                                 \
+			-sDEVICE=pdfwrite                       \
+			-dCompatibilityLevel=1.4                \
+			-dPDFSETTINGS=/screen                   \
+			-dEmbedAllFonts=true                    \
+			-dSubsetFonts=true                      \
+			-dColorImageDownsampleType=/Bicubic     \
+			-dColorImageResolution=144              \
+			-dGrayImageDownsampleType=/Bicubic      \
+			-dGrayImageResolution=144               \
+			-dMonoImageDownsampleType=/Bicubic      \
+			-dMonoImageResolution=144               \
+			-sOutputFile="${1%.pdf}_compressed.pdf" \
+		"${1}"
+}
