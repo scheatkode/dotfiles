@@ -1,4 +1,3 @@
 xrdb -load "${XDG_CONFIG_HOME}/x11/resources"
 setxkbmap -layout dvorak
-# picom --xrender-sync-fence -bc
 exec awesome
