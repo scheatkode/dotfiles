@@ -1,3 +1,3 @@
 xrdb -load "${XDG_CONFIG_HOME}/x11/resources"
-setxkbmap -layout dvorak
+setxkbmap -layout us -variant dvorak -option keypad:hex -option lv3:ralt_switch
 exec awesome
