@@ -11,6 +11,7 @@ local function setup()
 
 		use { 'wbthomason/packer.nvim' }
 
+		use(require 'plugins.modes')
 
 		-- miscellaneous requirements {{{
 
