@@ -7,8 +7,8 @@ local type = type
 local has_lspconfig, _ = pcall(require, 'lspconfig')
 
 if not has_lspconfig then
-   print('‼ Tried loading lspconfig for omnisharp ... unsuccessfully.')
-   return has_lspconfig
+	print('‼ Tried loading lspconfig for omnisharp ... unsuccessfully.')
+	return has_lspconfig
 end
 
 --- Recursively flatten a table.
@@ -18,35 +18,35 @@ end
 --- @param key string Current key
 --- @param value any Current value
 --- @return table _ flattened table
-local function flatten (acc, sep, key, value)
-   if type(value) ~= 'table' then
-      acc[key] = value
-      return acc
-   end
+local function flatten(acc, sep, key, value)
+	if type(value) ~= 'table' then
+		acc[key] = value
+		return acc
+	end
 
-   if til(value) then
-      for i = 1, #value do
-         flatten(
-            acc,
-            ':',
-            sf('%s%s%s', key, sep, i - 1),
-            value[i]
-         )
-      end
+	if til(value) then
+		for i = 1, #value do
+			flatten(
+				acc,
+				':',
+				sf('%s%s%s', key, sep, i - 1),
+				value[i]
+			)
+		end
 
-      return acc
-   end
+		return acc
+	end
 
-   for k, v in pairs(value) do
-      flatten(
-         acc,
-         ':',
-         sf('%s%s%s', key, sep, k),
-         v
-      )
-   end
+	for k, v in pairs(value) do
+		flatten(
+			acc,
+			':',
+			sf('%s%s%s', key, sep, k),
+			v
+		)
+	end
 
-   return acc
+	return acc
 end
 
 --- OmniSharp's settings as a table
@@ -57,104 +57,92 @@ end
 --- sweeps for unreferenced objects.
 ---
 --- @return table _ OmniSharp settings table
-local function omnisharp_settings ()
-   return {
-      useModernNet = true,
+local function omnisharp_settings()
+	return {
+		useModernNet = true,
 
-      formattingOptions = {
-         enableEditorConfigSupport = true,
-         indentBlock = true,
-         indentBraces = false,
-         indentSwitchCaseSection = true,
-         indentSwitchCaseSectionWhenBlock = true,
-         indentSwitchSection = true,
-         indentationSize = 3,
-         labelPositioning = 'oneLess',
-         newLine = '\n',
-         newLineForCatch = true,
-         newLineForClausesInQuery = true,
-         newLineForElse = false,
-         newLineForFinally = true,
-         newLineForMembersInAnonymousTypes = true,
-         newLineForMembersInObjectInit = true,
-         newLinesForBracesInAccessors = true,
-         newLinesForBracesInAnonymousMethods = false,
-         newLinesForBracesInAnonymousTypes = false,
-         newLinesForBracesInControlBlocks = false,
-         newLinesForBracesInLambdaExpressionBody = false,
-         newLinesForBracesInMethods = true,
-         newLinesForBracesInObjectCollectionArrayInitializers = true,
-         newLinesForBracesInProperties = true,
-         newLinesForBracesInTypes = true,
-         organizeImports = true,
-         spaceAfterCast = true,
-         spaceAfterColonInBaseTypeDeclaration = true,
-         spaceAfterComma = true,
-         spaceAfterControlFlowStatementKeyword = true,
-         spaceAfterDot = false,
-         spaceAfterMethodCallName = false,
-         spaceAfterSemicolonsInForStatement = true,
-         spaceBeforeColonInBaseTypeDeclaration = true,
-         spaceBeforeComma = false,
-         spaceBeforeDot = false,
-         spaceBeforeOpenSquareBracket = false,
-         spaceBeforeSemicolonsInForStatement = false,
-         spaceBetweenEmptyMethodCallParentheses = false,
-         spaceBetweenEmptyMethodDeclarationParentheses = false,
-         spaceBetweenEmptySquareBrackets = false,
-         spaceWithinCastParentheses = false,
-         spaceWithinExpressionParentheses = false,
-         spaceWithinMethodCallParentheses = false,
-         spaceWithinMethodDeclarationParenthesis = false,
-         spaceWithinOtherParentheses = false,
-         spaceWithinSquareBrackets = true,
-         spacesIgnoreAroundVariableDeclaration = false,
-         spacingAfterMethodDeclarationName = true,
-         spacingAroundBinaryOperator = 'single',
-         tabSize = 3,
-         useTabs = false,
-         wrappingKeepStatementsOnSingleLine = true,
-         wrappingPreserveSingleLine = true,
-      },
+		formattingOptions = {
+			enableEditorConfigSupport = true,
+			indentBlock = true,
+			indentBraces = false,
+			indentSwitchCaseSection = true,
+			indentSwitchCaseSectionWhenBlock = true,
+			indentSwitchSection = true,
+			indentationSize = 3,
+			labelPositioning = 'oneLess',
+			newLine = '\n',
+			newLineForCatch = true,
+			newLineForClausesInQuery = true,
+			newLineForElse = false,
+			newLineForFinally = true,
+			newLineForMembersInAnonymousTypes = true,
+			newLineForMembersInObjectInit = true,
+			newLinesForBracesInAccessors = true,
+			newLinesForBracesInAnonymousMethods = false,
+			newLinesForBracesInAnonymousTypes = false,
+			newLinesForBracesInControlBlocks = false,
+			newLinesForBracesInLambdaExpressionBody = false,
+			newLinesForBracesInMethods = true,
+			newLinesForBracesInObjectCollectionArrayInitializers = true,
+			newLinesForBracesInProperties = true,
+			newLinesForBracesInTypes = true,
+			organizeImports = true,
+			spaceAfterCast = true,
+			spaceAfterColonInBaseTypeDeclaration = true,
+			spaceAfterComma = true,
+			spaceAfterControlFlowStatementKeyword = true,
+			spaceAfterDot = false,
+			spaceAfterMethodCallName = false,
+			spaceAfterSemicolonsInForStatement = true,
+			spaceBeforeColonInBaseTypeDeclaration = true,
+			spaceBeforeComma = false,
+			spaceBeforeDot = false,
+			spaceBeforeOpenSquareBracket = false,
+			spaceBeforeSemicolonsInForStatement = false,
+			spaceBetweenEmptyMethodCallParentheses = false,
+			spaceBetweenEmptyMethodDeclarationParentheses = false,
+			spaceBetweenEmptySquareBrackets = false,
+			spaceWithinCastParentheses = false,
+			spaceWithinExpressionParentheses = false,
+			spaceWithinMethodCallParentheses = false,
+			spaceWithinMethodDeclarationParenthesis = false,
+			spaceWithinOtherParentheses = false,
+			spaceWithinSquareBrackets = true,
+			spacesIgnoreAroundVariableDeclaration = false,
+			spacingAfterMethodDeclarationName = true,
+			spacingAroundBinaryOperator = 'single',
+			tabSize = 3,
+			useTabs = false,
+			wrappingKeepStatementsOnSingleLine = true,
+			wrappingPreserveSingleLine = true,
+		},
 
-      roslynExtensionsOptions = {
-         documentAnalysisTimeoutMs  = 10000,
-         enableAnalyzersSupport     = true,
-         enableDecompilationSupport = true,
-         enableImportCompletion     = true,
-      },
-   }
+		roslynExtensionsOptions = {
+			documentAnalysisTimeoutMs  = 10000,
+			enableAnalyzersSupport     = true,
+			enableDecompilationSupport = true,
+			enableImportCompletion     = true,
+		},
+	}
 end
 
 --- Make the full environment to pass to OmniSharp.
 ---
 --- @return table _ Flattened environment table for OmniSharp.
 local function make_environment()
-   local settings = flatten({}, '_', 'OMNISHARP', omnisharp_settings())
-   local home_env = {
-      OMNISHARPHOME = vim.fn.expand('$XDG_DATA_HOME') .. '/omnisharp'
-   }
+	local settings = flatten({}, '_', 'OMNISHARP', omnisharp_settings())
+	local home_env = {
+		OMNISHARPHOME = vim.fn.expand('$XDG_DATA_HOME') .. '/omnisharp'
+	}
 
-   return tablex.deep_extend('keep', settings, home_env)
+	return tablex.deep_extend('keep', settings, home_env)
 end
 
 return {
-   cmd = {
-      'dotnet',
+	filetypes = {
+		'cs',
+		'vb'
+	},
 
-      sf(
-         '%s/lsp_servers/omnisharp/omnisharp/OmniSharp.dll',
-         vim.fn.stdpath('data')
-      ),
-
-      '--languageserver',
-      '--hostPID', tostring(vim.fn.getpid())
-   },
-
-   filetypes = {
-      'cs',
-      'vb'
-   },
-
-   cmd_env  = make_environment()
+	cmd_env = make_environment()
 }

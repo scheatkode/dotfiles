@@ -8,19 +8,6 @@ end
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
 return {
-	cmd = {
-		vim.fn.expand(table.concat({
-			vim.fn.stdpath('data'),
-			'lsp_servers',
-			'tsserver',
-			'node_modules',
-			'typescript-language-server',
-			'lib',
-			'cli.js',
-		}, '/')),
-		'--stdio'
-	},
-
 	filetypes = {
 		'javascript',
 		'javascriptreact',
