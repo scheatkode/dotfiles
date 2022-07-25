@@ -5,8 +5,7 @@ local typex = require('typex')()
 
 local on_attach = require('plugins.lspconfig.on_attach')
 
-local has_lspinstall, lspinstall = pcall(require, 'nvim-lsp-installer')
-local has_lspconfig,  lspconfig  = pcall(require, 'lspconfig')
+local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
 
 local log = require('log')
 
@@ -53,13 +52,6 @@ local languages = {
 
 local configure_servers = function(language_list)
    local capabilities = require('lang.capabilities')
-   local installer
-
-   if not has_lspinstall then
-      log.warn('Unable to install language servers automatically.', '‼ lsp')
-   else
-      installer = require('nvim-lsp-installer.servers')
-   end
 
    f
    .iterate(language_list)
@@ -73,14 +65,6 @@ local configure_servers = function(language_list)
          )
 
          return
-      end
-
-      if has_lspinstall then
-         local has_lsp_server, lsp_server = installer.get_server(server)
-
-         if has_lsp_server and not lsp_server:is_installed() then
-            lsp_server:install()
-         end
       end
 
       local function run_hook (hook, client, bufnr, s)
