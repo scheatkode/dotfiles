@@ -40,6 +40,7 @@ local function setup()
 
 		use(require 'plugins.dap')
 		use(require 'plugins.dapui')
+		use(require 'plugins.testing')
 
 		use(require 'plugins.annotation')
 
