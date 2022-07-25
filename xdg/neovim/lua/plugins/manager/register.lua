@@ -21,12 +21,13 @@ local function setup()
 		-- }}}
 		-- completion, lsp clients, debuggers, and snippets plugins {{{
 
-		use(require 'plugins.lspinstall') -- powered by williamboman/nvim-lsp-installer
-		use(require 'plugins.lspconfig')  -- powered by neovim/nvim-lspconfig
-		use(require 'plugins.lspstatus')  -- powered by nvim-lua/lsp-status.nvim
+		use(require 'plugins.mason')           -- powered by williamboman/mason.nvim
+		use(require 'plugins.mason-lspconfig') -- powered by williamboman/mason-lspconfig.nvim
+		use(require 'plugins.lspconfig')       -- powered by neovim/nvim-lspconfig
+		use(require 'plugins.lspstatus')       -- powered by nvim-lua/lsp-status.nvim
 		use(require 'plugins.lint')
-		use(require 'plugins.signature')  -- powered by xray/lsp_signature
-		use(require 'plugins.symbols')    -- powered by simrat39/symbols-outline
+		use(require 'plugins.signature')       -- powered by xray/lsp_signature
+		use(require 'plugins.symbols')         -- powered by simrat39/symbols-outline
 
 		use(require 'plugins.snippets')   -- powered by L3MON4D3/LuaSnip
 		use(require 'plugins.snippets-catalog')

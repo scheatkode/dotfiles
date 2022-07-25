@@ -1,12 +1,14 @@
 return { 'neovim/nvim-lspconfig', opt = true,
-   event = { 'BufReadPre' },
-   cmd   = {
-      'LspStatus',
-      'LspStart',
-      'LspInfo',
-   },
-   module = { 'lspconfig' },
-   config = function ()
-      require('plugins.lspconfig.config')
-   end,
+	cmd    = {
+		'LspStatus',
+		'LspStart',
+		'LspInfo',
+	},
+	event  = { 'BufReadPre' },
+	module = { 'lspconfig' },
+
+	config = function()
+		require('mason').setup()
+		require('plugins.lspconfig.config')
+	end,
 }
