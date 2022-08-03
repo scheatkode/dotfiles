@@ -44,6 +44,7 @@ local languages = {
 
    salt_ls = 'salt_ls',
    ltex = 'ltex',
+   html = 'html',
 
    texlab = 'texlab'
 }
