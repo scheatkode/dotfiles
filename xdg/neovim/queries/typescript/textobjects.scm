@@ -17,3 +17,17 @@
 ;; //                        ╰─ captures ─╯
 ;; ```
 (type_arguments (_) @swappable)
+
+;; Properties in type declarations.
+;;
+;; ```typescript
+;; interface ISomething {
+;;    property: number
+;; // ╰──────────────╯
+;; //        ╰──────────────────╮
+;;    other_property: number // │
+;; // ╰────────────────────╯    │
+;; //      ╰─ captures ─────────╯
+;; }
+;; ```
+(property_signature) @swappable
