@@ -35,7 +35,7 @@
 ;; //     ╰───────╯  ╰───────╯
 ;; //        ╰─ captures ─╯
 ;; ```
-(object (_) @swappable)
+(object (pair) @swappable)
 
 ;; Items of arrays.
 ;;
