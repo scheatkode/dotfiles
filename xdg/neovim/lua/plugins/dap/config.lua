@@ -8,7 +8,10 @@ local log = require('log')
 -- globals
 
 local debuggers = {
-	'go'
+	'go',
+	'node2',
+	'javascript',
+	'typescript',
 }
 
 -- debugger configuration
