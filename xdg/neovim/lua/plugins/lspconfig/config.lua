@@ -41,6 +41,7 @@ local languages = {
    tailwindcss = 'tailwindcss',
    svelte = 'svelte',
 	css = 'cssls',
+	prisma = 'prismals',
 
    salt_ls = 'salt_ls',
    ltex = 'ltex',
