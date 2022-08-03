@@ -1,13 +1,16 @@
-return {'jose-elias-alvarez/null-ls.nvim', opt = true,
-   ft     = require('plugins.lint.filetypes'),
-   module = 'null-ls',
+return {
+	'jose-elias-alvarez/null-ls.nvim',
 
-   requires = {
-      'neovim/nvim-lspconfig',
-      'nvim-lua/plenary.nvim',
-   },
+	opt    = true,
+	ft     = require('plugins.lint.filetypes'),
+	module = 'null-ls',
 
-   config = function ()
-      require('plugins.lint.config')
-   end,
+	requires = {
+		'neovim/nvim-lspconfig',
+		'nvim-lua/plenary.nvim',
+	},
+
+	config = function()
+		require('plugins.lint.config')
+	end,
 }
