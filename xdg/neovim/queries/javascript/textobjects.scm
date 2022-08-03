@@ -25,7 +25,7 @@
 ;; ```
 (ternary_expression [consequence: (_) alternative: (_)] @swappable)
 
-;; properties of objects
+;; Properties of objects.
 ;;
 ;; ```javascript
 ;; const obj = { property1: 1, property2: 2 }
@@ -37,7 +37,7 @@
 ;; ```
 (object (_) @swappable)
 
-;; properties of objects
+;; Items of arrays.
 ;;
 ;; ```javascript
 ;; const arr = [ member1, member2 ]

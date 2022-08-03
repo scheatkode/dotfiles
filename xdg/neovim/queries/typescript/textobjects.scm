@@ -1,6 +1,6 @@
-; inherits javascript
+; inherits: javascript
 
-;; identifiers in named imports
+;; Identifiers in named imports.
 ;;
 ;; ```typescript
 ;; import { access, ftruncate } from 'fs'
@@ -9,7 +9,7 @@
 ;; ```
 (named_imports (import_specifier) @swappable)
 
-;; type arguments
+;; Type arguments.
 ;;
 ;; ```typescript
 ;; const defaults: Omit<'some_options', Options> = {}
