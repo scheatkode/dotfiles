@@ -1,5 +1,3 @@
---- localise vim globals
-
 local extensions = require('lang.extensions')
 
 local border = {
@@ -75,8 +73,8 @@ return function (client, bufnr, settings)
    vim.keymap.set('n', '<leader>cL', vim.diagnostic.setloclist, {buffer = bufnr, desc = 'Send diagnostics to loclist'})
    vim.keymap.set('n', '<leader>cq', vim.diagnostic.setqflist,  {buffer = bufnr, desc = 'Send diagnostics to qflist'})
 
-   vim.keymap.set('n', '[d', function () vim.diagnostic.goto_prev({popup_opts = {border = 'ronded'}}) end, {buffer = bufnr, desc = 'Go to previous diagnostic'})
-   vim.keymap.set('n', ']d', function () vim.diagnostic.goto_next({popup_opts = {border = 'ronded'}}) end, {buffer = bufnr, desc = 'Go to next diagnostic'})
+   vim.keymap.set('n', '[d', function () vim.diagnostic.goto_prev({float = false}) end, {buffer = bufnr, desc = 'Go to previous diagnostic'})
+   vim.keymap.set('n', ']d', function () vim.diagnostic.goto_next({float = false}) end, {buffer = bufnr, desc = 'Go to next diagnostic'})
 
    -- signature help {{{3
    vim.keymap.set({'n', 'x'}, '<M-s>', vim.lsp.buf.signature_help, {buffer = bufnr, desc = 'Show signature help'})
