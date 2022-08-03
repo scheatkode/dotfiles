@@ -277,6 +277,7 @@ zinit wait:'1b' silent from:gh-r as:program for \
             @Nukesor/pueue                      \
    atload:'eval "$(zoxide init zsh)"'           \
      pick:'zoxide'                              \
+      src:'completions/_zoxide'                 \
             @ajeetdsouza/zoxide                 \
    atload:'alias diff="delta"'                  \
      pick:'delta*/delta'                        \
