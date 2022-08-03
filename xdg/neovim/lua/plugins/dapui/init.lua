@@ -1,18 +1,18 @@
 return {
-   'rcarriga/nvim-dap-ui',
+	'rcarriga/nvim-dap-ui',
 
-   opt = true,
+	opt = true,
 
-   keys = {
-      '<leader>de',
-      '<leader>dv',
-   },
+	keys = {
+		'<leader>de',
+		'<leader>dv',
+	},
 
-   modules = { 'dapui'    },
-   after   = { 'nvim-dap' },
+	modules = { 'dapui' },
+	after   = { 'nvim-dap' },
 
-   config  = function ()
-      require('plugins.dapui.config')
-      require('plugins.dapui.keys').setup()
-   end,
+	config = function()
+		require('plugins.dapui.config')
+		require('plugins.dapui.keys').setup()
+	end,
 }
