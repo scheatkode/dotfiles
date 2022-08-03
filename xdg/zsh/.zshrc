@@ -333,13 +333,6 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 --color=info:#d79921,prompt:#d65d0e,pointer:#fe8019
 --color=marker:#689d6a,spinner:#b16286,header:#83a598'
 
-# ---------------------------------------------------------------------------- #
-#                            Alias configuration                               #
-# ---------------------------------------------------------------------------- #
-
-alias vol=alsamixer
-alias v=nvim
-
 # Finalize p10k configuration.
 
 (( ! ${+functions[p10k]} )) || p10k finalize
