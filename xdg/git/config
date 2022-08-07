@@ -26,6 +26,17 @@
    editor = nvim
    pager  = delta
 
+[color]
+	branch      = auto
+	diff        = auto
+	interactive = auto
+	status      = auto
+
+[color "status"]
+	added     = green
+	changed   = yellow
+	untracked = magenta
+
 [delta]
    line-numbers = true
    syntax-theme = gruvbox-dark
