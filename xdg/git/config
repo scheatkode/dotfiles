@@ -42,12 +42,42 @@
    syntax-theme = gruvbox-dark
 
 [alias]
-   st       = status -sb
    branches = branch --format='%(color:magenta)%(authorname)%(color:reset) %(HEAD) %(align:right,15)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(contents:subject) %(color:green)(%(committerdate:relative))%(color:reset)' --sort=-committerdate
-
    last     = log -1 HEAD --stat
    unstage  = reset HEAD --
    uncommit = reset HEAD^
+
+   st = "!f() {                      \
+ 		awk -vOFS='' '                 \
+			NR==FNR {                   \
+				all[i++] = $0;           \
+				difffiles[$1] = $0;      \
+				next;                    \
+			}                           \
+                                     \
+			! ($2 in difffiles) {       \
+				print;                   \
+				next;                    \
+			}                           \
+                                     \
+			{                           \
+				gsub($2, difffiles[$2]); \
+				print;                   \
+			}                           \
+                                     \
+			END {                       \
+				if (NR != FNR) {         \
+					exit;                 \
+				}                        \
+                                     \
+				for (i in all) {         \
+					print all[i];         \
+				}                        \
+			}                           \
+ 		'                              \
+ 		<(git diff --color --stat=$(($(tput cols) - 3)) HEAD | sed '$d; s/^ //') \
+ 		<(git -c color.status=always status -sb );                               \
+   }; f"
 
    history  = "!f() {       \
    	git                   \
