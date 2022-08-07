@@ -2,26 +2,34 @@
    name       = scheatkode
    email      = scheatkode@gmail.com
    signingkey = 0550819B9F997638
+
 [commit]
    gpgsign  = true
    cleanup  = strip
    template = ~/.config/git/message
    verbose  = true
+
 [push]
    default = current
+
 [pull]
    ff     = only
    rebase = true
+
 [rebase]
    autoStash = true
+
 [init]
    defaultBranch = main
+
 [core]
    editor = nvim
    pager  = delta
+
 [delta]
    line-numbers = true
    syntax-theme = gruvbox-dark
+
 [alias]
    st       = status -sb
    branches = branch --format='%(color:magenta)%(authorname)%(color:reset) %(HEAD) %(align:right,15)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(contents:subject) %(color:green)(%(committerdate:relative))%(color:reset)' --sort=-committerdate
