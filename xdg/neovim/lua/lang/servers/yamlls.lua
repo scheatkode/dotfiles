@@ -8,6 +8,7 @@ end
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
 return {
+	autostart = false,
 	filetypes = { 'yaml' },
 	root_dir  = lspconfig.util.root_pattern('.git', vim.fn.getcwd())
 }
