@@ -1,5 +1,12 @@
-return { 'Glench/Vim-Jinja2-Syntax', opt = true,
-   config = function ()
-      require('log').info('Plugin loaded', 'jinja2-syntax')
-   end,
+return {
+	'Glench/Vim-Jinja2-Syntax',
+
+	opt = true,
+
+	ft = {
+		'jinja',
+		'j2',
+		'sls',
+		'yaml'
+	},
 }
