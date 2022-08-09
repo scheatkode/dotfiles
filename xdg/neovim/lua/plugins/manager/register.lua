@@ -87,7 +87,6 @@ local function setup()
 		use(require 'plugins.treesitter-textobjects')
 		use(require 'plugins.treesitter-comment-string')
 
-		use(require 'plugins.syntax.salt')
 		use(require 'plugins.syntax.jinja')
 		use(require 'plugins.syntax.twig')
 		use(require 'plugins.syntax.plantuml')
