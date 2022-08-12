@@ -13,7 +13,7 @@ return {'numToStr/Comment.nvim', opt = true,
    },
 
    config = function ()
-      require('plugins.comment.config')
+      require('plugins.comment.config').setup()
       require('plugins.comment.keys').setup()
    end
 }
