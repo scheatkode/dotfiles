@@ -92,6 +92,7 @@ ls.setup({
 		luacheck,
 
 		ls.builtins.diagnostics.vale,
+		ls.builtins.diagnostics.yamllint,
 
 		ls.builtins.formatting.black,
 		ls.builtins.formatting.shfmt,
