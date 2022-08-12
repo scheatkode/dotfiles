@@ -20,22 +20,10 @@ runtime! syntax/yaml.vim
 syntax include @Yaml  syntax/yaml.vim
 syntax include @Jinja syntax/jinja.vim
 
-let s:load_jinja_syntax = findfile('syntax/jinja.vim', &runtimepath, 1) != ''
-
-if s:load_jinja_syntax
-	syntax cluster jinjaSLSBlocks add=jinjaTagBlock,jinjaVarBlock,jinjaComment
-	syntax region  jinjaTagBlock  matchgroup=jinjaTagDelim     start=/{%-\?/ end=/-\?%}/ containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaRaw,jinjaString,jinjaNested,jinjaComment,@jinjaSLSBlocks
-	syntax region  jinjaVarBlock  matchgroup=jinjaVarDelim     start=/{{-\?/ end=/-\?}}/ containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaRaw,jinjaString,jinjaNested,jinjaComment,@jinjaSLSBlocks
-	syntax region  jinjaComment   matchgroup=jinjaCommentDelim start="{#" end="#}" containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaString,@jinjaSLSBlocks
-else
-	" Fall back to Django template syntax
-	syntax include @Jinja syntax/django.vim
-
-	syntax cluster djangoBlocks   add=djangoTagBlock,djangoVarBlock,djangoComment,djangoComBlock
-	syntax region  djangoTagBlock start="{%" end="%}" contains=djangoStatement,djangoFilter,djangoArgument,djangoTagError display containedin=ALLBUT,@djangoBlocks
-	syntax region  djangoVarBlock start="{{" end="}}" contains=djangoFilter,djangoArgument,djangoVarError display containedin=ALLBUT,@djangoBlocks
-	syntax region  djangoComBlock start="{#" end="#}" contains=djangoTodo containedin=ALLBUT,@djangoBlocks
-endif
+syntax cluster jinjaslsblocks add=jinjatagblock,jinjavarblock,jinjacomment
+syntax region  jinjatagblock  matchgroup=jinjatagdelim     start=/{%-\?/ end=/-\?%}/ containedin=ALLBUT,jinjatagblock,jinjavarblock,jinjaraw,jinjastring,jinjanested,jinjacomment,@jinjaslsblocks
+syntax region  jinjavarblock  matchgroup=jinjavardelim     start=/{{-\?/ end=/-\?}}/ containedin=ALLBUT,jinjatagblock,jinjavarblock,jinjaraw,jinjastring,jinjanested,jinjacomment,@jinjaslsblocks
+syntax region  jinjacomment   matchgroup=jinjacommentdelim start="{#" end="#}" containedin=ALLBUT,jinjatagblock,jinjavarblock,jinjastring,@jinjaslsblocks
 
 syntax keyword salt_stateInclude     include extend containedin=yamlBlockMappingKey
 syntax keyword salt_stateSpecialArgs name names check_cmd listen listen_in onchanges onchanges_in onfail onfail_in onlyif prereq prereq_in require require_in unless use use_in watch watch_in containedin=yamlBlockMappingKey
