@@ -79,7 +79,7 @@ hi def link jinjacommentdelim jinjacomment
 hi def link jinjarawdelim     jinja
 
 hi def link jinjaspecial      Special
-hi def link jinjaoperator     Normal
+hi def link jinjaoperator     Operator
 hi def link jinjaraw          Normal
 hi def link jinjatagblock     PreProc
 hi def link jinjavarblock     PreProc
