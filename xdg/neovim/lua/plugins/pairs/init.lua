@@ -6,5 +6,6 @@ return { 'windwp/nvim-autopairs', opt = true,
 
 	config = function()
 		require('plugins.pairs.config').setup()
+		require('plugins.pairs.rules').setup()
 	end,
 }

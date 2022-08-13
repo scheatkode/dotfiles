@@ -10,9 +10,6 @@ return {
 			return has_pairs
 		end
 
-		local rule = require('nvim-autopairs.rule')
-		local cond = require('nvim-autopairs.conds')
-
 		if has_treesitter then
 			pairs.setup {
 				disable_in_macro = true,
@@ -28,38 +25,5 @@ return {
 				'nvim-autopairs'
 			)
 		end
-
-		pairs.add_rules({
-			rule('%', '%', { 'jinja', 'sls', 'yaml', 'sls.yaml' }),
-			rule(' ', ' ')
-				 :with_pair(function( options)
-				    local pair = options.line:sub(options.col - 1, options.col)
-				    return vim.tbl_contains({ '()', '[]', '{}', '%%' }, pair)
-				 end),
-			rule('% ', ' %')
-				 :with_pair(cond.none())
-				 :with_move(function( options)
-				    return options.prev_char:match('.%%%') ~= nil
-				 end)
-				 :use_key('%'),
-			rule('( ', ' )')
-				 :with_pair(cond.none())
-				 :with_move(function( options)
-				    return options.prev_char:match('.%)') ~= nil
-				 end)
-				 :use_key(')'),
-			rule('{ ', ' }')
-				 :with_pair(cond.none())
-				 :with_move(function( options)
-				    return options.prev_char:match('.%}') ~= nil
-				 end)
-				 :use_key('}'),
-			rule('[ ', ' ]')
-				 :with_pair(cond.none())
-				 :with_move(function( options)
-				    return options.prev_char:match('.%]') ~= nil
-				 end)
-				 :use_key(']'),
-		})
 	end
 }
