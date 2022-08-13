@@ -5,6 +5,6 @@ return { 'windwp/nvim-autopairs', opt = true,
 	requires = { 'hrsh7th/nvim-cmp' },
 
 	config = function()
-		require('plugins.pairs.config')
+		require('plugins.pairs.config').setup()
 	end,
 }
