@@ -1,10 +1,15 @@
 return {
 	setup = function()
 		local has_comment, comment = pcall(require, 'Comment')
+		local has_ts, ts           = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
 
 		if not has_comment then
 			print('‼ Tried loading Comment.nvim ... unsuccessfully.')
 			return has_comment
+		end
+
+		if not has_ts then
+			print('‼ nvim-ts-context-commentstring unavailable, comments may not be correct.')
 		end
 
 		return comment.setup {
@@ -29,30 +34,9 @@ return {
 			},
 
 			-- pre-hook, called before commenting the line
-			pre_hook = function(context)
-				local u = require('Comment.utils')
-
-				-- determine whether to use linewise or blockwise
-				-- commentstring
-				local type = context.ctype == u.ctype.line
-					 and '__default'
-					 or '__multiline'
-
-				-- determine the location from which to calculate the
-				-- commentstring
-				local location = nil
-
-				if context.ctype == u.ctype.block then
-					location = require('ts_context_commentstring.utils').get_cursor_location()
-				elseif context.cmation == u.cmotion.v or context.cmotion == u.cmotion.V then
-					location = require('ts_context_commentstring.utils').get_visual_start_location()
-				end
-
-				return require('ts_context_commentstring.internal').calculate_commentstring({
-					key = type,
-					location = location
-				})
-			end,
+			pre_hook = has_ts
+				 and ts.create_pre_hook()
+				 or nil,
 
 			-- post-hook, called after commenting is done
 			post_hook = nil,
