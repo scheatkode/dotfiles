@@ -25,6 +25,22 @@ local prettier = ls.builtins.formatting.prettier.with({
 	}
 })
 
+local djlint = ls.builtins.formatting.djlint.with({
+	args = {
+		'--indent=2',
+		'--preserve-blank-lines',
+		'--preserve-leading-space',
+		'--reformat',
+		'-',
+	},
+
+	filetypes = {
+		'jinja',
+		'sls',
+		'yaml',
+	}
+})
+
 local hadolint = ls.builtins.diagnostics.hadolint.with({
 	command = 'hadolint',
 	args = {
@@ -85,6 +101,7 @@ ls.setup({
 	on_attach          = require('plugins.lspconfig.on_attach'),
 	root_dir           = vim.loop.cwd,
 	sources            = {
+		djlint,
 		hadolint,
 		prettier,
 		shellcheck_diagnostics,
