@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -e
+set -u
+
+set -o errexit
+
+status_diff() {
+	{
+		git diff --color --stat="$(($(tput cols || true) - 3))" HEAD | sed '$d; s/^ //'
+		git -c color.status=always status -sb
+	} | awk -vOFS='' '
+		NR == FNR {
+			all[i++]       = $0;
+			diff_files[$1] = $0;
+			next;
+		}
+
+		! ($2 in diff_files) {
+			print;
+			next;
+		}
+
+		{
+			gsub($2, diff_files[$2]);
+			print;
+		}
+
+		END {
+			if (NR != FNR) {
+				exit;
+			}
+
+			for (i in all) {
+				print all[i];
+			}
+		}
+	'
+}
+
+
+while test "${#}" -ne 0
+do
+	case "${1}" in
+		d|diff) status_diff ;;
+		*) exit 1 ;;
+	esac
+	shift
+done

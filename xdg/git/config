@@ -47,37 +47,7 @@
    unstage  = reset HEAD --
    uncommit = reset HEAD^
 
-   st = "!f() {                      \
- 		awk -vOFS='' '                 \
-			NR==FNR {                   \
-				all[i++] = $0;           \
-				difffiles[$1] = $0;      \
-				next;                    \
-			}                           \
-                                     \
-			! ($2 in difffiles) {       \
-				print;                   \
-				next;                    \
-			}                           \
-                                     \
-			{                           \
-				gsub($2, difffiles[$2]); \
-				print;                   \
-			}                           \
-                                     \
-			END {                       \
-				if (NR != FNR) {         \
-					exit;                 \
-				}                        \
-                                     \
-				for (i in all) {         \
-					print all[i];         \
-				}                        \
-			}                           \
- 		'                              \
- 		<(git diff --color --stat=$(($(tput cols) - 3)) HEAD | sed '$d; s/^ //') \
- 		<(git -c color.status=always status -sb );                               \
-   }; f"
+	d = "!sh ~/.config/git/alias d"
 
    history  = "!f() {       \
    	git                   \
