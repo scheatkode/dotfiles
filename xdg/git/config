@@ -48,6 +48,7 @@
    uncommit = reset HEAD^
 
 	d = "!sh ~/.config/git/alias d"
+	s = "!sh ~/.config/git/alias s"
 
    history  = "!f() {       \
    	git                   \
