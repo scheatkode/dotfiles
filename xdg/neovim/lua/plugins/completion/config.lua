@@ -150,11 +150,6 @@ return {
 				end, { 'i', 's' })
 			},
 
-			performance = {
-				debounce = 200,
-				throttle = 500,
-			},
-
 			sources = completion.config.sources({
 				{ name = 'luasnip' },
 				{ name = 'calc' },
