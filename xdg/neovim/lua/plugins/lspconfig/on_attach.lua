@@ -1,3 +1,5 @@
+local ternary = require('f.function.ternary')
+
 local extensions = require('lang.extensions')
 
 local border = {
@@ -83,17 +85,25 @@ return function(client, bufnr, settings)
 	vim.keymap.set({ 'n', 'x' }, '<M-s>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Show signature help' })
 
 	-- workspace management {{{3
-	vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = 'Add folder to workspace' })
+	vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder,
+		{ buffer = bufnr, desc = 'Add folder to workspace' })
 	vim.keymap.set('n', '<leader>cwd', vim.lsp.buf.remove_workspace_folder,
 		{ buffer = bufnr, desc = 'Remove folder from workspace' })
 	vim.keymap.set('n', '<leader>cwl', vim.lsp.buf.list_workspace_folders,
 		{ buffer = bufnr, desc = 'Remove folder from workspace' })
 
 	-- code formatting {{{3
-	vim.keymap.set({ 'n', 'x' }, '<leader>cf', vim.lsp.buf.formatting,
-		{ buffer = bufnr, desc = 'Format code in current buffer' })
-	vim.keymap.set({ 'n', 'x' }, '<leader>=', vim.lsp.buf.formatting,
-		{ buffer = bufnr, desc = 'Format code in current buffer' })
+	-- TODO(0.8): Remove the condition once `0.8` lands.
+	local format = ternary(
+		vim.lsp.buf.format == nil,
+		function() return vim.lsp.buf.formatting end,
+		function() return function()
+			return vim.lsp.buf.format({ async = true })
+		end end
+	)
+
+	vim.keymap.set({ 'n', 'x' }, '<leader>cf', format, { buffer = bufnr, desc = 'Format code in current buffer' })
+	vim.keymap.set({ 'n', 'x' }, '<leader>=', format, { buffer = bufnr, desc = 'Format code in current buffer' })
 
 	-- }}}
 
