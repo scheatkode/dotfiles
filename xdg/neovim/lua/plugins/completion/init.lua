@@ -1,15 +1,18 @@
-return {'hrsh7th/nvim-cmp', opt = true,
-   event = { 'InsertEnter' },
-   wants = {
-      'nvim-lspconfig',
-      'luasnip',
-   },
+return {
+	'hrsh7th/nvim-cmp',
 
-   requires = {
-      'neovim/nvim-lspconfig',
-   },
+	opt   = true,
+	event = { 'InsertEnter' },
+	wants = {
+		'nvim-lspconfig',
+		'luasnip',
+	},
 
-   config = function ()
-      require('plugins.completion.config')
-   end,
+	requires = {
+		'neovim/nvim-lspconfig',
+	},
+
+	config = function()
+		require('plugins.completion.config')
+	end,
 }
