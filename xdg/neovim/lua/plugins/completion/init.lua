@@ -13,6 +13,6 @@ return {
 	},
 
 	config = function()
-		require('plugins.completion.config')
+		require('plugins.completion.config').setup()
 	end,
 }
