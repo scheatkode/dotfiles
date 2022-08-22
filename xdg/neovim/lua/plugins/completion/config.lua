@@ -1,14 +1,54 @@
 return {
-	setup = function()
+	setup = function(overrides)
 		local log    = require('log')
+		local extend = require('tablex').deep_extend
 		local unpack = require('compat.table.unpack')
 
-		local function t(code)
-			return vim.api.nvim_replace_termcodes(code, true, true, true)
-		end
+		local defaults = {
+			borders  = {
+				'╭',
+				'─',
+				'╮',
+				'│',
+				'╯',
+				'─',
+				'╰',
+				'│',
+			},
+			icons    = require('meta.icon.lsp').presets.default,
+			maxwidth = 50,
+			sources  = {
+				nvim_lsp = '[lsp]',
+				calc     = '[calc]',
+				luasnip  = '[snip]',
+				cmdline  = '[cmd]',
+				nvim_lua = '[api]',
+				path     = '[path]',
+			},
+		}
 
-		-- check for plugin existence {{{1
+		local options = extend('force', defaults, overrides or {})
 
+		--- Localization and memoization
+
+		-- These functions are spammed enough times already to
+		-- warrant the small performance increase of localizing
+		-- them.
+		local nvim_win_get_cursor = vim.api.nvim_win_get_cursor
+		local nvim_buf_get_lines  = vim.api.nvim_buf_get_lines
+		local nvim_feedkeys       = vim.fn.feedkeys
+
+		-- The result of running this function won't change over time.
+		-- Memoizing its result beforehand offers a small performance
+		-- boost.
+		local expand_or_jump = vim.api.nvim_replace_termcodes(
+			'<Plug>luasnip-expand-or-jump', true, true, true
+		)
+		local jump_prev      = vim.api.nvim_replace_termcodes(
+			'<Plug>luasnip-jump-prev', true, true, true
+		)
+
+		-- Check for plugin existence
 		local has_completion, completion = pcall(require, 'cmp')
 		local has_snippets, snippets     = pcall(require, 'luasnip')
 
@@ -17,54 +57,42 @@ return {
 			return has_completion
 		end
 
-		local has_words_before = function()
-			local line, column = unpack(vim.api.nvim_win_get_cursor(0))
+		local function has_words_before()
+			local line, column = unpack(nvim_win_get_cursor(0))
 
 			return column ~= 0
-				 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+				 and nvim_buf_get_lines(0, line - 1, line, true)[1]
 				 :sub(column, column)
 				 :match("%s") == nil
 		end
 
-		-- configure plugin {{{1
-
-		local sources = {
-			nvim_lsp = '[lsp]',
-			luasnip  = '[snip]',
-			calc     = '[calc]',
-			cmdline  = '[cmd]',
-			nvim_lua = '[api]',
-			path     = '[path]',
-		}
-
-		local maxwidth = 50
-		local borders  = {
-			'╭',
-			'─',
-			'╮',
-			'│',
-			'╯',
-			'─',
-			'╰',
-			'│',
-		}
-
+		-- Not sure about other people, but autocompletion is broken in my
+		-- case. Honestly too buggy to be usable.
+		-- If it weren't for the nice windows, colocated multiple sources,
+		-- and the quick doc, I'd have simply used the `omnifunc` provided
+		-- by `vim.lsp`. I already use the builtin `ins-completion` for
+		-- other stuff and avoid `cmp-buffer` as well as `cmp-cmdline`
+		-- like the plague.
 		completion.setup({
+			completion = {
+				autocomplete = false,
+			},
+
 			window = {
 				completion = {
-					border = borders,
+					border = options.borders,
 				},
 
 				documentation = {
-					border = borders,
+					border = options.borders,
 				},
 			},
 
 			formatting = {
 				format = function(entry, item)
-					item.kind = require('meta.icon.lsp').presets.default[item.kind]
-					item.menu = sources[entry.source.name]
-					item.abbr = item.abbr:sub(1, maxwidth)
+					item.kind = options.icons[item.kind]
+					item.menu = options.sources[entry.source.name]
+					item.abbr = item.abbr:sub(1, options.maxwidth)
 
 					return item
 				end,
@@ -72,11 +100,13 @@ return {
 
 			snippet = {
 				expand = function(arguments)
-					require('luasnip').lsp_expand(arguments.body)
+					snippets.lsp_expand(arguments.body)
 				end,
 			},
 
 			mapping = {
+				['<C-x><C-x>'] = completion.mapping.complete(),
+
 				['<C-p>'] = completion.mapping.select_prev_item(),
 				['<C-n>'] = completion.mapping.select_next_item(),
 				['<C-b>'] = completion.mapping(completion.mapping.scroll_docs(-4), { 'i', 'c' }),
@@ -87,16 +117,21 @@ return {
 					c = completion.mapping.close(),
 				}),
 
-				['<CR>'] = completion.mapping.confirm {
+				['<CR>'] = completion.mapping.confirm({
 					behavior = completion.ConfirmBehavior.Replace,
-					select = true,
-				},
+					select   = true,
+				}),
+
+				['<C-y>'] = completion.mapping.confirm({
+					behavior = completion.ConfirmBehavior.Replace,
+					select   = true,
+				}),
 
 				['<Tab>'] = completion.mapping(function(fallback)
 					if completion.visible() then
 						completion.select_next_item()
 					elseif snippets.expand_or_jumpable() then
-						vim.fn.feedkeys(t('<Plug>luasnip-expand-or-jump'), '')
+						nvim_feedkeys(expand_or_jump, '')
 					elseif has_words_before() then
 						completion.complete()
 					else
@@ -108,7 +143,7 @@ return {
 					if completion.visible() then
 						completion.select_prev_item()
 					elseif snippets.jumpable(-1) then
-						vim.fn.feedkeys(t('<Plug>luasnip-jump-prev'), '')
+						nvim_feedkeys(jump_prev, '')
 					else
 						fallback()
 					end
@@ -127,6 +162,19 @@ return {
 				{ name = 'nvim_lsp' },
 				{ name = 'path' },
 			}),
+
+			sorting = {
+				comparators = {
+					completion.config.compare.offset,
+					completion.config.compare.exact,
+					completion.config.compare.score,
+
+					completion.config.compare.kind,
+					completion.config.compare.sort_text,
+					completion.config.compare.length,
+					completion.config.compare.order,
+				},
+			},
 
 			experimental = {
 				ghost_text = true,
