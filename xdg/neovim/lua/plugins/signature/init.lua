@@ -9,6 +9,6 @@ return {
 	requires = { 'neovim/nvim-lspconfig' },
 
 	config = function()
-		require('plugins.signature.config')
+		require('plugins.signature.config').setup()
 	end,
 }
