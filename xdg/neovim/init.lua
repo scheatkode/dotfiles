@@ -42,8 +42,7 @@ require('user.settings').setup()
 require('scheatkode.autocmds').setup()
 require('scheatkode.commands').setup()
 require('user.mappings').setup()
-
-require('scheatkode.providers').disable()
+require('user.providers').disable()
 
 require('diagnostics').setup()
 
