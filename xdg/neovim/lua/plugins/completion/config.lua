@@ -151,10 +151,10 @@ return {
 			},
 
 			sources = completion.config.sources({
+				{ name = 'nvim_lsp' },
 				{ name = 'luasnip' },
 				{ name = 'calc' },
 				{ name = 'nvim_lua' },
-				{ name = 'nvim_lsp' },
 				{ name = 'path' },
 			}),
 
