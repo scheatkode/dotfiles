@@ -36,7 +36,7 @@ return {
 		-- them.
 		local nvim_win_get_cursor = vim.api.nvim_win_get_cursor
 		local nvim_buf_get_lines  = vim.api.nvim_buf_get_lines
-		local nvim_feedkeys       = vim.fn.feedkeys
+		local nvim_feedkeys       = vim.api.nvim_feedkeys
 
 		-- The result of running this function won't change over time.
 		-- Memoizing its result beforehand offers a small performance
@@ -131,7 +131,7 @@ return {
 					if completion.visible() then
 						completion.select_next_item()
 					elseif snippets.expand_or_jumpable() then
-						nvim_feedkeys(expand_or_jump, '')
+						nvim_feedkeys(expand_or_jump, '', false)
 					elseif has_words_before() then
 						completion.complete()
 					else
@@ -143,7 +143,7 @@ return {
 					if completion.visible() then
 						completion.select_prev_item()
 					elseif snippets.jumpable(-1) then
-						nvim_feedkeys(jump_prev, '')
+						nvim_feedkeys(jump_prev, '', false)
 					else
 						fallback()
 					end
