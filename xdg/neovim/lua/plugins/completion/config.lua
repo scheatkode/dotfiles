@@ -109,8 +109,8 @@ return {
 
 				['<C-p>'] = completion.mapping.select_prev_item(),
 				['<C-n>'] = completion.mapping.select_next_item(),
-				['<C-b>'] = completion.mapping(completion.mapping.scroll_docs(-4), { 'i', 'c' }),
-				['<C-f>'] = completion.mapping(completion.mapping.scroll_docs(4), { 'i', 'c' }),
+				['<C-b>'] = completion.mapping(completion.mapping.scroll_docs(-4), { 'i' }),
+				['<C-f>'] = completion.mapping(completion.mapping.scroll_docs(4), { 'i' }),
 
 				['<C-e>'] = completion.mapping({
 					i = completion.mapping.abort(),
