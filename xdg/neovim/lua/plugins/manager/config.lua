@@ -45,6 +45,7 @@ local function setup()
 		},
 
 		display = {
+			compact         = true,            -- If true, fold updates results by default
 			non_interactive = false,           -- if true, disable display windows for all operations
 			open_fn         = nil,             -- an optional function to open a window for packer's display
 			open_cmd        = '60vnew packer', -- an optional command to open a window for packer's display
