@@ -17,10 +17,10 @@ return {
 		vim.opt.listchars = {
 			eol        = nil,
 			extends    = '›',
-			multispace = '.',
+			multispace = '⋅',
 			nbsp       = '␣',
 			precedes   = '‹',
-			tab        = '│ ',
+			tab        = '» ',
 			trail      = '•',
 		}
 
