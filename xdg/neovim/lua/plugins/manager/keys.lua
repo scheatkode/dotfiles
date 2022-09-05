@@ -13,7 +13,7 @@ local function setup()
 	vim.keymap.set('n', '<leader>PU', packer.update)
 	vim.keymap.set('n', '<leader>Ps', packer.status)
 
-	vim.keymap.set('n', '<leader>PS', function ()
+	vim.keymap.set('n', '<leader>PS', function()
 		packer.snapshot(os.date('!%Y-%m-%d_%T'))
 		packer.sync()
 	end)

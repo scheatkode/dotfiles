@@ -16,20 +16,20 @@ local function setup()
 		-- miscellaneous requirements {{{
 
 		use(require 'plugins.devicons') -- powered by kyazdani42/nvim-web-devicons
-		use(require 'plugins.plenary')  -- powered by nvim-lua/plenary.nvim
+		use(require 'plugins.plenary') -- powered by nvim-lua/plenary.nvim
 
 		-- }}}
 		-- completion, lsp clients, debuggers, and snippets plugins {{{
 
-		use(require 'plugins.mason')           -- powered by williamboman/mason.nvim
+		use(require 'plugins.mason') -- powered by williamboman/mason.nvim
 		use(require 'plugins.mason-lspconfig') -- powered by williamboman/mason-lspconfig.nvim
-		use(require 'plugins.lspconfig')       -- powered by neovim/nvim-lspconfig
-		use(require 'plugins.lspstatus')       -- powered by nvim-lua/lsp-status.nvim
+		use(require 'plugins.lspconfig') -- powered by neovim/nvim-lspconfig
+		use(require 'plugins.lspstatus') -- powered by nvim-lua/lsp-status.nvim
 		use(require 'plugins.lint')
-		use(require 'plugins.signature')       -- powered by xray/lsp_signature
-		use(require 'plugins.symbols')         -- powered by simrat39/symbols-outline
+		use(require 'plugins.signature') -- powered by xray/lsp_signature
+		use(require 'plugins.symbols') -- powered by simrat39/symbols-outline
 
-		use(require 'plugins.snippets')   -- powered by L3MON4D3/LuaSnip
+		use(require 'plugins.snippets') -- powered by L3MON4D3/LuaSnip
 		use(require 'plugins.snippets-catalog')
 		use(require 'plugins.completion') -- powered by hrsh7th/nvim-cmp
 
@@ -49,20 +49,20 @@ local function setup()
 
 		-- }}}
 
-		use(require 'plugins.pairs')   -- powered by windwp/nvim-autopairs
+		use(require 'plugins.pairs') -- powered by windwp/nvim-autopairs
 		use(require 'plugins.autotag') -- powered by windwp/nvim-ts-autotag
 
 		-- fuzzy searching and file exploration plugins {{{
 
-		use(require 'plugins.explorer')  -- tree-like file explorer
+		use(require 'plugins.explorer') -- tree-like file explorer
 		use(require 'plugins.telescope') -- fuzzy searching
 
 		-- }}}
 		-- git plugins {{{
 
 		use(require 'plugins.gitporcelain') -- magit for vim
-		use(require 'plugins.gitsigns')     -- git file changes in the gutter
-		use(require 'plugins.diff')         -- ediff-like diff viewing
+		use(require 'plugins.gitsigns') -- git file changes in the gutter
+		use(require 'plugins.diff') -- ediff-like diff viewing
 
 		use { 'rhysd/committia.vim', opt = true,
 			ft = 'gitcommit',
@@ -110,7 +110,7 @@ local function setup()
 		use(require 'plugins.quickfix')
 
 		use(require 'plugins.indent')
-		use(require 'plugins.align')   -- alignment made easy
+		use(require 'plugins.align') -- alignment made easy
 		use(require 'plugins.comment') -- commenting plugin
 
 		use { 'dstein64/vim-startuptime' } -- startup time monitor
