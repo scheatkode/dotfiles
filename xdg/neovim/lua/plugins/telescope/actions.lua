@@ -41,14 +41,14 @@ function m.live_grep(open_files)
 		max_results     = 200,
 		prompt_title    = open_files
 			 and 'Live Grep Open Files'
-			 or  'Live Grep',
+			 or 'Live Grep',
 	})
 end
 
 function m.find_files(hidden, no_ignore)
 	local prompt_title
 
-	hidden    = hidden    or false
+	hidden    = hidden or false
 	no_ignore = no_ignore or false
 
 	if hidden and no_ignore then

@@ -19,7 +19,7 @@ return {
 		'neotest-plenary',
 	},
 
-	config = function ()
+	config = function()
 		require('plugins.testing.config').setup()
 		require('plugins.testing.keys').setup()
 	end

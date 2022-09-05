@@ -1,5 +1,8 @@
-return {'nvim-treesitter/nvim-treesitter-textobjects' , opt = true,
-   as = 'treesitter-textobjects',
+return {
+	'nvim-treesitter/nvim-treesitter-textobjects',
 
-   module = { 'nvim-treesitter-textobjects' },
+	as = 'treesitter-textobjects',
+
+	opt    = true,
+	module = { 'nvim-treesitter-textobjects' },
 }

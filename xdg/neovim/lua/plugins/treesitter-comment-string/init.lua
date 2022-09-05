@@ -1,5 +1,8 @@
-return {'JoosepAlviste/nvim-ts-context-commentstring', opt = true,
-   as = 'treesitter-comment-string',
+return {
+	'JoosepAlviste/nvim-ts-context-commentstring',
 
-   module = 'ts_context_commentstring',
+	as = 'treesitter-comment-string',
+
+	opt    = true,
+	module = 'ts_context_commentstring',
 }
