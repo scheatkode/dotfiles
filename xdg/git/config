@@ -26,6 +26,9 @@
    editor = nvim
    pager  = delta
 
+[merge]
+	tool = nvimdiff
+
 [color]
 	branch      = auto
 	diff        = auto
