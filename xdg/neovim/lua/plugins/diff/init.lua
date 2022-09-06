@@ -1,7 +1,22 @@
-return {'sindrets/diffview.nvim', opt = true, -- ediff-like diff view
-   cmd = 'DiffviewOpen',
+return { -- ediff-like diff view
+	'sindrets/diffview.nvim',
 
-   module_pattern = {
-      'diffview.*'
-   },
+	opt = true,
+	cmd = {
+		'DiffviewClose',
+		'DiffviewFileHistory',
+		'DiffviewFocusFiles',
+		'DiffviewLog',
+		'DiffviewOpen',
+		'DiffviewRefresh',
+		'DiffviewToggleFiles',
+	},
+
+	module_pattern = {
+		'diffview.*'
+	},
+
+	config = function()
+		require('plugins.diff.config').setup()
+	end
 }
