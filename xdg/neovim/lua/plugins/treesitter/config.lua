@@ -1,8 +1,8 @@
 -- configure treesitter {{{1
 
-local has_treesitter, treesitter    = pcall(require, 'nvim-treesitter.configs')
-local has_textobjects, _            = pcall(require, 'nvim-treesitter-textobjects')
-local has_commentstring, _          = pcall(require, 'ts_context_commentstring')
+local has_treesitter, treesitter = pcall(require, 'nvim-treesitter.configs')
+local has_textobjects, _         = pcall(require, 'nvim-treesitter-textobjects')
+local has_commentstring, _       = pcall(require, 'ts_context_commentstring')
 
 if not has_treesitter then
 	print('‼ Tried loading treesitter ... unsuccessfully.')
@@ -150,15 +150,13 @@ treesitter.setup({
 			enable = true,
 
 			swap_next = {
-				['<leader>cs'] = { '@swappable' },
+				['<leader>cs'] = '@swappable',
 			},
 
 			swap_previous = {
-				['<leader>cS'] = { '@swappable' },
+				['<leader>cS'] = '@swappable',
 			},
 		},
 	},
 
 })
-
--- vim: set ft=lua fdm=marker fdl=0:
