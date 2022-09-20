@@ -1,55 +1,53 @@
--- localize globals {{{1
+return {
+	setup = function()
+		local has_porcelain, porcelain = pcall(require, 'neogit')
 
-local log = require('log')
+		if not has_porcelain then
+			vim.notify('neogit: Tried loading plugin ... unsuccessfully ‼', vim.log.levels.warn)
+			return has_porcelain
+		end
 
--- check for plugin existence {{{1
+		porcelain.setup({
+			disable_builtin_notifications = false,
+			disable_commit_confirmation   = true,
+			disable_context_highlighting  = false,
+			disable_hint                  = false,
+			disable_signs                 = false,
 
-local has_porcelain, porcelain = pcall(require, 'neogit')
+			auto_refresh = true,
 
-if not has_porcelain then
-   log.error('Tried loading plugin ... unsuccessfully ‼', 'neogit')
-   return has_porcelain
-end
+			commit_popup = {
+				kind = 'split',
+			},
 
--- configure plugin {{{1
+			kind = 'tab',
 
-porcelain.setup({
-   disable_signs = false,
-   disable_hint = false,
-   disable_context_highlighting = false,
-   disable_commit_confirmation = false,
-   disable_builtin_notifications = false,
+			signs = {
+				section = { '', '' },
+				item    = { '', '' },
+				hunk    = { '', '' },
+			},
 
-   auto_refresh = true,
+			integrations = {
+				diffview = true,
+			},
 
-   commit_popup = {
-      kind = 'split',
-   },
+			mappings = {
+				status = {
+					-- staging
+					['S']  = '',
+					['s']  = '',
+					['gs'] = 'Stage',
 
-   kind = 'tab',
+					-- popups
+					['p'] = 'PushPopup',
+					['F'] = 'PullPopup',
+				}
+			}
+		})
 
-   signs = {
-      section = { '', '' },
-         item = { '', '' },
-         hunk = { '', '' },
-   },
+		vim.notify('neogit: Plugin loaded', vim.log.levels.info)
 
-   integrations = {
-      diffview = true,
-   },
-
-   mappings = {
-      status = {
-         ['S']  = '',
-         ['s']  = '',
-         ['gs'] = 'Stage',
-      }
-   }
-})
-
-log.info('Plugin loaded', 'neogit')
-
-return true
-
--- vim: fdm=marker fdl=0:
-
+		return true
+	end
+}

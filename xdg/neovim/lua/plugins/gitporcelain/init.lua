@@ -43,24 +43,25 @@
 --   \ |=| /              mouse ===>  ('      `\_______,
 --    \|_|/                            `,,---,,'
 
-return {'TimUntersberger/neogit', opt = true,
-   cmd = 'Neogit',
+return {
+	'TimUntersberger/neogit',
 
-   keys = {
-      '<leader>gg',
-   },
+	opt  = true,
+	cmd  = 'Neogit',
+	keys = {
+		'<leader>gg',
+	},
 
-   requires = {
-      {'nvim-lua/plenary.nvim'},
-      {'sindrets/diffview.nvim'},
-   },
+	requires = {
+		{ 'nvim-lua/plenary.nvim' },
+		{ 'sindrets/diffview.nvim' },
+	},
+	wants = {
+		'plenary.nvim',
+	},
 
-   wants = {
-      'plenary.nvim',
-   },
-
-   config = function ()
-      require('plugins.gitporcelain.config')
-      require('plugins.gitporcelain.keys').setup()
-   end
+	config = function()
+		require('plugins.gitporcelain.config').setup()
+		require('plugins.gitporcelain.keys').setup()
+	end
 }
