@@ -1,5 +1,3 @@
-; inherits: javascript
-
 ;; Identifiers in named imports.
 ;;
 ;; ```typescript
