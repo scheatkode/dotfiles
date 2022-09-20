@@ -22,21 +22,23 @@
 --   _/  ( /          \
 --  `----'(____________)
 
-return {'lewis6991/gitsigns.nvim', opt = true,
-   event = {
-      'BufReadPost',
-      'FileReadPre',
-   },
+return {
+	'lewis6991/gitsigns.nvim',
 
-   requires = {
-      {'nvim-lua/plenary.nvim'},
-   },
+	opt   = true,
+	event = {
+		'BufReadPost',
+		'FileReadPre',
+	},
 
-   wants = {
-      'plenary.nvim'
-   },
+	requires = {
+		{ 'nvim-lua/plenary.nvim' },
+	},
+	wants = {
+		'plenary.nvim'
+	},
 
-   config = function ()
-      require('plugins.gitsigns.config')
-   end,
+	config = function()
+		require('plugins.gitsigns.config').setup()
+	end,
 }
