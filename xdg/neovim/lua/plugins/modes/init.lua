@@ -1,10 +1,10 @@
 return {
 	'anuvyklack/hydra.nvim',
 
-	opt = true,
-
+	opt  = true,
 	keys = {
 		'z',
+		'<C-w>',
 	},
 
 	config = function()
