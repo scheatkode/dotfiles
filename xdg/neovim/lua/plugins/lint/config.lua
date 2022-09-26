@@ -6,25 +6,6 @@ if not has_ls then
 	return has_ls
 end
 
-local prettier = ls.builtins.formatting.prettier.with({
-	filetypes = {
-		'css',
-		'html',
-		'javascript',
-		'javascript.jsx',
-		'javascriptreact',
-		'json',
-		'jsonc',
-		'markdown',
-		'scss',
-		'svelte',
-		'typescript',
-		'typescript.tsx',
-		'typescriptreact',
-		'yaml',
-	}
-})
-
 local djlint = ls.builtins.formatting.djlint.with({
 	args = {
 		'--indent=2',
@@ -103,15 +84,31 @@ ls.setup({
 	sources            = {
 		djlint,
 		hadolint,
-		prettier,
 		shellcheck_diagnostics,
 		shellcheck_codeactions,
 		luacheck,
 
+		-- (t|j)s-specific
+		ls.builtins.formatting.prettier,
+
+		-- generic
 		ls.builtins.diagnostics.vale,
+
+		-- yaml-specific
 		ls.builtins.diagnostics.yamllint,
 
+		-- go-specific
+		ls.builtins.diagnostics.staticcheck,
+		ls.builtins.formatting.gofumpt,
+		ls.builtins.formatting.goimports_reviser,
+		ls.builtins.formatting.golines,
+
+		-- python-specific
 		ls.builtins.formatting.black,
+		ls.builtins.diagnostics.pylint,
+		ls.builtins.diagnostics.pydocstyle,
+
+		-- shell-specific
 		ls.builtins.formatting.shfmt,
 		ls.builtins.formatting.shellharden,
 	}
