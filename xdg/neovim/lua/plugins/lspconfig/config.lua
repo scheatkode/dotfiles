@@ -21,6 +21,7 @@ local languages = {
 	dart        = 'dartls',
 	eslint      = 'eslint',
 	go          = 'gopls',
+	golint      = 'golangci_lint_ls',
 	html        = 'html',
 	java        = 'jdtls',
 	javascript  = 'tsserver',
