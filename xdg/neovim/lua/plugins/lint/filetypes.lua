@@ -1,5 +1,6 @@
 return {
 	'css',
+	'go',
 	'html',
 	'javascript',
 	'javascript.jsx',
