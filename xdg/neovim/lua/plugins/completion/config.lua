@@ -178,11 +178,9 @@ return {
 
 		-- TODO(scheatkode): Refactor this
 
-		local h = require('scheatkode.highlight')
-
-		h.set_hl('CmpItemMenu', { link = 'NonText', force = true })
-		h.set_hl('CmpItemKind', { link = 'Special', force = true })
-		h.set_hl('CmpItemAbbrDeprecated', { link = 'Error', force = true })
+		vim.api.nvim_set_hl(0, 'CmpItemMenu', { link = 'NonText' })
+		vim.api.nvim_set_hl(0, 'CmpItemKind', { link = 'Special' })
+		vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { link = 'Error' })
 
 		log.info('Plugin loaded', 'nvim-cmp')
 	end
