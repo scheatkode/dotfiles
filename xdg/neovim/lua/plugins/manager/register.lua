@@ -7,11 +7,11 @@ local function setup()
 
 	packer.startup(function(use)
 
-		-- packer can manage itself
+		-- packages running at startup
 
 		use { 'wbthomason/packer.nvim' }
+		use({ 'lewis6991/impatient.nvim' })
 
-		use(require 'plugins.modes')
 
 		-- miscellaneous requirements {{{
 
@@ -104,6 +104,7 @@ local function setup()
 
 		--- miscellaneous plugins
 
+		use(require 'plugins.modes')
 		use(require 'plugins.movement')
 		use(require 'plugins.harpoon')
 		use(require 'plugins.splitjoin')
