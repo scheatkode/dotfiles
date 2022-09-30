@@ -1,5 +1,3 @@
-local ternary = require('f.function.ternary')
-
 local extensions = require('lang.extensions')
 
 local border = {
@@ -93,14 +91,7 @@ return function(client, bufnr, settings)
 		{ buffer = bufnr, desc = 'Remove folder from workspace' })
 
 	-- code formatting {{{3
-	-- TODO(0.8): Remove the condition once `0.8` lands.
-	local format = ternary(
-		vim.lsp.buf.format == nil,
-		function() return vim.lsp.buf.formatting end,
-		function() return function()
-			return vim.lsp.buf.format({ async = true })
-		end end
-	)
+	local format = function() return vim.lsp.buf.format({ async = true }) end
 
 	vim.keymap.set({ 'n', 'x' }, '<leader>cf', format, { buffer = bufnr, desc = 'Format code in current buffer' })
 	vim.keymap.set({ 'n', 'x' }, '<leader>=', format, { buffer = bufnr, desc = 'Format code in current buffer' })
