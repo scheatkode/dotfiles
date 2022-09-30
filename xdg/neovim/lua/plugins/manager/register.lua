@@ -57,6 +57,10 @@ local function setup()
 		use(require 'plugins.explorer') -- tree-like file explorer
 		use(require 'plugins.telescope') -- fuzzy searching
 
+			use(require 'plugins.popup')
+			use(require 'plugins.telescope-fzf-native')
+			use(require 'plugins.telescope-project')
+
 		-- }}}
 		-- git plugins {{{
 

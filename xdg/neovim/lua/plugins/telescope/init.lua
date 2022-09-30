@@ -93,9 +93,7 @@ return { 'nvim-telescope/telescope.nvim', opt = true,
 		{ 'nvim-lua/popup.nvim' },
 		{ 'nvim-lua/plenary.nvim' },
 		{ 'nvim-telescope/telescope-project.nvim' }, -- project picker
-		{ 'nvim-telescope/telescope-fzf-native.nvim', -- better sorter
-			run = 'make'
-		},
+		{ 'nvim-telescope/telescope-fzf-native.nvim' }, -- better sorter
 	},
 
 	wants = {
