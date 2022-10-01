@@ -1,4 +1,7 @@
-return { 'numToStr/Comment.nvim', opt = true,
+return {
+	'numToStr/Comment.nvim',
+
+	opt  = true,
 	keys = {
 		'<leader>/',
 		'gcc',
