@@ -19,10 +19,10 @@ return {
 
 		vim.opt.shortmess = {
 			s = true, -- Ignore 'search hit BOTTOM' kind of messages
-			t = true, -- Truncate long messages
+			t = true, -- Truncate long file messages
+			T = true, -- Truncate other long messages
 			I = true, -- No need for vim's intro message
 			c = true, -- Don't give 'ins-completion-menu' messages
-			q = true, -- I know what macro I'm recording, thank you
 		}
 
 		-- Scrolling
