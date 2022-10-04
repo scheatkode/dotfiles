@@ -1,8 +1,5 @@
 return {
 	setup = function()
-		local api = vim.api
-		local fmt = string.format
-
 		local TMUX        = os.getenv('TMUX')
 		local TMUX_PANE   = os.getenv('TMUX_PANE')
 		local TMUX_SOCKET = vim.split(TMUX or ',', ',')[1]
@@ -15,7 +12,7 @@ return {
 				j = 'D',
 			}
 
-			local command = fmt(
+			local command = string.format(
 				'tmux -S %s select-pane -t "%s" -%s',
 				TMUX_SOCKET,
 				TMUX_PANE,
@@ -24,7 +21,7 @@ return {
 
 			local handle = assert(
 				io.popen(command),
-				fmt('unable to execute tmux command "%s"', command)
+				string.format('unable to execute tmux command "%s"', command)
 			)
 
 			local result = handle:read()
@@ -36,14 +33,16 @@ return {
 		local function jump(direction)
 			return function()
 				-- window id before jump
-				local current_window = api.nvim_get_current_win()
+				local current_window = vim.api.nvim_get_current_win()
 
-				api.nvim_command(fmt('wincmd %s', direction))
+				vim.api.nvim_command(string.format('wincmd %s', direction))
 
 				-- stop if we're not in a tmux instance
-				if TMUX == nil then return end
+				if TMUX == nil then
+					return
+				end
 
-				if api.nvim_get_current_win() == current_window then
+				if vim.api.nvim_get_current_win() == current_window then
 					tmux_jump(direction)
 				end
 			end
