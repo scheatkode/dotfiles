@@ -13,7 +13,14 @@ return {
 	},
 
 	root_dir = lspconfig.util.root_pattern(
-		"package.json",
-		".git"
-	)
+		'.git',
+		'svelte.config.js',
+		'package.json'
+	),
+
+	settings = {
+		svelte = {
+			['enable-ts-plugin'] = true
+		}
+	}
 }
