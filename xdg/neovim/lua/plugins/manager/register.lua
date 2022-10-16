@@ -1,5 +1,6 @@
 local function setup()
 	local has_packer, packer = pcall(require, 'packer')
+	local lazy               = require('lazy.on_index')
 
 	if not has_packer then
 		error('Expected packer to be installed')
@@ -15,58 +16,58 @@ local function setup()
 
 		-- miscellaneous requirements {{{
 
-		use(require 'plugins.devicons') -- powered by kyazdani42/nvim-web-devicons
-		use(require 'plugins.plenary') -- powered by nvim-lua/plenary.nvim
+		use(lazy 'plugins.devicons') -- powered by kyazdani42/nvim-web-devicons
+		use(lazy 'plugins.plenary') -- powered by nvim-lua/plenary.nvim
 
 		-- }}}
 		-- completion, lsp clients, debuggers, and snippets plugins {{{
 
-		use(require 'plugins.mason') -- powered by williamboman/mason.nvim
-		use(require 'plugins.mason-lspconfig') -- powered by williamboman/mason-lspconfig.nvim
-		use(require 'plugins.lspconfig') -- powered by neovim/nvim-lspconfig
-		use(require 'plugins.lspstatus') -- powered by nvim-lua/lsp-status.nvim
-		use(require 'plugins.lint')
-		use(require 'plugins.signature') -- powered by xray/lsp_signature
-		use(require 'plugins.symbols') -- powered by simrat39/symbols-outline
+		use(lazy 'plugins.mason') -- powered by williamboman/mason.nvim
+		use(lazy 'plugins.mason-lspconfig') -- powered by williamboman/mason-lspconfig.nvim
+		use(lazy 'plugins.lspconfig') -- powered by neovim/nvim-lspconfig
+		use(lazy 'plugins.lspstatus') -- powered by nvim-lua/lsp-status.nvim
+		use(lazy 'plugins.lint')
+		use(lazy 'plugins.signature') -- powered by xray/lsp_signature
+		use(lazy 'plugins.symbols') -- powered by simrat39/symbols-outline
 
-		use(require 'plugins.snippets') -- powered by L3MON4D3/LuaSnip
-		use(require 'plugins.snippets-catalog')
-		use(require 'plugins.completion') -- powered by hrsh7th/nvim-cmp
+		use(lazy 'plugins.snippets') -- powered by L3MON4D3/LuaSnip
+		use(lazy 'plugins.snippets-catalog')
+		use(lazy 'plugins.completion') -- powered by hrsh7th/nvim-cmp
 
-			use(require 'plugins.completion.calc')
-			use(require 'plugins.completion.lsp')
-			use(require 'plugins.completion.lua')
-			use(require 'plugins.completion.path')
-			use(require 'plugins.completion.snip')
+			use(lazy 'plugins.completion.calc')
+			use(lazy 'plugins.completion.lsp')
+			use(lazy 'plugins.completion.lua')
+			use(lazy 'plugins.completion.path')
+			use(lazy 'plugins.completion.snip')
 
-		use(require 'plugins.dap')
-		use(require 'plugins.dapui')
-		use(require 'plugins.testing')
+		use(lazy 'plugins.dap')
+		use(lazy 'plugins.dapui')
+		use(lazy 'plugins.testing')
 
-		use(require 'plugins.annotation')
+		use(lazy 'plugins.annotation')
 
-		use(require 'plugins.schema')
+		use(lazy 'plugins.schema')
 
 		-- }}}
 
-		use(require 'plugins.pairs') -- powered by windwp/nvim-autopairs
-		use(require 'plugins.autotag') -- powered by windwp/nvim-ts-autotag
+		use(lazy 'plugins.pairs') -- powered by windwp/nvim-autopairs
+		use(lazy 'plugins.autotag') -- powered by windwp/nvim-ts-autotag
 
 		-- fuzzy searching and file exploration plugins {{{
 
-		use(require 'plugins.explorer') -- tree-like file explorer
-		use(require 'plugins.telescope') -- fuzzy searching
+		use(lazy 'plugins.explorer') -- tree-like file explorer
+		use(lazy 'plugins.telescope') -- fuzzy searching
 
-			use(require 'plugins.popup')
-			use(require 'plugins.telescope-fzf-native')
-			use(require 'plugins.telescope-project')
+			use(lazy 'plugins.popup')
+			use(lazy 'plugins.telescope-fzf-native')
+			use(lazy 'plugins.telescope-project')
 
 		-- }}}
 		-- git plugins {{{
 
-		use(require 'plugins.gitporcelain') -- magit for vim
-		use(require 'plugins.gitsigns') -- git file changes in the gutter
-		use(require 'plugins.diff') -- ediff-like diff viewing
+		use(lazy 'plugins.gitporcelain') -- magit for vim
+		use(lazy 'plugins.gitsigns') -- git file changes in the gutter
+		use(lazy 'plugins.diff') -- ediff-like diff viewing
 
 		use { 'rhysd/committia.vim', opt = true,
 			ft = 'gitcommit',
@@ -86,41 +87,41 @@ local function setup()
 		-- }}}
 		-- syntax plugins {{{
 
-		use(require 'plugins.treesitter')
-		use(require 'plugins.treesitter-playground')
-		use(require 'plugins.treesitter-textobjects')
-		use(require 'plugins.treesitter-comment-string')
+		use(lazy 'plugins.treesitter')
+		use(lazy 'plugins.treesitter-playground')
+		use(lazy 'plugins.treesitter-textobjects')
+		use(lazy 'plugins.treesitter-comment-string')
 
-		use(require 'plugins.syntax.twig')
-		use(require 'plugins.syntax.plantuml')
-		use(require 'plugins.syntax.blade')
-		use(require 'plugins.syntax.pug')
+		use(lazy 'plugins.syntax.twig')
+		use(lazy 'plugins.syntax.plantuml')
+		use(lazy 'plugins.syntax.blade')
+		use(lazy 'plugins.syntax.pug')
 
 		-- }}}
 		-- visual
 
-		use(require 'plugins.colorizer')
-		use(require 'plugins.statusline')
+		use(lazy 'plugins.colorizer')
+		use(lazy 'plugins.statusline')
 
 		--- miscellaneous plugins
 
-		use(require 'plugins.modes')
-		use(require 'plugins.movement')
-		use(require 'plugins.harpoon')
-		use(require 'plugins.splitjoin')
-		use(require 'plugins.notes')
-		use(require 'plugins.bufdel')
+		use(lazy 'plugins.modes')
+		use(lazy 'plugins.movement')
+		use(lazy 'plugins.harpoon')
+		use(lazy 'plugins.splitjoin')
+		use(lazy 'plugins.notes')
+		use(lazy 'plugins.bufdel')
 
-		use(require 'plugins.quickfix')
+		use(lazy 'plugins.quickfix')
 
-		use(require 'plugins.indent')
-		use(require 'plugins.align') -- alignment made easy
-		use(require 'plugins.comment') -- commenting plugin
+		use(lazy 'plugins.indent')
+		use(lazy 'plugins.align') -- alignment made easy
+		use(lazy 'plugins.comment') -- commenting plugin
 
 		use { 'dstein64/vim-startuptime' } -- startup time monitor
 		use { 'lambdalisue/suda.vim' }     -- workaround for using `sudo`
 
-		use(require 'plugins.surround')
+		use(lazy 'plugins.surround')
 
 	end)
 end
