@@ -7,9 +7,6 @@ local mmin   = math.min
 local tie = tablex.is_empty
 local tde = tablex.deep_extend
 
-local vcmd = vim.cmd
-local vfun = vim.fn
-
 local sf = string.format
 
 local m = {}
@@ -99,7 +96,7 @@ end
 ---
 ---@param name string|nil highlight group to clear
 function m.clear_hl(name)
-	vcmd(sf('highlight clear %s', name or ''))
+	vim.cmd.highlight({ 'clear', name or ''})
 end
 
 ---the default configuration table.
@@ -147,18 +144,18 @@ local function apply_highlight_groups(hlgroups)
 		if tie(colors) then return end
 
 		if colors.link then
-			vcmd(sf('highlight! link %s %s', group, colors.link))
+			vim.cmd.highlight({ 'link', group, colors.link, bang = true })
 			return
 		end
 
-		local fg    = colors.fg and sf('guifg=%s ', colors.fg) or ''
-		local bg    = colors.bg and sf('guibg=%s ', colors.bg) or ''
-		local style = colors.style and sf('gui=%s ', colors.style) or ''
-		local guisp = colors.guisp and sf('guisp=%s ', colors.guisp) or ''
+		local args = { group }
 
-		local command = sf('highlight %s %s%s%s%s', group, fg, bg, style, guisp)
+		if colors.fg then args[#args+1] = sf('guifg=%s ', colors.fg) end
+		if colors.bg then args[#args+1] = sf('guibg=%s ', colors.bg) end
+		if colors.style then args[#args+1] = sf('gui=%s ', colors.style) end
+		if colors.guisp then args[#args+1] = sf('guisp=%s ', colors.guisp) end
 
-		vcmd(command)
+		vim.cmd.highlight(args)
 	end)
 end
 
@@ -809,8 +806,13 @@ function m.load(colorscheme, config)
 
 	current_colorscheme = colors
 
-	if vim.g.colors_name then m.clear_hl() end
-	if vfun.exists('syntax_on') then vcmd('syntax reset') end
+	if vim.g.colors_name then
+		m.clear_hl()
+	end
+
+	if vim.fn.exists('syntax_on') then
+		vim.cmd.syntax('reset')
+	end
 
 	vim.g.colors_name   = colorscheme
 	vim.o.termguicolors = true
