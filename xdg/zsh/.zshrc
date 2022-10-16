@@ -205,8 +205,7 @@ zinit wait:'0b' lucid light-mode for                              \
 
 zinit wait:'0b' lucid light-mode as:completion for \
       OMZ::plugins/docker/_docker                  \
-      OMZ::plugins/ripgrep/_ripgrep                \
-      OMZ::plugins/flutter/_flutter
+      OMZ::plugins/ripgrep/_ripgrep
 
 # recommended be loaded last.
 
@@ -246,23 +245,22 @@ zinit wait:'1b' silent from:gh-r as:program for \
      pick:'fd*/fd'                              \
             @sharkdp/fd                         \
        mv:'hyperfine*/hyperfine -> hyperfine'   \
-     pick:'hyperfine*/hyperfine'                \
+     pick:'hyperfine'                           \
             @sharkdp/hyperfine                  \
    atload:'alias ls="exa --icons"'              \
        mv:'bin/exa* -> exa'                     \
      pick:'exa'                                 \
             @ogham/exa                          \
-       mv:'ripgrep* -> ripgrep'                 \
-     pick:'ripgrep/rg'                          \
+       mv:'ripgrep*/rg -> rg'                   \
+     pick:'rg'                                  \
             @BurntSushi/ripgrep                 \
-    bpick:'*lnx*'                               \
             @dalance/procs                      \
      pick:'imsnif/bandwhich'                    \
             @imsnif/bandwhich                   \
      pick:'dust*/dust'                          \
             @bootandy/dust                      \
     id-as:'pueue'                               \
-    bpick:'pueue-*linux*64*'                    \
+    bpick:'pueue-*'                             \
      pick:'pueue'                               \
    atpull:'./pueue completions zsh .'           \
    atload:'alias p=pueue'                       \
@@ -270,9 +268,8 @@ zinit wait:'1b' silent from:gh-r as:program for \
        mv:'pueue-* -> pueue'                    \
             @Nukesor/pueue                      \
     id-as:'pueued'                              \
-    bpick:'pueued-*linux*64*'                   \
+    bpick:'pueued-*'                            \
    atload:'pueued --daemonize > /dev/null 2>&1' \
-   atpull:'mv pueue* pueued > /dev/null 2>&1'   \
        mv:'pueued-* -> pueued'                  \
             @Nukesor/pueue                      \
    atload:'eval "$(zoxide init zsh)"'           \
@@ -292,12 +289,10 @@ zinit wait:'1b' silent from:gh-r as:program for \
             @ericchiang/pup                     \
     bpick:'*linux*amd64'                        \
      pick:'yq'                                  \
-   atload:'mv yq* yq > /dev/null 2>&1'          \
-       mv:'yq-* -> yq'                          \
+       mv:'yq_* -> yq'                          \
             @mikefarah/yq                       \
     bpick:'*linux*64*'                          \
      pick:'jq'                                  \
-   atload:'mv jq* jq > /dev/null 2>&1'          \
        mv:'jq* -> jq'                           \
             @stedolan/jq
 
