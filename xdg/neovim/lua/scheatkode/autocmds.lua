@@ -2,17 +2,6 @@ local sf   = string.format
 local pipe = require('f.function.pipe')
 
 local function setup ()
-   -- highlight yanked text {{{1
-   vim.api.nvim_create_autocmd('TextYankPost', {
-      group    = vim.api.nvim_create_augroup('HighlightYank', {clear = true}),
-      callback = function ()
-         vim.highlight.on_yank {
-            timeout   = 100,
-            on_visual = false,
-         }
-      end
-   })
-
    -- quickfix auto open {{{1
    vim.api.nvim_create_autocmd('QuickFixCmdPost', {
       group   = vim.api.nvim_create_augroup('QuickFixAutoOpen', {clear = true}),
