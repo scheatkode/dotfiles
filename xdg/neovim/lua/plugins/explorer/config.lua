@@ -358,7 +358,7 @@ local function setup()
 				},
 
 				['A']    = 'add_directory', -- also accepts the config.show_path option.
-				['dd']    = 'delete',
+				['x']    = 'delete',
 				['r']    = 'rename',
 				['y']    = 'copy_to_clipboard',
 				['d']    = 'cut_to_clipboard',
