@@ -301,94 +301,98 @@ local function generate_highlights(colors, config)
 		LspSignatureActiveParameter = { fg = colors.diag.warning },
 		LspCodeLens                 = { fg = colors.fg_comment },
 
-		-- ['@annotation']                 = {},
-		['@attribute']             = { link = 'Constant' },
-		['@boolean']               = { link = 'Boolean' },
-		['@character']             = { link = 'Character' },
-		-- ['@character.special']          = {},
-		['@comment']               = { link = 'Comment' },
-		['@constructor']           = { fg = colors.keyword }, -- Function/Special/Statement/Keyword
-		['@conditional']           = { link = 'Conditional' },
-		['@constant']              = { link = 'Constant' },
-		-- ['@constant.builtin']           = {},
-		-- ['@constant.macro']             = {},
-		['@debug']                 = { link = 'Debug' },
-		['@define']                = { link = 'Define' },
-		['@error']                 = { fg = colors.diag.error },
-		['@exception']             = extend({ fg = config.special_exception and colors.special3 or colors.statement },
-			config.statement_style),
-		['@field']                 = { link = 'Identifier' }, -- default
-		['@float']                 = { link = 'Float' },
-		['@function']              = { link = 'Function' },
-		-- ['@function.call']              = {},
-		-- ['@function.builtin']           = {link = 'Function' },
-		-- ['@function.macro']             = {},
-		['@include']               = { link = 'Include' },
-		['@keyword']               = { link = 'Keyword' },
-		-- ['@keyword.function']           = { link = 'Keyword' }, -- default
-		['@keyword.operator']      = { fg = colors.operator, bold = true },
-		['@keyword.return']        = extend({ fg = config.special_return and colors.special3 or colors.keyword,
+		['@none']                  = { default = true },
+		['@punctuation.delimiter'] = { link = 'Delimiter' },
+		['@punctuation.bracket']   = { link = 'Delimiter' },
+		['@punctuation.special']   = { link = 'Delimiter' },
+
+		['@constant']          = { link = 'Constant' },
+		['@constant.builtin']  = { link = 'Special' },
+		['@constant.macro']    = { link = 'Define' },
+		['@string']            = { link = 'String' },
+		['@string.regex']      = { fg = colors.regex },
+		['@string.escape']     = { fg = colors.regex, bold = true },
+		['@string.special']    = { link = 'SpecialChar' },
+		['@character']         = { link = 'Character' },
+		['@character.special'] = { link = 'SpecialChar' },
+		['@number']            = { link = 'Number' },
+		['@boolean']           = { link = 'Boolean' },
+		['@float']             = { link = 'Float' },
+
+		['@function']            = { link = 'Function' },
+		['@function.call']       = { link = '@function' },
+		['@function.builtin']    = { link = 'Special' },
+		['@function.macro']      = { link = 'Macro' },
+		['@parameter']           = { link = 'Identifier' },
+		['@parameter.reference'] = { link = '@parameter' },
+		['@method']              = { link = 'Function' },
+		['@method.call']         = { link = '@method' },
+		['@field']               = { link = 'Identifier' },
+		['@property']            = { link = 'Identifier' },
+		['@constructor']         = { fg = colors.keyword },
+		['@annotation']          = { link = 'PreProc' },
+		['@attribute']           = { link = 'PreProc' },
+		['@namespace']           = { link = 'Include' },
+		['@symbol']              = { link = 'Identifier' },
+
+		['@conditional']      = { link = 'Conditional' },
+		['@repeat']           = { link = 'Repeat' },
+		['@label']            = { link = 'Label' },
+		['@operator']         = { link = 'Operator' },
+		['@keyword']          = { link = 'Keyword' },
+		['@keyword.function'] = { link = 'Keyword' },
+		['@keyword.operator'] = { fg = colors.operator, bold = true },
+		['@keyword.return']   = extend({
+			fg = config.special_return
+				 and colors.special3
+				 or colors.keyword,
 		}, config.keyword_style),
-		['@label']                 = { link = 'Label' },
-		['@method']                = { link = 'Function' },
-		-- ['@method.call']                = { link = 'Function' },
-		-- ['@namespace']                  = {},
-		-- ['@none']                       = {},
-		['@number']                = { link = 'Number' },
-		['@operator']              = { link = 'Operator' },
-		['@parameter']             = { link = 'Identifier' }, -- default
-		-- ['@parameter.reference']        = {},
-		['@preproc']               = { link = 'PreProc' },
-		['@property']              = { link = 'Identifier' }, -- default
-		['@punctuation.delimiter'] = { fg = colors.delimiter },
-		['@punctuation.bracket']   = { fg = colors.delimiter },
-		['@punctuation.special']   = { fg = colors.delimiter },
-		['@repeat']                = { link = 'Repeat' },
-		['@storageclass']          = { link = 'StorageClass' },
-		['@string']                = { link = 'String' },
-		['@string.regex']          = { fg = colors.regex },
-		['@string.escape']         = { fg = colors.regex, bold = true },
-		-- ['@string.special']             = {},
-		-- ['@symbol']                     = {},
-		['@type']                  = { link = 'Type' },
-		-- ['@type.builtin']               = {},
-		-- ['@type.qualifier']             = {},
-		-- ['@type.definition']            = {},
-		['@variable']              = { fg = 'NONE' },
-		['@variable.builtin']      = extend({ fg = colors.special2 }, config.variablebuiltin_style),
 
-		['@tag']           = { link = 'Tag' },
-		['@tag.attribute'] = { link = '@attribute' },
+		['@exception']    = extend({
+			fg = config.special_exception
+				 and colors.special3
+				 or colors.statement
+		}, config.statement_style),
+		['@debug']        = { link = 'Debug' },
+		['@define']       = { link = 'Define' },
+		['@preproc']      = { link = 'PreProc' },
+		['@storageclass'] = { link = 'StorageClass' },
+
+		['@todo'] = { link = 'Todo' },
+
+		['@type']            = { link = 'Type' },
+		['@type.builtin']    = { link = '@type' },
+		['@type.qualifier']  = { link = '@type' },
+		['@type.definition'] = { link = 'Typedef' },
+
+		['@include'] = { link = 'Include' },
+
+		['@variable']         = { fg = 'NONE' },
+		['@variable.builtin'] = extend({ fg = colors.special2 }, config.variablebuiltin_style),
+
+		['@text']                  = { link = '@none' },
+		['@text.strong']           = { bold = true, default = true },
+		['@text.emphasis']         = { italic = true, default = true },
+		['@text.underline']        = { underline = true },
+		['@text.strike']           = { strikethrough = true },
+		['@text.math']             = { link = 'Special', default = true },
+		['@text.reference']        = { link = 'Constant', default = true },
+		['@text.environment']      = { link = 'Macro', default = true },
+		['@text.environment.name'] = { link = 'Type', default = true },
+		['@text.title']            = { link = 'Title', default = true },
+		['@text.literal']          = { link = 'String', default = true },
+		['@text.uri']              = { link = 'Underlined', default = true },
+
+		['@comment']      = { link = 'Comment', default = true },
+		['@text.note']    = { link = 'SpecialComment', default = true },
+		['@text.warning'] = { link = 'Todo', default = true },
+		['@text.danger']  = { link = 'WarningMsg', default = true },
+
+		['@error'] = { fg = colors.diag.error },
+
+		['@tag']           = { link = 'Label', default = true },
+		['@tag.attribute'] = { link = '@property' },
 		['@tag.delimiter'] = { link = 'Delimiter' },
-		-- ['@text']                       = {},
-		-- ['@text.strong']                = {},
-		-- ['@text.emphasis']              = {},
-		-- ['@text.underline']             = {},
-		-- ['@text.strike']                = {},
-		-- ['@text.title']                 = {},
-		-- ['@text.literal']               = {},
-		-- ['@text.uri']                   = {},
-		-- ['@text.math']                  = {},
-		-- ['@text.reference']             = { fg = colors.special2 },
-		-- ['@text.environment']           = {},
-		-- ['@text.environment.name']      = {},
-
-		-- ['@text.note']                  = { fg = colors.fg_dark, bg = colors.diag.hint, style = 'nocombine,bold'}, -- links to SpecialComment -> Special
-		['@text.warning'] = { link = 'Todo' }, -- default
-		['@text.danger']  = { link = 'WarningMsg' }, -- default
-		-- ['@text.todo']                  = {},
-
-		-- Lua
-		-- luaTSProperty                  = {},
-
-		-- LspTrouble
-		-- LspTroubleText                 = {},
-		-- LspTroubleCount                = {},
-		-- LspTroubleNormal               = {},
-
-		-- Illuminate
-		-- illuminatedWord                = {},
-		-- illuminatedCurWord             = {},
 
 		-- Git
 		diffAdded   = { fg = colors.git.added, bg = m.alter(colors.git.added, -70) },
@@ -409,11 +413,6 @@ local function generate_highlights(colors, config)
 		NeogitDiffContextHighlight = { bg = colors.bg_dark, fg = colors.fg_dark },
 		NeogitDiffDeleteHighlight  = { fg = m.alter(colors.git.removed, -5), bg = m.alter(colors.git.removed, -65) },
 		NeogitDiffAddHighlight     = { fg = m.alter(colors.git.added, -5), bg = m.alter(colors.git.added, -65) },
-
-		-- GitGutter
-		-- GitGutterAdd                   = {},
-		-- GitGutterChange                = {},
-		-- GitGutterDelete                = {},
 
 		-- GitSigns
 		GitSignsAdd      = { fg = colors.git.added },
@@ -617,7 +616,6 @@ local function generate_highlights(colors, config)
 
 		CmpItemKindSnippet = { fg = colors.special, bg = 'NONE' },
 
-		-- CmpItemKindText = { link = 'TSText' },
 		CmpItemKindText = { link = '@text' },
 
 		CmpItemKindModule = { link = '@include' },
@@ -647,32 +645,6 @@ local function generate_highlights(colors, config)
 		-- SymbolsOutline
 		FocusedSymbol = { fg = colors.identifier },
 		-- SymbolsOutlineConnector        = {},
-
-
-		-- TroubleNvim
-		TroubleNormal = { link = 'NormalSB' },
-		-- TroubleCount                   = {},
-		-- TroubleError                   = {},
-		-- TroubleTextInformation         = {},
-		-- TroubleSignWarning             = {},
-		-- TroubleLocation                = {},
-		-- TroubleWarning                 = {},
-		-- TroublePreview                 = {},
-		-- TroubleTextError               = {},
-		-- TroubleSignInformation         = {},
-		-- TroubleIndent                  = {},
-		-- TroubleSource                  = {},
-		-- TroubleSignHint                = {},
-		-- TroubleSignOther               = {},
-		-- TroubleFoldIcon                = {},
-		-- TroubleTextWarning             = {},
-		-- TroubleCode                    = {},
-		-- TroubleInformation             = {},
-		-- TroubleSignError               = {},
-		-- TroubleFile                    = {},
-		-- TroubleHint                    = {},
-		-- TroubleTextHint                = {},
-		-- TroubleText                    = {},
 	}
 
 	f.iterate(config.overrides)
