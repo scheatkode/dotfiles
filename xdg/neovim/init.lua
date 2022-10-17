@@ -9,17 +9,17 @@ pcall(require, 'impatient')
 -- location.
 
 do
-   local pack_path = (
-         os.getenv('XDG_CONFIG_HOME')
-      or os.getenv('HOME') .. '/.config'
-   ) .. '/lib/lua'
+	local pack_path = (
+		 os.getenv('XDG_CONFIG_HOME')
+			  or os.getenv('HOME') .. '/.config'
+		 ) .. '/lib/lua'
 
-   package.path = string.format(
-      '%s;%s/?.lua;%s/?/init.lua',
-      package.path,
-      pack_path,
-      pack_path
-   )
+	package.path = string.format(
+		'%s;%s/?.lua;%s/?/init.lua',
+		package.path,
+		pack_path,
+		pack_path
+	)
 end
 
 -- Leader key
@@ -51,8 +51,6 @@ require('user.providers').disable()
 require('colors').load('gruvvy')
 
 require('diagnostics').setup()
-require('lang.capabilities').setup()
-
 require('plugins').setup()
 
 require('scheatkode.whitespace')
@@ -60,5 +58,5 @@ require('scheatkode.whitespace')
 
 -- garbage collection
 
-collectgarbage('setpause',   260)
+collectgarbage('setpause', 260)
 collectgarbage('setstepmul', 500)
