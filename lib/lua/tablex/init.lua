@@ -91,4 +91,6 @@ function m.deep_extend(behavior, ...)
    return out
 end
 
+m.extend = require('tablex.extend')
+
 return m
