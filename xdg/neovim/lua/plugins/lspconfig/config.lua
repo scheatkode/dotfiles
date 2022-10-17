@@ -96,6 +96,7 @@ if not has_lspconfig then
 	return has_lspconfig
 end
 
+require('lang.capabilities').setup()
 require('lang.protocol').setup()
 require('lang.handlers').setup()
 

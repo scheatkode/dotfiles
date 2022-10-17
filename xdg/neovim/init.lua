@@ -48,9 +48,10 @@ require('scheatkode.commands').setup()
 require('user.mappings').setup()
 require('user.providers').disable()
 
-require('diagnostics').setup()
-
 require('colors').load('gruvvy')
+
+require('diagnostics').setup()
+require('lang.capabilities').setup()
 
 require('plugins').setup()
 
