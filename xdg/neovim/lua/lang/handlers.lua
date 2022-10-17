@@ -1,7 +1,7 @@
 return {
 	setup = function(options)
-		local f      = require('f')
-		local tablex = require('tablex')
+		local f           = require('f')
+		local deep_extend = require('tablex.deep_extend')
 
 		local defaults = {
 			['textDocument/publishDiagnostics'] = vim.lsp.with(
@@ -20,7 +20,7 @@ return {
 		}
 
 		f
-			 .iterate(tablex.deep_extend('force', defaults, options or {}))
+			 .iterate(deep_extend('force', defaults, options or {}))
 			 :foreach(function( k, v) vim.lsp.handlers[k] = v end)
 	end
 }

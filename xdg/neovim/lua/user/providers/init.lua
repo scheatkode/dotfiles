@@ -10,8 +10,8 @@ return {
 			loaded_ruby_provider    = 0,
 		}
 
-		local extend    = require('tablex').deep_extend
-		local providers = extend('force', defaults, overrides or {})
+		local deep_extend = require('tablex.deep_extend')
+		local providers   = deep_extend('force', defaults, overrides or {})
 
 		for k, v in pairs(providers) do
 			vim.g[k] = v

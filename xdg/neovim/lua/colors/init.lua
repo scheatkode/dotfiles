@@ -1,8 +1,9 @@
-local assertx  = require('assertx')
-local f        = require('f')
-local constant = require('f.function.constant')
-local extend   = require('tablex.extend')
-local tablex   = require('tablex')
+local assertx     = require('assertx')
+local f           = require('f')
+local constant    = require('f.function.constant')
+local deep_extend = require('tablex.deep_extend')
+local extend      = require('tablex.extend')
+local is_empty    = require('tablex.is_empty')
 
 local m = {}
 
@@ -125,16 +126,16 @@ local defaults = constant({
 ---@param config table? options containing colors and theme fields (optional)
 ---@return table palette colors and theme colors merged with `config.overrides`
 local function generate_colors(cs, config)
-	local conf   = tablex.deep_extend('force', defaults(), config)
-	local colors = tablex.deep_extend('force', cs.palette(), conf.overrides)
-	local theme  = tablex.deep_extend('force', cs.themes(conf.theme)(colors), conf.overrides)
+	local conf   = deep_extend('force', defaults(), config)
+	local colors = deep_extend('force', cs.palette(), conf.overrides)
+	local theme  = deep_extend('force', cs.themes(conf.theme)(colors), conf.overrides)
 
-	return tablex.deep_extend('force', theme, colors)
+	return deep_extend('force', theme, colors)
 end
 
 local function apply_highlight_groups(hlgroups)
 	f.iterate(hlgroups):foreach(function(group, colors)
-		if not tablex.is_empty(colors) then
+		if not is_empty(colors) then
 			vim.api.nvim_set_hl(0, group, colors)
 		end
 	end)
@@ -649,11 +650,11 @@ local function generate_highlights(colors, config)
 
 	f.iterate(config.overrides)
 		 :foreach(function( hl, specs)
-		    if hlgroups[hl] and not tablex.is_empty(specs) then
+		    if hlgroups[hl] and not is_empty(specs) then
 		       hlgroups[hl].link = nil
 		    end
 
-		    hlgroups[hl] = tablex.deep_extend('force', hlgroups[hl] or {}, specs)
+		    hlgroups[hl] = deep_extend('force', hlgroups[hl] or {}, specs)
 		 end)
 
 	return hlgroups

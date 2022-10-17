@@ -16,16 +16,15 @@ return {
 			},
 		})
 
-		local tablex = require('tablex')
-
-		local defaults = {
+		local deep_extend = require('tablex.deep_extend')
+		local defaults    = {
 			DiagnosticSignError = { text = '', texthl = 'DiagnosticError' },
 			DiagnosticSignWarn  = { text = '‼', texthl = 'DiagnosticWarn' },
 			DiagnosticSignInfo  = { text = 'ℹ', texthl = 'DiagnosticInfo' },
 			DiagnosticSignHint  = { text = '', texthl = 'DiagnosticHint' },
 		}
 
-		local options = tablex.deep_extend('force', defaults, overrides or {})
+		local options = deep_extend('force', defaults, overrides or {})
 
 		for k, v in pairs(options) do
 			vim.fn.sign_define(k, v)
