@@ -2,12 +2,6 @@ local sf   = string.format
 local pipe = require('f.function.pipe')
 
 local function setup ()
-   -- quickfix auto open {{{1
-   vim.api.nvim_create_autocmd('QuickFixCmdPost', {
-      group   = vim.api.nvim_create_augroup('QuickFixAutoOpen', {clear = true}),
-      command = 'cwindow'
-   })
-
    -- smart close certain filetypes {{{1
 
    local smart_close_filetypes = {
