@@ -1,13 +1,8 @@
-local f      = require('f')
-local tablex = require('tablex')
-
-local mfloor = math.floor
-local mmin   = math.min
-
-local tie = tablex.is_empty
-local tde = tablex.deep_extend
-
-local sf = string.format
+local assertx  = require('assertx')
+local f        = require('f')
+local constant = require('f.function.constant')
+local extend   = require('tablex.extend')
+local tablex   = require('tablex')
 
 local m = {}
 
@@ -32,7 +27,7 @@ end
 ---@param percent number percentage by which to alter
 ---@return number result altered color component
 local function alterc(component, percent)
-	return mfloor(component * (100 + percent) / 100)
+	return math.floor(component * (100 + percent) / 100)
 end
 
 ---alter a given hex color.
@@ -60,9 +55,9 @@ function m.alter(color, percent)
 	end
 
 	r, g, b = alterc(r, percent), alterc(g, percent), alterc(b, percent)
-	r, g, b = mmin(r, 255), mmin(g, 255), mmin(b, 255)
+	r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
 
-	return sf('#%02x%02x%02x', r, g, b)
+	return string.format('#%02x%02x%02x', r, g, b)
 end
 
 ---set autocommands to dim the active window when neovim loses
@@ -96,7 +91,7 @@ end
 ---
 ---@param name string|nil highlight group to clear
 function m.clear_hl(name)
-	vim.cmd.highlight({ 'clear', name or ''})
+	vim.cmd.highlight({ 'clear', name or '' })
 end
 
 ---the default configuration table.
@@ -106,25 +101,23 @@ end
 ---when the garbage collector sweeps for unreferenced objects.
 ---
 ---@return table default configuration table
-local function default_config()
-	return {
-		undercurl             = true,
-		comment_style         = 'italic',
-		function_style        = 'NONE',
-		keyword_style         = 'italic',
-		statement_style       = 'italic',
-		type_style            = 'NONE',
-		variablebuiltin_style = 'italic',
-		special_return        = true,
-		special_exception     = true,
-		transparent           = false,
-		darken_sidebar        = true,
-		dim_inactive          = true,
-		dim_on_focus_lost     = true,
-		overrides             = {},
-		theme                 = 'default',
-	}
-end
+local defaults = constant({
+	undercurl             = true,
+	comment_style         = { italic = true },
+	function_style        = {},
+	keyword_style         = { italic = true },
+	statement_style       = { italic = true },
+	type_style            = {},
+	variablebuiltin_style = { italic = true },
+	special_return        = true,
+	special_exception     = true,
+	transparent           = false,
+	darken_sidebar        = true,
+	dim_inactive          = true,
+	dim_on_focus_lost     = true,
+	overrides             = {},
+	theme                 = 'default',
+})
 
 ---generate color table.
 ---
@@ -132,146 +125,134 @@ end
 ---@param config table? options containing colors and theme fields (optional)
 ---@return table palette colors and theme colors merged with `config.overrides`
 local function generate_colors(cs, config)
-	local conf   = tde('force', default_config(), config)
-	local colors = tde('force', cs.palette(), conf.overrides)
-	local theme  = tde('force', cs.themes(conf.theme)(colors), conf.overrides)
+	local conf   = tablex.deep_extend('force', defaults(), config)
+	local colors = tablex.deep_extend('force', cs.palette(), conf.overrides)
+	local theme  = tablex.deep_extend('force', cs.themes(conf.theme)(colors), conf.overrides)
 
-	return tde('force', theme, colors)
+	return tablex.deep_extend('force', theme, colors)
 end
 
 local function apply_highlight_groups(hlgroups)
 	f.iterate(hlgroups):foreach(function(group, colors)
-		if tie(colors) then return end
-
-		if colors.link then
-			vim.cmd.highlight({ 'link', group, colors.link, bang = true })
-			return
+		if not tablex.is_empty(colors) then
+			vim.api.nvim_set_hl(0, group, colors)
 		end
-
-		local args = { group }
-
-		if colors.fg then args[#args+1] = sf('guifg=%s ', colors.fg) end
-		if colors.bg then args[#args+1] = sf('guibg=%s ', colors.bg) end
-		if colors.style then args[#args+1] = sf('gui=%s ', colors.style) end
-		if colors.guisp then args[#args+1] = sf('guisp=%s ', colors.guisp) end
-
-		vim.cmd.highlight(args)
 	end)
 end
 
 ---generate highlights.
 ---
 ---@param colors table color (theme) table created by `generate_colors`
----@param config table|nil config options (optional)
+---@param config table config options (optional)
 local function generate_highlights(colors, config)
 	local hlgroups = {
-		Comment                           = { fg = colors.fg_comment, style = config.comment_style },
-		ColorColumn                       = { bg = colors.bg_light0 },
-		Conceal                           = { fg = colors.bg_light3, bg = 'NONE', style = 'bold' },
-		Cursor                            = { fg = colors.bg, bg = colors.fg },
-		lCursor                           = { link = 'Cursor' },
-		CursorIM                          = { link = 'Cursor' },
-		CursorLine                        = { bg = colors.bg_light0 },
-		CursorColumn                      = { link = 'CursorLine' },
-		Directory                         = { fg = colors.fn },
-		DiffAdd                           = { bg = m.alter(colors.git.added, -70) },
-		DiffChange                        = { bg = m.alter(colors.git.changed, -70) },
-		DiffDelete                        = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70), style = 'none' },
-		DiffText                          = { fg = 'NONE', bg = colors.diff.text },
-		EndOfBuffer                       = { fg = colors.bg },
+		Comment      = extend({ fg = colors.fg_comment }, config.comment_style),
+		ColorColumn  = { bg = colors.bg_light0 },
+		Conceal      = { fg = colors.bg_light3, bg = 'NONE', bold = true },
+		Cursor       = { fg = colors.bg, bg = colors.fg },
+		lCursor      = { link = 'Cursor' },
+		CursorIM     = { link = 'Cursor' },
+		CursorLine   = { bg = colors.bg_light0 },
+		CursorColumn = { link = 'CursorLine' },
+		Directory    = { fg = colors.fn },
+		DiffAdd      = { bg = m.alter(colors.git.added, -70) },
+		DiffChange   = { bg = m.alter(colors.git.changed, -70) },
+		DiffDelete   = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
+		DiffText     = { fg = 'NONE', bg = colors.diff.text },
+		EndOfBuffer  = { fg = colors.bg },
 		-- TermCursor                     = {},
 		-- TermCursorNC                   = {},
-		ErrorMsg                          = { fg = colors.diag.error, bg = 'NONE' },
-		VertSplit                         = { fg = colors.bg_status, bg = colors.bg_status, style = 'NONE' },
-		Folded                            = { fg = colors.bg_light3, bg = colors.bg_light0 },
-		FoldColumn                        = { fg = colors.bg_light2, bg = 'NONE' },
-		SignColumn                        = { fg = colors.bg_light2, bg = 'NONE' },
-		SignColumnSB                      = { link = 'SignColumn' },
-		Substitute                        = { fg = colors.fg, bg = colors.git.removed },
-		LineNr                            = { fg = colors.bg_light2 },
-		CursorLineNr                      = { fg = colors.diag.warning, bg = 'NONE', style = 'bold' },
-		MatchParen                        = { fg = colors.diag.warning, bg = 'NONE', style = 'bold' },
-		ModeMsg                           = { fg = colors.diag.warning, style = 'bold', bg = 'NONE' },
-		MsgArea                           = { link = 'NormalNC' },
+		ErrorMsg     = { fg = colors.diag.error, bg = 'NONE' },
+		VertSplit    = { fg = colors.bg_status, bg = colors.bg_status },
+		Folded       = { fg = colors.bg_light3, bg = colors.bg_light0 },
+		FoldColumn   = { fg = colors.bg_light2, bg = 'NONE' },
+		SignColumn   = { fg = colors.bg_light2, bg = 'NONE' },
+		SignColumnSB = { link = 'SignColumn' },
+		Substitute   = { fg = colors.fg, bg = colors.git.removed },
+		LineNr       = { fg = colors.bg_light2 },
+		CursorLineNr = { fg = colors.diag.warning, bg = 'NONE', bold = true },
+		MatchParen   = { fg = colors.diag.warning, bg = 'NONE', bold = true },
+		ModeMsg      = { fg = colors.diag.warning, bg = 'NONE', bold = true },
+		MsgArea      = { link = 'NormalNC' },
 		-- MsgSeparator                   = {},
-		MoreMsg                           = { fg = colors.diag.info, bg = colors.bg, style = 'NONE' },
-		NonText                           = { fg = colors.bg_light2 },
-		Normal                            = { fg = colors.fg, bg = not config.transparent and colors.bg or 'NONE' },
-		NormalNC                          = config.dim_inactive and { fg = colors.fg_dark, bg = colors.bg_dim } or { link = 'Normal' },
-		NormalSB                          = config.darken_sidebar and { fg = colors.fg_dark, bg = colors.bg_dark } or { link = 'Normal' },
-		NormalFloat                       = { fg = colors.fg, bg = colors.bg },
-		FloatBorder                       = { fg = colors.fg_border, bg = 'NONE' },
-		Pmenu                             = { fg = colors.fg, bg = colors.bg_menu },
-		PmenuSel                          = { fg = 'NONE', bg = colors.bg_menu_sel },
-		PmenuSbar                         = { link = 'Pmenu' },
-		PmenuThumb                        = { bg = colors.bg_search },
-		Question                          = { link = 'MoreMsg' },
-		QuickFixLine                      = { link = 'CursorLine' },
-		Search                            = { fg = colors.fg, bg = colors.bg_search },
-		IncSearch                         = { fg = colors.bg_visual, bg = colors.diag.warning, style = 'NONE' },
-		SpecialKey                        = { link = 'NonText' },
-		SpellBad                          = { style = 'undercurl', guisp = colors.diag.error },
-		SpellCap                          = { style = 'undercurl', guisp = colors.diag.warning },
-		SpellLocal                        = { style = 'undercurl', guisp = colors.diag.warning },
-		SpellRare                         = { style = 'undercurl', guisp = colors.diag.warning },
-		StatusLine                        = { fg = colors.fg_dark, bg = colors.bg_status, style = 'NONE' },
-		StatusLineNC                      = { fg = colors.fg_comment, bg = colors.bg_dim, style = 'NONE' },
-		TabLine                           = { bg = colors.bg_dark, fg = colors.bg_light3, style = 'NONE' },
-		TabLineFill                       = { bg = colors.bg, style = 'NONE' },
-		TabLineSel                        = { fg = colors.fg_dark, bg = colors.bg_light1, style = 'NONE' },
-		Title                             = { fg = colors.fn, style = 'bold' },
-		Visual                            = { bg = colors.bg_visual },
-		VisualNOS                         = { link = 'Visual' },
-		WarningMsg                        = { fg = colors.diag.warning, bg = 'NONE' },
-		Whitespace                        = { fg = colors.bg_light2 },
-		WildMenu                          = { link = 'Pmenu' },
+		MoreMsg      = { fg = colors.diag.info, bg = colors.bg },
+		NonText      = { fg = colors.bg_light2 },
+		Normal       = { fg = colors.fg, bg = not config.transparent and colors.bg or 'NONE' },
+		NormalNC     = config.dim_inactive and { fg = colors.fg_dark, bg = colors.bg_dim } or { link = 'Normal' },
+		NormalSB     = config.darken_sidebar and { fg = colors.fg_dark, bg = colors.bg_dark } or { link = 'Normal' },
+		NormalFloat  = { fg = colors.fg, bg = colors.bg },
+		FloatBorder  = { fg = colors.fg_border, bg = 'NONE' },
+		Pmenu        = { fg = colors.fg, bg = colors.bg_menu },
+		PmenuSel     = { fg = 'NONE', bg = colors.bg_menu_sel },
+		PmenuSbar    = { link = 'Pmenu' },
+		PmenuThumb   = { bg = colors.bg_search },
+		Question     = { link = 'MoreMsg' },
+		QuickFixLine = { link = 'CursorLine' },
+		Search       = { fg = colors.fg, bg = colors.bg_search },
+		IncSearch    = { fg = colors.bg_visual, bg = colors.diag.warning },
+		SpecialKey   = { link = 'NonText' },
+		SpellBad     = { sp = colors.diag.error, undercurl = true },
+		SpellCap     = { sp = colors.diag.warning, undercurl = true },
+		SpellLocal   = { sp = colors.diag.warning, undercurl = true },
+		SpellRare    = { sp = colors.diag.warning, undercurl = true },
+		StatusLine   = { fg = colors.fg_dark, bg = colors.bg_status },
+		StatusLineNC = { fg = colors.fg_comment, bg = colors.bg_dim },
+		TabLine      = { bg = colors.bg_dark, fg = colors.bg_light3 },
+		TabLineFill  = { bg = colors.bg },
+		TabLineSel   = { fg = colors.fg_dark, bg = colors.bg_light1 },
+		Title        = { fg = colors.fn },
+		Visual       = { bg = colors.bg_visual },
+		VisualNOS    = { link = 'Visual' },
+		WarningMsg   = { fg = colors.diag.warning, bg = 'NONE' },
+		Whitespace   = { fg = colors.bg_light2 },
+		WildMenu     = { link = 'Pmenu' },
 
-		Constant                          = { fg = colors.constant },
-		String                            = { fg = colors.string },
-		Character                         = { link = 'String' },
-		Number                            = { fg = colors.number },
-		Boolean                           = { fg = colors.constant, style = 'bold' },
-		Float                             = { link = 'Number' },
+		Constant  = { fg = colors.constant },
+		String    = { fg = colors.string },
+		Character = { link = 'String' },
+		Number    = { fg = colors.number },
+		Boolean   = { fg = colors.constant, bold = true },
+		Float     = { link = 'Number' },
 
-		Identifier                        = { fg = colors.identifier },
-		Function                          = { fg = colors.fn, style = config.function_style },
-		Statement                         = { fg = colors.statement, style = config.statement_style },
+		Identifier = { fg = colors.identifier },
+		Function   = extend({ fg = colors.fn }, config.function_style),
+		Statement  = extend({ fg = colors.statement }, config.statement_style),
 		-- Conditional                    = {},
 		-- Repeat                         = {},
 		-- Label                          = {},
-		Operator                          = { fg = colors.operator },
-		Keyword                           = { fg = colors.keyword, style = config.keyword_style },
-		Exception                         = { fg = colors.special2 },
+		Operator   = { fg = colors.operator },
+		Keyword    = extend({ fg = colors.keyword }, config.keyword_style),
+		Exception  = { fg = colors.special2 },
 
-		PreProc                           = { fg = colors.preproc },
+		PreProc = { fg = colors.preproc },
 		-- Include                        = {},
 		-- Define                         = {},
 		-- Macro                          = {},
 		-- PreCondit                      = {},
 
-		Type                              = { fg = colors.type, style = config.type_style },
+		Type = extend({ fg = colors.type }, config.type_style),
 		-- StorageClass                   = {},
 		-- Structure                      = {},
 		-- Typedef                        = {},
 
-		Special                           = { fg = colors.special },
+		Special   = { fg = colors.special },
 		-- SpecialChar                    = {},
 		-- Tag                            = {},
-		Delimiter                         = { fg = colors.delimiter },
+		Delimiter = { fg = colors.delimiter },
 		-- SpecialComment                 = {},
 		-- Debug                          = {},
 
-		Underlined                        = { fg = colors.special, style = 'underline' },
-		Bold                              = { style = 'bold' },
-		Italic                            = { style = 'italic' },
+		Underlined = { fg = colors.special, underline = true },
+		Bold       = { bold = true },
+		Italic     = { italic = true },
 
-		Ignore                            = { link = 'NonText' },
+		Ignore = { link = 'NonText' },
 
-		Error                             = { fg = colors.diag.error, bg = 'NONE' },
-		Todo                              = { fg = colors.diag.info, bg = 'NONE', style = 'bold' },
+		Error = { fg = colors.diag.error, bg = 'NONE' },
+		Todo  = { fg = colors.diag.info, bg = 'NONE', bold = true },
 
-		qfLineNr                          = { link = 'lineNr' },
-		qfFileName                        = { link = 'Directory' },
+		qfLineNr   = { link = 'lineNr' },
+		qfFileName = { link = 'Directory' },
 
 		-- htmlH1                         = {},
 		-- htmlH2                         = {},
@@ -290,93 +271,95 @@ local function generate_highlights(colors, config)
 		-- markdownH2                     = {},
 		-- markdownLinkText               = {},
 
-		debugPC                           = { link = 'CursorLine' },
-		debugBreakpoint                   = { fg = colors.special },
+		debugPC         = { link = 'CursorLine' },
+		debugBreakpoint = { fg = colors.special },
 
-		LspReferenceText                  = { bg = colors.diff.text },
-		LspReferenceRead                  = { link = 'LspReferenceText' },
-		LspReferenceWrite                 = { link = 'LspReferenceText' },
+		LspReferenceText  = { bg = colors.diff.text },
+		LspReferenceRead  = { link = 'LspReferenceText' },
+		LspReferenceWrite = { link = 'LspReferenceText' },
 
-		DiagnosticError                   = { fg = colors.diag.error },
-		DiagnosticWarn                    = { fg = colors.diag.warning },
-		DiagnosticInfo                    = { fg = colors.diag.info },
-		DiagnosticHint                    = { fg = colors.diag.hint },
+		DiagnosticError = { fg = colors.diag.error },
+		DiagnosticWarn  = { fg = colors.diag.warning },
+		DiagnosticInfo  = { fg = colors.diag.info },
+		DiagnosticHint  = { fg = colors.diag.hint },
 
-		DiagnosticSignError               = { link = 'DiagnosticError' },
-		DiagnosticSignWarn                = { link = 'DiagnosticWarn' },
-		DiagnosticSignInfo                = { link = 'DiagnosticInfo' },
-		DiagnosticSignHint                = { link = 'DiagnosticHint' },
+		DiagnosticSignError = { link = 'DiagnosticError' },
+		DiagnosticSignWarn  = { link = 'DiagnosticWarn' },
+		DiagnosticSignInfo  = { link = 'DiagnosticInfo' },
+		DiagnosticSignHint  = { link = 'DiagnosticHint' },
 
-		DiagnosticVirtualTextError        = { link = 'DiagnosticError' },
-		DiagnosticVirtualTextWarn         = { link = 'DiagnosticWarn' },
-		DiagnosticVirtualTextInfo         = { link = 'DiagnosticInfo' },
-		DiagnosticVirtualTextHint         = { link = 'DiagnosticHint' },
+		DiagnosticVirtualTextError = { link = 'DiagnosticError' },
+		DiagnosticVirtualTextWarn  = { link = 'DiagnosticWarn' },
+		DiagnosticVirtualTextInfo  = { link = 'DiagnosticInfo' },
+		DiagnosticVirtualTextHint  = { link = 'DiagnosticHint' },
 
-		DiagnosticUnderlineError          = { style = 'undercurl', guisp = colors.diag.error },
-		DiagnosticUnderlineWarn           = { style = 'undercurl', guisp = colors.diag.warning },
-		DiagnosticUnderlineInfo           = { style = 'undercurl', guisp = colors.diag.info },
-		DiagnosticUnderlineHint           = { style = 'undercurl', guisp = colors.diag.hint },
+		DiagnosticUnderlineError = { sp = colors.diag.error, undercurl = true },
+		DiagnosticUnderlineWarn  = { sp = colors.diag.warning, undercurl = true },
+		DiagnosticUnderlineInfo  = { sp = colors.diag.info, undercurl = true },
+		DiagnosticUnderlineHint  = { sp = colors.diag.hint, undercurl = true },
 
-		LspSignatureActiveParameter       = { fg = colors.diag.warning },
-		LspCodeLens                       = { fg = colors.fg_comment },
+		LspSignatureActiveParameter = { fg = colors.diag.warning },
+		LspCodeLens                 = { fg = colors.fg_comment },
 
 		-- ['@annotation']                 = {},
-		['@attribute']                     = { link = 'Constant' },
-		-- ['@boolean']                    = {},
-		-- ['@character']                  = {},
+		['@attribute']             = { link = 'Constant' },
+		['@boolean']               = { link = 'Boolean' },
+		['@character']             = { link = 'Character' },
 		-- ['@character.special']          = {},
-		-- ['@comment']                    = {},
-		['@constructor']                   = { fg = colors.keyword }, -- Function/Special/Statement/Keyword
-		-- ['@conditional']                = {},
-		-- ['@constant']                   = {},
+		['@comment']               = { link = 'Comment' },
+		['@constructor']           = { fg = colors.keyword }, -- Function/Special/Statement/Keyword
+		['@conditional']           = { link = 'Conditional' },
+		['@constant']              = { link = 'Constant' },
 		-- ['@constant.builtin']           = {},
 		-- ['@constant.macro']             = {},
-		-- ['@debug']                      = {},
-		-- ['@define']                     = {},
-		['@error']                         = { fg = colors.diag.error },
-		['@exception']                     = { fg = config.special_exception and colors.special3 or colors.statement, style = config.statement_style },
-		['@field']                         = { link = 'Identifier' }, -- default
-		-- ['@float']                      = {},
-		-- ['@function']                   = {},
+		['@debug']                 = { link = 'Debug' },
+		['@define']                = { link = 'Define' },
+		['@error']                 = { fg = colors.diag.error },
+		['@exception']             = extend({ fg = config.special_exception and colors.special3 or colors.statement },
+			config.statement_style),
+		['@field']                 = { link = 'Identifier' }, -- default
+		['@float']                 = { link = 'Float' },
+		['@function']              = { link = 'Function' },
 		-- ['@function.call']              = {},
 		-- ['@function.builtin']           = {link = 'Function' },
 		-- ['@function.macro']             = {},
-		-- ['@include']                    = {},
-		['@keyword']                       = { link = 'Keyword' },
+		['@include']               = { link = 'Include' },
+		['@keyword']               = { link = 'Keyword' },
 		-- ['@keyword.function']           = { link = 'Keyword' }, -- default
-		['@keyword.operator']              = { fg = colors.operator, style = 'bold' },
-		['@keyword.return']                = { fg = config.special_return and colors.special3 or colors.keyword, style = config.keyword_style },
-		['@label']                         = { link = 'Label' },
-		['@method']                        = { link = 'Function' },
+		['@keyword.operator']      = { fg = colors.operator, bold = true },
+		['@keyword.return']        = extend({ fg = config.special_return and colors.special3 or colors.keyword,
+		}, config.keyword_style),
+		['@label']                 = { link = 'Label' },
+		['@method']                = { link = 'Function' },
 		-- ['@method.call']                = { link = 'Function' },
 		-- ['@namespace']                  = {},
 		-- ['@none']                       = {},
-		-- ['@number']                     = {},
-		['@operator']                      = { link = 'Operator' },
-		['@parameter']                     = { link = 'Identifier' }, -- default
+		['@number']                = { link = 'Number' },
+		['@operator']              = { link = 'Operator' },
+		['@parameter']             = { link = 'Identifier' }, -- default
 		-- ['@parameter.reference']        = {},
-		-- ['@preproc']                    = {},
-		['@property']                      = { link = 'Identifier' }, -- default
-		['@punctuation.delimiter']         = { fg = colors.delimiter },
-		['@punctuation.bracket']           = { fg = colors.delimiter },
-		['@punctuation.special']           = { fg = colors.delimiter },
-		-- ['@repeat']                     = {},
-		-- ['@storageclass']               = {},
-		-- ['@string']                     = {},
-		['@string.regex']                  = { fg = colors.regex },
-		['@string.escape']                 = { fg = colors.regex, style = 'bold' },
+		['@preproc']               = { link = 'PreProc' },
+		['@property']              = { link = 'Identifier' }, -- default
+		['@punctuation.delimiter'] = { fg = colors.delimiter },
+		['@punctuation.bracket']   = { fg = colors.delimiter },
+		['@punctuation.special']   = { fg = colors.delimiter },
+		['@repeat']                = { link = 'Repeat' },
+		['@storageclass']          = { link = 'StorageClass' },
+		['@string']                = { link = 'String' },
+		['@string.regex']          = { fg = colors.regex },
+		['@string.escape']         = { fg = colors.regex, bold = true },
 		-- ['@string.special']             = {},
 		-- ['@symbol']                     = {},
-		-- ['@type']                       = {},
+		['@type']                  = { link = 'Type' },
 		-- ['@type.builtin']               = {},
 		-- ['@type.qualifier']             = {},
 		-- ['@type.definition']            = {},
-		['@variable']                      = { fg = 'NONE' },
-		['@variable.builtin']              = { fg = colors.special2, style = config.variablebuiltin_style },
+		['@variable']              = { fg = 'NONE' },
+		['@variable.builtin']      = extend({ fg = colors.special2 }, config.variablebuiltin_style),
 
-		-- ['@tag']                        = {},
-		-- ['@tag.attribute']              = {},
-		-- ['@tag.delimiter']              = {},
+		['@tag']           = { link = 'Tag' },
+		['@tag.attribute'] = { link = '@attribute' },
+		['@tag.delimiter'] = { link = 'Delimiter' },
 		-- ['@text']                       = {},
 		-- ['@text.strong']                = {},
 		-- ['@text.emphasis']              = {},
@@ -391,8 +374,8 @@ local function generate_highlights(colors, config)
 		-- ['@text.environment.name']      = {},
 
 		-- ['@text.note']                  = { fg = colors.fg_dark, bg = colors.diag.hint, style = 'nocombine,bold'}, -- links to SpecialComment -> Special
-		['@text.warning']                  = { link = 'Todo' }, -- default
-		['@text.danger']                   = { link = 'WarningMsg' }, -- default
+		['@text.warning'] = { link = 'Todo' }, -- default
+		['@text.danger']  = { link = 'WarningMsg' }, -- default
 		-- ['@text.todo']                  = {},
 
 		-- Lua
@@ -408,24 +391,24 @@ local function generate_highlights(colors, config)
 		-- illuminatedCurWord             = {},
 
 		-- Git
-		diffAdded                         = { fg = colors.git.added, bg = m.alter(colors.git.added, -70) },
-		diffRemoved                       = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
-		diffDeleted                       = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
-		diffChanged                       = { fg = colors.git.changed },
-		diffOldFile                       = { fg = colors.git.removed },
-		diffNewFile                       = { fg = colors.git.added },
+		diffAdded   = { fg = colors.git.added, bg = m.alter(colors.git.added, -70) },
+		diffRemoved = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
+		diffDeleted = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
+		diffChanged = { fg = colors.git.changed },
+		diffOldFile = { fg = colors.git.removed },
+		diffNewFile = { fg = colors.git.added },
 		-- diffFile                       = { fg = colors.gray },
 		-- diffLine                       = { fg = colors.ray },
 		-- diffIndexLine                  = { link = 'Identifier' },
 
 		-- Neogit
-		NeogitBranch                      = { fg = colors.constant },
-		NeogitRemote                      = { fg = colors.type },
-		NeogitHunkHeader                  = { bg = colors.bg_dim },
-		NeogitHunkHeaderHighlight         = { bg = colors.bg_dim },
-		NeogitDiffContextHighlight        = { bg = colors.bg_dark, fg = colors.fg_dark },
-		NeogitDiffDeleteHighlight         = { fg = m.alter(colors.git.removed, -5), bg = m.alter(colors.git.removed, -65) },
-		NeogitDiffAddHighlight            = { fg = m.alter(colors.git.added, -5), bg = m.alter(colors.git.added, -65) },
+		NeogitBranch               = { fg = colors.constant },
+		NeogitRemote               = { fg = colors.type },
+		NeogitHunkHeader           = { bg = colors.bg_dim },
+		NeogitHunkHeaderHighlight  = { bg = colors.bg_dim },
+		NeogitDiffContextHighlight = { bg = colors.bg_dark, fg = colors.fg_dark },
+		NeogitDiffDeleteHighlight  = { fg = m.alter(colors.git.removed, -5), bg = m.alter(colors.git.removed, -65) },
+		NeogitDiffAddHighlight     = { fg = m.alter(colors.git.added, -5), bg = m.alter(colors.git.added, -65) },
 
 		-- GitGutter
 		-- GitGutterAdd                   = {},
@@ -433,40 +416,40 @@ local function generate_highlights(colors, config)
 		-- GitGutterDelete                = {},
 
 		-- GitSigns
-		GitSignsAdd                       = { fg = colors.git.added },
-		GitSignsChange                    = { fg = colors.git.changed },
-		GitSignsDelete                    = { fg = colors.git.removed },
-		GitSignsDeleteLn                  = { fg = 'NONE', bg = colors.diff.delete },
+		GitSignsAdd      = { fg = colors.git.added },
+		GitSignsChange   = { fg = colors.git.changed },
+		GitSignsDelete   = { fg = colors.git.removed },
+		GitSignsDeleteLn = { fg = 'NONE', bg = colors.diff.delete },
 
 		-- Telescope                      = {},
-		TelescopeBorder                   = { link = 'FloatBorder' },
-		TelescopeNormal                   = { link = 'NormalNC' },
+		TelescopeBorder = { link = 'FloatBorder' },
+		TelescopeNormal = { link = 'NormalNC' },
 
 		-- NvimTree                       = {},
-		NvimTreeNormal                    = { link = 'NormalSB' },
-		NvimTreeNormalNC                  = { link = 'NormalSB' },
-		NvimTreeRootFolder                = { fg = colors.identifier, style = 'bold' },
-		NvimTreeGitDirty                  = { fg = colors.git.changed },
-		NvimTreeGitNew                    = { fg = colors.git.added },
-		NvimTreeGitDeleted                = { fg = colors.git.removed },
-		NvimTreeSpecialFile               = { fg = colors.special },
+		NvimTreeNormal      = { link = 'NormalSB' },
+		NvimTreeNormalNC    = { link = 'NormalSB' },
+		NvimTreeRootFolder  = { fg = colors.identifier, bold = true },
+		NvimTreeGitDirty    = { fg = colors.git.changed },
+		NvimTreeGitNew      = { fg = colors.git.added },
+		NvimTreeGitDeleted  = { fg = colors.git.removed },
+		NvimTreeSpecialFile = { fg = colors.special },
 		-- NvimTreeIndentMarker           = {},
-		NvimTreeImageFile                 = { fg = colors.special2 },
-		NvimTreeSymlink                   = { link = 'Type' },
-		NvimTreeFolderName                = { link = 'Directory' },
-		NvimTreeExecFile                  = { fg = colors.operator, style = 'bold' },
-		NvimTreeGitStaged                 = { fg = colors.git.added },
-		NvimTreeOpenedFile                = { fg = colors.special, style = 'italic' },
+		NvimTreeImageFile   = { fg = colors.special2 },
+		NvimTreeSymlink     = { link = 'Type' },
+		NvimTreeFolderName  = { link = 'Directory' },
+		NvimTreeExecFile    = { fg = colors.operator, bold = true },
+		NvimTreeGitStaged   = { fg = colors.git.added },
+		NvimTreeOpenedFile  = { fg = colors.special, italic = true },
 
 		-- NeoTree
 		-- the buffer number shown in the buffers source.
-		NeoTreeBufferNumber               = { fg = colors.constant },
+		NeoTreeBufferNumber = { fg = colors.constant },
 
 		-- -- |hl-CursorLine| override in neo-tree window.
 		-- NeoTreeCursorLine              = {},
 
 		-- greyed out text used in various places.
-		NeoTreeDimText                    = { link = 'NormalNC' },
+		NeoTreeDimText = { link = 'NormalNC' },
 
 		-- -- directory icon.
 		-- NeoTreeDirectoryIcon           = {},
@@ -490,7 +473,7 @@ local function generate_highlights(colors, config)
 		-- NeoTreeFilterTerm              = {},
 
 		-- the border for pop-up windows.
-		NeoTreeFloatBorder                = { link = 'FloatBorder' },
+		NeoTreeFloatBorder = { link = 'FloatBorder' },
 
 		-- -- used for the title text of pop-ups when the
 		-- -- border-style is set to another style than 'NC'. this
@@ -531,16 +514,16 @@ local function generate_highlights(colors, config)
 
 		-- the style of indentation markers (guides). by default,
 		-- the 'Normal' highlight is used.
-		NeoTreeIndentMarker               = { fg = colors.bg_light1 },
+		NeoTreeIndentMarker = { fg = colors.bg_light1 },
 
 		-- used for collapsed/expanded icons.
-		NeoTreeExpander                   = config.darken_sidebar and { fg = colors.fg_dark } or { fg = colors.fg },
+		NeoTreeExpander = config.darken_sidebar and { fg = colors.fg_dark } or { fg = colors.fg },
 
 		-- |hl-Normal| override in neo-tree window.
-		NeoTreeNormal                     = { link = 'NormalSB' },
+		NeoTreeNormal = { link = 'NormalSB' },
 
 		-- |hl-NormalNC| override in neo-tree window.
-		NeoTreeNormalNC                   = { link = 'NormalSB' },
+		NeoTreeNormalNC = { link = 'NormalSB' },
 
 		-- -- |hl-SignColumn| override in neo-tree window.
 		-- NeoTreeSignColumn              = {},
@@ -575,9 +558,6 @@ local function generate_highlights(colors, config)
 		-- -- winblows.
 		-- NeoTreeWindowsHidden           = {},
 
-		-- Fern
-		-- FernBranchText                 = {},
-
 		-- glyph palette                  = {},
 		-- GlyphPalette1                  = {},
 		-- GlyphPalette2                  = {},
@@ -588,144 +568,71 @@ local function generate_highlights(colors, config)
 		-- GlyphPalette9                  = {},
 
 		-- Dashboard
-		DashboardShortCut                 = { fg = colors.special },
-		DashboardHeader                   = { fg = colors.git.removed },
-		DashboardCenter                   = { fg = colors.identifier },
-		DashboardFooter                   = { fg = colors.fn },
-
-		-- WhichKey                       = {},
-		-- WhichKeyGroup                  = {},
-		-- WhichKeyDesc                   = {},
-		-- WhichKeySeperator              = {},
-		-- WhichKeySeparator              = {},
-		-- WhichKeyFloat                  = {},
-		-- WhichKeyValue                  = {},
-
-		-- LspSaga
-		-- DiagnosticWarning              = {},
-		-- DiagnosticInformation          = {},
-
-		-- LspFloatWinNormal              = {},
-		-- LspFloatWinBorder              = {},
-		-- LspSagaBorderTitle             = {},
-		-- LspSagaHoverBorder             = {},
-		-- LspSagaRenameBorder            = {},
-		-- LspSagaDefPreviewBorder        = {},
-		-- LspSagaCodeActionBorder        = {},
-		-- LspSagaFinderSelection         = {},
-		-- LspSagaCodeActionTitle         = {},
-		-- LspSagaCodeActionContent       = {},
-		-- LspSagaSignatureHelpBorder     = {},
-		-- ReferencesCount                = {},
-		-- DefinitionCount                = {},
-		-- DefinitionIcon                 = {},
-		-- ReferencesIcon                 = {},
-		-- TargetWord                     = {},
+		DashboardShortCut = { fg = colors.special },
+		DashboardHeader   = { fg = colors.git.removed },
+		DashboardCenter   = { fg = colors.identifier },
+		DashboardFooter   = { fg = colors.fn },
 
 		-- Floaterm
-		FloatermBorder                    = { fg = colors.bg_light3 },
+		FloatermBorder = { fg = colors.bg_light3 },
 
 		-- NeoVim                         = {},
-		healthError                       = { fg = colors.diag.error },
-		healthSuccess                     = { fg = colors.diag.hint },
-		healthWarning                     = { fg = colors.diag.warning },
-
-		-- BufferLine
-		-- BufferLineIndicatorSelected    = {},
-		-- BufferLineFill                 = {},
-
-		-- Barbar                         = {},
-		-- BufferCurrent                  = {},
-		-- BufferCurrentIndex             = {},
-		-- BufferCurrentMod               = {},
-		-- BufferCurrentSign              = {},
-		-- BufferCurrentTarget            = {},
-		-- BufferVisible                  = {},
-		-- BufferVisibleIndex             = {},
-		-- BufferVisibleMod               = {},
-		-- BufferVisibleSign              = {},
-		-- BufferVisibleTarget            = {},
-		-- BufferInactive                 = {},
-		-- BufferInactiveIndex            = {},
-		-- BufferInactiveMod              = {},
-		-- BufferInactiveSign             = {},
-		-- BufferInactiveTarget           = {},
-		-- BufferTabpages                 = {},
-		-- BufferTabpage                  = {},
-
-		-- Sneak
-		-- Sneak                          = {},
-		-- SneakScope                     = {},
-
-		-- Hop
-		-- HopNextKey                     = {},
-		-- HopNextKey1                    = {},
-		-- HopNextKey2                    = {},
-		-- HopUnmatched                   = {},
-
-		-- -- Lightspeed
-		-- LightspeedLabel                   = { fg = colors.number, style = 'bold,underline' },
-		-- LightspeedLabelDistant            = { fg = colors.string, style = 'bold,underline' },
-		-- LightspeedLabelDistantOverlapped  = { fg = colors.string, style = 'underline' },
-		-- LightspeedLabelOverlapped         = { fg = colors.number, style = 'underline' },
-		-- LightspeedMaskedChar              = { bg = colors.identifier },
-		-- LightspeedOneCharMatch            = { bg = colors.number, fg = colors.fg, style = 'bold' },
-		-- LightspeedPendingOpArea           = { bg = colors.number, fg = colors.fg },
-		-- LightspeedShortcut                = { bg = colors.number, fg = colors.fg, style = 'bold,underline' },
-		-- LightspeedUnlabeledMatch          = { fg = colors.type, style = 'bold' },
-		-- -- LightspeedGreyWash             = { link = 'Comment' },
+		healthError   = { fg = colors.diag.error },
+		healthSuccess = { fg = colors.diag.hint },
+		healthWarning = { fg = colors.diag.warning },
 
 		-- Leap
-		LeapMatch                         = { fg = colors.fg, bg = colors.number, style = 'bold' },
-		LeapLabelPrimary                  = { fg = colors.fg, bg = colors.number, style = 'bold' },
-		LeapLabelSecondary                = { fg = colors.type, style = 'bold' },
-		LeapBackdrop                      = { fg = colors.fg_comment, style = 'italic' },
+		LeapMatch          = { fg = colors.fg, bg = colors.number, bold = true },
+		LeapLabelPrimary   = { fg = colors.fg, bg = colors.number, bold = true },
+		LeapLabelSecondary = { fg = colors.type, bold = true },
+		LeapBackdrop       = { fg = colors.fg_comment, italic = true },
 
 		-- Cmp
-		CmpDocumentation                  = { fg = colors.fg, bg = colors.bg_popup },
-		CmpDocumentationBorder            = { fg = colors.fg_border, bg = 'NONE' },
+		CmpDocumentation       = { fg = colors.fg, bg = colors.bg_popup },
+		CmpDocumentationBorder = { fg = colors.fg_border, bg = 'NONE' },
 
-		CmpItemAbbr                       = { fg = colors.fg, bg = 'NONE' },
-		CmpItemAbbrDeprecated             = { fg = colors.fg_comment, bg = 'NONE', style = 'strikethrough' },
+		CmpItemAbbr           = { fg = colors.fg, bg = 'NONE' },
+		CmpItemAbbrDeprecated = { fg = colors.fg_comment, bg = 'NONE', strikethrough = true },
 
-		CmpItemAbbrMatch                  = { fg = colors.fn, bg = 'NONE' },
-		CmpItemAbbrMatchFuzzy             = { link = 'CmpItemAbbrMatch' },
+		CmpItemAbbrMatch      = { fg = colors.fn, bg = 'NONE' },
+		CmpItemAbbrMatchFuzzy = { link = 'CmpItemAbbrMatch' },
 
-		CmpItemKindDefault                = { fg = colors.fg_comment, bg = 'NONE' },
-		CmpItemMenu                       = { fg = colors.fg_comment, bg = 'NONE' },
+		CmpItemKindDefault = { fg = colors.fg_comment, bg = 'NONE' },
+		CmpItemMenu        = { fg = colors.fg_comment, bg = 'NONE' },
 
-		CmpItemKindVariable               = { fg = colors.fg_dark, bg = 'NONE' },
+		CmpItemKindVariable = { fg = colors.fg_dark, bg = 'NONE' },
 
-		CmpItemKindFunction               = { link = 'Function' },
-		CmpItemKindMethod                 = { link = 'Function' },
+		CmpItemKindFunction = { link = 'Function' },
+		CmpItemKindMethod   = { link = 'Function' },
 
-		CmpItemKindConstructor            = { link = 'TSConstructor' },
+		CmpItemKindConstructor = { link = '@constructor' },
 
-		CmpItemKindClass                  = { link = 'Type' },
-		CmpItemKindInterface              = { link = 'Type' },
-		CmpItemKindStruct                 = { link = 'Type' },
+		CmpItemKindClass     = { link = 'Type' },
+		CmpItemKindInterface = { link = 'Type' },
+		CmpItemKindStruct    = { link = 'Type' },
 
-		CmpItemKindProperty               = { link = 'TSProperty' },
-		CmpItemKindField                  = { link = 'TSField' },
-		CmpItemKindEnum                   = { link = 'Identifier' },
+		CmpItemKindProperty = { link = '@property' },
+		CmpItemKindField    = { link = '@field' },
+		CmpItemKindEnum     = { link = 'Identifier' },
 
-		CmpItemKindSnippet                = { fg = colors.special, bg = 'NONE' },
+		CmpItemKindSnippet = { fg = colors.special, bg = 'NONE' },
 
-		CmpItemKindText                   = { link = 'TSText' },
+		-- CmpItemKindText = { link = 'TSText' },
+		CmpItemKindText = { link = '@text' },
 
-		CmpItemKindModule                 = { link = 'TSInclude' },
+		CmpItemKindModule = { link = '@include' },
 
-		CmpItemKindFile                   = { link = 'Directory' },
-		CmpItemKindFolder                 = { link = 'Directory' },
+		CmpItemKindFile   = { link = 'Directory' },
+		CmpItemKindFolder = { link = 'Directory' },
 
-		CmpItemKindKeyword                = { link = 'TSKeyword' },
-		CmpItemKindTypeParameter          = { link = 'Identifier' },
-		CmpItemKindConstant               = { link = 'Constant' },
-		CmpItemKindOperator               = { link = 'Operator' },
-		CmpItemKindReference              = { link = 'TSParameterReference' },
-		CmpItemKindEnumMember             = { link = 'TSField' },
+		CmpItemKindKeyword       = { link = '@keyword' },
+		CmpItemKindTypeParameter = { link = 'Identifier' },
+		CmpItemKindConstant      = { link = 'Constant' },
+		CmpItemKindOperator      = { link = 'Operator' },
+		CmpItemKindReference     = { link = '@parameter.reference' },
+		CmpItemKindEnumMember    = { link = '@field' },
 
-		CmpItemKindValue                  = { link = 'String' },
+		CmpItemKindValue = { link = 'String' },
 		-- CmpItemKindUnit                = {},
 		-- CmpItemKindEvent               = {},
 		-- CmpItemKindColor               = {},
@@ -735,15 +642,15 @@ local function generate_highlights(colors, config)
 		IndentBlanklineSpaceChar          = { fg = colors.bg_light1 },
 		IndentBlanklineSpaceCharBlankline = { fg = colors.bg_light1 },
 		IndentBlanklineContextChar        = { fg = colors.bg_light3 },
-		IndentBlanklineContextStart       = { guisp = colors.bg_light3, style = 'underline' },
+		IndentBlanklineContextStart       = { sp = colors.bg_light3, underline = true },
 
 		-- SymbolsOutline
-		FocusedSymbol                     = { fg = colors.identifier },
+		FocusedSymbol = { fg = colors.identifier },
 		-- SymbolsOutlineConnector        = {},
 
 
 		-- TroubleNvim
-		TroubleNormal                     = { link = 'NormalSB' },
+		TroubleNormal = { link = 'NormalSB' },
 		-- TroubleCount                   = {},
 		-- TroubleError                   = {},
 		-- TroubleTextInformation         = {},
@@ -770,11 +677,11 @@ local function generate_highlights(colors, config)
 
 	f.iterate(config.overrides)
 		 :foreach(function( hl, specs)
-		    if hlgroups[hl] and not tie(specs) then
+		    if hlgroups[hl] and not tablex.is_empty(specs) then
 		       hlgroups[hl].link = nil
 		    end
 
-		    hlgroups[hl] = tde('force', hlgroups[hl] or {}, specs)
+		    hlgroups[hl] = tablex.deep_extend('force', hlgroups[hl] or {}, specs)
 		 end)
 
 	return hlgroups
@@ -799,10 +706,12 @@ function m.current() return current_colorscheme end
 function m.load(colorscheme, config)
 	local has_colors, colors = pcall(require, 'colors.' .. colorscheme)
 
-	assert(has_colors, sf(
+	assertx(
+		has_colors,
+		string.format,
 		'invalid parameter #1 to "load": "%s" colorscheme not found',
 		colorscheme
-	))
+	)
 
 	current_colorscheme = colors
 
@@ -817,7 +726,7 @@ function m.load(colorscheme, config)
 	vim.g.colors_name   = colorscheme
 	vim.o.termguicolors = true
 
-	config = config or default_config()
+	config = config or defaults()
 
 	local effective_colors = generate_colors(colors, config)
 	local highlight_groups = generate_highlights(effective_colors, config)
