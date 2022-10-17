@@ -2,29 +2,6 @@ local sf   = string.format
 local pipe = require('f.function.pipe')
 
 local function setup ()
-   -- show the cursorline only in the active window {{{1
-
-   local cursor_line_augroup = vim.api.nvim_create_augroup('CursorLine', {clear = true})
-
-   vim.api.nvim_create_autocmd({'BufEnter', 'WinEnter', 'BufWinEnter'}, {
-      group    = cursor_line_augroup,
-      callback = function ()
-         if -- should we show the cursorline ?
-            not vim.wo.previewwindow
-            and vim.bo.buftype      ~= 'terminal'
-            and vim.bo.filetype     ~= ''
-            and vim.wo.winhighlight == ''
-         then
-            vim.wo.cursorline = true
-         end
-      end
-   })
-
-   vim.api.nvim_create_autocmd('WinLeave', {
-      group    = cursor_line_augroup,
-      callback = function () vim.wo.cursorline = false end
-   })
-
    -- highlight yanked text {{{1
    vim.api.nvim_create_autocmd('TextYankPost', {
       group    = vim.api.nvim_create_augroup('HighlightYank', {clear = true}),

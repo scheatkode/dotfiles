@@ -38,6 +38,7 @@ require('user.builtins').setup()
 require('user.settings').setup()
 require('user.mappings').setup()
 require('user.providers').setup()
+require('user.autocmd').setup()
 require('scheatkode.autocmds').setup()
 require('scheatkode.commands').setup()
 
