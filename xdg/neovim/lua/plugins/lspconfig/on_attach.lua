@@ -1,4 +1,5 @@
-local extensions = require('lang.extensions')
+local lazy       = require('lazy.on_member_call')
+local extensions = lazy('lang.extensions')
 
 local border = {
 
