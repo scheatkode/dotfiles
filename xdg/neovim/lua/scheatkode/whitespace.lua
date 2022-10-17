@@ -1,5 +1,3 @@
-local h = require('scheatkode.highlight')
-
 local function is_invalid_buffer()
 	return vim.bo.filetype == ''
 		 or vim.bo.filetype == 'norg'
