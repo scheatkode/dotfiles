@@ -43,7 +43,7 @@ local languages = {
 -- server configuration {{{1
 
 local configure_servers = function(language_list)
-	local capabilities = require('lang.capabilities')
+	local capabilities = require('lang.capabilities').setup()
 
 	f
 		 .iterate(language_list)
@@ -96,7 +96,6 @@ if not has_lspconfig then
 	return has_lspconfig
 end
 
-require('lang.capabilities').setup()
 require('lang.protocol').setup()
 require('lang.handlers').setup()
 
