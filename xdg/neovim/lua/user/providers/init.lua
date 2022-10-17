@@ -1,7 +1,7 @@
 return {
 	---Disable neovim providers. By default, disables all providers.
 	---@param overrides? table providers to keep.
-	disable = function(overrides)
+	setup = function(overrides)
 		local defaults = {
 			loaded_node_provider    = 0,
 			loaded_perl_provider    = 0,

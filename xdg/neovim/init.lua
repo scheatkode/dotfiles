@@ -40,13 +40,11 @@ vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
 -- configuration
 
 require('user.builtins').setup()
-
-require('scheatkode.global')
 require('user.settings').setup()
+require('user.mappings').setup()
+require('user.providers').setup()
 require('scheatkode.autocmds').setup()
 require('scheatkode.commands').setup()
-require('user.mappings').setup()
-require('user.providers').disable()
 
 require('colors').load('gruvvy')
 
