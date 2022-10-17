@@ -32,11 +32,6 @@ vim.g.mapleader      = ' '
 vim.g.maplocalleader = ' '
 vim.keymap.set('', '<Space>', '<Nop>')
 
--- miscellaneous
-
-vim.cmd('packadd justify') -- i simply cannot live without this
-vim.cmd('set invlist') -- FIXME: find a way to integrate with other options
-
 -- configuration
 
 require('user.builtins').setup()
