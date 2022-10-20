@@ -9,7 +9,7 @@ return {
 		vim.opt.cursorline     = false -- Cursorline is highlighted conditionally through autocmd
 		vim.opt.cursorlineopt  = 'screenline,number'
 		vim.opt.synmaxcol      = 200 -- Don't highlight after the 200th character
-		vim.opt.signcolumn     = 'auto:1-2' -- Resize to accomodate the signcolumn
+		vim.opt.signcolumn     = 'auto:1' -- Resize to accomodate the signcolumn
 
 		vim.opt.breakindent    = true -- Keep visual blocks indented when wrapping
 		vim.opt.breakindentopt = 'sbr'
