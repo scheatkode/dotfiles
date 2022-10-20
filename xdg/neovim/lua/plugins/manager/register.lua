@@ -59,6 +59,7 @@ local function setup()
 		use(lazy 'plugins.telescope') -- fuzzy searching
 
 			use(lazy 'plugins.popup')
+			use(lazy 'plugins.telescope-file-browser')
 			use(lazy 'plugins.telescope-fzf-native')
 			use(lazy 'plugins.telescope-project')
 
