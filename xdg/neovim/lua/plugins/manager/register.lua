@@ -13,7 +13,6 @@ local function setup()
 		use { 'wbthomason/packer.nvim' }
 		use({ 'lewis6991/impatient.nvim' })
 
-
 		-- miscellaneous requirements {{{
 
 		use(lazy 'plugins.devicons') -- powered by kyazdani42/nvim-web-devicons
@@ -120,9 +119,6 @@ local function setup()
 		use(lazy 'plugins.indent')
 		use(lazy 'plugins.align') -- alignment made easy
 		use(lazy 'plugins.comment') -- commenting plugin
-
-		use { 'dstein64/vim-startuptime' } -- startup time monitor
-		use { 'lambdalisue/suda.vim' }     -- workaround for using `sudo`
 
 		use(lazy 'plugins.surround')
 
