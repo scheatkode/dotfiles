@@ -1,7 +1,7 @@
 return {
 	setup = function(overrides)
 		local log    = require('log')
-		local extend = require('tablex').deep_extend
+		local extend = require('tablex.deep_extend')
 		local unpack = require('compat.table.unpack')
 
 		local defaults = {

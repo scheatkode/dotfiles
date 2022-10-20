@@ -18,7 +18,6 @@ end
 
 ---auto installs packer when needed and returns true when a sync
 ---is required
----@return boolean whether a sync is required
 local function auto_install(path)
 	print('Installing packer.nvim ...')
 	vim.api.nvim_command(
@@ -27,6 +26,8 @@ local function auto_install(path)
 end
 
 local function setup(overrides)
+	local deep_extend = require('tablex.deep_extend')
+
 	local defaults = {
 		install_path = string.format(
 			'%s/site/pack/packer/start/packer.nvim',
@@ -34,7 +35,7 @@ local function setup(overrides)
 		)
 	}
 
-	local options = require('tablex').deep_extend(
+	local options = deep_extend(
 		'force',
 		defaults,
 		overrides or {}

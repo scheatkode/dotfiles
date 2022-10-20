@@ -1,8 +1,5 @@
-local tablex = require('tablex')
-
-local sf   = string.format
-local til  = tablex.is_list
-local type = type
+local deep_extend = require('tablex.deep_extend')
+local is_list = require('tablex.is_list')
 
 local has_lspconfig, _ = pcall(require, 'lspconfig')
 
@@ -24,12 +21,12 @@ local function flatten(acc, sep, key, value)
 		return acc
 	end
 
-	if til(value) then
+	if is_list(value) then
 		for i = 1, #value do
 			flatten(
 				acc,
 				':',
-				sf('%s%s%s', key, sep, i - 1),
+				string.format('%s%s%s', key, sep, i - 1),
 				value[i]
 			)
 		end
@@ -41,7 +38,7 @@ local function flatten(acc, sep, key, value)
 		flatten(
 			acc,
 			':',
-			sf('%s%s%s', key, sep, k),
+			string.format('%s%s%s', key, sep, k),
 			v
 		)
 	end
@@ -135,7 +132,7 @@ local function make_environment()
 		OMNISHARPHOME = vim.fn.expand('$XDG_DATA_HOME') .. '/omnisharp'
 	}
 
-	return tablex.deep_extend('keep', settings, home_env)
+	return deep_extend('keep', settings, home_env)
 end
 
 return {
