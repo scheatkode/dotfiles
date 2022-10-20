@@ -24,6 +24,8 @@ return {
 
    modules = { 'dap' },
 
+   wants = { 'nvim-dap-vscode-js' },
+
    config = function ()
       require('plugins.dap.config')
       require('plugins.dap.keys').setup()
