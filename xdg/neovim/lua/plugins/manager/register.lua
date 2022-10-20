@@ -67,6 +67,7 @@ local function setup()
 		-- }}}
 		-- git plugins {{{
 
+		use(lazy 'plugins.git-conflict') -- git conflict view
 		use(lazy 'plugins.gitporcelain') -- magit for vim
 		use(lazy 'plugins.gitsigns') -- git file changes in the gutter
 		use(lazy 'plugins.diff') -- ediff-like diff viewing
