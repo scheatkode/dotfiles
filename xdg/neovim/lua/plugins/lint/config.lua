@@ -111,5 +111,9 @@ ls.setup({
 		-- shell-specific
 		ls.builtins.formatting.shfmt,
 		ls.builtins.formatting.shellharden,
+
+		-- github actions specific
+		ls.builtins.diagnostics.actionlint,
+
 	}
 })
