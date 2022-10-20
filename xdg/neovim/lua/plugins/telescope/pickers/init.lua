@@ -16,7 +16,8 @@ return {
 	project_or_find_files    = lazy('plugins.telescope.pickers.project_or_find_files'),
 	git_current_file_commits = lazy('plugins.telescope.pickers.git_current_file_commits'),
 
-	projects = lazy('plugins.telescope.pickers.projects'),
+	projects     = lazy('plugins.telescope.pickers.projects'),
+	file_browser = lazy('plugins.telescope.pickers.file_browser'),
 
 	autocommands           = builtin.autocommands,
 	buffer_fuzzy           = builtin.current_buffer_fuzzy_find,

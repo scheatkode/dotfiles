@@ -9,6 +9,17 @@ return {
 		vim.keymap.set('n', '<leader>pp', pickers.projects)
 		vim.keymap.set('n', '<leader>Pp', pickers.projects)
 
+		-- file browser
+		vim.keymap.set('n', '<leader>fe', pickers.file_browser)
+		vim.keymap.set('n', '<leader>Fe', pickers.file_browser)
+		vim.keymap.set('n', '<leader>fE', function ()pickers.file_browser({ depth = false, filse = false }) end)
+		vim.keymap.set('n', '<leader>FE', function ()pickers.file_browser({ depth = false, filse = false }) end)
+		-- shorthand
+		vim.keymap.set('n', '<leader>ee', pickers.file_browser)
+		vim.keymap.set('n', '<leader>Ee', pickers.file_browser)
+		vim.keymap.set('n', '<leader>eE', function ()pickers.file_browser({ depth = false, filse = false }) end)
+		vim.keymap.set('n', '<leader>EE', function ()pickers.file_browser({ depth = false, filse = false }) end)
+
 		-- live grep
 		vim.keymap.set('n', '<leader>fg', pickers.live_grep)
 		vim.keymap.set('n', '<leader>Fg', pickers.live_grep)
