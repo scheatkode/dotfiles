@@ -8,9 +8,7 @@ return {
 			signs            = true,
 			underline        = false,
 			update_in_insert = false,
-			virtual_text     = {
-				spacing = 3,
-			},
+			virtual_text     = false,
 			float            = {
 				source = 'always',
 			},
