@@ -9,7 +9,7 @@ return function(options)
 	return pipe(
 		extend(
 			{
-				max_results  = 200,
+				max_results  = 50,
 				prompt_title = options.grep_open_files
 					 and 'Live Grep Open Files'
 					 or 'Live Grep',
