@@ -12,6 +12,6 @@ return {
 	},
 
 	config = function()
-		vim.keymap.set('n', '<leader>gg', '<cmd>G<CR>', { desc = 'Open git fugitive' })
+		vim.keymap.set('n', '<leader>gg', '<cmd>tab G<CR>', { desc = 'Open git fugitive' })
 	end,
 }
