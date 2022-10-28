@@ -19,7 +19,7 @@ local function setup ()
    }
 
    local function smart_close()
-      if vim.fn.winnr('$') ~= 1 then
+      if vim.fn.winnr('$') ~= 1 or vim.fn.tabpagenr('$') ~= 1 then
          vim.api.nvim_win_close(0, true)
       end
    end
