@@ -20,9 +20,9 @@ return {
 		})
 
 		hydra({
-			name = 'Window resizing',
-			mode = 'n',
-			body = '<C-w>',
+			name  = 'Window resizing',
+			mode  = 'n',
+			body  = '<C-w>',
 			heads = {
 				{ '<', '5<C-w><' },
 				{ '>', '5<C-w>>', { desc = '5 × ←/→' } },
