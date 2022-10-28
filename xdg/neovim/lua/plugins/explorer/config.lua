@@ -72,7 +72,7 @@ local function setup()
 		---configuration of floating window is done in the individual
 		---source sections. `NC` is a special style that works well
 		---with `NormalNC` set.
-		---@type 'double'|'none'|'rounded'|'shadow'|'single'|'solid'
+		---@type 'double'|'none'|'rounded'|'shadow'|'single'|'solid'|'NC'
 		popup_border_style = 'NC',
 
 		---in ms, needed for containers to redraw right aligned and
@@ -383,7 +383,6 @@ local function setup()
 			window = {
 				mappings = {
 					['H']     = 'toggle_hidden',
-					['/']     = 'fuzzy_finder',
 					['f']     = 'filter_on_submit',
 					['<C-x>'] = 'clear_filter',
 					['<BS>']  = 'navigate_up',
@@ -475,7 +474,7 @@ local function setup()
 			--- - 'disabled':     netrw left alone, `neotree` does not
 			---                   handle opening dirs
 			---
-			---@type 'open_current'|'disabled'
+			---@type 'open_current'|'disabled'|'open_default'
 			hijack_netrw_behavior = 'open_default',
 
 			---this will use the os level file watchers to detect
