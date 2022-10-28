@@ -5,6 +5,7 @@ return {
 	keys = {
 		'z',
 		'<C-w>',
+		'<leader>D',
 	},
 
 	config = function()

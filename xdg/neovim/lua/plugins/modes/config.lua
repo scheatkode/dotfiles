@@ -1,5 +1,6 @@
 return {
 	setup = function()
+		local lazy      = require('lazy.on_member_call')
 		local ok, hydra = pcall(require, 'hydra')
 
 		if not ok then
@@ -32,5 +33,38 @@ return {
 				{ '-', '5<C-w>-', { desc = '5 × ↑/↓' } },
 			},
 		})
-	end
+
+		local dap   = lazy('dap')
+		local dapui = lazy('dapui')
+
+		hydra({
+			name   = 'Debug',
+			body   = '<leader>D',
+			config = {
+				color = 'pink',
+				invoke_on_body = true,
+				hint = {
+					type = 'window',
+					position = 'top',
+					border = 'rounded'
+				},
+				on_enter = function()
+					dap.continue()
+					dapui.open({})
+				end,
+				on_exit = function()
+					dap.clear_breakpoints()
+					dapui.close({})
+				end,
+			},
+			heads  = {
+				{ 'C', dap.continue, { desc = 'continue' } },
+				{ '-', dap.toggle_breakpoint, { desc = 'toggle breakpoint' } },
+				{ 'I', dap.step_into, { desc = 'step into' } },
+				{ 'O', dap.step_over, { desc = 'step over' } },
+				{ 'K', dapui.eval, { desc = 'evaluate variable' } },
+				{ 'q', dap.terminate, { desc = 'terminate', exit = true } },
+			}
+		})
+	end,
 }
