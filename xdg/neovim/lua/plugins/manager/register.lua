@@ -75,15 +75,12 @@ local function setup()
 		use { 'rhysd/committia.vim', opt = true,
 			ft = 'gitcommit',
 			setup = function()
-				vim.g.committia_open_only_vim_starting = 0
-				vim.g.committia_min_window_width       = 120
+				vim.g.committia_open_only_vim_starting = 1
+				vim.g.committia_min_window_width       = 100
 				vim.api.nvim_exec([[
                nnoremap <PgUp> <Plug>(committia-scroll-diff-up-half)
                nnoremap <PgDn> <Plug>(committia-scroll-diff-down-half)
             ]], false)
-			end,
-			config = function()
-				vim.api.nvim_exec([[:e!]], false)
 			end,
 		}
 
