@@ -9,6 +9,10 @@ return {
 			return has_telescope
 		end
 
+		pcall(telescope.load_extension, 'file_browser') -- file browser
+		pcall(telescope.load_extension, 'fzf') -- other superfast sorter
+		pcall(telescope.load_extension, 'project') -- project picker
+
 		local actions    = require('telescope.actions')
 		local layout     = require('telescope.actions.layout')
 		local previewers = require('telescope.previewers')
@@ -218,9 +222,5 @@ return {
 			}
 			--- }}}
 		})
-
-		pcall(telescope.load_extension, 'file_browser') -- file browser
-		pcall(telescope.load_extension, 'fzf') -- other superfast sorter
-		pcall(telescope.load_extension, 'project') -- project picker
 	end
 }
