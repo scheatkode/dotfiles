@@ -185,8 +185,24 @@ do
 end
 -- }}}
 
+local mod = require('bindings.mod')
+
 -- setup key and mouse bindings.
-require('bindings').setup()
+require('bindings').setup({
+   keyboard = {
+      ['keyboard::screen::take a screenshot'] = {
+         modifiers   = { mod.super, mod.shift },
+         key         = 's',
+         description = 'take a screenshot',
+         group       = 'screen',
+         on_press    = function ()
+            -- awful.util.spawn_with_shell("sleep 0.2; scrot -s -e 'xclip -selection clipboard -target image/png -i $f && rm $f' '/tmp/%F_%T_$wx$h.png' ")
+            -- awful.util.spawn_with_shell("sleep 0.2; maim -s -u | xclip -selection clipboard -t image/png")
+            awful.util.spawn_with_shell("sleep 0.5; maim -s | xclip -selection clipboard -t image/png")
+         end
+      }
+   }
+})
 
 -- setup rules.
 require('rules').setup()
