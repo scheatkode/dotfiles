@@ -21,13 +21,6 @@ function themes.get_vertical(opts)
 				return mmin(max_lines, 40)
 			end,
 		},
-
-		border      = true,
-		borderchars = {
-			preview = { '─', '│', ' ', '│', '╭', '╮', '│', '│' },
-			results = { '─', '│', '─', '│', '├', '┤', '╯', '╰' },
-			prompt  = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-		},
 	}
 
 	return vim.tbl_deep_extend('force', theme_opts, opts)
@@ -52,13 +45,6 @@ function themes.get_better_cursor(opts)
 			height = function(_, _, max_lines)
 				return mmin(max_lines, 7)
 			end,
-		},
-
-		border      = true,
-		borderchars = {
-			preview = { '─', '│', ' ', '│', '╭', '╮', '│', '│' },
-			results = { '─', '│', '─', '│', '├', '┤', '╯', '╰' },
-			prompt  = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
 		},
 	}
 
