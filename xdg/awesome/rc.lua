@@ -147,11 +147,13 @@ do
 end
 
 -- load theme
+local awesome   = require('awesome')
+local awful     = require('awful')
 local beautiful = require('beautiful')
-local naughty = require('naughty')
+local naughty   = require('naughty')
 -- beautiful.init(gears.filesystem.get_themes_dir() .. )
-local theme_dir = os.getenv('HOME') .. '/.config/awesome/themes/' .. theme .. '/'
-beautiful.init(theme_dir .. 'theme.lua')
+local theme_dir = awesome_directory .. '/themes/' .. theme
+beautiful.init(theme_dir .. '/theme.lua')
 
 -- {{{ Error handling
 -- check if awesome encountered an error during startup
