@@ -124,11 +124,13 @@ local function generate_colors(cs, config)
 end
 
 local function apply_highlight_groups(hlgroups)
-	f.iterate(hlgroups):foreach(function(group, colors)
-		if not is_empty(colors) then
-			vim.api.nvim_set_hl(0, group, colors)
-		end
-	end)
+	f
+		 .iterate(hlgroups)
+		 :foreach(function( group, colors)
+		    if not is_empty(colors) then
+		       vim.api.nvim_set_hl(0, group, colors)
+		    end
+		 end)
 end
 
 ---generate highlights.
@@ -643,7 +645,8 @@ local function generate_highlights(colors, config)
 		-- SymbolsOutlineConnector        = {},
 	}
 
-	f.iterate(config.overrides)
+	f
+		 .iterate(config.overrides)
 		 :foreach(function( hl, specs)
 		    if hlgroups[hl] and not is_empty(specs) then
 		       hlgroups[hl].link = nil
