@@ -5,6 +5,6 @@ return {'nvim-lualine/lualine.nvim', opt = true,
    event = 'VimEnter',
 
    config = function ()
-      require('plugins.statusline.config')
+      require('plugins.statusline.config').setup()
    end
 }
