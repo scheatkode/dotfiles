@@ -3,4 +3,8 @@ return {
 
 	opt = true,
 	ft  = 'qf',
+
+	config = function()
+		require('plugins.quickfix.config').setup()
+	end,
 }
