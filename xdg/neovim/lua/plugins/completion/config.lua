@@ -5,16 +5,6 @@ return {
 		local unpack = require('compat.table.unpack')
 
 		local defaults = {
-			borders  = {
-				'╭',
-				'─',
-				'╮',
-				'│',
-				'╯',
-				'─',
-				'╰',
-				'│',
-			},
 			icons    = require('meta.icon.lsp').presets.default,
 			maxwidth = 50,
 			sources  = {
