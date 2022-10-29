@@ -170,7 +170,7 @@ local function generate_highlights(colors, config)
 		NonText      = { fg = colors.bg_light2 },
 		Normal       = { fg = colors.fg, bg = not config.transparent and colors.bg or 'NONE' },
 		NormalNC     = config.dim_inactive and { fg = colors.fg_dark, bg = colors.bg_dim } or { link = 'Normal' },
-		NormalSB     = config.darken_sidebar and { fg = colors.fg_dark, bg = colors.bg_dark } or { link = 'Normal' },
+		NormalSB     = config.darken_sidebar and { fg = colors.fg_dark, bg = colors.bg_dim } or { link = 'Normal' },
 		NormalFloat  = { fg = colors.fg, bg = colors.bg },
 		FloatBorder  = { fg = colors.fg_border, bg = 'NONE' },
 		Pmenu        = { fg = colors.fg, bg = colors.bg_menu_sel },
