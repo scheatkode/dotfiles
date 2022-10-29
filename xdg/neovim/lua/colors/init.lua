@@ -173,7 +173,7 @@ local function generate_highlights(colors, config)
 		Normal       = { fg = colors.fg, bg = not config.transparent and colors.bg or 'NONE' },
 		NormalNC     = config.dim_inactive and { fg = colors.fg_dark, bg = colors.bg_dim } or { link = 'Normal' },
 		NormalSB     = config.darken_sidebar and { fg = colors.fg_dark, bg = colors.bg_dim } or { link = 'Normal' },
-		NormalFloat  = { fg = colors.fg, bg = colors.bg },
+		NormalFloat  = { fg = colors.fg, bg = colors.bg_menu_sel },
 		FloatBorder  = { fg = colors.fg_border, bg = 'NONE' },
 		Pmenu        = { fg = colors.fg, bg = colors.bg_menu_sel },
 		PmenuSel     = { fg = 'NONE', bg = colors.faded_yellow },
@@ -420,7 +420,7 @@ local function generate_highlights(colors, config)
 
 		-- Telescope                      = {},
 		TelescopeBorder = { link = 'FloatBorder' },
-		TelescopeNormal = { link = 'NormalFloat' },
+		TelescopeNormal = { link = 'Normal' },
 
 		-- NvimTree                       = {},
 		NvimTreeNormal      = { link = 'NormalSB' },
