@@ -72,7 +72,7 @@ local palette = constant({
 --- memory after  its use,  when the  garbage collector
 --- sweeps for unreferenced objects.
 ---
---- @return table Default themes table
+--- @return function Default themes table
 local function themes(theme)
 	return ({
 		default = function(colors)
@@ -150,8 +150,8 @@ local function lualine()
 	local theme  = {}
 
 	theme.normal = {
-		a = { bg = colors.pale_blue, fg = colors.dark0_hard },
-		b = { bg = colors.dark0, fg = colors.pale_blue },
+		a = { bg = colors.bright_blue, fg = colors.dark0_hard },
+		b = { bg = colors.dark0, fg = colors.bright_blue },
 		c = { bg = colors.dark0, fg = colors.light2 },
 	}
 
