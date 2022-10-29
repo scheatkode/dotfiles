@@ -85,16 +85,6 @@ local function dim_on_focus_lost(config)
 	})
 end
 
----clear highlights.
----
----clear a highlight group if given its name as an argument, all
----highlight groups otherwise.
----
----@param name string|nil highlight group to clear
-function m.clear_hl(name)
-	vim.cmd.highlight({ 'clear', name or '' })
-end
-
 ---the default configuration table.
 ---
 ---using a function's return value as a  temporary  variable  to
@@ -110,7 +100,7 @@ local defaults = constant({
 	statement_style       = { italic = true },
 	type_style            = {},
 	variablebuiltin_style = { italic = true },
-	special_return        = true,
+	special_return        = false,
 	special_exception     = true,
 	transparent           = false,
 	darken_sidebar        = true,
@@ -155,11 +145,11 @@ local function generate_highlights(colors, config)
 		CursorIM     = { link = 'Cursor' },
 		CursorLine   = { bg = colors.bg_light0 },
 		CursorColumn = { link = 'CursorLine' },
-		Directory    = { fg = colors.fn },
-		DiffAdd      = { bg = m.alter(colors.git.added, -70) },
-		DiffChange   = { bg = m.alter(colors.git.changed, -70) },
-		DiffDelete   = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
-		DiffText     = { fg = 'NONE', bg = colors.diff.text },
+		Directory    = { fg = colors.light4 },
+		DiffAdd      = { bg = colors.diff.add },
+		DiffChange   = { bg = colors.diff.change },
+		DiffDelete   = { bg = colors.diff.delete },
+		DiffText     = { bg = colors.diff.text },
 		EndOfBuffer  = { fg = colors.bg },
 		-- TermCursor                     = {},
 		-- TermCursorNC                   = {},
@@ -183,8 +173,8 @@ local function generate_highlights(colors, config)
 		NormalSB     = config.darken_sidebar and { fg = colors.fg_dark, bg = colors.bg_dark } or { link = 'Normal' },
 		NormalFloat  = { fg = colors.fg, bg = colors.bg },
 		FloatBorder  = { fg = colors.fg_border, bg = 'NONE' },
-		Pmenu        = { fg = colors.fg, bg = colors.bg_menu },
-		PmenuSel     = { fg = 'NONE', bg = colors.bg_menu_sel },
+		Pmenu        = { fg = colors.fg, bg = colors.bg_menu_sel },
+		PmenuSel     = { fg = 'NONE', bg = colors.faded_yellow },
 		PmenuSbar    = { link = 'Pmenu' },
 		PmenuThumb   = { bg = colors.bg_search },
 		Question     = { link = 'MoreMsg' },
@@ -205,7 +195,7 @@ local function generate_highlights(colors, config)
 		Visual       = { bg = colors.bg_visual },
 		VisualNOS    = { link = 'Visual' },
 		WarningMsg   = { fg = colors.diag.warning, bg = 'NONE' },
-		Whitespace   = { fg = colors.bg_light2 },
+		Whitespace   = { fg = colors.bg_light0 },
 		WildMenu     = { link = 'Pmenu' },
 
 		Constant  = { fg = colors.constant },
@@ -298,6 +288,11 @@ local function generate_highlights(colors, config)
 		DiagnosticUnderlineWarn  = { sp = colors.diag.warning, undercurl = true },
 		DiagnosticUnderlineInfo  = { sp = colors.diag.info, undercurl = true },
 		DiagnosticUnderlineHint  = { sp = colors.diag.hint, undercurl = true },
+
+		DiagnosticLineBackgroundError = { bg = colors.bgs.red, blend = 80 },
+		DiagnosticLineBackgroundWarn = { bg = colors.bgs.yellow, blend = 80 },
+		DiagnosticLineBackgroundInfo = { bg = colors.bgs.blue, blend = 80 },
+		DiagnosticLineBackgroundHint = { bg = colors.bgs.aqua, blend = 80 },
 
 		LspSignatureActiveParameter = { fg = colors.diag.warning },
 		LspCodeLens                 = { fg = colors.fg_comment },
@@ -396,9 +391,9 @@ local function generate_highlights(colors, config)
 		['@tag.delimiter'] = { link = 'Delimiter' },
 
 		-- Git
-		diffAdded   = { fg = colors.git.added, bg = m.alter(colors.git.added, -70) },
-		diffRemoved = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
-		diffDeleted = { fg = colors.git.removed, bg = m.alter(colors.git.removed, -70) },
+		diffAdded   = { fg = colors.git.added },
+		diffRemoved = { fg = colors.git.removed },
+		diffDeleted = { fg = colors.git.removed },
 		diffChanged = { fg = colors.git.changed },
 		diffOldFile = { fg = colors.git.removed },
 		diffNewFile = { fg = colors.git.added },
@@ -423,12 +418,12 @@ local function generate_highlights(colors, config)
 
 		-- Telescope                      = {},
 		TelescopeBorder = { link = 'FloatBorder' },
-		TelescopeNormal = { link = 'NormalNC' },
+		TelescopeNormal = { link = 'NormalFloat' },
 
 		-- NvimTree                       = {},
 		NvimTreeNormal      = { link = 'NormalSB' },
 		NvimTreeNormalNC    = { link = 'NormalSB' },
-		NvimTreeRootFolder  = { fg = colors.identifier, bold = true },
+		NvimTreeRootFolder  = { fg = colors.comment, bold = true },
 		NvimTreeGitDirty    = { fg = colors.git.changed },
 		NvimTreeGitNew      = { fg = colors.git.added },
 		NvimTreeGitDeleted  = { fg = colors.git.removed },
@@ -689,7 +684,7 @@ function m.load(colorscheme, config)
 	current_colorscheme = colors
 
 	if vim.g.colors_name then
-		m.clear_hl()
+		vim.cmd.highlight({ 'clear' })
 	end
 
 	if vim.fn.exists('syntax_on') then
