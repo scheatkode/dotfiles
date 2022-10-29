@@ -41,7 +41,7 @@ require('user.providers').setup()
 require('user.autocmd').setup()
 require('scheatkode.autocmds').setup()
 
-require('colors').load('gruvvy')
+require('colors').load('gruvvy-ng')
 
 require('diagnostics').setup()
 require('plugins').setup()
