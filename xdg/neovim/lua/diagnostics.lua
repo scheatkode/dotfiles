@@ -16,10 +16,10 @@ return {
 
 		local deep_extend = require('tablex.deep_extend')
 		local defaults    = {
-			DiagnosticSignError = { text = '', texthl = 'DiagnosticError' },
-			DiagnosticSignWarn  = { text = '‼', texthl = 'DiagnosticWarn' },
-			DiagnosticSignInfo  = { text = 'ℹ', texthl = 'DiagnosticInfo' },
-			DiagnosticSignHint  = { text = '', texthl = 'DiagnosticHint' },
+			DiagnosticSignError = { text = '', texthl = 'DiagnosticError', linehl = 'DiagnosticLineBackgroundError' },
+			DiagnosticSignWarn  = { text = '‼', texthl = 'DiagnosticWarn', linehl = 'DiagnosticLineBackgroundWarn'  },
+			DiagnosticSignInfo  = { text = 'ℹ', texthl = 'DiagnosticInfo', linehl = 'DiagnosticLineBackgroundInfo'  },
+			DiagnosticSignHint  = { text = '', texthl = 'DiagnosticHint', linehl = 'DiagnosticLineBackgroundHint'  },
 		}
 
 		local options = deep_extend('force', defaults, overrides or {})
