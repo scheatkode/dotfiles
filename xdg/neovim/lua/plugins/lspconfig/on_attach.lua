@@ -1,40 +1,12 @@
 local lazy       = require('lazy.on_member_call')
 local extensions = lazy('lang.extensions')
 
-local border = {
-
-	--- rounded border
-	{ '╭', 'FloatBorder' },
-	{ '─', 'FloatBorder' },
-	{ '╮', 'FloatBorder' },
-	{ '│', 'FloatBorder' },
-	{ '╯', 'FloatBorder' },
-	{ '─', 'FloatBorder' },
-	{ '╰', 'FloatBorder' },
-	{ '│', 'FloatBorder' },
-
-	--- square border
-	-- {'┌', 'FloatBorder'},
-	-- {'─', 'FloatBorder'},
-	-- {'┐', 'FloatBorder'},
-	-- {'│', 'FloatBorder'},
-	-- {'┘', 'FloatBorder'},
-	-- {'─', 'FloatBorder'},
-	-- {'└', 'FloatBorder'},
-	-- {'│', 'FloatBorder'},
-
-}
 
 return function(client, bufnr, settings)
 
 	-- omnifunc setup {{{2
 
 	vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-	-- border customization {{{2
-
-	vim.lsp.handlers['textDocument/hover']         = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-	vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 
 	-- mappings {{{2
 
@@ -69,8 +41,7 @@ return function(client, bufnr, settings)
 	vim.keymap.set('n', '<leader>cO', vim.lsp.buf.outgoing_calls, { buffer = bufnr, desc = 'Outgoing calls' })
 
 	-- diagnostics {{{3
-	vim.keymap.set('n', '<leader>cl', function() vim.diagnostic.open_float(nil, { border = 'rounded' }) end,
-		{ buffer = bufnr, desc = 'Show line diagnostics' })
+	vim.keymap.set('n', '<leader>cl', vim.diagnostic.open_float, { buffer = bufnr, desc = 'Show line diagnostics' })
 
 	vim.keymap.set('n', '<leader>cL', vim.diagnostic.setloclist, { buffer = bufnr, desc = 'Send diagnostics to loclist' })
 	vim.keymap.set('n', '<leader>cq', vim.diagnostic.setqflist, { buffer = bufnr, desc = 'Send diagnostics to qflist' })
