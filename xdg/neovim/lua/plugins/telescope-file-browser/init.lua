@@ -4,6 +4,7 @@ return {
 	opt = true,
 
 	module_pattern = {
+		'telescope',
 		'telescope.*',
 	},
 }
