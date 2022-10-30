@@ -645,17 +645,7 @@ local function generate_highlights(colors, config)
 		-- SymbolsOutlineConnector        = {},
 	}
 
-	f
-		 .iterate(config.overrides)
-		 :foreach(function( hl, specs)
-		    if hlgroups[hl] and not is_empty(specs) then
-		       hlgroups[hl].link = nil
-		    end
-
-		    hlgroups[hl] = deep_extend('force', hlgroups[hl] or {}, specs)
-		 end)
-
-	return hlgroups
+	return deep_extend('force', hlgroups, config.overrides)
 end
 
 local current_colorscheme = {}
