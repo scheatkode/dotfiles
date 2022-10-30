@@ -10,7 +10,7 @@ return {
 		end
 
 		pcall(telescope.load_extension, 'file_browser') -- file browser
-		pcall(telescope.load_extension, 'fzf') -- other superfast sorter
+		pcall(telescope.load_extension, 'fzf') -- superfast sorter
 		pcall(telescope.load_extension, 'project') -- project picker
 
 		local actions    = require('telescope.actions')
