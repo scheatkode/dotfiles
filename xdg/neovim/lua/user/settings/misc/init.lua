@@ -1,6 +1,8 @@
 return {
 	---Setup miscellaneous behaviour.
 	setup = function()
+		local flags = require('compat.flags')
+
 		-- Mice are for the weak
 
 		vim.opt.mouse      = ''
@@ -10,6 +12,12 @@ return {
 
 		vim.opt.errorbells = false
 		vim.opt.visualbell = false
+
+		-- No need to spawn a heavy shell most of the time
+
+		if not flags.is_windows then
+			vim.opt.shell = '/bin/sh'
+		end
 
 		vim.opt.sessionoptions = {
 			'globals',
