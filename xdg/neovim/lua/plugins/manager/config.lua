@@ -56,6 +56,16 @@ local function setup()
 			moved_sym       = '→', -- the symbol for a plugin which was moved (e.g. from opt to start)
 			header_sym      = '━', -- the symbol for the header line in packer's display
 			show_all_info   = true, -- should packer show all update details automatically?
+
+			keybindings = {
+				continue = 'c',
+				diff = 'd',
+				prompt_revert = 'r',
+				quit = 'q',
+
+				toggle_info = '<Tab>',
+				toggle_update = 'u',
+			},
 		},
 
 		luarocks = {
