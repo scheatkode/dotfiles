@@ -14,15 +14,6 @@ return {
 		'python'
 	},
 
-	root_dir = function(filename)
-		return lspconfig.util.root_pattern(
-			'.git',
-			'pyproject.toml',
-			'requirements.txt',
-			'setup.py'
-		)(filename) or lspconfig.util.dirname(filename)
-	end,
-
 	settings = {
 		python = {
 			disableOrganizeImports  = false,
