@@ -284,6 +284,9 @@ zinit wait:'1b' silent from:gh-r as:program for \
      pick:'bin/dog'                             \
       src:'completions/dog.zsh'                 \
             @ogham/dog                          \
+    bpick:'*x86_64*linux*gnu*'                  \
+     pick:'hexyl*/hexyl'                        \
+            @sharkdp/hexyl                      \
     bpick:'*linux*amd64*'                       \
      pick:'pup'                                 \
             @ericchiang/pup                     \
