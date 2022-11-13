@@ -160,10 +160,6 @@ return {
 					completion.config.compare.order,
 				},
 			},
-
-			experimental = {
-				ghost_text = true,
-			}
 		})
 
 		-- TODO(scheatkode): Refactor this
