@@ -84,7 +84,5 @@ return {
 			-- Next signature selection key, for looping through overloads.
 			select_signature_key = '<M-n>',
 		})
-
-		log.info('Plugin loaded', 'lsp-signature')
 	end
 }

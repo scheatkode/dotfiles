@@ -101,8 +101,6 @@ require('lang.handlers').setup()
 
 configure_servers(languages)
 
-log.info('Plugin loaded', ' lsp')
-
 return true
 
 -- vim: set fdm=marker fdl=0:

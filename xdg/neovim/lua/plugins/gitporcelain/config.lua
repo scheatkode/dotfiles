@@ -46,8 +46,6 @@ return {
 			}
 		})
 
-		vim.notify('neogit: Plugin loaded', vim.log.levels.info)
-
 		return true
 	end
 }

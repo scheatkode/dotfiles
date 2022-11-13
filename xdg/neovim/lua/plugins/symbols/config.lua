@@ -64,8 +64,6 @@ symbols.setup({
 
 -- }}}
 
-log.info('Plugin loaded', 'symbols-outline')
-
 return true
 
 -- vim: set fdm=marker fdl=0:

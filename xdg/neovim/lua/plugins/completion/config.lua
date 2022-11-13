@@ -167,7 +167,5 @@ return {
 		vim.api.nvim_set_hl(0, 'CmpItemMenu', { link = 'NonText' })
 		vim.api.nvim_set_hl(0, 'CmpItemKind', { link = 'Special' })
 		vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { link = 'Error' })
-
-		log.info('Plugin loaded', 'nvim-cmp')
 	end
 }

@@ -60,6 +60,4 @@ iguides.setup({
 	},
 })
 
-log.info('Plugin loaded', 'indent-guides')
-
 return true

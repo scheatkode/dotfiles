@@ -69,8 +69,6 @@ return {
 		})
 
 		configure_debuggers(debuggers)
-
-		log.info('Plugin loaded', ' dap')
 	end
 }
 
