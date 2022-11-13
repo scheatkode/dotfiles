@@ -105,7 +105,7 @@ ls.setup({
 
 		-- python-specific
 		ls.builtins.formatting.black,
-		ls.builtins.diagnostics.pylint,
+		-- ls.builtins.diagnostics.pylint,
 
 		-- shell-specific
 		ls.builtins.formatting.shfmt,
