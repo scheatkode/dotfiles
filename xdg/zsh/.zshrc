@@ -300,9 +300,8 @@ zinit wait:'1b' silent from:gh-r as:program for \
             @stedolan/jq
 
 zinit wait:'0a' silent from:gh-r as:program for \
-   atinit:'tar xvf *.tbz > /dev/null 2>&1'      \
     bpick:'*86*64*linux*'                       \
-     pick:'bin/btop'                            \
+     pick:'btop/bin/btop'                       \
             @aristocratos/btop
 
 zinit creinstall pueue > /dev/null 2>&1
