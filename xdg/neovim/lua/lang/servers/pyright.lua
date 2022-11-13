@@ -8,7 +8,7 @@ end
 -- TODO(scheatkode): Add autoinstall with spinner animation
 
 return {
-	autostart = false,
+	autostart = true,
 
 	filetypes = {
 		'python'
