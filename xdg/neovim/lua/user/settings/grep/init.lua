@@ -33,7 +33,7 @@ return {
 		vim.opt.completeopt = {
 			'menu', -- Use the pop-up menu for completion
 			'menuone', -- Use the pop-up menu also when there is only one match
-			'preview', -- Show extra information about the currently selected item
+			-- 'preview', -- Show extra information about the currently selected item
 			-- 'longest',  -- Only insert the longest common match
 			'noinsert', -- Do not insert any text for a match
 			'noselect', -- Do not autoselect a match
