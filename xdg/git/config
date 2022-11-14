@@ -1,7 +1,7 @@
 [user]
    name       = scheatkode
    email      = scheatkode@gmail.com
-   signingkey = 0550819B9F997638
+   signingkey = A12C6442670156F1!
 
 [commit]
    gpgsign  = true
