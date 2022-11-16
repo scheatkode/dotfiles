@@ -115,9 +115,6 @@ act('Setting up tmux',       function () setup('tmux')           end)
 act('Setting up x11',        function () setup('x11')            end)
 act('Setting up zsh',        function () setup('zsh')            end)
 
--- not ready yet
--- act('Setting up neomutt', function () setup('neomutt') end)
-
 -- needs copying, not linking
 -- https://gitlab.freedesktop.org/pulseaudio/pulseaudio/-/issues/624
 -- act('Setting up pulse', function () setup('pulse') end)
