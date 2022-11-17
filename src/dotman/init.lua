@@ -1,19 +1,17 @@
-local sf = string.format
-
 -- bare bones way of getting the running script's file name
 -- and directory.
 local this_filename  = debug.getinfo(1, 'S').source:sub(2)
 local this_directory = this_filename:match('(.*)/') or '.'
 
-local repository_path = sf('%s/../..', this_directory)
+local repository_path = string.format('%s/../..', this_directory)
 
 -- constructing a `package.path` to enable requiring from the
 -- dotfile manager directory or the central repository lib.
-package.path = sf(
-   '%s;%s/?.lua;%s/?/init.lua',
-   package.path,
-   sf('%s/lib/lua', repository_path),
-   sf('%s/src/dot', repository_path)
+package.path = string.format(
+	'%s;%s/?.lua;%s/?/init.lua',
+	package.path,
+	string.format('%s/lib/lua', repository_path),
+	string.format('%s/src/dot', repository_path)
 )
 
 local color  = require('terminal.color')
@@ -22,7 +20,7 @@ local green  = color.green
 local red    = color.red
 local yellow = color.yellow
 
-local function display (s, e) io.stdout:write(s .. (e or '\n')) end
+local function display(s, e) io.stdout:write(s .. (e or '\n')) end
 
 display(cyan([[
 
@@ -36,7 +34,7 @@ display(cyan([[
           scheatkode]]), '')
 display([['s dotfiles manager]], '\n\n\n')
 
-local function act (message, action, ...)
+local function act(message, action, ...)
 	assert(action, 'missing argument #2 to act()')
 
 	local icon_pending      = yellow('\u{2026}') -- …
@@ -44,40 +42,58 @@ local function act (message, action, ...)
 	local icon_failure      = red('\u{f00d}')    -- 
 	local icon_continuation = red('\u{21b3}')    -- ↳
 
-	display(sf("   [%s] - %s", icon_pending, message or 'Processing'), '')
+	display(
+		string.format(
+			"   [%s] - %s",
+			icon_pending,
+			message or 'Processing'
+		),
+		''
+	)
 
 	local ok, ret = pcall(action, ...)
 
 	if not ok then
-		display(sf("\r   [%s]", icon_failure))
-		display(sf("       %s %s", icon_continuation, ret:match('[^:]*:[^:]*: (.*)')))
+		display(string.format("\r   [%s]", icon_failure))
+		display(string.format(
+			"       %s %s",
+			icon_continuation,
+			ret:match('[^:]*:[^:]*: (.*)')
+		))
 		return
 	end
 
-	display(sf("\r   [%s]", icon_success))
+	display(string.format("\r   [%s]", icon_success))
 
 	return ret
 end
 
 ---shell's `ln -s`
 local function ln(source, destination)
-	local d = io.popen(sf('ln --symbolic `realpath "%s"` "%s"', source, destination))
+	local d = io.popen(string.format(
+		'ln --symbolic `realpath "%s"` "%s"', source, destination
+	))
+
 	local m = d:read('*a')
 
 	if m ~= '' then
-		error(sf('an error occurred when trying to link %s to %s: %s', destination, source, m))
+		error(string.format('an error occurred when trying to link %s to %s: %s', destination, source, m))
 	end
 
 	d:close()
 end
 
 ---shell's `mv`
-local function mv (source, destination)
-	local d = io.popen(sf('mv "%s" "%s" 2>&1', source, destination))
+local function mv(source, destination)
+	local d = io.popen(string.format('mv "%s" "%s" 2>&1', source, destination))
 	local m = d:read('*a')
 
 	if m ~= '' then
-		error(sf('an error occurred when trying to move %s to %s', destination, source))
+		error(string.format(
+			'an error occurred when trying to move %s to %s',
+			destination,
+			source
+		))
 	end
 
 	d:close()
@@ -85,11 +101,11 @@ end
 
 local HOME = os.getenv('HOME')
 
-local function ensure_backup (s) return mv(s, s .. '.backup') end
+local function ensure_backup(s) return mv(s, s .. '.backup') end
 
-local function setup (s, t)
-	local cpath = sf('%s/.config/%s', HOME, s)
-	local rpath = sf('%s/xdg/%s', repository_path, t or s)
+local function setup(s, t)
+	local cpath = string.format('%s/.config/%s', HOME, s)
+	local rpath = string.format('%s/xdg/%s', repository_path, t or s)
 
 	ensure_backup(cpath)
 	ln(rpath)
