@@ -12,6 +12,6 @@ return {
 	},
 
 	config = function()
-		require('plugins.movement.config')
+		require('leap').add_default_mappings()
 	end
 }
