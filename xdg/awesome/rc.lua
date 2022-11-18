@@ -198,8 +198,25 @@ require('bindings').setup({
          on_press    = function ()
 				awful.spawn.with_shell("sleep 0.5; maim -s | xclip -selection clipboard -t image/png")
          end
-      }
-   }
+		},
+
+		['keyboard::command::spawn neovim'] = {
+			modifiers   = { mod.super, mod.shift },
+			key         = 'v',
+			description = 'Spawn a neovim instance',
+			group       = 'command',
+			on_press    = function()
+				local tempfile = os.tmpname()
+
+				awful.spawn.easy_async_with_shell(
+					string.format('chmod o-r "%s"; alacritty -e nvim "%s"', tempfile, tempfile),
+					function()
+						awful.spawn.with_shell(string.format('cat "%s" | xclip -selection clipboard; rm "%s"', tempfile, tempfile))
+					end
+				)
+			end
+		}
+	}
 })
 
 -- setup rules.
