@@ -209,12 +209,97 @@ status_diff() {
 	'
 }
 
+moji () {
+   	git                   \
+   		-c color.ui=always \
+   			log             \
+   			--graph         \
+   			--decorate      \
+   			--abbrev-commit \
+   			--date=relative \
+   		--pretty=tformat:'%C(red)%h%C(reset)}%C(dim yellow)(%ar)%C(reset)}—}%C(bold cyan)%an%C(reset):}%C(white)%s%C(reset) %C(dim white) %C(bold yellow)%d%C(reset)' \
+   	| sed                                        \
+			-e "s/:adhesive_bandage:/🩹/g"          \
+			-e "s/:alembic:/⚗️/g"                    \
+			-e "s/:alien:/👽️/g"                     \
+			-e "s/:ambulance:/🚑️/g"                 \
+			-e "s/:arrow_down:/⬇️/g"                 \
+			-e "s/:arrow_up:/⬆️/g"                   \
+			-e "s/:art:/🎨/g"                       \
+			-e "s/:beers:/🍻/g"                     \
+			-e "s/:bento:/🍱/g"                     \
+			-e "s/:bookmark:/🔖/g"                  \
+			-e "s/:boom:/💥/g"                      \
+			-e "s/:bricks:/🧱/g"                    \
+			-e "s/:bug:/🐛/g"                       \
+			-e "s/:building_construction:/🏗️/g"      \
+			-e "s/:bulb:/💡/g"                      \
+			-e "s/:busts_in_silhouette:/👥/g"       \
+			-e "s/:camera_flash:/📸/g"              \
+			-e "s/:card_file_box:/🗃️/g"              \
+			-e "s/:chart_with_upwards_trend:/📈/g"  \
+			-e "s/:children_crossing:/🚸/g"         \
+			-e "s/:closed_lock_with_key:/🔐/g"      \
+			-e "s/:clown_face:/🤡/g"                \
+			-e "s/:coffin:/⚰️/g"                     \
+			-e "s/:construction:/🚧/g"              \
+			-e "s/:construction_worker:/👷/g"       \
+			-e "s/:dizzy:/💫/g"                     \
+			-e "s/:egg:/🥚/g"                       \
+			-e "s/:fire:/🔥/g"                      \
+			-e "s/:globe_with_meridians:/🌐/g"      \
+			-e "s/:goal_net:/🥅/g"                  \
+			-e "s/:green_heart:/💚/g"               \
+			-e "s/:hammer:/🔨/g"                    \
+			-e "s/:heavy_minus_sign:/➖/g"          \
+			-e "s/:heavy_plus_sign:/➕/g"           \
+			-e "s/:iphone:/📱/g"                    \
+			-e "s/:label:/🏷️/g"                      \
+			-e "s/:lipstick:/💄/g"                  \
+			-e "s/:lock:/🔒️/g"                      \
+			-e "s/:loud_sound:/🔊/g"                \
+			-e "s/:mag:/🔍️/g"                       \
+			-e "s/:memo:/📝/g"                      \
+			-e "s/:monocle_face:/🧐/g"              \
+			-e "s/:mute:/🔇/g"                      \
+			-e "s/:necktie:/👔/g"                   \
+			-e "s/:package:/📦️/g"                   \
+			-e "s/:page_facing_up:/📄/g"            \
+			-e "s/:passport_control:/🛂/g"          \
+			-e "s/:pencil2:/✏️/g"                    \
+			-e "s/:poop:/💩/g"                      \
+			-e "s/:pushpin:/📌/g"                   \
+			-e "s/:recycle:/♻️ /g"                   \
+			-e "s/:rewind:/⏪️/g"                    \
+			-e "s/:rocket:/🚀/g"                    \
+			-e "s/:rotating_light:/🚨/g"            \
+			-e "s/:see_no_evil:/🙈/g"               \
+			-e "s/:seedling:/🌱/g"                  \
+			-e "s/:sparkles:/✨/g"                  \
+			-e "s/:speech_balloon:/💬/g"            \
+			-e "s/:stethoscope:/🩺/g"               \
+			-e "s/:tada:/🎉/g"                      \
+			-e "s/:technologist:/🧑‍💻/g"      \
+			-e "s/:test_tube:/🧪/g"                 \
+			-e "s/:triangular_flag_on_post:/🚩/g"   \
+			-e "s/:truck:/🚚/g"                     \
+			-e "s/:twisted_rightwards_arrows:/🔀/g" \
+			-e "s/:wastebasket:/🗑️/g"                \
+			-e "s/:wheelchair:/♿️/g"                \
+			-e "s/:white_check_mark:/✅/g"          \
+			-e "s/:wrench:/🔧/g"                    \
+			-e "s/:zap:/⚡️/g"                       \
+		| column -s '}' -t \
+		| ${PAGER}
+}
+
 
 while test "${#}" -ne 0
 do
 	case "${1}" in
 		s|status) status ;;
 		d|diff) status_diff ;;
+		moji) moji ;;
 		*) exit 1 ;;
 	esac
 	shift
