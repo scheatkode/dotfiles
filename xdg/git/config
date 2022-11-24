@@ -56,3 +56,4 @@
 	daily   = "!sh ~/.config/git/daily"
 	history = "!sh ~/.config/git/history"
 	moji    = "!sh ~/.config/git/gitmoji"
+	stats   = "!sh ~/.config/git/stats"

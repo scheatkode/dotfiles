@@ -1,0 +1,112 @@
+#!/bin/sh
+
+set -e
+set -u
+
+set -o errexit
+
+branch_exists=0
+branch="${1:-}"
+
+if [ -n "${branch}" ]; then
+	if git show-ref refs/heads/"${branch}" >/dev/null 2>&1; then
+		branch_exists=1
+	fi
+fi
+
+if [ "${branch_exists}" = '1' ] && [ -n "${branch}" ]; then
+	printf '\nContribution stats on \033[0;33m%s\033[0m branch:\n\n' "${branch}"
+else
+	printf '\nContribution stats on current branch:\n\n'
+fi
+
+git -c log.showSignature=false log ${branch}                                    \
+	--use-mailmap                                                                \
+	--numstat                                                                    \
+   --pretty='format:commit %H%nAuthor: %aN <%aE>%nDate:   %ad%n%n%w(0,4,4)%B%n' \
+   | LC_ALL=C awk '
+	function red(f, s)     { return sprintf("\033[0;31m" f "\033[0m", s); }
+	function green(f, s)   { return sprintf("\033[0;32m" f "\033[0m", s); }
+	function yellow(f, s)  { return sprintf("\033[0;33m" f "\033[0m", s); }
+	function blue(f, s)    { return sprintf("\033[0;34m" f "\033[0m", s); }
+	function magenta(f, s) { return sprintf("\033[0;35m" f "\033[0m", s); }
+
+   function print_stats(author) {
+		printf "\t%s:\n", author
+
+		if(insertions["Total"] > 0) {
+			printf "\t  insertions:    %s\t(%s)\n", \
+				green("%d", insertions[author]), \
+				green("%.0f%%", insertions[author] / insertions["Total"] * 100)
+		}
+
+		if(deletions["Total"] > 0) {
+			printf "\t  deletions:     %s\t(%s)\n", \
+				red("%d", deletions[author]), \
+				red("%.0f%%", deletions[author] / deletions["Total"] * 100)
+		}
+
+		if(file["Total"] > 0) {
+			printf "\t  files:         %s\t(%s)\n", \
+				blue("%d", file[author]), \
+            blue("%.0f%%", file[author] / file["Total"] * 100)
+		}
+
+		if(commits["Total"] > 0) {
+			printf "\t  commits:       %s\t(%s)\n", \
+				magenta("%d", commits[author]), \
+            magenta("%.0f%%", commits[author] / commits["Total"] * 100)
+		}
+
+		if (first[author] != "") {
+			if (((insertions["Total"] + deletions["Total"]) * 100) > 0) {
+            printf "\t  lines changed: %s\t(%s)\n", \
+					yellow("%d", insertions[author] + deletions[author]),
+					yellow("%.0f%%", (insertions[author] + deletions[author]) / \
+						(insertions["Total"] + deletions["Total"]) * 100)
+			} else {
+				printf "\t  lines changed: %s\t(0%%)\n", \
+					yellow("%d", insertions[author] + deletions[author])
+			}
+
+			printf "\t  first commit:  %s\n", first[author]
+			printf "\t  last commit:   %s\n", last[author]
+		}
+
+		printf "\n"
+   }
+
+   /^Author:/ {
+		$1 = ""
+		author = $0
+		commits[author]  += 1
+		commits["Total"] += 1
+   }
+
+   /^Date:/ {
+		$1="";
+		first[author] = substr($0, 2)
+
+		if(last[author] == "" ) {
+			last[author] = first[author]
+		}
+   }
+
+   /^[0-9]/ {
+		insertions[author]  += $1
+		deletions[author]   += $2
+		file[author]        += 1
+		insertions["Total"] += $1
+		deletions["Total"]  += $2
+		file["Total"]       += 1
+   }
+
+   END {
+		for (author in commits) {
+			if (author != "Total") {
+				print_stats(author)
+			}
+		}
+
+		print_stats("Total")
+	}'
