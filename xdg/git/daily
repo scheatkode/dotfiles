@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+set -u
+
+set -o errexit
+
+printf '%s commits\n' \
+	"$(
+		git -c log.showSignature=false log --use-mailmap \
+			--author="$(git config user.name)"            \
+			--since="$(date '+%Y-%m-%dT00:00:00')"        \
+			--until="$(date '+%Y-%m-%dT23:59:59')"        \
+			--reverse                                     \
+		| grep -cE 'commit [a-f0-9]{40}'
+	)"
+
+git diff --shortstat '@{0 day ago}' \
+| sort -nr                          \
+| LC_ALL=C awk -F',|\n' '{
+	for (i = 1; i <= NF; i++) {
+		sub(/^[ \t\r\n]+/, "", $i)
+		printf "%s\n", $i
+	}
+}'

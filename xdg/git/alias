@@ -305,29 +305,6 @@ moji () {
 		| ${PAGER}
 }
 
-daily () {
-	printf '%s commits\n' \
-		"$(
-			git -c log.showSignature=false log --use-mailmap \
-				--author="$(git config user.name)" \
-				--since="$(date '+%Y-%m-%dT00:00:00')" \
-				--until="$(date '+%Y-%m-%dT23:59:59')" \
-				--reverse \
-			| grep -cE 'commit [a-f0-9]{40}'
-		)"
-
-   git diff --shortstat '@{0 day ago}' \
-   | sort -nr \
-   | LC_ALL=C awk -F',|\n' '
-   	{
-   		for (i = 1; i <= NF; i++) {
-   			sub(/^[ \t\r\n]+/, "", $i)
-   			printf "%s\n", $i
-   		}
-   	}'
-}
-
-
 while test "${#}" -ne 0
 do
 	case "${1}" in
@@ -335,7 +312,6 @@ do
 		d|diff) status_diff ;;
 		history) history ;;
 		moji) moji ;;
-		daily) daily ;;
 		*) exit 1 ;;
 	esac
 	shift
