@@ -209,24 +209,11 @@ status_diff() {
 	'
 }
 
-history () {
-	git -c color.ui=always log \
-		--all                   \
-		--graph                 \
-		--decorate              \
-		--abbrev-commit         \
-		--date=relative         \
-   	--pretty=tformat:'%C(red)%h%C(reset)}%C(dim yellow)(%ar)%C(reset)}—}%C(bold cyan)%an%C(reset):}%C(white)%s%C(reset) %C(dim white) %C(bold yellow)%d%C(reset)' \
-   | column -s '}' -t         \
-   | ${PAGER}
-}
-
 while test "${#}" -ne 0
 do
 	case "${1}" in
 		s|status) status ;;
 		d|diff) status_diff ;;
-		history) history ;;
 		*) exit 1 ;;
 	esac
 	shift
