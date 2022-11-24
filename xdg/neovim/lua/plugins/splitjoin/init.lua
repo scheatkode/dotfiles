@@ -1,10 +1,15 @@
 return {
-   'AndrewRadev/splitjoin.vim',
+	'Wansmer/treesj',
 
-   opt = true,
+	opt = true,
 
-   keys = {
-      {'n', 'gS'},
-      {'n', 'gJ'},
-   },
+	keys = {
+		{ 'n', 'gS' },
+		{ 'n', 'gJ' },
+	},
+
+	config = function()
+		require('plugins.splitjoin.config').setup()
+		require('plugins.splitjoin.keys').setup()
+	end
 }
