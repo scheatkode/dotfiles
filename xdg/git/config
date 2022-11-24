@@ -53,16 +53,5 @@
 	d = "!sh ~/.config/git/alias d"
 	s = "!sh ~/.config/git/alias s"
 
-   history-no-emogi  = "!git      \
-   	-c color.ui=always \
-   		log             \
-   		--all           \
-   		--graph         \
-   		--decorate      \
-   		--abbrev-commit \
-   		--date=relative \
-   	--pretty=tformat:'%C(red)%h%C(reset)}%C(dim yellow)(%ar)%C(reset)}—}%C(bold cyan)%an%C(reset):}%C(white)%s%C(reset) %C(dim white) %C(bold yellow)%d%C(reset)' \
-		| column -s \"}\" -t \
-		| ${PAGER}"
-
 	moji    = "!sh ~/.config/git/alias moji"
+	history = "!sh ~/.config/git/alias history"
