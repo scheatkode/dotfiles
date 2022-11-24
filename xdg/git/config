@@ -54,5 +54,5 @@
 	s = "!sh ~/.config/git/alias s"
 
 	daily   = "!sh ~/.config/git/daily"
-	moji    = "!sh ~/.config/git/alias moji"
 	history = "!sh ~/.config/git/alias history"
+	moji    = "!sh ~/.config/git/gitmoji"
