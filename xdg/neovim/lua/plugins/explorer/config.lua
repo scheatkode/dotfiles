@@ -373,6 +373,32 @@ local function setup()
 
 			window = {
 				mappings = {
+					['h']     = function(state)
+						local fs = require('neo-tree.sources.filesystem')
+						local ui = require('neo-tree.ui.renderer')
+
+						local node = state.tree:get_node()
+
+						if node.type == 'directory' and node:is_expanded() then
+							return fs.toggle_directory(state, node)
+						end
+
+						return ui.focus_node(state, node:get_parent_id())
+					end,
+					['l']     = function(state)
+						local fs = require('neo-tree.sources.filesystem')
+						local ui = require('neo-tree.ui.renderer')
+
+						local node = state.tree:get_node()
+
+						if node.type == 'directory' then
+							if not node:is_expanded() then
+								fs.toggle_directory(state, node)
+							elseif node:has_children() then
+								ui.focus_node(state, node:get_child_ids()[1])
+							end
+						end
+					end,
 					['H']     = 'toggle_hidden',
 					['f']     = 'filter_on_submit',
 					['<C-x>'] = 'clear_filter',
