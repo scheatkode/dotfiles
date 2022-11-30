@@ -92,10 +92,11 @@ local function setup()
 		use(lazy 'plugins.treesitter-textobjects')
 		use(lazy 'plugins.treesitter-comment-string')
 
-		use(lazy 'plugins.syntax.twig')
-		use(lazy 'plugins.syntax.plantuml')
 		use(lazy 'plugins.syntax.blade')
+		use(lazy 'plugins.syntax.d2')
+		use(lazy 'plugins.syntax.plantuml')
 		use(lazy 'plugins.syntax.pug')
+		use(lazy 'plugins.syntax.twig')
 
 		-- }}}
 		-- visual
