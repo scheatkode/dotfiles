@@ -95,15 +95,34 @@ treesitter.setup({
 
 		move = {
 			enable    = true,
-			set_jumps = true,
+			set_jumps = true, -- update the jumplist
 
 			goto_next_start = {
-				[']f'] = { '@function.inner' },
-				[']c'] = { '@class.outer' },
-				[']b'] = { '@block.outer' },
-				[']C'] = { '@comment.outer' },
-				[']i'] = { '@conditional.outer' },
-				[']l'] = { '@loop.outer' },
+				[']f'] = {
+					query = '@function.inner',
+					desc  = 'Go to next function',
+				}
+				,
+				[']c'] = {
+					query = '@class.outer',
+					desc  = 'Go to next class definition',
+				},
+				[']b'] = {
+					query = '@block.outer',
+					desc  = 'Go to next block',
+				},
+				[']C'] = {
+					query = '@comment.outer',
+					desc  = 'Go to next comment',
+				},
+				[']i'] = {
+					query = '@conditional.outer',
+					desc  = 'Go to next condition',
+				},
+				[']l'] = {
+					query = '@loop.outer',
+					desc  = 'Go to next loop',
+				},
 			},
 
 			goto_next_end = {
@@ -111,12 +130,31 @@ treesitter.setup({
 			},
 
 			goto_previous_start = {
-				['[f'] = { '@function.inner' },
-				['[c'] = { '@class.outer' },
-				['[b'] = { '@block.outer' },
-				['[C'] = { '@comment.outer' },
-				['[i'] = { '@conditional.outer' },
-				['[l'] = { '@loop.outer' },
+				['[f'] = {
+					query = '@function.inner',
+					desc  = 'Go to previous function',
+				}
+				,
+				['[c'] = {
+					query = '@class.outer',
+					desc  = 'Go to previous class definition',
+				},
+				['[b'] = {
+					query = '@block.outer',
+					desc  = 'Go to previous block',
+				},
+				['[C'] = {
+					query = '@comment.outer',
+					desc  = 'Go to previous comment',
+				},
+				['[i'] = {
+					query = '@conditional.outer',
+					desc  = 'Go to previous condition',
+				},
+				['[l'] = {
+					query = '@loop.outer',
+					desc  = 'Go to previous loop',
+				},
 			},
 
 			goto_previous_end = {
