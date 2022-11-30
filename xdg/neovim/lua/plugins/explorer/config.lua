@@ -83,6 +83,9 @@ local function setup()
 		---@type number
 		resize_timer_interval = 500,
 
+		---@type boolean
+		show_scrolled_off_parent_node = true,
+
 		---used when sorting files and directories in the tree.
 		---@type boolean
 		sort_case_insensitive = false,
@@ -90,7 +93,7 @@ local function setup()
 		---if false, inputs will use `vim.ui.input()` instead of
 		---custom floats.
 		---@type boolean
-		use_popups_for_input = true,
+		use_popups_for_input = false,
 
 		---@type boolean
 		use_default_mappings = false,
@@ -116,7 +119,10 @@ local function setup()
 		default_component_configs = {
 			container = {
 				---@type boolean
-				enable_character_fade = true
+				enable_character_fade = false,
+
+				width = '100%',
+				right_padding = 0,
 			},
 
 			indent = {
@@ -145,7 +151,7 @@ local function setup()
 				---if nil and file nesting is enabled, will enable
 				--expanders.
 				---@type nil|true
-				with_expanders = true,
+				with_expanders = nil,
 
 				---@type string
 				expander_collapsed = '',
@@ -191,7 +197,7 @@ local function setup()
 			name = {
 
 				---@type boolean
-				trailing_slash = false,
+				trailing_slash = true,
 
 				---@type boolean
 				use_git_status_colors = true,
@@ -263,18 +269,12 @@ local function setup()
 					'container',
 					width = '100%',
 					right_padding = 1,
-					--max_width = 60,
 					content = {
 						{
 							'name',
 							use_git_status_colors = true,
 							zindex = 10
 						},
-						-- {
-						--   'symlink_target',
-						--   zindex = 10,
-						--   highlight = 'NeoTreeSymbolicLinkTarget',
-						-- },
 						{ 'clipboard', zindex = 10 },
 						{ 'bufnr', zindex = 10 },
 						{ 'modified', zindex = 20, align = 'right' },
@@ -304,11 +304,9 @@ local function setup()
 		-- return these options.
 		window = {
 			---@type 'left'|'right'|'float'|'current'
-			position = 'left',
+			position = 'float',
 
-			---applies to left and right positions.
-			---@type number
-			width = 40,
+			auto_expand_width = true,
 
 			-- settings that apply to float position only.
 			popup = {
@@ -358,7 +356,7 @@ local function setup()
 				},
 
 				['A']    = 'add_directory', -- also accepts the config.show_path option.
-				['x']    = 'delete',
+				['X']    = 'delete',
 				['r']    = 'rename',
 				['y']    = 'copy_to_clipboard',
 				['d']    = 'cut_to_clipboard',
@@ -367,29 +365,34 @@ local function setup()
 				['m']    = 'move', -- takes text input for destination
 				['q']    = 'close_window',
 				['<F1>'] = 'close_window',
-				['?']    = 'show_help',
+				['g?']   = 'show_help',
 			},
 		},
 
 		filesystem = {
-
-			commands = {
-				run_command = function(state)
-					local path = state.tree:get_node():get_id()
-					vim.api.nvim_input(': ' .. path .. '<Home>')
-				end
-			},
 
 			window = {
 				mappings = {
 					['H']     = 'toggle_hidden',
 					['f']     = 'filter_on_submit',
 					['<C-x>'] = 'clear_filter',
-					['<BS>']  = 'navigate_up',
-					['.']     = 'set_root',
+					['-']     = 'navigate_up',
+					['<CR>']  = function(state)
+						local fs   = require('neo-tree.sources.filesystem.commands')
+						local node = state.tree:get_node()
+
+						if node.type == "directory" then
+							return fs.set_root(state)
+						end
+
+						return fs.open(state)
+					end,
 					['[g']    = 'prev_git_modified',
 					[']g']    = 'next_git_modified',
-					[';']     = 'run_command',
+					['.']     = function(state)
+						local path = state.tree:get_node():get_id()
+						vim.api.nvim_input(': ' .. path .. '<Home>')
+					end,
 				}
 			},
 
@@ -475,7 +478,7 @@ local function setup()
 			---                   handle opening dirs
 			---
 			---@type 'open_current'|'disabled'|'open_default'
-			hijack_netrw_behavior = 'open_default',
+			hijack_netrw_behavior = 'disabled',
 
 			---this will use the os level file watchers to detect
 			---changes instead of relying on nvim autocmd events.
