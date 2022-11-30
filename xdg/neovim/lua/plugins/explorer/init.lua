@@ -8,6 +8,7 @@ return {
 	cmd  = 'Neotree',
 	keys = {
 		'<F1>',
+		'-',
 	},
 
 	wants = {
