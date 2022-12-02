@@ -55,7 +55,8 @@ local function setup()
 
 		-- fuzzy searching and file exploration plugins {{{
 
-		use(lazy 'plugins.explorer') -- tree-like file explorer
+		use(lazy 'plugins.explorer') -- netrw-like file explorer
+		use(lazy 'plugins.explorer-git') -- git plugin for the file explorer
 		use(lazy 'plugins.telescope') -- fuzzy searching
 
 			use(lazy 'plugins.popup')
