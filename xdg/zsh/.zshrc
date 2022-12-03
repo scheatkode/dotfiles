@@ -234,6 +234,9 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
     bpick:'*linux*64'                                      \
        mv:'sampler* -> sampler'                            \
          @sqshq/sampler                                    \
+    bpick:'*linux*amd*'                                    \
+       mv:'d2*/bin/d2 -> d2'                               \
+         @terrastruct/d2                                   \
     bpick:'*linux*64*gz'                                   \
          @muesli/duf
 
