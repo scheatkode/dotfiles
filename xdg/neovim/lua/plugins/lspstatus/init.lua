@@ -1,7 +1,14 @@
 return {
-	'nvim-lua/lsp-status.nvim',
+	'j-hui/fidget.nvim',
+
+	opt   = true,
+	after = 'nvim-lspconfig',
 
 	config = function()
-		require('plugins.lspstatus.config')
+		require('fidget').setup({
+			text = {
+				spinner = 'dots',
+			}
+		})
 	end
 }

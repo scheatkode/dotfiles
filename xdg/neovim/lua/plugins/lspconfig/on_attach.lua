@@ -2,7 +2,7 @@ local lazy       = require('lazy.on_member_call')
 local extensions = lazy('lang.extensions')
 
 
-return function(client, bufnr, settings)
+return function(_, bufnr, _)
 
 	-- omnifunc setup {{{2
 
@@ -76,13 +76,6 @@ return function(client, bufnr, settings)
 
 	if has_signature then
 		signature.on_attach()
-	end
-
-	local has_status, status = pcall(require, 'lsp-status')
-
-	if has_status and settings then
-		vim.tbl_extend('keep', settings.capabilities or {}, status.capabilities)
-		status.on_attach(client)
 	end
 
 	-- }}}
