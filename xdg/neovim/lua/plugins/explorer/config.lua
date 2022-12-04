@@ -31,7 +31,7 @@ return {
 			end
 
 			if name == '.' or name == '..' then
-				print('Invalid file name: ', name)
+				error('Invalid file name: ', name)
 			end
 
 			local path = require('plenary.path'):new(lirdir .. name)
