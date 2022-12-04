@@ -6,9 +6,9 @@ return { 'neovim/nvim-lspconfig', opt = true,
 	},
 	event  = { 'BufReadPre' },
 	module = { 'lspconfig' },
+	wants  = { 'mason.nvim' },
 
 	config = function()
-		require('mason').setup()
 		require('plugins.lspconfig.config')
 	end,
 }
