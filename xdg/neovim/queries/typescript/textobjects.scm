@@ -89,3 +89,11 @@
 ;; }
 ;; ```
 (property_signature) @swappable
+
+;; Elements of tuple types.
+;; ```typescript
+;; type Tuple: [SomeType, SomeOtherType]
+;; //           ╰──────╯  ╰───────────╯
+;; //              ╰─ captures ─╯
+;; ```
+(tuple_type (_) @swappable)
