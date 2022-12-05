@@ -97,3 +97,11 @@
 ;; //              ╰─ captures ─╯
 ;; ```
 (tuple_type (_) @swappable)
+
+;; Types of union type.
+;; ```typescript
+;; type Union: SomeType | SomeOtherType
+;; //          ╰──────╯   ╰───────────╯
+;; //              ╰─ captures ─╯
+;; ```
+(union_type (_) @swappable)
