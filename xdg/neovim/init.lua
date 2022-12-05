@@ -47,7 +47,6 @@ require('diagnostics').setup()
 require('plugins').setup()
 
 require('scheatkode.whitespace')
--- require('scheatkode.numbers')
 
 -- garbage collection
 
