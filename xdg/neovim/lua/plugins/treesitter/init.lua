@@ -1,11 +1,13 @@
-return { 'nvim-treesitter/nvim-treesitter', opt = true,
+return {
+	'nvim-treesitter/nvim-treesitter',
+
 	as = 'treesitter',
 
+	opt = true,
 	cmd = {
 		'TSUpdate',
 		'TSInstall',
 	},
-
 	event = {
 		'BufEnter',
 	},
@@ -18,6 +20,6 @@ return { 'nvim-treesitter/nvim-treesitter', opt = true,
 	run = ':TSUpdate',
 
 	config = function()
-		require('plugins.treesitter.config')
+		require('plugins.treesitter.config').setup()
 	end,
 }
