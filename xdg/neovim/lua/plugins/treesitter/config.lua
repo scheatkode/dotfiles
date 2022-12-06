@@ -107,9 +107,8 @@ treesitter.setup({
 				[']f'] = {
 					query = '@function.inner',
 					desc  = 'Go to next function',
-				}
-				,
-				[']c'] = {
+				},
+				[']C'] = {
 					query = '@class.outer',
 					desc  = 'Go to next class definition',
 				},
@@ -117,7 +116,7 @@ treesitter.setup({
 					query = '@block.outer',
 					desc  = 'Go to next block',
 				},
-				[']C'] = {
+				[']/'] = {
 					query = '@comment.outer',
 					desc  = 'Go to next comment',
 				},
@@ -139,9 +138,8 @@ treesitter.setup({
 				['[f'] = {
 					query = '@function.inner',
 					desc  = 'Go to previous function',
-				}
-				,
-				['[c'] = {
+				},
+				['[C'] = {
 					query = '@class.outer',
 					desc  = 'Go to previous class definition',
 				},
@@ -149,7 +147,7 @@ treesitter.setup({
 					query = '@block.outer',
 					desc  = 'Go to previous block',
 				},
-				['[C'] = {
+				['[/'] = {
 					query = '@comment.outer',
 					desc  = 'Go to previous comment',
 				},
