@@ -1,8 +1,9 @@
 return {
 	setup = function(overrides)
-		local log    = require('log')
-		local extend = require('tablex.deep_extend')
-		local unpack = require('compat.table.unpack')
+		local log      = require('log')
+		local constant = require('f.function.constant')
+		local extend   = require('tablex.deep_extend')
+		local unpack   = require('compat.table.unpack')
 
 		local defaults = {
 			icons    = require('meta.icon.lsp').presets.default,
@@ -45,6 +46,18 @@ return {
 		if not has_completion or not has_snippets then
 			log.error('Tried loading plugin ... unsuccessfully ‼', 'nvim-cmp')
 			return has_completion
+		end
+
+		if not has_snippets then
+			log.warn('Snippets plugin not found', 'luasnip')
+
+			-- Coerce used snippets functions to keep using the completion
+			-- engine yet avoid errors when snippets are not available.
+			snippets = {
+				expand_or_locally_jumpable = constant(false),
+				expand_or_jumpable         = constant(false),
+				jumpable                   = constant(false),
+			}
 		end
 
 		local function has_words_before()
@@ -132,6 +145,8 @@ return {
 				['<S-Tab>'] = completion.mapping(function(fallback)
 					if completion.visible() then
 						completion.select_prev_item()
+						---This is intended for the above coercion.
+						---@diagnostic disable-next-line: redundant-parameter
 					elseif snippets.jumpable(-1) then
 						nvim_feedkeys(jump_prev, '', false)
 					else
