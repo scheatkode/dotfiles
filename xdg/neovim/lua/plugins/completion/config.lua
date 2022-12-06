@@ -120,7 +120,7 @@ return {
 				['<Tab>'] = completion.mapping(function(fallback)
 					if completion.visible() then
 						completion.select_next_item()
-					elseif snippets.expand_or_jumpable() then
+					elseif snippets.expand_or_locally_jumpable() then
 						nvim_feedkeys(expand_or_jump, '', false)
 					elseif has_words_before() then
 						completion.complete()
