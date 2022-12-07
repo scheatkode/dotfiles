@@ -1,3 +1,14 @@
-vim.keymap.set({ 'n' }, '<Tab>', '<Plug>fugitive:=', { buffer = true })
-vim.keymap.set({ 'n' }, '<leader>gp', '<cmd>G push<CR>', { buffer = true })
-vim.keymap.set({ 'n' }, '<leader>cc', '<cmd>vert G commit<CR>', { buffer = true })
+vim.keymap.set('n', '<Tab>', '<Plug>fugitive:=', {
+	buffer = true,
+	desc   = 'Toggle an inline diff of the file under the cursor.',
+})
+
+vim.keymap.set('n', '<leader>gp', '<cmd>G push<CR>', {
+	buffer = true,
+	desc   = 'Push the local commits.',
+})
+
+vim.keymap.set('n', '<leader>gc', '<cmd>vertical G commit<CR>', {
+	buffer = true,
+	desc   = 'Create a new commit.',
+})
