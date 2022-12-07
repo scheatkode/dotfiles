@@ -8,6 +8,7 @@ return {
 	requires = { 'rafamadriz/friendly-snippets' },
 
 	config = function()
+		require('plugins.snippets.config').setup()
 		require('plugins.snippets.keys').setup()
 	end
 }
