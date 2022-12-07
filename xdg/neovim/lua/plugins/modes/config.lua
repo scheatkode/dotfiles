@@ -4,7 +4,7 @@ return {
 		local ok, hydra = pcall(require, 'hydra')
 
 		if not ok then
-			require('log').error('Tried loading plugin ... unsuccessfully ‼', 'null-ls')
+			require('log').error('Tried loading plugin ... unsuccessfully ‼', 'hydra')
 			return ok
 		end
 
