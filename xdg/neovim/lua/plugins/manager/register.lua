@@ -109,7 +109,7 @@ local function setup()
 
 		use(lazy 'plugins.modes')
 		use(lazy 'plugins.movement')
-		use(lazy 'plugins.harpoon')
+		use(lazy 'plugins.grapple')
 		use(lazy 'plugins.splitjoin')
 		use(lazy 'plugins.notes')
 		use(lazy 'plugins.bufdel')

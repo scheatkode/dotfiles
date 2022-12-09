@@ -1,5 +1,5 @@
 return {
-	'ThePrimeagen/harpoon',
+	'cbochs/grapple.nvim',
 
 	opt = true,
 
@@ -21,7 +21,11 @@ return {
 	},
 
 	config = function()
-		require('harpoon').setup()
-		require('plugins.harpoon.keys').setup()
+		require('grapple').setup({
+			popup_options = {
+				border = 'none'
+			}
+		})
+		require('plugins.grapple.keys').setup()
 	end
 }
