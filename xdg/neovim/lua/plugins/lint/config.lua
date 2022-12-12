@@ -98,6 +98,7 @@ ls.setup({
 		ls.builtins.diagnostics.yamllint,
 
 		-- go-specific
+		ls.builtins.diagnostics.golangci_lint,
 		ls.builtins.diagnostics.staticcheck,
 		ls.builtins.formatting.gofumpt,
 		ls.builtins.formatting.goimports_reviser,
