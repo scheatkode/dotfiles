@@ -1,7 +1,3 @@
--- Enable module resolution caching if available.
-
-pcall(require, 'impatient')
-
 -- Setup package path
 
 -- To prevent code duplication, a library with utilities
