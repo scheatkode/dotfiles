@@ -44,7 +44,6 @@ local function setup()
 		use(lazy 'plugins.dap-js')
 		use(lazy 'plugins.testing')
 
-		use(lazy 'plugins.annotation')
 
 		use(lazy 'plugins.schema')
 
