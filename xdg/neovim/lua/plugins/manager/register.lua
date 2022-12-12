@@ -40,10 +40,11 @@ local function setup()
 			use(lazy 'plugins.completion.snip')
 
 		use(lazy 'plugins.dap')
-		use(lazy 'plugins.dapui')
-		use(lazy 'plugins.dap-js')
-		use(lazy 'plugins.testing')
 
+			use(lazy 'plugins.dapui')
+			use(lazy 'plugins.dap-js')
+
+		use(lazy 'plugins.testing')
 
 		use(lazy 'plugins.schema')
 
