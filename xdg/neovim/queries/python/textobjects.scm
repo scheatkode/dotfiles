@@ -33,6 +33,14 @@
 ;; ```
 (list (_) @swappable)
 
+;; Members of tuples.
+;; ```python
+;; some_tuple = (member0, member1)
+;; #             ╰─────╯  ╰─────╯
+;; #               ╰ captures ╯
+;; ```
+(tuple (_) @swappable)
+
 ;; in multiple variable assignment
 ;; ```python
 ;;   return0, return1 = func(arg0, arg1)
