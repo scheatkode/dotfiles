@@ -2,8 +2,8 @@ return {
 	---Configure user interface behaviour.
 	setup = function()
 		-- Colors
+		vim.cmd.syntax('off')
 		vim.opt.termguicolors = true -- Enable true colors, we're not in 1984 anymore
-		vim.opt.syntax        = 'off' -- Overridden by Treesitter
 		vim.opt.lazyredraw    = true -- Don't redraw when executing macros
 		vim.opt.pumheight     = 15 -- Limit completion items
 		vim.opt.pumblend      = 15 -- Make popup window translucient
