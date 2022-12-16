@@ -109,6 +109,7 @@ return {
 
 			mapping = {
 				['<C-x><C-x>'] = completion.mapping.complete(),
+				['<C-x><C-o>'] = completion.mapping.complete(),
 
 				['<C-p>'] = completion.mapping.select_prev_item(),
 				['<C-n>'] = completion.mapping.select_next_item(),
