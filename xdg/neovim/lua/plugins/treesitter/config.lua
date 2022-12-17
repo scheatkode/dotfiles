@@ -17,6 +17,9 @@ return {
 			print('‼ Tried loading treesitter-comment-string ... unsuccessfully.')
 		end
 
+		local flip           = require('f.function.flip')
+		local is_file_bigger = require('user.predicates.is_file_bigger')
+
 		treesitter.setup({
 			ensure_installed = {
 				'awk',
@@ -61,9 +64,13 @@ return {
 
 			autopairs   = { enable = true },
 			autotag     = { enable = true },
-			highlight   = { enable = true },
 			indent      = { enable = true },
 			lsp_interop = { enable = true },
+			highlight   = {
+				enable = true,
+				additional_vim_regex_highlighting = false,
+				disable = flip(is_file_bigger(1048576)) -- 1 MiB,
+			},
 
 			context_commentstring = {
 				enable         = true,
