@@ -1,5 +1,3 @@
-local curry = require('f.function.curry')
-
 ---flip the order of a binary function's arguments.
 ---
 ---@generic A
