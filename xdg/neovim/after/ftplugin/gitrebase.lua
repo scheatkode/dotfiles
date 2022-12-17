@@ -83,3 +83,23 @@ vim.keymap.set('x', 'gs', with_range('Squash'), {
 	buffer = 0,
 	expr   = true,
 })
+
+vim.keymap.set('n', '<C-j>',
+	function()
+		vim.cmd.move({
+			args = { '.+' .. vim.v.count1 },
+			mods = { emsg_silent = true },
+		})
+	end,
+	{ buffer = 0, desc = 'Swap current line with the one below' }
+)
+
+vim.keymap.set('n', '<C-k>',
+	function()
+		vim.cmd.move({
+			args = { '.-' .. vim.v.count1 + 1 },
+			mods = { emsg_silent = true },
+		})
+	end,
+	{ buffer = 0, desc = 'Swap current line with the one above' }
+)
