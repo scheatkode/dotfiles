@@ -63,7 +63,9 @@ return function(_, bufnr, _)
 		{ buffer = bufnr, desc = 'Remove folder from workspace' })
 
 	-- code formatting {{{3
-	local format = function() return vim.lsp.buf.format({ async = true }) end
+	local format = function()
+		return vim.lsp.buf.format({ async = true })
+	end
 
 	vim.keymap.set({ 'n', 'x' }, '<leader>cf', format, { buffer = bufnr, desc = 'Format code in current buffer' })
 	vim.keymap.set({ 'n', 'x' }, '<leader>=', format, { buffer = bufnr, desc = 'Format code in current buffer' })

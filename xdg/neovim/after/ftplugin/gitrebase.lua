@@ -1,14 +1,14 @@
 local function with_count(command)
 	return function()
 		return string.format(
-			'<Cmd>.,.+%s%s<CR>',
+			[[<cmd>.,.+%s%s<CR>]],
 			vim.v.count1 - 1,
 			command
 		)
 	end
 end
 
-vim.keymap.set('n', '<Tab>', '<Cmd>Cycle<CR>', {
+vim.keymap.set('n', '<Tab>', '<cmd>Cycle<CR>', {
 	desc   = 'Cycle commit action',
 	buffer = 0,
 })
@@ -46,7 +46,7 @@ vim.keymap.set('n', 'gs', with_count('Squash'), {
 local function with_range(command)
 	return function()
 		return string.format(
-			[[<Cmd>%s,%s%s<CR><Esc>]],
+			[[<cmd>%s,%s%s<CR><Esc>]],
 			vim.fn.getpos('v')[2],
 			vim.fn.getcurpos('.')[2],
 			command

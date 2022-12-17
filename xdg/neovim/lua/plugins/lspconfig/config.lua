@@ -47,7 +47,7 @@ local configure_servers = function(language_list)
 
 	f
 		 .iterate(language_list)
-		 :foreach(function( _, server)
+		 :foreach(function(_, server)
 		    local has_settings, settings = pcall(require, 'lang.servers.' .. server)
 
 		    if not has_settings then
@@ -59,19 +59,19 @@ local configure_servers = function(language_list)
 		       return
 		    end
 
-		    local function run_hook(    hook, client, bufnr, s)
+		    local function run_hook(hook, client, bufnr, s)
 		       if typex(hook) == 'function' then
 		          hook(client, bufnr, s)
 		       elseif typex(hook) == 'table' then
 		          f
 			           .iterate(hook)
-			           :foreach(function(           _, h)
+			           :foreach(function(_, h)
 			              h(client, bufnr, s)
 			           end)
 		       end
 		    end
 
-		    settings.on_attach = function(    client, bufnr)
+		    settings.on_attach = function(client, bufnr)
 		       run_hook(settings.pre_attach, client, bufnr, settings)
 		       run_hook(on_attach, client, bufnr, settings)
 		       run_hook(settings.post_attach, client, bufnr, settings)
