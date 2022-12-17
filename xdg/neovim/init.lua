@@ -42,8 +42,6 @@ require('colors').load('gruvvy-ng')
 require('diagnostics').setup()
 require('plugins').setup()
 
-require('scheatkode.whitespace')
-
 -- garbage collection
 
 collectgarbage('setpause', 260)
