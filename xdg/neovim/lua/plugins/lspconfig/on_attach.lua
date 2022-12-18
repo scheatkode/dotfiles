@@ -12,9 +12,11 @@ return function(_, bufnr, _)
 
 	-- declaration {{{3
 	vim.keymap.set('n', '<leader>cD', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'Go to declaration' })
+	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'Go to declaration' })
 
 	-- definition {{{3
 	vim.keymap.set('n', '<leader>cd', vim.lsp.buf.definition, { buffer = bufnr, desc = 'Go to definition' })
+	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = 'Go to definition' })
 
 	-- type definition {{{3
 	vim.keymap.set('n', '<leader>cT', vim.lsp.buf.type_definition, { buffer = bufnr, desc = 'Go to type definition' })
@@ -24,9 +26,11 @@ return function(_, bufnr, _)
 
 	-- rename symbol {{{3
 	vim.keymap.set('n', '<leader>cR', extensions.rename, { buffer = bufnr, desc = 'Rename symbol under cursor' })
+	vim.keymap.set('n', 'gR', extensions.rename, { buffer = bufnr, desc = 'Rename symbol under cursor' })
 
 	-- references {{{3
 	vim.keymap.set('n', '<leader>cr', vim.lsp.buf.references, { buffer = bufnr, desc = 'Show references' })
+	vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = bufnr, desc = 'Show references' })
 
 	-- code action {{{3
 	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'Code actions' })
