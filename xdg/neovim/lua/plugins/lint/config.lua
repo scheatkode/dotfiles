@@ -59,22 +59,6 @@ local shellcheck_codeactions = ls.builtins.code_actions.shellcheck.with({
 	}
 })
 
-local luacheck = ls.builtins.diagnostics.luacheck.with({
-	args = {
-		'--formatter',
-		'plain',
-		'--codes',
-		'--ranges',
-		'--std',
-		'max+busted',
-		'--globals',
-		'vim',
-		'--filename',
-		'$FILENAME',
-		'-'
-	}
-})
-
 ls.setup({
 	debounce           = 250,
 	default_timeout    = 5000,
@@ -86,7 +70,6 @@ ls.setup({
 		hadolint,
 		shellcheck_diagnostics,
 		shellcheck_codeactions,
-		luacheck,
 
 		-- (t|j)s-specific
 		ls.builtins.formatting.prettier,
@@ -103,6 +86,11 @@ ls.setup({
 		ls.builtins.formatting.gofumpt,
 		ls.builtins.formatting.goimports_reviser,
 		ls.builtins.formatting.golines,
+
+		-- lua-specific
+		ls.builtins.diagnostics.luacheck,
+		ls.builtins.diagnostics.selene,
+		ls.builtins.formatting.stylua,
 
 		-- python-specific
 		ls.builtins.formatting.black,

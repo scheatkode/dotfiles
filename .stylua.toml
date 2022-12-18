@@ -1,0 +1,7 @@
+column_width              = 78
+indent_type               = 'Tabs'
+indent_width              = 3
+call_parentheses          = 'Always'
+collapse_simple_statement = 'Never'
+line_endings              = 'Unix'
+quote_style               = 'AutoPreferSingle'
