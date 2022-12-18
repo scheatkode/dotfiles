@@ -29,5 +29,8 @@ return {
 
 		vim.keymap.set('n', '<leader>qf', toggle_quickfix, { desc = 'Toggle quickfix list' })
 		vim.keymap.set('n', '<leader>qo', '<cmd>copen<CR>', { desc = 'Open quickfix list' })
+
+		vim.keymap.set('n', ']q', '<cmd>cnext<CR>', { desc = 'Go to next quickfix item' })
+		vim.keymap.set('n', '[q', '<cmd>cprevious<CR>', { desc = 'Go to previous quickfix item' })
 	end
 }
