@@ -1,7 +1,8 @@
 return {
 	setup = function()
-		local themes  = require('plugins.telescope.themes')
-		local pickers = require('plugins.telescope.pickers')
+		local lazy = require('lazy.on_member_call')
+		local themes = lazy('plugins.telescope.themes')
+		local pickers = lazy('plugins.telescope.pickers')
 
 		-- project
 		vim.keymap.set('n', '<leader>fp', pickers.projects)
@@ -13,19 +14,31 @@ return {
 		-- file browser
 		vim.keymap.set('n', '<leader>fe', pickers.file_browser)
 		vim.keymap.set('n', '<leader>Fe', pickers.file_browser)
-		vim.keymap.set('n', '<leader>fE', function() pickers.file_browser({ depth = false, files = false }) end)
-		vim.keymap.set('n', '<leader>FE', function() pickers.file_browser({ depth = false, files = false }) end)
+		vim.keymap.set('n', '<leader>fE', function()
+			pickers.file_browser({ depth = false, files = false })
+		end)
+		vim.keymap.set('n', '<leader>FE', function()
+			pickers.file_browser({ depth = false, files = false })
+		end)
 		-- shorthand
 		vim.keymap.set('n', '<leader>ee', pickers.file_browser)
 		vim.keymap.set('n', '<leader>Ee', pickers.file_browser)
-		vim.keymap.set('n', '<leader>eE', function() pickers.file_browser({ depth = false, files = false }) end)
-		vim.keymap.set('n', '<leader>EE', function() pickers.file_browser({ depth = false, files = false }) end)
+		vim.keymap.set('n', '<leader>eE', function()
+			pickers.file_browser({ depth = false, files = false })
+		end)
+		vim.keymap.set('n', '<leader>EE', function()
+			pickers.file_browser({ depth = false, files = false })
+		end)
 
 		-- live grep
 		vim.keymap.set('n', '<leader>fg', pickers.live_grep)
 		vim.keymap.set('n', '<leader>Fg', pickers.live_grep)
-		vim.keymap.set('n', '<leader>fG', function() pickers.live_grep({ grep_open_files = true }) end)
-		vim.keymap.set('n', '<leader>FG', function() pickers.live_grep({ grep_open_files = true }) end)
+		vim.keymap.set('n', '<leader>fG', function()
+			pickers.live_grep({ grep_open_files = true })
+		end)
+		vim.keymap.set('n', '<leader>FG', function()
+			pickers.live_grep({ grep_open_files = true })
+		end)
 		vim.keymap.set('n', '<leader>ft', pickers.buffer_fuzzy)
 		vim.keymap.set('n', '<leader>Ft', pickers.buffer_fuzzy)
 
@@ -37,21 +50,33 @@ return {
 		vim.keymap.set('n', '<leader><leader>', pickers.project_or_find_files)
 		vim.keymap.set('n', '<leader>ff', pickers.find_files)
 		vim.keymap.set('n', '<leader>Ff', pickers.find_files)
-		vim.keymap.set('n', '<leader>fF', function() pickers.find_files({ hidden = true }) end)
-		vim.keymap.set('n', '<leader>FF', function() pickers.find_files({ hidden = true }) end)
+		vim.keymap.set('n', '<leader>fF', function()
+			pickers.find_files({ hidden = true })
+		end)
+		vim.keymap.set('n', '<leader>FF', function()
+			pickers.find_files({ hidden = true })
+		end)
 		vim.keymap.set('n', '<leader>fn', pickers.find_notes)
 		vim.keymap.set('n', '<leader>Fn', pickers.find_notes)
 
 		-- find buffers
 		vim.keymap.set('n', '<leader>fb', pickers.buffers)
 		vim.keymap.set('n', '<leader>Fb', pickers.buffers)
-		vim.keymap.set('n', '<leader>fB', function() pickers.buffers({ show_all_buffers = true }) end)
-		vim.keymap.set('n', '<leader>FB', function() pickers.buffers({ show_all_buffers = true }) end)
+		vim.keymap.set('n', '<leader>fB', function()
+			pickers.buffers({ show_all_buffers = true })
+		end)
+		vim.keymap.set('n', '<leader>FB', function()
+			pickers.buffers({ show_all_buffers = true })
+		end)
 		-- shorthand
 		vim.keymap.set('n', '<leader>bb', pickers.buffers)
 		vim.keymap.set('n', '<leader>Bb', pickers.buffers)
-		vim.keymap.set('n', '<leader>bB', function() pickers.buffers({ show_all_buffers = true }) end)
-		vim.keymap.set('n', '<leader>BB', function() pickers.buffers({ show_all_buffers = true }) end)
+		vim.keymap.set('n', '<leader>bB', function()
+			pickers.buffers({ show_all_buffers = true })
+		end)
+		vim.keymap.set('n', '<leader>BB', function()
+			pickers.buffers({ show_all_buffers = true })
+		end)
 
 		-- git commit
 		vim.keymap.set('n', '<leader>fgc', pickers.git_commits)
@@ -68,7 +93,9 @@ return {
 		-- commands
 		vim.keymap.set('n', '<leader>fc', pickers.commands)
 		vim.keymap.set('n', '<leader>Fc', pickers.commands)
-		vim.keymap.set('n', '<leader>;', function() pickers.commands(themes.get_command()) end)
+		vim.keymap.set('n', '<leader>;', function()
+			pickers.commands(themes.get_command())
+		end)
 
 		-- qflist & loclist
 		vim.keymap.set('n', '<leader>fq', pickers.quickfix)
@@ -125,36 +152,38 @@ return {
 
 		-- lsp
 
-			-- references
-			vim.keymap.set('n', '<leader>fr', pickers.lsp_references)
-			vim.keymap.set('n', '<leader>Fr', pickers.lsp_references)
+		-- references
+		vim.keymap.set('n', '<leader>fr', pickers.lsp_references)
+		vim.keymap.set('n', '<leader>Fr', pickers.lsp_references)
 
-			-- definitions
-			vim.keymap.set('n', '<leader>fd', pickers.lsp_definitions)
-			vim.keymap.set('n', '<leader>Fd', pickers.lsp_definitions)
+		-- definitions
+		vim.keymap.set('n', '<leader>fd', pickers.lsp_definitions)
+		vim.keymap.set('n', '<leader>Fd', pickers.lsp_definitions)
 
-			-- type definitions
-			vim.keymap.set('n', '<leader>fT', pickers.lsp_type_definitions)
-			vim.keymap.set('n', '<leader>FT', pickers.lsp_type_definitions)
+		-- type definitions
+		vim.keymap.set('n', '<leader>fT', pickers.lsp_type_definitions)
+		vim.keymap.set('n', '<leader>FT', pickers.lsp_type_definitions)
 
-			-- implementations
-			vim.keymap.set('n', '<leader>fi', pickers.lsp_implementations)
-			vim.keymap.set('n', '<leader>Fi', pickers.lsp_implementations)
+		-- implementations
+		vim.keymap.set('n', '<leader>fi', pickers.lsp_implementations)
+		vim.keymap.set('n', '<leader>Fi', pickers.lsp_implementations)
 
-			-- document symbols
-			vim.keymap.set('n', '<leader>fds', pickers.lsp_document_symbols)
-			vim.keymap.set('n', '<leader>Fds', pickers.lsp_document_symbols)
+		-- document symbols
+		vim.keymap.set('n', '<leader>fds', pickers.lsp_document_symbols)
+		vim.keymap.set('n', '<leader>Fds', pickers.lsp_document_symbols)
 
-			-- workspace symbols
-			vim.keymap.set('n', '<leader>fws', pickers.lsp_workspace_symbols)
-			vim.keymap.set('n', '<leader>Fws', pickers.lsp_workspace_symbols)
+		-- workspace symbols
+		vim.keymap.set('n', '<leader>fws', pickers.lsp_workspace_symbols)
+		vim.keymap.set('n', '<leader>Fws', pickers.lsp_workspace_symbols)
 
 		-- diagnostics
 		vim.keymap.set('n', '<leader>fdd', pickers.diagnostics)
 		vim.keymap.set('n', '<leader>Fdd', pickers.diagnostics)
 
 		-- command history
-		vim.keymap.set('c', '<C-r><C-r>', '<Plug>(TelescopeFuzzyCommandSearch)', { remap = true, nowait = true })
-
-	end
+		vim.keymap.set('c', '<C-r><C-r>', '<Plug>(TelescopeFuzzyCommandSearch)', {
+			remap = true,
+			nowait = true,
+		})
+	end,
 }
