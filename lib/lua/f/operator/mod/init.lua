@@ -9,4 +9,6 @@
 ---@param a number
 ---@param b number
 ---@return boolean
-return function(a, b) return a % b end
+return function(a, b)
+	return a % b
+end

@@ -39,22 +39,23 @@ local function bench(signature, func)
 	print(string.format('%s: %s', signature, os.clock() - start))
 end
 
-bench(
-	"assertx(true, table.concat({ 'blah', i }))",
-	function(i) assertx(true, table.concat({ 'blah', i })) end
-)
+bench("assertx(true, table.concat({ 'blah', i }))", function(i)
+	assertx(true, table.concat({ 'blah', i }))
+end)
 
 bench(
 	"assertx(true, function() return table.concat({'blah', i}) end)",
-	function(i) assertx(true, function() return table.concat({ 'blah', i }) end) end
+	function(i)
+		assertx(true, function()
+			return table.concat({ 'blah', i })
+		end)
+	end
 )
 
-bench(
-	"assertx(true, concat, 'blah', i)",
-	function(i) assertx(true, concat, 'blah', i) end
-)
+bench("assertx(true, concat, 'blah', i)", function(i)
+	assertx(true, concat, 'blah', i)
+end)
 
-bench(
-	"assert(true, table.concat({ 'blah', i }))",
-	function(i) assert(true, table.concat({ 'blah', i })) end
-)
+bench("assert(true, table.concat({ 'blah', i }))", function(i)
+	assert(true, table.concat({ 'blah', i }))
+end)

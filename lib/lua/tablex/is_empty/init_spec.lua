@@ -5,25 +5,33 @@ describe('tablex', function()
 		it('should throw an error when given nil', function()
 			---Necessary for testing.
 			---@diagnostic disable-next-line: param-type-mismatch
-			assert.error(function() is_empty(nil) end)
+			assert.error(function()
+				is_empty(nil)
+			end)
 		end)
 
 		it('should throw an error when given a number', function()
 			---Necessary for testing.
 			---@diagnostic disable-next-line: param-type-mismatch
-			assert.error(function() is_empty(1) end)
+			assert.error(function()
+				is_empty(1)
+			end)
 		end)
 
 		it('should throw an error when given a string', function()
 			---Necessary for testing.
 			---@diagnostic disable-next-line: param-type-mismatch
-			assert.error(function() is_empty('abc') end)
+			assert.error(function()
+				is_empty('abc')
+			end)
 		end)
 
 		it('should throw an error when given a function', function()
 			---Necessary for testing.
 			---@diagnostic disable-next-line: param-type-mismatch
-			assert.error(function() is_empty(function() end) end)
+			assert.error(function()
+				is_empty(function() end)
+			end)
 		end)
 
 		it('should be truthy when given an empty table', function()
@@ -38,5 +46,4 @@ describe('tablex', function()
 			assert.same(false, is_empty({ a = 1, b = 2, c = 3 }))
 		end)
 	end)
-
 end)

@@ -21,13 +21,16 @@ describe('compat', function()
 			assert.are.same(z, 3)
 		end)
 
-		it('should respect the arguments and unpack only what\'s asked', function()
-			local x, y, z = unpack({ 5, 1, 2, 3 }, 2, 4)
+		it(
+			"should respect the arguments and unpack only what's asked",
+			function()
+				local x, y, z = unpack({ 5, 1, 2, 3 }, 2, 4)
 
-			assert.are.same(x, 1)
-			assert.are.same(y, 2)
-			assert.are.same(z, 3)
-		end)
+				assert.are.same(x, 1)
+				assert.are.same(y, 2)
+				assert.are.same(z, 3)
+			end
+		)
 
 		it('should respect the `n` field', function()
 			local x, y, z, a, b = unpack({ n = 3, 1, 2, 3, 4, 5 })

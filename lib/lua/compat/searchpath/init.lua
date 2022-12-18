@@ -18,10 +18,34 @@ local separator = require('compat.separator')
 return function(name, path, sep, rep)
 	local type = type
 
-	assertx(type(name) == 'string', string.format, 'bad argument #1 to \'searchpath\' (string expected, got %s)', type(path), 2)
-	assertx(type(path) == 'string', string.format, 'bad argument #2 to \'searchpath\' (string expected, got %s)', type(path), 2)
-	assertx(sep == nil or type(sep) == 'string', string.format, 'bad argument #3 to \'searchpath\' (string expected, got %s)', type(path), 2)
-	assertx(rep == nil or type(rep) == 'string', string.format, 'bad argument #4 to \'searchpath\' (string expected, got %s)', type(path), 2)
+	assertx(
+		type(name) == 'string',
+		string.format,
+		"bad argument #1 to 'searchpath' (string expected, got %s)",
+		type(path),
+		2
+	)
+	assertx(
+		type(path) == 'string',
+		string.format,
+		"bad argument #2 to 'searchpath' (string expected, got %s)",
+		type(path),
+		2
+	)
+	assertx(
+		sep == nil or type(sep) == 'string',
+		string.format,
+		"bad argument #3 to 'searchpath' (string expected, got %s)",
+		type(path),
+		2
+	)
+	assertx(
+		rep == nil or type(rep) == 'string',
+		string.format,
+		"bad argument #4 to 'searchpath' (string expected, got %s)",
+		type(path),
+		2
+	)
 
 	sep = sep or '.'
 	rep = rep or separator
@@ -30,15 +54,14 @@ return function(name, path, sep, rep)
 		local s, e = name:find(sep, nil, true)
 
 		while s do
-			name = name:sub(1, s - 1)
-				 .. rep
-				 .. name:sub(e + 1, -1)
-
-			s, e = name:find(
-				sep,
-				s + #rep + 1,
-				true
+			name = string.format(
+				'%s%s%s',
+				name:sub(1, s - 1),
+				rep,
+				name:sub(e + 1, -1)
 			)
+
+			s, e = name:find(sep, s + #rep + 1, true)
 		end
 	end
 
@@ -57,7 +80,5 @@ return function(name, path, sep, rep)
 	end
 
 	return nil,
-		 '\n\tno file \''
-		 .. table.concat(paths_tried, '\'\n\tno file \'')
-		 .. '\''
+		"\n\tno file '" .. table.concat(paths_tried, "'\n\tno file '") .. "'"
 end

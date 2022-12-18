@@ -8,4 +8,6 @@
 ---
 ---@param a string|table
 ---@return number
-return function (a) return #a end
+return function(a)
+	return #a
+end

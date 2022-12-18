@@ -19,15 +19,21 @@ describe('stringx', function()
 		end)
 
 		it('should trim newlines', function()
-			assert.are.equal('abc', trim([[
+			assert.are.equal(
+				'abc',
+				trim([[
 				abc
-			]]))
+			]])
+			)
 		end)
 
 		it('should trim newlines and carriage returns', function()
-			assert.are.equal('abc', trim([[
+			assert.are.equal(
+				'abc',
+				trim([[
 				abc
-			]]))
+			]])
+			)
 		end)
 
 		it('should trim tabs', function()

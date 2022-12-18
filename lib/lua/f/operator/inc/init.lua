@@ -8,4 +8,6 @@
 ---
 ---@param a number
 ---@return boolean
-return function(a) return a + 1 end
+return function(a)
+	return a + 1
+end

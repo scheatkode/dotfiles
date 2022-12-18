@@ -90,23 +90,26 @@ describe('compat', function()
 			assert.are.same(0, r2)
 		end)
 
-		it('should work correctly on non-Windows, pure Lua5.1, with exit code > 256', function()
-			local called = 0
+		it(
+			'should work correctly on non-Windows, pure Lua5.1, with exit code > 256',
+			function()
+				local called = 0
 
-			flags.is_windows = false
-			flags.lua51      = true
-			flags.luajit52   = false
+				flags.is_windows = false
+				flags.lua51 = true
+				flags.luajit52 = false
 
-			os.execute = function()
-				called = called + 1
-				return 257, 'No error', 0
+				os.execute = function()
+					called = called + 1
+					return 257, 'No error', 0
+				end
+
+				local r1, r2 = execute('something')
+
+				assert.are.same(false, r1)
+				assert.are.same(1, r2)
 			end
-
-			local r1, r2 = execute('something')
-
-			assert.are.same(false, r1)
-			assert.are.same(1, r2)
-		end)
+		)
 
 		it('should work correctly on non-Windows, pure Lua5.1', function()
 			local called = 0

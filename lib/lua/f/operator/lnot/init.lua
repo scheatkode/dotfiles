@@ -8,4 +8,6 @@
 ---
 ---@param a any
 ---@return boolean
-return function (a) return not a end
+return function(a)
+	return not a
+end

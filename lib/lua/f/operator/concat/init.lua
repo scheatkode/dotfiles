@@ -10,4 +10,6 @@
 ---@param a number|string
 ---@param b number|string
 ---@return string
-return function (a, b) return a .. b end
+return function(a, b)
+	return a .. b
+end

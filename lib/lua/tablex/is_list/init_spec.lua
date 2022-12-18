@@ -38,9 +38,12 @@ describe('tablex', function()
 			assert.same(true, is_list({ 'a', 'b', 'c' }))
 		end)
 
-		it('should be truthy when given a list of numbers and strings', function()
-			assert.same(true, is_list({ 1, 2, 'abc', 'foo' }))
-		end)
+		it(
+			'should be truthy when given a list of numbers and strings',
+			function()
+				assert.same(true, is_list({ 1, 2, 'abc', 'foo' }))
+			end
+		)
 
 		it('should be falsy when given a hybrid table', function()
 			assert.same(false, is_list({ 1, 2, 'abc', a = 'foo' }))

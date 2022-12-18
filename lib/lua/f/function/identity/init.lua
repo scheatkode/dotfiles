@@ -20,6 +20,8 @@
 ---
 ---@vararg any
 ---@return ...
-local function identity(...) return ... end
+local function identity(...)
+	return ...
+end
 
 return identity

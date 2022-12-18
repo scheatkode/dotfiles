@@ -4,11 +4,7 @@ local is_empty = require('tablex.is_empty')
 local is_list  = require('tablex.is_list')
 
 local function can_merge(v)
-	return type(v) == 'table'
-		 and (
-		 is_empty(v)
-			  or not is_list(v)
-		 )
+	return type(v) == 'table' and (is_empty(v) or not is_list(v))
 end
 
 local function deep_extend_impl(is_mergeable, is_not_force, is_error, ...)
@@ -24,7 +20,8 @@ local function deep_extend_impl(is_mergeable, is_not_force, is_error, ...)
 						is_mergeable,
 						is_not_force,
 						is_error,
-						result[k], v
+						result[k],
+						v
 					)
 				elseif is_not_force and result[k] ~= nil then
 					if is_error then
@@ -48,11 +45,10 @@ end
 --- @vararg ... Two or more map-like tables.
 return function(behavior, ...)
 	assertx(
-		behavior == 'error'
-		or behavior == 'force'
-		or behavior == 'keep',
+		behavior == 'error' or behavior == 'force' or behavior == 'keep',
 		string.format,
-		'invalid behavior: "%s"', behavior
+		'invalid behavior: "%s"',
+		behavior
 	)
 
 	assertx(

@@ -18,7 +18,9 @@ local partial = require('f.function.partial')
 local function curry(f, n)
 	n = n or debug.getinfo(f, 'u').nparams or 2
 
-	if n < 2 then return f end
+	if n < 2 then
+		return f
+	end
 
 	return function(...)
 		local nargs = select('#', ...)

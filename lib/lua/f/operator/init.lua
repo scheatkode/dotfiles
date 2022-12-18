@@ -36,5 +36,4 @@ return {
 	-- sequence
 
 	length = require('f.operator.length'),
-
 }

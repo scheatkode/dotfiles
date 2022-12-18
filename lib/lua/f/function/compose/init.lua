@@ -23,7 +23,6 @@ end
 ---assert.same(6, f('foo'))
 ---```
 local function compose(...)
-
 	-- This function taps into Lua's tail call optimization to
 	-- getting a performance hit because of `unpack`.
 

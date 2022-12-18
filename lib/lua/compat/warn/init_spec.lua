@@ -11,7 +11,7 @@ describe('compat', function()
 		local called      = 0
 		local original_io = io
 		local stub_io     = {
-			stderr = {}
+			stderr = {},
 		}
 
 		-- `plenary.nvim`'s busted doesn't support `setup` and `teardown`, we're

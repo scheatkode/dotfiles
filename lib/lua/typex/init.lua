@@ -24,34 +24,36 @@ local sformat      = string.format
 ---
 --- @param  value any
 --- @return string
-local function typex (value)
-   local raw_type = rawtype(value)
+local function typex(value)
+	local raw_type = rawtype(value)
 
-   if raw_type ~= 'table' and raw_type ~= 'userdata' then
-      return raw_type
-   end
+	if raw_type ~= 'table' and raw_type ~= 'userdata' then
+		return raw_type
+	end
 
-   local mt = getmetatable(value)
+	local mt = getmetatable(value)
 
-   if mt then
-      local mt_type = mt.__type
+	if mt then
+		local mt_type = mt.__type
 
-      if mt_type then
-         if rawtype(mt_type) == 'function' then
-            mt_type = mt_type(value)
-         end
+		if mt_type then
+			if rawtype(mt_type) == 'function' then
+				mt_type = mt_type(value)
+			end
 
-         return mt_type
-      end
-   end
+			return mt_type
+		end
+	end
 
-   if raw_type == 'userdata' then
-      local io_type = iotype(value)
+	if raw_type == 'userdata' then
+		local io_type = iotype(value)
 
-      if io_type then return io_type end
-   end
+		if io_type then
+			return io_type
+		end
+	end
 
-   return raw_type
+	return raw_type
 end
 
 --- Return  `true` if  the *enhanced*  type of  `value`
@@ -75,38 +77,44 @@ end
 --- @param  typename string
 --- @param  value    any
 --- @return boolean
-local function istypex (typename, value)
-   assert(
-      rawtype(typename) == 'string',
-      sformat('bad argument #1 to "is_typex" (string expected, got %s)', rawtype(typename))
-   )
+local function istypex(typename, value)
+	assert(
+		rawtype(typename) == 'string',
+		sformat(
+			'bad argument #1 to "is_typex" (string expected, got %s)',
+			rawtype(typename)
+		)
+	)
 
-   local raw_type          = rawtype(value)
-   local raw_type_equality = raw_type == typename
+	local raw_type = rawtype(value)
+	local raw_type_equality = raw_type == typename
 
-   if
-          raw_type_equality
-      or  raw_type ~= 'table'
-      and raw_type ~= 'userdata'
-   then
-      return raw_type_equality
-   end
+	if raw_type_equality or raw_type ~= 'table' and raw_type ~= 'userdata' then
+		return raw_type_equality
+	end
 
-   local mt = getmetatable(value)
+	local mt = getmetatable(value)
 
-   if mt then
-      local istype_f = mt.__istype
+	if mt then
+		local istype_f = mt.__istype
 
-      if rawtype(istype_f) == 'function' then
-         return istype_f(value, typename)
-      elseif rawtype(istype_f) == 'string' then
-         return istype_f == typename
-      elseif istype_f ~= nil then
-         error(sformat('invalid metafield "__istype" (function or string expected, got %s)', rawtype(istype_f)))
-      end
-   end
+		if rawtype(istype_f) == 'function' then
+			return istype_f(value, typename)
+		elseif rawtype(istype_f) == 'string' then
+			return istype_f == typename
+		elseif istype_f ~= nil then
+			error(
+				sformat(
+					'invalid metafield "__istype" (function or string expected, got %s)',
+					rawtype(istype_f)
+				)
+			)
+		end
+	end
 
-   return typex(value) == typename
+	return typex(value) == typename
 end
 
-return function () return typex, istypex end
+return function()
+	return typex, istypex
+end

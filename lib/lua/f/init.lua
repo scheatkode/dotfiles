@@ -206,10 +206,7 @@ Iterator.__index = Iterator
 --- @param state any
 --- @return any
 function Iterator:__call(parameter, state)
-   return self.generator(
-      parameter or self.parameter,
-      state     or self.state
-   )
+	return self.generator(parameter or self.parameter, state or self.state)
 end
 
 --- Returns a  tag signifying  this is a  special class
@@ -217,7 +214,7 @@ end
 ---
 --- @return string
 function Iterator:__tostring()
-   return '<iterator>'
+	return '<iterator>'
 end
 
 --- # Helper functions {{{1
@@ -229,12 +226,12 @@ end
 --- @vararg ... any
 --- @return nil
 --- @return ...
-return_if_not_empty = function (stateX, ...)
-   if stateX == nil then
-      return stateX
-   end
+return_if_not_empty = function(stateX, ...)
+	if stateX == nil then
+		return stateX
+	end
 
-   return ...
+	return ...
 end
 
 --- Call  the  given  function  with the  rest  of  the
@@ -246,11 +243,11 @@ end
 --- @return nil
 --- @return any
 call_if_not_empty = function(f, stateX, ...)
-   if stateX == nil then
-      return stateX
-   end
+	if stateX == nil then
+		return stateX
+	end
 
-   return stateX, f(...)
+	return stateX, f(...)
 end
 
 --- Returns a deep copy  of the given object. Non-table
@@ -264,23 +261,21 @@ end
 --- @param original any
 --- @return any
 local function deepcopy(original)
-   local copy
+	local copy
 
-   if type(original) == 'table' then
-      copy = {}
+	if type(original) == 'table' then
+		copy = {}
 
-      for k, v in next, original, nil do
-         copy[deepcopy(k)] = deepcopy(v)
-      end
-   elseif type(original) == 'userdata'
-      or  type(original) == 'thread'
-   then
-      error('deepcopy: wrong parameter type')
-   else
-      copy = original
-   end
+		for k, v in next, original, nil do
+			copy[deepcopy(k)] = deepcopy(v)
+		end
+	elseif type(original) == 'userdata' or type(original) == 'thread' then
+		error('deepcopy: wrong parameter type')
+	else
+		copy = original
+	end
 
-   return copy
+	return copy
 end
 
 --- A  special  hack for  zip/chain  to  skip last  two
@@ -288,23 +283,24 @@ end
 ---
 --- @vararg ...
 --- @return number
-local count_arguments = function (...)
-   local n = select('#', ...)
+local count_arguments = function(...)
+	local n = select('#', ...)
 
-   if n >= 3 then
-      -- Fix last argument
-      local it = select(n - 2, ...)
+	if n >= 3 then
+		-- Fix last argument
+		local it = select(n - 2, ...)
 
-      if     type(it) == 'table'
-         and getmetatable(it) == Iterator
-         and it.parameter     == select(n - 1, ...)
-         and it.state         == select(n, ...)
-      then
-         return n - 2
-      end
-   end
+		if
+			type(it) == 'table'
+			and getmetatable(it) == Iterator
+			and it.parameter == select(n - 1, ...)
+			and it.state == select(n, ...)
+		then
+			return n - 2
+		end
+	end
 
-   return n
+	return n
 end
 
 --- # Constructors {{{1
@@ -316,37 +312,34 @@ end
 --- @param  parameter any
 --- @param  state     any
 --- @return any, any, any
-local raw_iterator = function (object, parameter, state)
-   assert(object ~= nil, 'invalid iterator')
+local raw_iterator = function(object, parameter, state)
+	assert(object ~= nil, 'invalid iterator')
 
-   if type(object) == 'table' then
-      local metatable = getmetatable(object)
+	if type(object) == 'table' then
+		local metatable = getmetatable(object)
 
-      if     metatable ~= nil
-         and metatable == Iterator
-      then
-         return object.generator, object.parameter, object.state
-      end
+		if metatable ~= nil and metatable == Iterator then
+			return object.generator, object.parameter, object.state
+		end
 
-      if #object > 0 then -- array
-         return ipairs(object)
-      else -- hash
-         return hashmap_generator, object, nil
-      end
-   elseif type(object) == 'function' then
-      return object, parameter, state
-   elseif type(object) == 'string' then
-      if #object == 0 then
-         return nil_generator, nil, nil
-      end
+		if #object > 0 then -- array
+			return ipairs(object)
+		else -- hash
+			return hashmap_generator, object, nil
+		end
+	elseif type(object) == 'function' then
+		return object, parameter, state
+	elseif type(object) == 'string' then
+		if #object == 0 then
+			return nil_generator, nil, nil
+		end
 
-      return string_generator, object, 0
-   end
+		return string_generator, object, 0
+	end
 
-   error(sformat(
-      'object %s of type "%s" is not iterable',
-      object, type(object)
-   ))
+	error(
+		sformat('object %s of type "%s" is not iterable', object, type(object))
+	)
 end
 
 --- Wraps the  iterator triplet  into a table  to allow
@@ -361,12 +354,12 @@ end
 --- @param  parameter any
 --- @param  state     any
 --- @return Iterator
-local wrap = function (generator, parameter, state)
-   return setmetatable({
-      generator = generator,
-      parameter = parameter,
-          state = state,
-   }, Iterator)
+local wrap = function(generator, parameter, state)
+	return setmetatable({
+		generator = generator,
+		parameter = parameter,
+		state = state,
+	}, Iterator)
 end
 
 --- Unwrap  an  iterator  metatable into  the  iterator
@@ -376,8 +369,8 @@ end
 --- @return any
 --- @return any
 --- @return any
-local unwrap = function (self)
-   return self.generator, self.parameter, self.state
+local unwrap = function(self)
+	return self.generator, self.parameter, self.state
 end
 
 --- Make  `generator`,  `parameter`,  `state`  iterator
@@ -447,8 +440,8 @@ end
 --- @param  parameter any (optional)
 --- @param  state     any (optional)
 --- @return Iterator
-local iterate = function (object, parameter, state)
-   return wrap(raw_iterator(object, parameter, state))
+local iterate = function(object, parameter, state)
+	return wrap(raw_iterator(object, parameter, state))
 end
 
 --- Make  `generator`,  `parameter`,  `state`  iterator
@@ -517,7 +510,7 @@ end
 --- @param  object    any
 --- @return Iterator
 function Iterator:iterate(object)
-   return iterate(object, self.parameter, self.state)
+	return iterate(object, self.parameter, self.state)
 end
 
 --- Execute `f` for each  iteration value. The function
@@ -539,10 +532,10 @@ end
 --- @param parameter any
 --- @param state any
 --- @return nil
-local function foreach (f, generator, parameter, state)
-   repeat
-      state = call_if_not_empty(f, generator(parameter, state))
-   until state == nil
+local function foreach(f, generator, parameter, state)
+	repeat
+		state = call_if_not_empty(f, generator(parameter, state))
+	until state == nil
 end
 
 --- Execute `f` for each  iteration value. The function
@@ -561,8 +554,8 @@ end
 ---
 --- @param f function
 --- @return nil
-function Iterator:foreach (f)
-   return foreach(f, self.generator, self.parameter, self.state)
+function Iterator:foreach(f)
+	return foreach(f, self.generator, self.parameter, self.state)
 end
 
 --- Transforms the  given iterator into a  stateful one
@@ -589,22 +582,22 @@ end
 --- @param parameter any
 --- @param state any
 --- @return Iterator
-local with_state = function (generator, parameter, state)
-   local function return_and_retain_state(state_x, ...)
-      state = state_x
+local with_state = function(generator, parameter, state)
+	local function return_and_retain_state(state_x, ...)
+		state = state_x
 
-      if state == nil then
-         return nil
-      end
+		if state == nil then
+			return nil
+		end
 
-      return state_x, ...
-   end
+		return state_x, ...
+	end
 
-   local function state_generator ()
-      return return_and_retain_state(generator(parameter, state))
-   end
+	local function state_generator()
+		return return_and_retain_state(generator(parameter, state))
+	end
 
-   return wrap(state_generator)
+	return wrap(state_generator)
 end
 
 --- Transforms the  given iterator into a  stateful one
@@ -627,22 +620,22 @@ end
 --- @param parameter any
 --- @param state any
 --- @return Iterator
-local with_suppressed_state = function (generator, parameter, state)
-   local function return_and_retain_state(state_x, ...)
-      state = state_x
+local with_suppressed_state = function(generator, parameter, state)
+	local function return_and_retain_state(state_x, ...)
+		state = state_x
 
-      if state == nil then
-         return nil
-      end
+		if state == nil then
+			return nil
+		end
 
-      return ...
-   end
+		return ...
+	end
 
-   local function state_generator ()
-      return return_and_retain_state(generator(parameter, state))
-   end
+	local function state_generator()
+		return return_and_retain_state(generator(parameter, state))
+	end
 
-   return wrap(state_generator)
+	return wrap(state_generator)
 end
 
 --- Transforms the  given iterator into a  stateful one
@@ -666,8 +659,8 @@ end
 --- </pre>
 ---
 --- @return Iterator
-function Iterator:with_state ()
-   return with_state(self.generator, self.parameter, self.state)
+function Iterator:with_state()
+	return with_state(self.generator, self.parameter, self.state)
 end
 
 --- Transforms the  given iterator into a  stateful one
@@ -687,8 +680,8 @@ end
 --- </pre>
 ---
 --- @return Iterator
-function Iterator:with_suppressed_state ()
-   return with_suppressed_state(self.generator, self.parameter, self.state)
+function Iterator:with_suppressed_state()
+	return with_suppressed_state(self.generator, self.parameter, self.state)
 end
 
 --- Export  a  higher  order   function  that  takes  a
@@ -698,10 +691,10 @@ end
 ---
 --- @param f fun(generator,parameter,state): Iterator
 --- @return fun(generator, parameter, state): Iterator
-local hoe_no_args = function (f)
-   return function (generator, parameter, state)
-      return f(raw_iterator(generator, parameter, state))
-   end
+local hoe_no_args = function(f)
+	return function(generator, parameter, state)
+		return f(raw_iterator(generator, parameter, state))
+	end
 end
 
 --- Export  a  higher  order   function  that  takes  a
@@ -712,10 +705,10 @@ end
 ---
 --- @param f fun(arg1,generator,parameter,state): Iterator
 --- @return fun(arg1, generator, parameter, state): Iterator
-local hoe_1_arg = function (f)
-   return function (arg1, generator, parameter, state)
-      return f(arg1, raw_iterator(generator, parameter, state))
-   end
+local hoe_1_arg = function(f)
+	return function(arg1, generator, parameter, state)
+		return f(arg1, raw_iterator(generator, parameter, state))
+	end
 end
 
 --- Export  a  higher  order   function  that  takes  a
@@ -726,10 +719,10 @@ end
 ---
 --- @param f fun(arg1,arg2,generator,parameter,state): Iterator
 --- @return fun(arg1, arg2, generator, parameter, state): Iterator
-local hoe_2_args = function (f)
-   return function (arg1, arg2, generator, parameter, state)
-      return f(arg1, arg2, raw_iterator(generator, parameter, state))
-   end
+local hoe_2_args = function(f)
+	return function(arg1, arg2, generator, parameter, state)
+		return f(arg1, arg2, raw_iterator(generator, parameter, state))
+	end
 end
 
 module.foreach  = hoe_1_arg(foreach)
@@ -773,8 +766,8 @@ local pairs_generator = pairs({})
 --- @param  _state     any
 --- @return nil
 --- @diagnostic disable-next-line: unused-local
-nil_generator = function (_parameter, _state)
-   return nil
+nil_generator = function(_parameter, _state)
+	return nil
 end
 
 --- String generator.
@@ -783,14 +776,14 @@ end
 --- @param  state number
 --- @return nil
 --- @return number, string
-string_generator = function (parameter, state)
-   state = state + 1
+string_generator = function(parameter, state)
+	state = state + 1
 
-   if state > #parameter then
-      return nil
-   end
+	if state > #parameter then
+		return nil
+	end
 
-   return state, ssub(parameter, state, state)
+	return state, ssub(parameter, state, state)
 end
 
 --- Hashmap generator.
@@ -798,44 +791,44 @@ end
 --- @param  map table
 --- @param  key any
 --- @return any, any, any
-hashmap_generator = function (map, key)
-   local value
+hashmap_generator = function(map, key)
+	local value
 
-   key, value = pairs_generator(map, key)
+	key, value = pairs_generator(map, key)
 
-   return key, key, value
+	return key, key, value
 end
 
 --- @param  parameter_x any
 --- @param  state_x any
 --- @return nil
 --- @return number, number
-local range_generator = function (parameter_x, state_x)
-   local stop, step = parameter_x[1], parameter_x[2]
+local range_generator = function(parameter_x, state_x)
+	local stop, step = parameter_x[1], parameter_x[2]
 
-   state_x = state_x + step
+	state_x = state_x + step
 
-   if state_x > stop then
-      return nil
-   end
+	if state_x > stop then
+		return nil
+	end
 
-   return state_x, state_x
+	return state_x, state_x
 end
 
 --- @param  parameter_x any
 --- @param  state_x     any
 --- @return nil
 --- @return number, number
-local range_reverse_generator = function (parameter_x, state_x)
-   local stop, step = parameter_x[1], parameter_x[2]
+local range_reverse_generator = function(parameter_x, state_x)
+	local stop, step = parameter_x[1], parameter_x[2]
 
-   state_x = state_x + step
+	state_x = state_x + step
 
-   if state_x < stop then
-      return nil
-   end
+	if state_x < stop then
+		return nil
+	end
 
-   return state_x, state_x
+	return state_x, state_x
 end
 
 --- Returns   an   iterator    to   create   arithmetic
@@ -854,37 +847,39 @@ end
 --- range(0) always returns an empty iterator.
 ---
 --- @param  start number
---- @param  stop number
---- @param  step number
---- @return Iterator
-local range = function (start, stop, step)
-   if step == nil then
-      if stop == nil then
-         if start == 0 then
-            return nil_generator, nil, nil
-         end
+--- @param  stop number?
+--- @param  step number?
+--- @return Iterator|function
+--- @return nil
+--- @return nil
+local range = function(start, stop, step)
+	if step == nil then
+		if stop == nil then
+			if start == 0 then
+				return nil_generator, nil, nil
+			end
 
-         stop  = start
-         start = stop > 0 and 1 or -1
-      end
+			stop = start
+			start = stop > 0 and 1 or -1
+		end
 
-      step = start <= stop and 1 or -1
-   end
+		step = start <= stop and 1 or -1
+	end
 
-   assert(type(start) == 'number', 'start must be a number')
-   assert(type(stop)  == 'number',  'stop must be a number')
-   assert(type(step)  == 'number',  'step must be a number')
-   assert(step ~= 0,                'step must not be zero')
+	assert(type(start) == 'number', 'start must be a number')
+	assert(type(stop) == 'number', 'stop must be a number')
+	assert(type(step) == 'number', 'step must be a number')
+	assert(step ~= 0, 'step must not be zero')
 
-   if step > 0 then
-      return wrap(range_generator, {stop, step}, start - step)
-   elseif step < 0 then
-      if stop > start then
-         start, stop = stop, start
-      end
+	if step > 0 then
+		return wrap(range_generator, { stop, step }, start - step)
+	elseif step < 0 then
+		if stop > start then
+			start, stop = stop, start
+		end
 
-      return wrap(range_reverse_generator, {stop, step}, start - step)
-   end
+		return wrap(range_reverse_generator, { stop, step }, start - step)
+	end
 end
 module.range = range
 
@@ -897,22 +892,22 @@ module.range = range
 --- @param  parameter_x table
 --- @param  state_x number
 --- @return number, ...
-local duplicate_table_generator = function (parameter_x, state_x)
-   return state_x + 1, unpack(parameter_x)
+local duplicate_table_generator = function(parameter_x, state_x)
+	return state_x + 1, unpack(parameter_x)
 end
 
 --- @param  parameter_x function
 --- @param  state_x number
 --- @return number, any
-local duplicate_function_generator = function (parameter_x, state_x)
-   return state_x + 1, parameter_x(state_x)
+local duplicate_function_generator = function(parameter_x, state_x)
+	return state_x + 1, parameter_x(state_x)
 end
 
 --- @param  parameter_x any
 --- @param  state_x number
 --- @return number, any
-local duplicate_generator = function (parameter_x, state_x)
-   return state_x + 1, parameter_x
+local duplicate_generator = function(parameter_x, state_x)
+	return state_x + 1, parameter_x
 end
 
 --- Creates an  iterator that  returns values  over and
@@ -922,12 +917,12 @@ end
 ---
 --- @vararg ...
 --- @return Iterator
-local duplicate = function (...)
-   if select('#', ...) <= 1 then
-      return wrap(duplicate_generator, select(1, ...), 0)
-   else
-      return wrap(duplicate_table_generator, {...}, 0)
-   end
+local duplicate = function(...)
+	if select('#', ...) <= 1 then
+		return wrap(duplicate_generator, select(1, ...), 0)
+	else
+		return wrap(duplicate_table_generator, { ... }, 0)
+	end
 end
 module.duplicate = duplicate
 module.replicate = duplicate
@@ -945,9 +940,9 @@ module.xrepeat   = duplicate
 ---
 --- @param  f function
 --- @return Iterator
-local tabulate = function (f)
-   assert(type(f) == 'function')
-   return wrap(duplicate_function_generator, f, 0)
+local tabulate = function(f)
+	assert(type(f) == 'function')
+	return wrap(duplicate_function_generator, f, 0)
 end
 module.tabulate      = tabulate
 module.from_function = tabulate
@@ -956,8 +951,8 @@ module.from_function = tabulate
 --- as an alias to calling `duplicate(0)`.
 ---
 --- @return Iterator
-local zeros = function ()
-   return wrap(duplicate_generator, 0, 0)
+local zeros = function()
+	return wrap(duplicate_generator, 0, 0)
 end
 module.zeros = zeros
 
@@ -965,17 +960,17 @@ module.zeros = zeros
 --- as an alias to calling `duplicate(1)`.
 ---
 --- @return Iterator
-local ones = function ()
-   return wrap(duplicate_generator, 1, 0)
+local ones = function()
+	return wrap(duplicate_generator, 1, 0)
 end
 module.ones = ones
 
 local random_generator = function(parameter, _)
-   return 0, mrandom(parameter[1], parameter[2])
+	return 0, mrandom(parameter[1], parameter[2])
 end
 
-local random_nil_generator = function (_, _)
-   return 0, mrandom()
+local random_nil_generator = function(_, _)
+	return 0, mrandom()
 end
 
 --- # Random sampling {{{1
@@ -993,23 +988,23 @@ end
 --- @param  n number
 --- @param  m number
 --- @return Iterator
-local random = function (n, m)
-   if n == nil and m == nil then
-      return wrap(random_nil_generator, 0, 0)
-   end
+local random = function(n, m)
+	if n == nil and m == nil then
+		return wrap(random_nil_generator, 0, 0)
+	end
 
-   assert(type(n) == 'number', 'invalid first argument to random')
+	assert(type(n) == 'number', 'invalid first argument to random')
 
-   if m == nil then
-      m = n
-      n = 0
-   else
-      assert(type(m) == 'number', 'invalid second argument to random')
-   end
+	if m == nil then
+		m = n
+		n = 0
+	else
+		assert(type(m) == 'number', 'invalid second argument to random')
+	end
 
-   assert(n < m, 'empty interval')
+	assert(n < m, 'empty interval')
 
-   return wrap(random_generator, {n, m - 1}, 0)
+	return wrap(random_generator, { n, m - 1 }, 0)
 end
 module.random = random
 
@@ -1025,29 +1020,29 @@ module.random = random
 --- @param  state any
 --- @return nil
 --- @return any
-local nth = function (n, generator, parameter, state)
-   assert(n > 0, 'invalid first argument to nth')
+local nth = function(n, generator, parameter, state)
+	assert(n > 0, 'invalid first argument to nth')
 
-   -- An optimization for arrays and strings
-   if generator == ipairs_generator then
-      return parameter[n]
-   elseif generator == string_generator then
-      if n <= #parameter then
-         return ssub(parameter, n, n)
-      else
-         return nil
-      end
-   end
+	-- An optimization for arrays and strings
+	if generator == ipairs_generator then
+		return parameter[n]
+	elseif generator == string_generator then
+		if n <= #parameter then
+			return ssub(parameter, n, n)
+		else
+			return nil
+		end
+	end
 
-   for _ = 1, n - 1, 1 do
-      state = generator(parameter, state)
+	for _ = 1, n - 1, 1 do
+		state = generator(parameter, state)
 
-      if state == nil then
-         return nil
-      end
-   end
+		if state == nil then
+			return nil
+		end
+	end
 
-   return return_if_not_empty(generator(parameter, state))
+	return return_if_not_empty(generator(parameter, state))
 end
 module.nth = hoe_1_arg(nth)
 
@@ -1059,7 +1054,7 @@ module.nth = hoe_1_arg(nth)
 --- @return nil
 --- @return any
 function Iterator:nth(n)
-   return nth(n, self.generator, self.parameter, self.state)
+	return nth(n, self.generator, self.parameter, self.state)
 end
 
 --- @param  state any
@@ -1067,11 +1062,11 @@ end
 --- @return nil
 --- @return ...
 local head_call = function(state, ...)
-   if state == nil then
-      error('head: iterator is empty')
-   end
+	if state == nil then
+		error('head: iterator is empty')
+	end
 
-   return ...
+	return ...
 end
 
 --- Extract the  first element of the  iterator. If the
@@ -1082,8 +1077,8 @@ end
 --- @param state any
 --- @return nil
 --- @return any
-local head = function (generator, parameter, state)
-   return head_call(generator(parameter, state))
+local head = function(generator, parameter, state)
+	return head_call(generator(parameter, state))
 end
 module.head = hoe_no_args(head)
 module.car  = module.head
@@ -1094,7 +1089,7 @@ module.car  = module.head
 --- @return nil
 --- @return any
 function Iterator:head()
-   return head(self.generator, self.parameter, self.state)
+	return head(self.generator, self.parameter, self.state)
 end
 
 --- Return  a copy  of the  given iterator  without its
@@ -1105,14 +1100,14 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local tail = function (generator, parameter, state)
-   state = generator(parameter, state)
+local tail = function(generator, parameter, state)
+	state = generator(parameter, state)
 
-   if state == nil then
-      return wrap(nil_generator, nil, nil)
-   end
+	if state == nil then
+		return wrap(nil_generator, nil, nil)
+	end
 
-   return wrap(generator, parameter, state)
+	return wrap(generator, parameter, state)
 end
 module.tail = hoe_no_args(tail)
 module.cdr  = module.tail
@@ -1124,7 +1119,7 @@ module.cdr  = module.tail
 --- @return nil
 --- @return any
 function Iterator:tail()
-   return tail(self.generator, self.parameter, self.state)
+	return tail(self.generator, self.parameter, self.state)
 end
 
 --- # Subsequences {{{1
@@ -1133,26 +1128,27 @@ end
 --- @param  state_x any
 --- @vararg ...
 --- @return table, ...
-local take_n_generator_x = function (i, state_x, ...)
-   if state_x == nil then
-      return nil
-   end
+local take_n_generator_x = function(i, state_x, ...)
+	if state_x == nil then
+		return nil
+	end
 
-   return {i, state_x}, ...
+	return { i, state_x }, ...
 end
 
 --- @param  parameter table
 --- @param  state table
 --- @return any
-local take_n_generator = function (parameter, state)
-   local n, generator_x, parameter_x = parameter[1], parameter[2], parameter[3]
-   local i, state_x = state[1], state[2]
+local take_n_generator = function(parameter, state)
+	local n, generator_x, parameter_x =
+		parameter[1], parameter[2], parameter[3]
+	local i, state_x = state[1], state[2]
 
-   if i >= n then
-      return nil
-   end
+	if i >= n then
+		return nil
+	end
 
-   return take_n_generator_x(i + 1, generator_x(parameter_x, state_x))
+	return take_n_generator_x(i + 1, generator_x(parameter_x, state_x))
 end
 
 --- Returns an iterator on the subsequence of first `n`
@@ -1163,9 +1159,9 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local take_n = function (n, generator, parameter, state)
-   assert(n >= 0,  'invalid first argument to take_n')
-   return wrap(take_n_generator, {n, generator, parameter}, {0, state})
+local take_n = function(n, generator, parameter, state)
+	assert(n >= 0, 'invalid first argument to take_n')
+	return wrap(take_n_generator, { n, generator, parameter }, { 0, state })
 end
 module.take_n = hoe_1_arg(take_n)
 
@@ -1175,7 +1171,7 @@ module.take_n = hoe_1_arg(take_n)
 --- @param  n number
 --- @return Iterator
 function Iterator:take_n(n)
-   return take_n(n, self.generator, self.parameter, self.state)
+	return take_n(n, self.generator, self.parameter, self.state)
 end
 
 --- @param  f function
@@ -1184,20 +1180,21 @@ end
 --- @return nil
 --- @return any
 --- @return ...
-local take_while_generator_x = function (f, state_x, ...)
-   if state_x == nil or not f(...) then
-      return nil
-   end
+local take_while_generator_x = function(f, state_x, ...)
+	if state_x == nil or not f(...) then
+		return nil
+	end
 
-   return state_x, ...
+	return state_x, ...
 end
 
 --- @param  parameter table
 --- @param  state any
 --- @return any
-local take_while_generator = function (parameter, state)
-   local f, generator_x, parameter_x = parameter[1], parameter[2], parameter[3]
-   return take_while_generator_x(f, generator_x(parameter_x, state))
+local take_while_generator = function(parameter, state)
+	local f, generator_x, parameter_x =
+		parameter[1], parameter[2], parameter[3]
+	return take_while_generator_x(f, generator_x(parameter_x, state))
 end
 
 --- @param  predicate function
@@ -1205,9 +1202,16 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local take_while = function (predicate, generator, parameter, state)
-   assert(type(predicate) == 'function', 'invalid first argument to take_while')
-   return wrap(take_while_generator, {predicate, generator, parameter}, state)
+local take_while = function(predicate, generator, parameter, state)
+	assert(
+		type(predicate) == 'function',
+		'invalid first argument to take_while'
+	)
+	return wrap(
+		take_while_generator,
+		{ predicate, generator, parameter },
+		state
+	)
 end
 module.take_while = hoe_1_arg(take_while)
 
@@ -1218,7 +1222,7 @@ module.take_while = hoe_1_arg(take_while)
 --- @param  predicate function
 --- @return Iterator
 function Iterator:take_while(predicate)
-   return take_while(predicate, self.generator, self.parameter, self.state)
+	return take_while(predicate, self.generator, self.parameter, self.state)
 end
 
 --- Returns  an  iterator  on  the  longest  prefix  of
@@ -1227,12 +1231,12 @@ end
 ---
 --- @param  n_or_predicate function
 --- @return Iterator
-local take = function (n_or_predicate, generator, parameter, state)
-   if type(n_or_predicate) == 'number' then
-      return take_n(n_or_predicate, generator, parameter, state)
-   else
-   return take_while(n_or_predicate, generator, parameter, state)
-   end
+local take = function(n_or_predicate, generator, parameter, state)
+	if type(n_or_predicate) == 'number' then
+		return take_n(n_or_predicate, generator, parameter, state)
+	else
+		return take_while(n_or_predicate, generator, parameter, state)
+	end
 end
 module.take = hoe_1_arg(take)
 
@@ -1244,7 +1248,7 @@ module.take = hoe_1_arg(take)
 --- @return nil
 --- @return any
 function Iterator:take(n_or_predicate)
-   return take(n_or_predicate, self.generator, self.parameter, self.state)
+	return take(n_or_predicate, self.generator, self.parameter, self.state)
 end
 
 --- Returns an  iterator after  skipping the  first `n`
@@ -1255,18 +1259,18 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local drop_n = function (n, generator, parameter, state)
-   assert(n >= 0, 'invalid first argument to drop_n')
+local drop_n = function(n, generator, parameter, state)
+	assert(n >= 0, 'invalid first argument to drop_n')
 
-   for _ = 1, n, 1 do
-      state = generator(parameter, state)
+	for _ = 1, n, 1 do
+		state = generator(parameter, state)
 
-      if state == nil then
-         return wrap (nil_generator, nil, nil)
-      end
-   end
+		if state == nil then
+			return wrap(nil_generator, nil, nil)
+		end
+	end
 
-   return wrap(generator, parameter, state)
+	return wrap(generator, parameter, state)
 end
 module.drop_n = hoe_1_arg(drop_n)
 
@@ -1276,7 +1280,7 @@ module.drop_n = hoe_1_arg(drop_n)
 --- @param  n number
 --- @return Iterator
 function Iterator:drop_n(n)
-   return drop_n(n, self.generator, self.parameter, self.state)
+	return drop_n(n, self.generator, self.parameter, self.state)
 end
 
 --- @param  predicate function
@@ -1286,11 +1290,11 @@ end
 --- @return boolean
 --- @return ...
 local drop_while_x = function(predicate, state, ...)
-   if state == nil or not predicate(...) then
-      return state, false
-   end
+	if state == nil or not predicate(...) then
+		return state, false
+	end
 
-   return state, true, ...
+	return state, true, ...
 end
 
 --- Return  an  iterator  after  skipping  the  longest
@@ -1302,20 +1306,23 @@ end
 --- @param  state any
 --- @return Iterator
 local drop_while = function(predicate, generator, parameter, state)
-   assert(type(predicate) == 'function', 'invalid first argument to drop_while')
+	assert(
+		type(predicate) == 'function',
+		'invalid first argument to drop_while'
+	)
 
-   local continue, state_previous
+	local continue, state_previous
 
-   repeat
-      state_previous  = deepcopy(state)
-      state, continue = drop_while_x(predicate, generator(parameter, state))
-   until not continue
+	repeat
+		state_previous = deepcopy(state)
+		state, continue = drop_while_x(predicate, generator(parameter, state))
+	until not continue
 
-   if state == nil then
-      return wrap(nil_generator, nil, nil)
-   end
+	if state == nil then
+		return wrap(nil_generator, nil, nil)
+	end
 
-   return wrap(generator, parameter, state_previous)
+	return wrap(generator, parameter, state_previous)
 end
 module.drop_while = hoe_1_arg(drop_while)
 
@@ -1325,7 +1332,7 @@ module.drop_while = hoe_1_arg(drop_while)
 --- @param  predicate function
 --- @return Iterator
 function Iterator:drop_while(predicate)
-   return drop_while(predicate, self.generator, self.parameter, self.state)
+	return drop_while(predicate, self.generator, self.parameter, self.state)
 end
 
 --- An  alias for  `drop_n()`  and `drop_while()`  that
@@ -1337,12 +1344,12 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local drop = function (n_or_predicate, generator, parameter, state)
-   if type(n_or_predicate) == 'number' then
-      return drop_n(n_or_predicate, generator, parameter, state)
-   else
-      return drop_while(n_or_predicate, generator, parameter, state)
-   end
+local drop = function(n_or_predicate, generator, parameter, state)
+	if type(n_or_predicate) == 'number' then
+		return drop_n(n_or_predicate, generator, parameter, state)
+	else
+		return drop_while(n_or_predicate, generator, parameter, state)
+	end
 end
 module.drop = hoe_1_arg(drop)
 
@@ -1353,7 +1360,7 @@ module.drop = hoe_1_arg(drop)
 --- @param  n_or_predicate number|function
 --- @return Iterator
 function Iterator:drop(n_or_predicate)
-   return drop(n_or_predicate, self.generator, self.parameter, self.state)
+	return drop(n_or_predicate, self.generator, self.parameter, self.state)
 end
 
 --- Return  an  iterator  pair   where  the  first  one
@@ -1372,9 +1379,9 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator, Iterator
-local split_p = function (n_or_predicate, generator, parameter, state)
-   return take(n_or_predicate, generator, parameter, state),
-          drop(n_or_predicate, generator, parameter, state)
+local split_p = function(n_or_predicate, generator, parameter, state)
+	return take(n_or_predicate, generator, parameter, state),
+		drop(n_or_predicate, generator, parameter, state)
 end
 module.split_p  = hoe_1_arg(split_p)
 module.split_at = module.split_p
@@ -1390,31 +1397,31 @@ module.span     = module.split_p
 --- @return nil
 --- @return any
 function Iterator:split_p(n_or_predicate)
-   return split_p(n_or_predicate, self.generator, self.parameter, self.state)
+	return split_p(n_or_predicate, self.generator, self.parameter, self.state)
 end
 
 --- @param  parameter table
 --- @param  state number
 --- @return nil
 --- @return number, string
-local string_split_generator = function (parameter, state)
-   local input, separator = parameter[1], parameter[2]
-   local length = #input
+local string_split_generator = function(parameter, state)
+	local input, separator = parameter[1], parameter[2]
+	local length = #input
 
-   if state > length + 1 then
-      return nil
-   end
+	if state > length + 1 then
+		return nil
+	end
 
-   local start, finish = sfind(input, separator, state, true)
+	local start, finish = sfind(input, separator, state, true)
 
-   if not start then
-      start  = length + 1
-      finish = length + 1
-   end
+	if not start then
+		start = length + 1
+		finish = length + 1
+	end
 
-   local substring = input:sub(state, start - 1)
+	local substring = input:sub(state, start - 1)
 
-   return finish + 1, substring
+	return finish + 1, substring
 end
 
 --- Return  an iterator  of substrings  separated by  a
@@ -1424,9 +1431,9 @@ end
 --- @param  separator string
 --- @param  state number
 --- @return Iterator
-local split = function (input, separator, state)
-   assert(type(input) == 'string', 'split should be called only on strings')
-   return wrap(string_split_generator, {input, separator}, state or 1)
+local split = function(input, separator, state)
+	assert(type(input) == 'string', 'split should be called only on strings')
+	return wrap(string_split_generator, { input, separator }, state or 1)
 end
 module.split = split
 
@@ -1438,7 +1445,7 @@ module.split = split
 --- @return nil
 --- @return table
 function Iterator:split(separator)
-   return split(self.parameter, separator, self.state)
+	return split(self.parameter, separator, self.state)
 end
 
 --- Splits a string based on a single space.
@@ -1449,8 +1456,8 @@ end
 ---
 --- @return nil
 --- @return table
-local words = function (input, state)
-   return split(input, ' ', state)
+local words = function(input, state)
+	return split(input, ' ', state)
 end
 module.words = words
 
@@ -1460,7 +1467,7 @@ module.words = words
 --- @return nil
 --- @return table
 function Iterator:words()
-   return words(self.parameter, self.state)
+	return words(self.parameter, self.state)
 end
 
 --- Splits a string based on line separators.
@@ -1471,9 +1478,9 @@ end
 ---
 --- @return nil
 --- @return table
-local lines = function (input, state)
-   -- TODO(scheatkode): platform specific linebreaks
-   return split(input, '\n', state)
+local lines = function(input, state)
+	-- TODO(scheatkode): platform specific linebreaks
+	return split(input, '\n', state)
 end
 module.lines = lines
 
@@ -1483,7 +1490,7 @@ module.lines = lines
 --- @return nil
 --- @return table
 function Iterator:lines()
-   return lines(self.parameter, self.state)
+	return lines(self.parameter, self.state)
 end
 
 --- # Indexing {{{1
@@ -1501,18 +1508,18 @@ end
 --- @param  state any
 --- @return nil
 --- @return number
-local index = function (x, generator, parameter, state)
-   local i = 1
+local index = function(x, generator, parameter, state)
+	local i = 1
 
-   for _, v in generator, parameter, state do
-      if v == x then
-         return i
-      end
+	for _, v in generator, parameter, state do
+		if v == x then
+			return i
+		end
 
-      i = i + 1
-   end
+		i = i + 1
+	end
 
-   return nil
+	return nil
 end
 module.index      = hoe_1_arg(index)
 module.index_of   = module.index
@@ -1526,31 +1533,32 @@ module.elem_index = module.index
 --- @return nil
 --- @return number
 function Iterator:index(x)
-   return index(x, self.generator, self.parameter, self.state)
+	return index(x, self.generator, self.parameter, self.state)
 end
 
 --- @param  parameter table
 --- @param  state table
 --- @return nil
 --- @return table, number
-local indexes_generator = function (parameter, state)
-   local x, generator_x, parameter_x = parameter[1], parameter[2], parameter[3]
-   local i, state_x = state[1], state[2]
-   local v
+local indexes_generator = function(parameter, state)
+	local x, generator_x, parameter_x =
+		parameter[1], parameter[2], parameter[3]
+	local i, state_x = state[1], state[2]
+	local v
 
-   while true do
-      state_x, v = generator_x(parameter_x, state_x)
+	while true do
+		state_x, v = generator_x(parameter_x, state_x)
 
-      if state_x == nil then
-         return nil
-      end
+		if state_x == nil then
+			return nil
+		end
 
-      i = i + 1
+		i = i + 1
 
-      if v == x then
-         return {i, state_x}, i
-      end
-   end
+		if v == x then
+			return { i, state_x }, i
+		end
+	end
 end
 
 --- Returns an iterator to  positions of elements which
@@ -1561,8 +1569,8 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local indexes = function (x, generator, parameter, state)
-   return wrap(indexes_generator, {x, generator, parameter}, {0, state})
+local indexes = function(x, generator, parameter, state)
+	return wrap(indexes_generator, { x, generator, parameter }, { 0, state })
 end
 module.indexes = hoe_1_arg(indexes)
 module.indices = module.indexes
@@ -1573,7 +1581,7 @@ module.indices = module.indexes
 --- @param  x any
 --- @return Iterator
 function Iterator:indexes(x)
-   return indexes(x, self.generator, self.parameter, self.state)
+	return indexes(x, self.generator, self.parameter, self.state)
 end
 
 --- # Filtering {{{1
@@ -1581,51 +1589,57 @@ end
 --- This  section contains  functions to  filter values
 --- during iteration, using a predicate.
 
-local filter1_generator = function (f, generator, parameter, state, a)
-   while true do
-      if state == nil or f(a) then
-         break
-      end
+local filter1_generator = function(f, generator, parameter, state, a)
+	while true do
+		if state == nil or f(a) then
+			break
+		end
 
-      state, a = generator(parameter, state)
-   end
+		state, a = generator(parameter, state)
+	end
 
-   return state, a
+	return state, a
 end
 
-local filterm_generator_shrink = function (f, generator, parameter, state)
-   return filterm_generator(f, generator, parameter, generator(parameter, state))
+local filterm_generator_shrink = function(f, generator, parameter, state)
+	return filterm_generator(
+		f,
+		generator,
+		parameter,
+		generator(parameter, state)
+	)
 end
 
-filterm_generator = function (f, generator, parameter, state, ...)
-   if state == nil then
-      return nil
-   end
+filterm_generator = function(f, generator, parameter, state, ...)
+	if state == nil then
+		return nil
+	end
 
-   if f(...) then
-      return state, ...
-   end
+	if f(...) then
+		return state, ...
+	end
 
-   return filterm_generator_shrink(f, generator, parameter, state)
+	return filterm_generator_shrink(f, generator, parameter, state)
 end
 
-local filter_detect = function (f, generator, parameter, state, ...)
-   if select('#', ...) < 2 then
-      return filter1_generator(f, generator, parameter, state, ...)
-   else
-      return filterm_generator(f, generator, parameter, state, ...)
-   end
+local filter_detect = function(f, generator, parameter, state, ...)
+	if select('#', ...) < 2 then
+		return filter1_generator(f, generator, parameter, state, ...)
+	else
+		return filterm_generator(f, generator, parameter, state, ...)
+	end
 end
 
-local filter_generator = function (parameter, state_x)
-   local f, generator_x, parameter_x = parameter[1], parameter[2], parameter[3]
+local filter_generator = function(parameter, state_x)
+	local f, generator_x, parameter_x =
+		parameter[1], parameter[2], parameter[3]
 
-   return filter_detect(
-      f,
-      generator_x,
-      parameter_x,
-      generator_x(parameter_x, state_x)
-   )
+	return filter_detect(
+		f,
+		generator_x,
+		parameter_x,
+		generator_x(parameter_x, state_x)
+	)
 end
 
 --- Return  a  new  iterator  of  those  elements  that
@@ -1636,8 +1650,8 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local filter = function (predicate, generator, parameter, state)
-   return wrap(filter_generator, {predicate, generator, parameter}, state)
+local filter = function(predicate, generator, parameter, state)
+	return wrap(filter_generator, { predicate, generator, parameter }, state)
 end
 module.filter = hoe_1_arg(filter)
 
@@ -1647,7 +1661,7 @@ module.filter = hoe_1_arg(filter)
 --- @param  predicate function
 --- @return Iterator
 function Iterator:filter(predicate)
-   return filter(predicate, self.generator, self.parameter, self.state)
+	return filter(predicate, self.generator, self.parameter, self.state)
 end
 
 --- If `regex_or_predicate` is a string then it is used
@@ -1660,14 +1674,16 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local grep = function (regex_or_predicate, generator, parameter, state)
-   local f = regex_or_predicate
+local grep = function(regex_or_predicate, generator, parameter, state)
+	local f = regex_or_predicate
 
-   if type(regex_or_predicate) == 'string' then
-      f = function (x) return sfind(x, regex_or_predicate) ~= nil end
-   end
+	if type(regex_or_predicate) == 'string' then
+		f = function(x)
+			return sfind(x, regex_or_predicate) ~= nil
+		end
+	end
 
-   return filter(f, generator, parameter, state)
+	return filter(f, generator, parameter, state)
 end
 module.grep = hoe_1_arg(grep)
 
@@ -1679,12 +1695,7 @@ module.grep = hoe_1_arg(grep)
 --- @param  regex_or_predicate string|function
 --- @return Iterator
 function Iterator:grep(regex_or_predicate)
-   return grep(
-      regex_or_predicate,
-      self.generator,
-      self.parameter,
-      self.state
-   )
+	return grep(regex_or_predicate, self.generator, self.parameter, self.state)
 end
 
 --- Returns two iterators where  elements do and do not
@@ -1695,13 +1706,13 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator, Iterator
-local partition = function (predicate, generator, parameter, state)
-   local negative_p = function (...)
-      return not predicate(...)
-   end
+local partition = function(predicate, generator, parameter, state)
+	local negative_p = function(...)
+		return not predicate(...)
+	end
 
-   return filter(predicate,  generator, parameter, state),
-          filter(negative_p, generator, parameter, state)
+	return filter(predicate, generator, parameter, state),
+		filter(negative_p, generator, parameter, state)
 end
 module.partition = hoe_1_arg(partition)
 
@@ -1711,7 +1722,7 @@ module.partition = hoe_1_arg(partition)
 --- @param  predicate function
 --- @return Iterator, Iterator
 function Iterator:partition(predicate)
-   return partition(predicate, self.generator, self.parameter, self.state)
+	return partition(predicate, self.generator, self.parameter, self.state)
 end
 
 --- # Reducing {{{1}
@@ -1725,12 +1736,12 @@ end
 --- @param f function
 --- @param start any
 --- @param state any
-local foldl_call = function (f, start, state, ...)
-   if state == nil then
-      return nil, start
-   end
+local foldl_call = function(f, start, state, ...)
+	if state == nil then
+		return nil, start
+	end
 
-   return state, f(start, ...)
+	return state, f(start, ...)
 end
 
 --- Reduce the  iterator from  left to right  using the
@@ -1753,16 +1764,17 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return any
-local reduce = function (accumulator, start, generator, parameter, state)
-   while true do
-      state, start = foldl_call(accumulator, start, generator(parameter, state))
+local reduce = function(accumulator, start, generator, parameter, state)
+	while true do
+		state, start =
+			foldl_call(accumulator, start, generator(parameter, state))
 
-      if state == nil then
-         break
-      end
-   end
+		if state == nil then
+			break
+		end
+	end
 
-   return start
+	return start
 end
 module.reduce = hoe_2_args(reduce)
 module.foldl  = module.reduce
@@ -1785,13 +1797,13 @@ module.foldl  = module.reduce
 --- @param  start any
 --- @return any
 function Iterator:reduce(accumulator, start)
-   return reduce(
-      accumulator,
-      start,
-      self.generator,
-      self.parameter,
-      self.state
-   )
+	return reduce(
+		accumulator,
+		start,
+		self.generator,
+		self.parameter,
+		self.state
+	)
 end
 
 --- Return the number of elements in the iterator. This
@@ -1810,22 +1822,19 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return number
-local length = function (generator, parameter, state)
-   if
-         generator == ipairs_generator
-      or generator == string_generator
-   then
-      return #parameter
-   end
+local length = function(generator, parameter, state)
+	if generator == ipairs_generator or generator == string_generator then
+		return #parameter
+	end
 
-   local length = 0
+	local length = 0
 
-   repeat
-      state  = generator(parameter, state)
-      length = length + 1
-   until state == nil
+	repeat
+		state = generator(parameter, state)
+		length = length + 1
+	until state == nil
 
-   return length - 1
+	return length - 1
 end
 module.length = hoe_no_args(length)
 
@@ -1843,7 +1852,7 @@ module.length = hoe_no_args(length)
 ---
 --- @return number
 function Iterator:length()
-   return length(self.generator, self.parameter, self.state)
+	return length(self.generator, self.parameter, self.state)
 end
 
 --- Returns  `true`  when  the  iterator  is  empty  or
@@ -1853,8 +1862,8 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return boolean
-local is_null = function (generator, parameter, state)
-   return generator(parameter, deepcopy(state)) == nil
+local is_null = function(generator, parameter, state)
+	return generator(parameter, deepcopy(state)) == nil
 end
 module.is_null = hoe_no_args(is_null)
 
@@ -1863,7 +1872,7 @@ module.is_null = hoe_no_args(is_null)
 ---
 --- @return boolean
 function Iterator:is_null()
-   return is_null(self.generator, self.parameter, self.state)
+	return is_null(self.generator, self.parameter, self.state)
 end
 
 --- Takes two iterators and returns `true` if the first
@@ -1872,24 +1881,24 @@ end
 --- @param  iter_x Iterator
 --- @param  iter_y Iterator
 --- @return boolean
-local is_prefix_of = function (iter_x, iter_y)
-   local generator_x, parameter_x, state_x = iterate(iter_x)
-   local generator_y, parameter_y, state_y = iterate(iter_y)
+local is_prefix_of = function(iter_x, iter_y)
+	local generator_x, parameter_x, state_x = iterate(iter_x)
+	local generator_y, parameter_y, state_y = iterate(iter_y)
 
-   local v_x, v_y
+	local v_x, v_y
 
-   for _ = 1, 10, 1 do
-      state_x, v_x = generator_x(parameter_x, state_x)
-      state_y, v_y = generator_y(parameter_y, state_y)
+	for _ = 1, 10, 1 do
+		state_x, v_x = generator_x(parameter_x, state_x)
+		state_y, v_y = generator_y(parameter_y, state_y)
 
-      if state_x == nil then
-         return true
-      end
+		if state_x == nil then
+			return true
+		end
 
-      if state_y == nil or v_x ~= v_y then
-         return false
-      end
-   end
+		if state_y == nil or v_x ~= v_y then
+			return false
+		end
+	end
 end
 module.is_prefix_of = is_prefix_of
 
@@ -1899,7 +1908,7 @@ module.is_prefix_of = is_prefix_of
 --- @param  iter Iterator
 --- @return boolean
 function Iterator:is_prefix_of(iter)
-   return is_prefix_of(self, iter)
+	return is_prefix_of(self, iter)
 end
 
 --- Returns `true`  if all return values  of `iterator`
@@ -1910,14 +1919,14 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return boolean
-local every = function (predicate, generator, parameter, state)
-   local v
+local every = function(predicate, generator, parameter, state)
+	local v
 
-   repeat
-      state, v = call_if_not_empty(predicate, generator(parameter, state))
-   until state == nil or not v
+	repeat
+		state, v = call_if_not_empty(predicate, generator(parameter, state))
+	until state == nil or not v
 
-   return state == nil
+	return state == nil
 end
 module.every = hoe_1_arg(every)
 module.all   = module.every
@@ -1928,7 +1937,7 @@ module.all   = module.every
 --- @param  predicate function
 --- @return boolean
 function Iterator:every(predicate)
-   return every(predicate, self.generator, self.parameter, self.state)
+	return every(predicate, self.generator, self.parameter, self.state)
 end
 
 --- Returns  `true` if  at least  one return  values of
@@ -1940,14 +1949,14 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return boolean
-local any = function (predicate, generator, parameter, state)
-   local v
+local any = function(predicate, generator, parameter, state)
+	local v
 
-   repeat
-      state, v = call_if_not_empty(predicate, generator(parameter, state))
-   until state == nil or v
+	repeat
+		state, v = call_if_not_empty(predicate, generator(parameter, state))
+	until state == nil or v
 
-   return not not v
+	return not not v
 end
 module.any  = hoe_1_arg(any)
 module.some = module.any
@@ -1959,7 +1968,7 @@ module.some = module.any
 --- @param  predicate function
 --- @return boolean
 function Iterator:any(predicate)
-   return any(predicate, self.generator, self.parameter, self.state)
+	return any(predicate, self.generator, self.parameter, self.state)
 end
 
 --- Sum  up all  iteration values.  An optimized  alias
@@ -1975,16 +1984,16 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return number
-local sum = function (generator, parameter, state)
-   local s = 0
-   local v = 0
+local sum = function(generator, parameter, state)
+	local s = 0
+	local v = 0
 
-   repeat
-      s = s + v
-      state, v = generator(parameter, state)
-   until state == nil
+	repeat
+		s = s + v
+		state, v = generator(parameter, state)
+	until state == nil
 
-   return s
+	return s
 end
 module.sum = hoe_no_args(sum)
 
@@ -1999,7 +2008,7 @@ module.sum = hoe_no_args(sum)
 ---
 --- @return number
 function Iterator:sum()
-   return sum(self.generator, self.parameter, self.state)
+	return sum(self.generator, self.parameter, self.state)
 end
 
 --- Multiply  up  all  iteration values.  An  optimized
@@ -2015,16 +2024,16 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return number
-local product = function (generator, parameter, state)
-   local p = 1
-   local v = 1
+local product = function(generator, parameter, state)
+	local p = 1
+	local v = 1
 
-   repeat
-      p = p * v
-      state, v = generator(parameter, state)
-   until state == nil
+	repeat
+		p = p * v
+		state, v = generator(parameter, state)
+	until state == nil
 
-   return p
+	return p
 end
 module.product = hoe_no_args(product)
 
@@ -2039,15 +2048,23 @@ module.product = hoe_no_args(product)
 ---
 --- @return number
 function Iterator:product()
-   return product(self.generator, self.parameter, self.state)
+	return product(self.generator, self.parameter, self.state)
 end
 
-local min_cmp = function (m, n)
-   if n < m then return n else return m end
+local min_cmp = function(m, n)
+	if n < m then
+		return n
+	else
+		return m
+	end
 end
 
-local max_cmp = function (m, n)
-   if n > m then return n else return m end
+local max_cmp = function(m, n)
+	if n > m then
+		return n
+	else
+		return m
+	end
 end
 
 --- Returns the  smallest value  of the  iterator using
@@ -2059,27 +2076,27 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return any
-local minimum = function (generator, parameter, state)
-   local state_x, m = generator(parameter, state)
+local minimum = function(generator, parameter, state)
+	local state_x, m = generator(parameter, state)
 
-   if state_x == nil then
-      error('min: iterator is empty')
-   end
+	if state_x == nil then
+		error('min: iterator is empty')
+	end
 
-   local cmp
+	local cmp
 
-   if type(m) == 'number' then
-      -- An optimization: use math.min for numbers
-      cmp = mmin
-   else
-      cmp = min_cmp
-   end
+	if type(m) == 'number' then
+		-- An optimization: use math.min for numbers
+		cmp = mmin
+	else
+		cmp = min_cmp
+	end
 
-   for _, v in generator, parameter, state_x do
-      m = cmp(m, v)
-   end
+	for _, v in generator, parameter, state_x do
+		m = cmp(m, v)
+	end
 
-   return m
+	return m
 end
 module.minimum = hoe_no_args(minimum)
 
@@ -2090,7 +2107,7 @@ module.minimum = hoe_no_args(minimum)
 ---
 --- @return any
 function Iterator:minimum()
-   return minimum(self.generator, self.parameter, self.state)
+	return minimum(self.generator, self.parameter, self.state)
 end
 
 --- Returns the  smallest value  of the  iterator using
@@ -2102,18 +2119,18 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return any
-local minimum_by = function (predicate, generator, parameter, state)
-   local state_x, m = generator(parameter, state)
+local minimum_by = function(predicate, generator, parameter, state)
+	local state_x, m = generator(parameter, state)
 
-   if state_x == nil then
-      error('min: iterator is empty')
-   end
+	if state_x == nil then
+		error('min: iterator is empty')
+	end
 
-   for _, v in generator, parameter, state_x do
-      m = predicate(m, v)
-   end
+	for _, v in generator, parameter, state_x do
+		m = predicate(m, v)
+	end
 
-   return m
+	return m
 end
 module.minimum_by = hoe_1_arg(minimum_by)
 
@@ -2124,7 +2141,7 @@ module.minimum_by = hoe_1_arg(minimum_by)
 --- @param  predicate function
 --- @return any
 function Iterator:minimum_by(predicate)
-   return minimum_by(predicate, self.generator, self.parameter, self.state)
+	return minimum_by(predicate, self.generator, self.parameter, self.state)
 end
 
 --- Returns the  biggest value from the  iterator using
@@ -2135,27 +2152,27 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return any
-local maximum = function (generator, parameter, state)
-   local state_x, m = generator(parameter, state)
+local maximum = function(generator, parameter, state)
+	local state_x, m = generator(parameter, state)
 
-   if state_x == nil then
-      error('max: iterator is empty')
-   end
+	if state_x == nil then
+		error('max: iterator is empty')
+	end
 
-   local cmp
+	local cmp
 
-   if type(m) == 'number' then
-      -- An optimization: use math.max for numbers
-      cmp = mmax
-   else
-      cmp = max_cmp
-   end
+	if type(m) == 'number' then
+		-- An optimization: use math.max for numbers
+		cmp = mmax
+	else
+		cmp = max_cmp
+	end
 
-   for _, v in generator, parameter, state_x do
-      m = cmp(m, v)
-   end
+	for _, v in generator, parameter, state_x do
+		m = cmp(m, v)
+	end
 
-   return m
+	return m
 end
 module.maximum = hoe_no_args(maximum)
 
@@ -2166,7 +2183,7 @@ module.maximum = hoe_no_args(maximum)
 ---
 --- @return any
 function Iterator:maximum()
-   return maximum(self.generator, self.parameter, self.state)
+	return maximum(self.generator, self.parameter, self.state)
 end
 
 --- Returns  the biggest  value of  the iterator  using
@@ -2178,18 +2195,18 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return any
-local maximum_by = function (predicate, generator, parameter, state)
-   local state_x, m = generator(parameter, state)
+local maximum_by = function(predicate, generator, parameter, state)
+	local state_x, m = generator(parameter, state)
 
-   if state_x == nil then
-      error('max: iterator is empty')
-   end
+	if state_x == nil then
+		error('max: iterator is empty')
+	end
 
-   for _, v in generator, parameter, state_x do
-      m = predicate(m, v)
-   end
+	for _, v in generator, parameter, state_x do
+		m = predicate(m, v)
+	end
 
-   return m
+	return m
 end
 module.maximum_by = hoe_1_arg(maximum_by)
 
@@ -2200,7 +2217,7 @@ module.maximum_by = hoe_1_arg(maximum_by)
 --- @param  predicate function
 --- @return any
 function Iterator:maximum_by(predicate)
-   return maximum_by(predicate, self.generator, self.parameter, self.state)
+	return maximum_by(predicate, self.generator, self.parameter, self.state)
 end
 
 --- Reduces  the  iterator  from left  to  right  using
@@ -2210,20 +2227,20 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return table
-local totable = function (generator, parameter, state)
-   local t, v = {}, nil
+local totable = function(generator, parameter, state)
+	local t, v = {}, nil
 
-   while true do
-      state, v = generator(parameter, state)
+	while true do
+		state, v = generator(parameter, state)
 
-      if state == nil then
-         break
-      end
+		if state == nil then
+			break
+		end
 
-      table.insert(t, v)
-   end
+		table.insert(t, v)
+	end
 
-   return t
+	return t
 end
 module.totable = hoe_no_args(totable)
 
@@ -2232,7 +2249,7 @@ module.totable = hoe_no_args(totable)
 ---
 --- @return table
 function Iterator:totable()
-   return totable(self.generator, self.parameter, self.state)
+	return totable(self.generator, self.parameter, self.state)
 end
 
 --- Reduces the  iterator from  left to right  using by
@@ -2242,20 +2259,20 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return table
-local tomap = function (generator, parameter, state)
-   local t, k, v = {}, nil, nil
+local tomap = function(generator, parameter, state)
+	local t, k, v = {}, nil, nil
 
-   while true do
-      state, k, v = generator(parameter, state)
+	while true do
+		state, k, v = generator(parameter, state)
 
-      if state == nil then
-         break
-      end
+		if state == nil then
+			break
+		end
 
-      t[k] = v
-   end
+		t[k] = v
+	end
 
-   return t
+	return t
 end
 module.tomap = hoe_no_args(tomap)
 
@@ -2264,15 +2281,16 @@ module.tomap = hoe_no_args(tomap)
 ---
 --- @return table
 function Iterator:tomap()
-   return tomap(self.generator, self.parameter, self.state)
+	return tomap(self.generator, self.parameter, self.state)
 end
 
 --- # Transformations {{{1
 
-local map_generator = function (parameter, state)
-   local generator_x, parameter_x, f = parameter[1], parameter[2], parameter[3]
+local map_generator = function(parameter, state)
+	local generator_x, parameter_x, f =
+		parameter[1], parameter[2], parameter[3]
 
-   return call_if_not_empty(f, generator_x(parameter_x, state))
+	return call_if_not_empty(f, generator_x(parameter_x, state))
 end
 
 --- Return  a  new iterator  by  applying  `f` to  each
@@ -2284,8 +2302,8 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local map = function (f, generator, parameter, state)
-   return wrap(map_generator, {generator, parameter, f}, state)
+local map = function(f, generator, parameter, state)
+	return wrap(map_generator, { generator, parameter, f }, state)
 end
 module.map = hoe_1_arg(map)
 
@@ -2296,22 +2314,22 @@ module.map = hoe_1_arg(map)
 --- @param  f function
 --- @return Iterator
 function Iterator:map(f)
-   return map(f, self.generator, self.parameter, self.state)
+	return map(f, self.generator, self.parameter, self.state)
 end
 
-local enumerate_generator_call = function (i, state_x, ...)
-   if state_x == nil then
-      return nil
-   end
+local enumerate_generator_call = function(i, state_x, ...)
+	if state_x == nil then
+		return nil
+	end
 
-   return {i + 1, state_x}, i, ...
+	return { i + 1, state_x }, i, ...
 end
 
-local enumerate_generator = function (parameter, state)
-   local generator_x, parameter_x = parameter[1], parameter[2]
-   local i, state_x = state[1], state[2]
+local enumerate_generator = function(parameter, state)
+	local generator_x, parameter_x = parameter[1], parameter[2]
+	local i, state_x = state[1], state[2]
 
-   return enumerate_generator_call(i, generator_x(parameter_x, state_x))
+	return enumerate_generator_call(i, generator_x(parameter_x, state_x))
 end
 
 --- Return a  new iterator by enumerating  all elements
@@ -2323,8 +2341,8 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local enumerate = function (generator, parameter, state)
-   return wrap(enumerate_generator, {generator, parameter}, {1, state})
+local enumerate = function(generator, parameter, state)
+	return wrap(enumerate_generator, { generator, parameter }, { 1, state })
 end
 module.enumerate = hoe_no_args(enumerate)
 
@@ -2335,26 +2353,27 @@ module.enumerate = hoe_no_args(enumerate)
 ---
 --- @return Iterator
 function Iterator:enumerate()
-   return enumerate(self.generator, self.parameter, self.state)
+	return enumerate(self.generator, self.parameter, self.state)
 end
 
-local intersperse_call = function (i, state_x, ...)
-   if state_x == nil then
-      return nil
-   end
+local intersperse_call = function(i, state_x, ...)
+	if state_x == nil then
+		return nil
+	end
 
-   return {i + 1, state_x}, ...
+	return { i + 1, state_x }, ...
 end
 
-local intersperse_generator = function (parameter, state)
-   local x, generator_x, parameter_x = parameter[1], parameter[2], parameter[3]
-   local i, state_x = state[1], state[2]
+local intersperse_generator = function(parameter, state)
+	local x, generator_x, parameter_x =
+		parameter[1], parameter[2], parameter[3]
+	local i, state_x = state[1], state[2]
 
-   if i % 2 == 1 then
-      return {i + 1, state_x}, x
-   else
-      return intersperse_call(i, generator_x(parameter_x, state_x))
-   end
+	if i % 2 == 1 then
+		return { i + 1, state_x }, x
+	else
+		return intersperse_call(i, generator_x(parameter_x, state_x))
+	end
 end
 
 --- Return  a  new  iterator  where the  `x`  value  is
@@ -2369,8 +2388,12 @@ end
 --- @return Iterator
 ---
 --- TODO(scheatkode): intersperse must not add x to the tail
-local intersperse = function (x, generator, parameter, state)
-   return wrap(intersperse_generator, {x, generator, parameter}, {0, state})
+local intersperse = function(x, generator, parameter, state)
+	return wrap(
+		intersperse_generator,
+		{ x, generator, parameter },
+		{ 0, state }
+	)
 end
 module.intersperse = hoe_1_arg(intersperse)
 
@@ -2382,31 +2405,31 @@ module.intersperse = hoe_1_arg(intersperse)
 ---
 --- @return Iterator
 function Iterator:intersperse(x)
-   return intersperse(x, self.generator, self.parameter, self.state)
+	return intersperse(x, self.generator, self.parameter, self.state)
 end
 
 --- # Compositions {{{1
 
-local function zip_generator_r (parameter, state, state_new, ...)
-   if #state_new == #parameter / 2 then
-      return state_new, ...
-   end
+local function zip_generator_r(parameter, state, state_new, ...)
+	if #state_new == #parameter / 2 then
+		return state_new, ...
+	end
 
-   local i = #state_new + 1
-   local generator_x, parameter_x = parameter[2 * i - 1], parameter[2 * i]
-   local state_x, v = generator_x(parameter_x, state[i])
+	local i = #state_new + 1
+	local generator_x, parameter_x = parameter[2 * i - 1], parameter[2 * i]
+	local state_x, v = generator_x(parameter_x, state[i])
 
-   if state_x == nil then
-      return nil
-   end
+	if state_x == nil then
+		return nil
+	end
 
-   table.insert(state_new, state_x)
+	table.insert(state_new, state_x)
 
-   return zip_generator_r(parameter, state, state_new, v, ...)
+	return zip_generator_r(parameter, state, state_new, v, ...)
 end
 
-local zip_generator = function (parameter, state)
-   return zip_generator_r(parameter, state, {})
+local zip_generator = function(parameter, state)
+	return zip_generator_r(parameter, state, {})
 end
 
 --- Return a new iterator where the `i`-th return value
@@ -2417,29 +2440,29 @@ end
 ---
 --- @vararg ... Iterator
 --- @return Iterator
-local zip = function (...)
-   local n = count_arguments(...)
+local zip = function(...)
+	local n = count_arguments(...)
 
-   if n == 0 then
-      return wrap(nil_generator, nil, nil)
-   end
+	if n == 0 then
+		return wrap(nil_generator, nil, nil)
+	end
 
-   local parameter = { [2 * n] = 0 }
-   local state     = {     [n] = 0 }
+	local parameter = { [2 * n] = 0 }
+	local state = { [n] = 0 }
 
-   local generator_x, parameter_x, state_x
+	local generator_x, parameter_x, state_x
 
-   for i = 1, n, 1 do
-      local it = select(n - i + 1, ...)
+	for i = 1, n, 1 do
+		local it = select(n - i + 1, ...)
 
-      generator_x, parameter_x, state_x = raw_iterator(it)
+		generator_x, parameter_x, state_x = raw_iterator(it)
 
-      parameter[ 2 * i - 1 ] = generator_x
-      parameter[ 2 * i ]     = parameter_x
-      state[ i ]             = state_x
-   end
+		parameter[2 * i - 1] = generator_x
+		parameter[2 * i] = parameter_x
+		state[i] = state_x
+	end
 
-   return wrap(zip_generator, parameter, state)
+	return wrap(zip_generator, parameter, state)
 end
 module.zip = zip
 
@@ -2453,21 +2476,22 @@ module.zip = zip
 --- @return Iterator
 Iterator.zip = zip
 
-local cycle_generator_call = function (parameter, state_x, ...)
-   if state_x == nil then
-      local generator_x, parameter_x, state_x0 = parameter[1], parameter[2], parameter[3]
+local cycle_generator_call = function(parameter, state_x, ...)
+	if state_x == nil then
+		local generator_x, parameter_x, state_x0 =
+			parameter[1], parameter[2], parameter[3]
 
-      return generator_x(parameter_x, deepcopy(state_x0))
-   end
+		return generator_x(parameter_x, deepcopy(state_x0))
+	end
 
-   return state_x, ...
+	return state_x, ...
 end
 
-local cycle_generator = function (parameter, state_x)
-   -- local generator_x, parameter_x, state_x0 = parameter[1], parameter[2], parameter[3]
-   local generator_x, parameter_x = parameter[1], parameter[2]
+local cycle_generator = function(parameter, state_x)
+	-- local generator_x, parameter_x, state_x0 = parameter[1], parameter[2], parameter[3]
+	local generator_x, parameter_x = parameter[1], parameter[2]
 
-   return cycle_generator_call(parameter, generator_x(parameter_x, state_x))
+	return cycle_generator_call(parameter, generator_x(parameter_x, state_x))
 end
 
 --- Make a new iterator  that returns elements from the
@@ -2483,8 +2507,12 @@ end
 --- @param  parameter any
 --- @param  state any
 --- @return Iterator
-local cycle = function (generator, parameter, state)
-   return wrap(cycle_generator, {generator, parameter, state}, deepcopy(state))
+local cycle = function(generator, parameter, state)
+	return wrap(
+		cycle_generator,
+		{ generator, parameter, state },
+		deepcopy(state)
+	)
 end
 module.cycle = hoe_no_args(cycle)
 
@@ -2499,32 +2527,36 @@ module.cycle = hoe_no_args(cycle)
 ---
 --- @return Iterator
 function Iterator:cycle()
-   return cycle(self.generator, self.parameter, self.state)
+	return cycle(self.generator, self.parameter, self.state)
 end
 
 -- call each other
 local chain_generator_r1
-local chain_generator_r2 = function (parameter, state, state_x, ...)
-   if state_x == nil then
-      local i = state[1] + 1
+local chain_generator_r2 = function(parameter, state, state_x, ...)
+	if state_x == nil then
+		local i = state[1] + 1
 
-      if parameter[3 * i - 1] == nil then
-         return nil
-      end
+		if parameter[3 * i - 1] == nil then
+			return nil
+		end
 
-      state_x = parameter[3 * i]
+		state_x = parameter[3 * i]
 
-      return chain_generator_r1(parameter, {i, state_x})
-   end
+		return chain_generator_r1(parameter, { i, state_x })
+	end
 
-   return { state[1], state_x }, ...
+	return { state[1], state_x }, ...
 end
 
-chain_generator_r1 = function (parameter, state)
-   local i, state_x = state[1], state[2]
-   local generator_x, parameter_x = parameter[3 * i - 2], parameter[3 * i - 1]
+chain_generator_r1 = function(parameter, state)
+	local i, state_x = state[1], state[2]
+	local generator_x, parameter_x = parameter[3 * i - 2], parameter[3 * i - 1]
 
-   return chain_generator_r2(parameter, state, generator_x(parameter_x, state_x))
+	return chain_generator_r2(
+		parameter,
+		state,
+		generator_x(parameter_x, state_x)
+	)
 end
 
 --- Make  an iterator  that returns  elements from  the
@@ -2537,27 +2569,27 @@ end
 ---
 --- @vararg ... Iterator
 --- @return Iterator
-local chain = function (...)
-   local n = count_arguments(...)
+local chain = function(...)
+	local n = count_arguments(...)
 
-   if n == 0 then
-      return wrap(nil_generator, nil, nil)
-   end
+	if n == 0 then
+		return wrap(nil_generator, nil, nil)
+	end
 
-   local parameter = { [3 * n] = 0 }
-   local it
+	local parameter = { [3 * n] = 0 }
+	local it
 
-   for i = 1, n, 1 do
-      local element = select(i, ...)
+	for i = 1, n, 1 do
+		local element = select(i, ...)
 
-      it = iterate(element)
+		it = iterate(element)
 
-      parameter[3 * i - 2] = it.generator
-      parameter[3 * i - 1] = it.parameter
-      parameter[3 * i]     = it.state
-   end
+		parameter[3 * i - 2] = it.generator
+		parameter[3 * i - 1] = it.parameter
+		parameter[3 * i] = it.state
+	end
 
-   return wrap(chain_generator_r1, parameter, {1, parameter[3]})
+	return wrap(chain_generator_r1, parameter, { 1, parameter[3] })
 end
 module.chain = chain
 
@@ -2577,53 +2609,102 @@ Iterator.chain = chain
 
 local operator = {
 
-   --- ## Comparison operators {{{2
+	--- ## Comparison operators {{{2
 
-   lt = function (a, b) return a <  b end,
-   le = function (a, b) return a <= b end,
-   eq = function (a, b) return a == b end,
-   ne = function (a, b) return a ~= b end,
-   ge = function (a, b) return a >= b end,
-   gt = function (a, b) return a >  b end,
+	lt = function(a, b)
+		return a < b
+	end,
+	le = function(a, b)
+		return a <= b
+	end,
+	eq = function(a, b)
+		return a == b
+	end,
+	ne = function(a, b)
+		return a ~= b
+	end,
+	ge = function(a, b)
+		return a >= b
+	end,
+	gt = function(a, b)
+		return a > b
+	end,
 
-   --- ## Arithmetic operators {{{2
+	--- ## Arithmetic operators {{{2
 
-   add = function (a, b) return a + b end,
-   sub = function (a, b) return a - b end,
-   div = function (a, b) return a / b end,
-   mod = function (a, b) return a % b end,
-   mul = function (a, b) return a * b end,
-   pow = function (a, b) return a ^ b end,
+	add = function(a, b)
+		return a + b
+	end,
+	sub = function(a, b)
+		return a - b
+	end,
+	div = function(a, b)
+		return a / b
+	end,
+	mod = function(a, b)
+		return a % b
+	end,
+	mul = function(a, b)
+		return a * b
+	end,
+	pow = function(a, b)
+		return a ^ b
+	end,
 
-   neg = function (a) return -a end,
+	neg = function(a)
+		return -a
+	end,
 
-   floordiv = function (a, b) return mfloor(a / b) end,
-   intdiv   = function (a, b)
-      local q = a / b
+	floordiv = function(a, b)
+		return mfloor(a / b)
+	end,
+	intdiv = function(a, b)
+		local q = a / b
 
-      if a >= 0 then return mfloor(q) else return mceil(q) end
-   end,
+		if a >= 0 then
+			return mfloor(q)
+		else
+			return mceil(q)
+		end
+	end,
 
-   --- ## String operators {{{2
+	--- ## String operators {{{2
 
-   concat = function (a, b) return a .. b end,
-   length = function (a) return #a end,
+	concat = function(a, b)
+		return a .. b
+	end,
+	length = function(a)
+		return #a
+	end,
 
-   --- ## Logical operators {{{2
+	--- ## Logical operators {{{2
 
-   land = function (a, b) return a and b end,
-   lor  = function (a, b) return a or  b end,
+	land = function(a, b)
+		return a and b
+	end,
+	lor = function(a, b)
+		return a or b
+	end,
 
-   lnot  = function (a) return     not a end,
-   truth = function (a) return not not a end,
+	lnot = function(a)
+		return not a
+	end,
+	truth = function(a)
+		return not not a
+	end,
 
-   --- ## Miscellaneous operators {{{2
+	--- ## Miscellaneous operators {{{2
 
-   id = function (...) return ... end,
+	id = function(...)
+		return ...
+	end,
 
-   skip_key   = function (_, v) return v end,
-   skip_value = function (k, _) return k end,
-
+	skip_key = function(_, v)
+		return v
+	end,
+	skip_value = function(k, _)
+		return k
+	end,
 }
 
 module.operator = operator

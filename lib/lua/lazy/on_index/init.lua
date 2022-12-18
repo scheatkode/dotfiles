@@ -13,6 +13,6 @@ return function(path)
 
 		__new_index = function(_, key, value)
 			require(path)[key] = value
-		end
+		end,
 	})
 end

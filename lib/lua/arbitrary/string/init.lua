@@ -78,8 +78,12 @@ local function random_string(length, seed)
 	length = length or math.random(100)
 
 	math.randomseed(seed or os.clock() ^ 5)
-	assertx(type(length) == 'number' and length >= 0, string.format, 'wrong argument #1 to random string generator, expected positive number, got %s', length)
-
+	assertx(
+		type(length) == 'number' and length >= 0,
+		string.format,
+		'wrong argument #1 to random string generator, expected positive number, got %s',
+		length
+	)
 
 	return recurse(length)
 end

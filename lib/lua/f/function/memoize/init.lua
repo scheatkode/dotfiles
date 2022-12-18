@@ -43,7 +43,9 @@ local function memoize_1(f)
 		local k = return_or_empty(arg)
 		local r = lookup[k]
 
-		if r then return r() end
+		if r then
+			return r()
+		end
 
 		r = enclose(f(arg))
 		lookup[k] = r
@@ -98,7 +100,7 @@ local function memoize_n(n, f)
 			return f(arg, ...)
 		end)
 
-		print(debug.getinfo(1, "n").istailcall)
+		print(debug.getinfo(1, 'n').istailcall)
 
 		lookup[k] = r
 		return r(...)

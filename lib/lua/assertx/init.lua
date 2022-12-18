@@ -23,7 +23,9 @@ local type   = type
 ---@param ... any Rest arguments.
 ---@return ... any The given arguments.
 local function assertx(v, ...)
-	if v then return v, ... end
+	if v then
+		return v, ...
+	end
 
 	local f = ...
 

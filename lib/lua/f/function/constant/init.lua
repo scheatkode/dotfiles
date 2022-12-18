@@ -4,5 +4,7 @@
 ---@param a A
 ---@type fun(a: A): fun(): A
 return function(a)
-	return function() return a end
+	return function()
+		return a
+	end
 end

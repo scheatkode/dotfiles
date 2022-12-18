@@ -9,4 +9,6 @@
 ---
 ---@param a any
 ---@return boolean
-return function (a) return not not a end
+return function(a)
+	return not not a
+end

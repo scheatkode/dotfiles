@@ -70,13 +70,14 @@ local function get_bounds(l)
 		local m3 = m[i][3]
 
 		for t = 0, 1 do
-			local top1   = (284517 * m1 - 94839 * m3) * sub2
-			local top2   = (838422 * m3 + 769860 * m2 + 731718 * m1) * l * sub2 - 769860 * t * l
+			local top1 = (284517 * m1 - 94839 * m3) * sub2
+			local top2 = (838422 * m3 + 769860 * m2 + 731718 * m1) * l * sub2
+				- 769860 * t * l
 			local bottom = (632260 * m3 - 126452 * m2) * sub2 + 126452 * t
 
 			result[#result + 1] = {
-				slope     = top1 / bottom,
-				intercept = top2 / bottom
+				slope = top1 / bottom,
+				intercept = top2 / bottom,
 			}
 		end
 	end
@@ -154,9 +155,8 @@ local function rgb_to_xyz(tuple)
 	local rgbl = {
 		to_linear(tuple[1]),
 		to_linear(tuple[2]),
-		to_linear(tuple[3])
+		to_linear(tuple[3]),
 	}
-
 
 	return {
 		dot_product(minv[1], rgbl),
@@ -207,7 +207,7 @@ local function xyz_to_luv(tuple)
 	return {
 		L,
 		13 * L * (var_u - ref_u),
-		13 * L * (var_v - ref_v)
+		13 * L * (var_v - ref_v),
 	}
 end
 
@@ -255,7 +255,6 @@ local function luv_to_lch(tuple)
 		C,
 		H,
 	}
-
 end
 
 local function lch_to_luv(tuple)
@@ -266,7 +265,7 @@ local function lch_to_luv(tuple)
 	return {
 		L,
 		math.cos(h_rad) * C,
-		math.sin(h_rad) * C
+		math.sin(h_rad) * C,
 	}
 end
 
@@ -288,7 +287,6 @@ local function hsluv_to_lch(tuple)
 		max_safe_chroma_for_lh(L, H) / 100 * S,
 		H,
 	}
-
 end
 
 local function lch_to_hsluv(tuple)
@@ -351,7 +349,6 @@ local function lch_to_hpluv(tuple)
 		C / max_safe_chroma_for_l(L) * 100,
 		L,
 	}
-
 end
 
 local function rgb_to_hex(tuple)

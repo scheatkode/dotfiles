@@ -83,7 +83,7 @@ describe('function', function()
 		end)
 
 		it('should handle flipped arguments', function()
-			local add = function (x, y)
+			local add = function(x, y)
 				counter = counter + 1
 				return x + y
 			end

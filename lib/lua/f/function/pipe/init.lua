@@ -50,7 +50,6 @@ local pipe
 
 if jit then
 	pipe = function(a, ...)
-
 		-- LuaJIT is better at optimizing loops than we are. This is consistently
 		-- ~100x faster than the alternatives.
 
@@ -64,7 +63,6 @@ if jit then
 	end
 else
 	pipe = function(a, ...)
-
 		-- Vanilla Lua doesn't do loop optimizations, we gotta do it ourselves by
 		-- unrolling the first 20 iterations of the loop for better performance;
 		-- it's extremely rare that anyone would need anything more. it is also
@@ -74,33 +72,375 @@ else
 		local funcs = { ... }
 
 		if count < 11 then
-			if count == 1 then return funcs[1](a) end
-			if count == 2 then return funcs[2](funcs[1](a)) end
-			if count == 3 then return funcs[3](funcs[2](funcs[1](a))) end
-			if count == 4 then return funcs[4](funcs[3](funcs[2](funcs[1](a)))) end
-			if count == 5 then return funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))) end
-			if count == 6 then return funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))) end
-			if count == 7 then return funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))) end
-			if count == 8 then return funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))))) end
-			if count == 9 then return funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))))) end
-			if count == 0 then return a end
+			if count == 1 then
+				return funcs[1](a)
+			end
+			if count == 2 then
+				return funcs[2](funcs[1](a))
+			end
+			if count == 3 then
+				return funcs[3](funcs[2](funcs[1](a)))
+			end
+			if count == 4 then
+				return funcs[4](funcs[3](funcs[2](funcs[1](a))))
+			end
+			if count == 5 then
+				return funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))
+			end
+			if count == 6 then
+				return funcs[6](
+					funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))
+				)
+			end
+			if count == 7 then
+				return funcs[7](
+					funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))
+				)
+			end
+			if count == 8 then
+				return funcs[8](
+					funcs[7](
+						funcs[6](
+							funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))
+						)
+					)
+				)
+			end
+			if count == 9 then
+				return funcs[9](
+					funcs[8](
+						funcs[7](
+							funcs[6](
+								funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))
+							)
+						)
+					)
+				)
+			end
+			if count == 0 then
+				return a
+			end
 
-			return funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))))))
+			return funcs[10](
+				funcs[9](
+					funcs[8](
+						funcs[7](
+							funcs[6](
+								funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))
+							)
+						)
+					)
+				)
+			)
 		end
 
 		if count < 21 then
-			if count == 10 then return funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))))))) end
-			if count == 11 then return funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))))))) end
-			if count == 12 then return funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))))))))) end
-			if count == 13 then return funcs[13](funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))))))))) end
-			if count == 14 then return funcs[14](funcs[13](funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))))))))))) end
-			if count == 15 then return funcs[15](funcs[14](funcs[13](funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))))))))))) end
-			if count == 16 then return funcs[16](funcs[15](funcs[14](funcs[13](funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))))))))))))) end
-			if count == 17 then return funcs[17](funcs[16](funcs[15](funcs[14](funcs[13](funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))))))))))))) end
-			if count == 18 then return funcs[18](funcs[17](funcs[16](funcs[15](funcs[14](funcs[13](funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))))))))))))))) end
-			if count == 19 then return funcs[19](funcs[18](funcs[17](funcs[16](funcs[15](funcs[14](funcs[13](funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))))))))))))))) end
+			if count == 10 then
+				return funcs[10](
+					funcs[9](
+						funcs[8](
+							funcs[7](
+								funcs[6](
+									funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a)))))
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 11 then
+				return funcs[11](
+					funcs[10](
+						funcs[9](
+							funcs[8](
+								funcs[7](
+									funcs[6](
+										funcs[5](
+											funcs[4](funcs[3](funcs[2](funcs[1](a))))
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 12 then
+				return funcs[12](
+					funcs[11](
+						funcs[10](
+							funcs[9](
+								funcs[8](
+									funcs[7](
+										funcs[6](
+											funcs[5](
+												funcs[4](funcs[3](funcs[2](funcs[1](a))))
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 13 then
+				return funcs[13](
+					funcs[12](
+						funcs[11](
+							funcs[10](
+								funcs[9](
+									funcs[8](
+										funcs[7](
+											funcs[6](
+												funcs[5](
+													funcs[4](
+														funcs[3](funcs[2](funcs[1](a)))
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 14 then
+				return funcs[14](
+					funcs[13](
+						funcs[12](
+							funcs[11](
+								funcs[10](
+									funcs[9](
+										funcs[8](
+											funcs[7](
+												funcs[6](
+													funcs[5](
+														funcs[4](
+															funcs[3](funcs[2](funcs[1](a)))
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 15 then
+				return funcs[15](
+					funcs[14](
+						funcs[13](
+							funcs[12](
+								funcs[11](
+									funcs[10](
+										funcs[9](
+											funcs[8](
+												funcs[7](
+													funcs[6](
+														funcs[5](
+															funcs[4](
+																funcs[3](
+																	funcs[2](funcs[1](a))
+																)
+															)
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 16 then
+				return funcs[16](
+					funcs[15](
+						funcs[14](
+							funcs[13](
+								funcs[12](
+									funcs[11](
+										funcs[10](
+											funcs[9](
+												funcs[8](
+													funcs[7](
+														funcs[6](
+															funcs[5](
+																funcs[4](
+																	funcs[3](
+																		funcs[2](funcs[1](a))
+																	)
+																)
+															)
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 17 then
+				return funcs[17](
+					funcs[16](
+						funcs[15](
+							funcs[14](
+								funcs[13](
+									funcs[12](
+										funcs[11](
+											funcs[10](
+												funcs[9](
+													funcs[8](
+														funcs[7](
+															funcs[6](
+																funcs[5](
+																	funcs[4](
+																		funcs[3](
+																			funcs[2](funcs[1](a))
+																		)
+																	)
+																)
+															)
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 18 then
+				return funcs[18](
+					funcs[17](
+						funcs[16](
+							funcs[15](
+								funcs[14](
+									funcs[13](
+										funcs[12](
+											funcs[11](
+												funcs[10](
+													funcs[9](
+														funcs[8](
+															funcs[7](
+																funcs[6](
+																	funcs[5](
+																		funcs[4](
+																			funcs[3](
+																				funcs[2](
+																					funcs[1](a)
+																				)
+																			)
+																		)
+																	)
+																)
+															)
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
+			if count == 19 then
+				return funcs[19](
+					funcs[18](
+						funcs[17](
+							funcs[16](
+								funcs[15](
+									funcs[14](
+										funcs[13](
+											funcs[12](
+												funcs[11](
+													funcs[10](
+														funcs[9](
+															funcs[8](
+																funcs[7](
+																	funcs[6](
+																		funcs[5](
+																			funcs[4](
+																				funcs[3](
+																					funcs[2](
+																						funcs[1](a)
+																					)
+																				)
+																			)
+																		)
+																	)
+																)
+															)
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			end
 
-			return funcs[20](funcs[19](funcs[18](funcs[17](funcs[16](funcs[15](funcs[14](funcs[13](funcs[12](funcs[11](funcs[10](funcs[9](funcs[8](funcs[7](funcs[6](funcs[5](funcs[4](funcs[3](funcs[2](funcs[1](a))))))))))))))))))))
+			return funcs[20](
+				funcs[19](
+					funcs[18](
+						funcs[17](
+							funcs[16](
+								funcs[15](
+									funcs[14](
+										funcs[13](
+											funcs[12](
+												funcs[11](
+													funcs[10](
+														funcs[9](
+															funcs[8](
+																funcs[7](
+																	funcs[6](
+																		funcs[5](
+																			funcs[4](
+																				funcs[3](
+																					funcs[2](
+																						funcs[1](a)
+																					)
+																				)
+																			)
+																		)
+																	)
+																)
+															)
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			)
 		end
 
 		local result = a

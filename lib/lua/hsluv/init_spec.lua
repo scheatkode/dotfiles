@@ -2,8 +2,8 @@ local hsluv = require('hsluv')
 local specs = require('hsluv.specs')
 
 local function assert_close_enough(a, b)
-	local s_a = string.format("(%f,%f,%f)", a[1], a[2], a[3])
-	local s_b = string.format("(%f,%f,%f)", b[1], b[2], b[3])
+	local s_a = string.format('(%f,%f,%f)', a[1], a[2], a[3])
+	local s_b = string.format('(%f,%f,%f)', b[1], b[2], b[3])
 
 	for i = 1, #a do
 		assert.is_true(

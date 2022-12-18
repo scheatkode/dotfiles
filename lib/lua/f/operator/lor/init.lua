@@ -11,4 +11,6 @@
 ---@param a any
 ---@param b any
 ---@return boolean
-return function (a, b) return a or b end
+return function(a, b)
+	return a or b
+end

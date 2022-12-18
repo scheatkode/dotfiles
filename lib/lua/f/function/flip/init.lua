@@ -9,7 +9,9 @@
 ---@param f function function to apply
 ---@return function f a function accepting the flipped arguments
 local function flip(f)
-   return function(b, a) return f(a, b) end
+	return function(b, a)
+		return f(a, b)
+	end
 end
 
 return flip

@@ -18,22 +18,14 @@ local flags = require('compat.flags')
 return function(command)
 	local r1, r2, r3 = os.execute(command)
 
-	if
-		    r2 == 'No error'
-		and r3 == 0
-		and flags.is_windows
-	then
-
+	if r2 == 'No error' and r3 == 0 and flags.is_windows then
 		-- `os.execute` bug in Lua 5.2/5.3 not reporting `-1`
 		-- properly on Windows was fixed in 5.4.
 
 		r3 = -1
 	end
 
-	if
-		        flags.lua51
-		and not flags.luajit52
-	then
+	if flags.lua51 and not flags.luajit52 then
 		if flags.is_windows then
 			return r1 == 0, r1
 		end

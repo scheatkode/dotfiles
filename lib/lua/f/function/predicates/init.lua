@@ -19,7 +19,9 @@ return function(...)
 
 	return function(...)
 		for _, predicate in ipairs(predicates) do
-			if not predicate(...) then return false end
+			if not predicate(...) then
+				return false
+			end
 		end
 
 		return true

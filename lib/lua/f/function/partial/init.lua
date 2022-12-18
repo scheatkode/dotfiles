@@ -1,5 +1,7 @@
 local function part(f, x)
-	return function(...) return f(x, ...) end
+	return function(...)
+		return f(x, ...)
+	end
 end
 
 ---A function that partially applies given arguments to the

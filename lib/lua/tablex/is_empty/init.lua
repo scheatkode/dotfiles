@@ -6,7 +6,8 @@ return function(table)
 	assertx(
 		type(table) == 'table',
 		string.format,
-		'Expected table, got %s', type(table)
+		'Expected table, got %s',
+		type(table)
 	)
 
 	return next(table) == nil

@@ -17,14 +17,11 @@ describe('comparison operator', function()
 			assert.is_false(gt(2, 3))
 		end)
 
-		f.zip(
-			f.random(0, 1000):take(100),
-			f.random(0, 1000):take(100)
-		)
+		f.zip(f.random(0, 1000):take(100), f.random(0, 1000):take(100))
 			:foreach(function(x, y)
-			   it(fmt('should compare %3d and %3d', x, y), function()
-			      assert.are.same(x > y, gt(x, y))
-			   end)
+				it(fmt('should compare %3d and %3d', x, y), function()
+					assert.are.same(x > y, gt(x, y))
+				end)
 			end)
 	end)
 end)
