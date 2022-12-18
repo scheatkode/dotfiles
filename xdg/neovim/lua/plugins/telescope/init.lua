@@ -87,6 +87,7 @@ return { 'nvim-telescope/telescope.nvim', opt = true,
 		'<leader>Gf',
 		'<leader>pp',
 		'<leader>Pp',
+		'<leader>;',
 	},
 
 	requires = {

@@ -1,5 +1,6 @@
 return {
 	setup = function()
+		local themes  = require('plugins.telescope.themes')
 		local pickers = require('plugins.telescope.pickers')
 
 		-- project
@@ -67,6 +68,7 @@ return {
 		-- commands
 		vim.keymap.set('n', '<leader>fc', pickers.commands)
 		vim.keymap.set('n', '<leader>Fc', pickers.commands)
+		vim.keymap.set('n', '<leader>;', function() pickers.commands(themes.get_command()) end)
 
 		-- qflist & loclist
 		vim.keymap.set('n', '<leader>fq', pickers.quickfix)
