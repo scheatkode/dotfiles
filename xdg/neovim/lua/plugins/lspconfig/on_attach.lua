@@ -30,7 +30,7 @@ return function(_, bufnr, _)
 
 	-- code action {{{3
 	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'Code actions' })
-	vim.keymap.set('x', '<leader>ca', vim.lsp.buf.range_code_action, { buffer = bufnr, desc = 'Range code actions' })
+	vim.keymap.set('x', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'Range code actions' })
 
 	-- hover documentation {{{3
 	vim.keymap.set('n', '<leader>ch', vim.lsp.buf.hover, { buffer = bufnr, desc = 'Show documentation' })
