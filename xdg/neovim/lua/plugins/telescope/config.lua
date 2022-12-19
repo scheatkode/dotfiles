@@ -73,16 +73,16 @@ return {
 					i = {
 						['<c-h>'] = actions.which_key,
 
-						['<c-j>'] = actions.move_selection_next,
-						['<c-k>'] = actions.move_selection_previous,
+						['<c-n>'] = actions.move_selection_next,
+						['<c-p>'] = actions.move_selection_previous,
 
 						['<cr>']  = actions.select_default,
 						['<c-v>'] = actions.select_vertical,
 						['<c-s>'] = actions.select_horizontal,
 						['<c-x>'] = false,
 
-						['<c-n>'] = actions.cycle_history_next,
-						['<c-p>'] = actions.cycle_history_prev,
+						['<c-j>'] = actions.cycle_history_next,
+						['<c-k>'] = actions.cycle_history_prev,
 
 						['<c-u>'] = actions.preview_scrolling_up,
 						['<c-d>'] = actions.preview_scrolling_down,
@@ -106,8 +106,8 @@ return {
 						['<c-h>'] = actions.which_key,
 						['?']     = actions.which_key,
 
-						['<c-j>'] = actions.move_selection_next,
-						['<c-k>'] = actions.move_selection_previous,
+						['<c-n>'] = actions.move_selection_next,
+						['<c-p>'] = actions.move_selection_previous,
 						['j']     = actions.move_selection_next,
 						['k']     = actions.move_selection_previous,
 
@@ -116,8 +116,8 @@ return {
 						['<c-s>'] = actions.select_horizontal,
 						['<c-x>'] = false,
 
-						['<c-n>'] = actions.cycle_history_next,
-						['<c-p>'] = actions.cycle_history_prev,
+						['<c-j>'] = actions.cycle_history_next,
+						['<c-k>'] = actions.cycle_history_prev,
 
 						['<c-u>'] = actions.preview_scrolling_up,
 						['<c-d>'] = actions.preview_scrolling_down,
