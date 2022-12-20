@@ -1,7 +1,7 @@
 return {
 	setup = function()
 		local lazy = require('load.on_member_call')
-		local actions = lazy('plugins.explorer.actions')
+		local actions = lazy('plugins.lir.actions')
 
 		local defaults  = lazy('lir.actions')
 		local clipboard = lazy('lir.clipboard.actions')
