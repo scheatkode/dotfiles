@@ -3,7 +3,7 @@
 local f     = require('f')
 local typex = require('typex')()
 
-local on_attach = require('plugins.lspconfig.on_attach')
+local on_attach = require('plugins.nvim-lspconfig.on_attach')
 
 local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
 
@@ -21,7 +21,6 @@ local languages = {
 	dart        = 'dartls',
 	eslint      = 'eslint',
 	go          = 'gopls',
-	golint      = 'golangci_lint_ls',
 	html        = 'html',
 	java        = 'jdtls',
 	javascript  = 'tsserver',
