@@ -1,7 +1,6 @@
 return {
 	'anuvyklack/hydra.nvim',
 
-	opt  = true,
 	keys = {
 		'z',
 		'<C-w>',
@@ -9,6 +8,6 @@ return {
 	},
 
 	config = function()
-		require('plugins.modes.config').setup()
+		require('plugins.hydra.config').setup()
 	end,
 }
