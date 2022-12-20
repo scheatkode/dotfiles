@@ -1,18 +1,9 @@
 return {
 	setup = function()
-		local has_comment, comment = pcall(require, 'Comment')
-		local has_ts, ts           = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
+		local comment = require('Comment')
+		local ts = require('ts_context_commentstring.integrations.comment_nvim')
 
-		if not has_comment then
-			print('‼ Tried loading Comment.nvim ... unsuccessfully.')
-			return has_comment
-		end
-
-		if not has_ts then
-			print('‼ nvim-ts-context-commentstring unavailable, comments may not be correct.')
-		end
-
-		return comment.setup {
+		return comment.setup({
 			-- add a space between comment and the line
 			padding = true,
 
@@ -24,22 +15,18 @@ return {
 			-- mappings for normal/visual mode
 			mappings = {
 				-- operator-pending mapping
-				basic = false,
-
+				basic    = false,
 				-- extra mapping
-				extra = false,
-
+				extra    = false,
 				-- extended mapping
 				extended = false,
 			},
 
 			-- pre-hook, called before commenting the line
-			pre_hook = has_ts
-				 and ts.create_pre_hook()
-				 or nil,
+			pre_hook = ts.create_pre_hook(),
 
 			-- post-hook, called after commenting is done
 			post_hook = nil,
-		}
-	end
+		})
+	end,
 }
