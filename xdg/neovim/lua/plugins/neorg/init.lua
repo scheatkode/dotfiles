@@ -1,18 +1,14 @@
 return {
 	'nvim-neorg/neorg',
 
-	opt = true,
 	ft = 'norg',
 
-	requires = {
+	dependencies = {
 		'nvim-lua/plenary.nvim',
-	},
-
-	wants = {
-		'plenary.nvim',
+		'nvim-treesitter/nvim-treesitter',
 	},
 
 	config = function()
-		require('plugins.notes.config')
+		require('plugins.notes.config').setup()
 	end,
 }
