@@ -80,28 +80,6 @@ local function setup ()
       end
    })
 
-   -- lazy load builtin plugin {{{1
-
-   -- automatically load builtin plugin
-   -- @return function
-   local function enable_plugin(plugin_name)
-      return function ()
-         local global_key = sf('loaded_%s', plugin_name)
-
-         if vim.g[global_key] == nil or vim.g[global_key] == 2 then
-            vim.g[global_key] = nil
-            vim.cmd(sf('packadd %s', plugin_name))
-         end
-      end
-   end
-
-   vim.api.nvim_create_autocmd({'BufReadPre', 'FileReadPre'}, {
-      desc     = 'Lazy load builtin plugins',
-      group    = vim.api.nvim_create_augroup('ClearCommandMessages', {clear = true}),
-      pattern  = {'*.lua', '*.html', '*.md', '*.tsx'},
-      callback = enable_plugin('matchit')
-   })
-
    -- prevent large files from causing too much noticeable overhead {{{1
 
    local function handle_large_file ()
