@@ -1,14 +1,10 @@
 return {
 	'ggandor/leap.nvim',
 
-	opt  = true,
 	keys = {
 		's',
 		'S',
-		'f',
-		'F',
-		't',
-		'T',
+		'gs',
 	},
 
 	config = function()
@@ -17,5 +13,5 @@ return {
 		vim.keymap.set({ 'n' }, 'gs', '<Plug>(leap-cross-window)')
 		vim.keymap.set({ 'v', 'x' }, 's', '<Plug>(leap-forward-till)')
 		vim.keymap.set({ 'v', 'x' }, 'S', '<Plug>(leap-backward-till)')
-	end
+	end,
 }
