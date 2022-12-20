@@ -1,6 +1,7 @@
 return {
 	'jwalton512/vim-blade',
 
-	opt = true,
-	ft  = { 'blade' },
+	ft = {
+		'blade',
+	},
 }
