@@ -1,6 +1,6 @@
 return {
 	setup = function()
-		local lazy = require('lazy.on_member_call')
+		local lazy = require('load.on_member_call')
 		local themes = lazy('plugins.telescope.themes')
 		local pickers = lazy('plugins.telescope.pickers')
 

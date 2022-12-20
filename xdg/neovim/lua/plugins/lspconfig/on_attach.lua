@@ -1,4 +1,4 @@
-local lazy = require('lazy.on_member_call')
+local lazy = require('load.on_member_call')
 local extensions = lazy('lang.extensions')
 
 return function(_, bufnr, _)

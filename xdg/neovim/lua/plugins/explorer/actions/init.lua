@@ -1,4 +1,4 @@
-local lazy = require('lazy.on_module_call')
+local lazy = require('load.on_module_call')
 
 return {
 	new_node         = lazy('plugins.explorer.actions.new_node'),

@@ -1,4 +1,4 @@
-local lazy = require('lazy.on_module_call')
+local lazy = require('load.on_module_call')
 
 return {
 	is_file_bigger = lazy('user.predicates.is_file_bigger'),

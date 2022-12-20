@@ -1,5 +1,5 @@
-local lazy         = require('lazy.on_module_call')
-local lazy_default = require('lazy.on_member_call')
+local lazy         = require('load.on_module_call')
+local lazy_default = require('load.on_member_call')
 
 local builtin = lazy_default('telescope.builtin')
 

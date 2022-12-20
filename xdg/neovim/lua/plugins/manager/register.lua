@@ -1,6 +1,6 @@
 local function setup()
 	local has_packer, packer = pcall(require, 'packer')
-	local lazy               = require('lazy.on_index')
+	local lazy               = require('load.on_index')
 
 	if not has_packer then
 		error('Expected packer to be installed')
