@@ -10,10 +10,7 @@ return {
 			maxwidth = 50,
 			sources  = {
 				nvim_lsp = '[lsp]',
-				calc     = '[calc]',
 				luasnip  = '[snip]',
-				cmdline  = '[cmd]',
-				nvim_lua = '[api]',
 				path     = '[path]',
 			},
 		}
@@ -35,7 +32,7 @@ return {
 		local expand_or_jump = vim.api.nvim_replace_termcodes(
 			'<Plug>luasnip-expand-or-jump', true, true, true
 		)
-		local jump_prev      = vim.api.nvim_replace_termcodes(
+		local jump_prev = vim.api.nvim_replace_termcodes(
 			'<Plug>luasnip-jump-prev', true, true, true
 		)
 
@@ -66,7 +63,8 @@ return {
 			return column ~= 0
 				 and nvim_buf_get_lines(0, line - 1, line, true)[1]
 				 :sub(column, column)
-				 :match("%s") == nil
+				 :match('%s')
+				 == nil
 		end
 
 		-- Not sure about other people, but autocompletion is broken in my
@@ -159,8 +157,6 @@ return {
 			sources = completion.config.sources({
 				{ name = 'nvim_lsp' },
 				{ name = 'luasnip' },
-				{ name = 'calc' },
-				{ name = 'nvim_lua' },
 				{ name = 'path' },
 			}),
 
