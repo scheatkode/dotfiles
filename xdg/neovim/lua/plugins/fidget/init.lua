@@ -1,14 +1,13 @@
 return {
 	'j-hui/fidget.nvim',
 
-	opt   = true,
-	after = 'mason.nvim',
+	dependencies = {
+		'neovim/nvim-lspconfig',
+	},
 
 	config = function()
 		require('fidget').setup({
-			text = {
-				spinner = 'dots',
-			}
+			text = { spinner = 'dots' },
 		})
-	end
+	end,
 }
