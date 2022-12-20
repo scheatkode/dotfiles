@@ -1,16 +1,6 @@
 return {
 	setup = function()
-		local log = require('log')
-
-		-- Check for plugin existence
-		local has_signature, signature = pcall(require, 'lsp_signature')
-
-		if not has_signature then
-			log.error('Tried loading plugin ... unsuccessfully ‼', 'lsp-signature')
-			return has_signature
-		end
-
-		signature.setup({
+		require('lsp_signature').setup({
 			-- Autoclose signature float win after x sec, disabled if
 			-- `nil`.
 			auto_close_after = nil,
@@ -75,7 +65,7 @@ return {
 			max_width = 50,
 
 			handler_opts = {
-				border = 'rounded' -- double, single, shadow, none
+				border = 'rounded', -- double, single, shadow, none
 			},
 
 			-- Manual toggle key.
@@ -84,5 +74,5 @@ return {
 			-- Next signature selection key, for looping through overloads.
 			select_signature_key = '<M-n>',
 		})
-	end
+	end,
 }
