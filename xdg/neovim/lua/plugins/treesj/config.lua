@@ -1,13 +1,6 @@
 return {
 	setup = function()
-		local has_sj, sj = pcall(require, 'treesj')
-
-		if not has_sj then
-			require('log').error('Tried loading plugin ... unsuccessfully ‼', 'treesj')
-			return has_sj
-		end
-
-		sj.setup({
+		require('treesj').setup({
 			---Do not use default mappings.
 			---@type boolean
 			use_default_keymaps = false,
@@ -32,5 +25,5 @@ return {
 			---@type boolean
 			notify = false,
 		})
-	end
+	end,
 }
