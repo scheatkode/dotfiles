@@ -40,7 +40,7 @@ require('scheatkode.autocmds').setup()
 require('colors').load('gruvvy-ng')
 
 require('diagnostics').setup()
-require('plugins').setup()
+require('plugman').setup()
 
 -- garbage collection
 
