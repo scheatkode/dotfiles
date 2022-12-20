@@ -11,6 +11,7 @@ return {
 	},
 
 	dependencies = {
+		'j-hui/fidget.nvim',
 		'williamboman/mason.nvim',
 		'williamboman/mason-lspconfig.nvim',
 	},
