@@ -1,7 +1,7 @@
 return {
 	setup = function()
-		local log          = require('log')
-		local has_dap, dap = pcall(require, 'dap')
+		local log = require('log')
+		local dap = require('dap')
 
 		local debuggers = {
 			'go',
@@ -9,8 +9,6 @@ return {
 			'javascript',
 			'typescript',
 		}
-
-		-- debugger configuration
 
 		local function configure_debuggers(debugger_list)
 			for _, debugger in ipairs(debugger_list) do
@@ -33,11 +31,6 @@ return {
 
 				::continue::
 			end
-		end
-
-		if not has_dap then
-			log.error('Tried loading plugin ... unsuccessfully', '‼ dap')
-			return has_dap
 		end
 
 		vim.fn.sign_define('DapBreakpointRejected', {
@@ -71,5 +64,3 @@ return {
 		configure_debuggers(debuggers)
 	end
 }
-
--- }}}
