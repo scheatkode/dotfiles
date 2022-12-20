@@ -1,38 +1,28 @@
 return {
 	setup = function()
-		local has_statusline, statusline = pcall(require, 'lualine')
-
-		if not has_statusline then
-			print('Tried loading plugin ... unsuccessfully ‼', 'lualine')
-			return has_statusline
-		end
-
-		local has_status, status = pcall(require, 'lsp-status')
-
-		local function lspstatus()
-			if has_status and #vim.lsp.buf_get_clients() > 0 then
-				return status.status()
-			end
-
-			return ''
-		end
-
-		statusline.setup({
-			options = {
+		require('lualine').setup({
+			options           = {
 				always_divide_middle = true,
 				component_separators = { left = ' ', right = ' ' },
-				disabled_filetypes   = {},
 				icons_enabled        = true,
 				section_separators   = { left = ' ', right = ' ' },
 				theme                = require('colors').current().lualine(),
+				disabled_filetypes   = {
+					statusline = {
+						'dapui_breakpoints',
+						'dapui_scopes',
+						'dapui_stacks',
+						'dapui_watches',
+					},
+				},
 			},
-			sections = {
+			sections          = {
 				lualine_a = { 'mode' },
 				lualine_b = { 'branch', 'diff', 'diagnostics' },
-				lualine_c = { 'filename', lspstatus },
+				lualine_c = { 'filename' },
 				lualine_x = { 'encoding', 'fileformat', 'filetype' },
 				lualine_y = { 'progress' },
-				lualine_z = { 'location' }
+				lualine_z = { 'location' },
 			},
 			inactive_sections = {
 				lualine_a = {},
@@ -40,10 +30,10 @@ return {
 				lualine_c = { 'filename' },
 				lualine_x = { 'location' },
 				lualine_y = {},
-				lualine_z = {}
+				lualine_z = {},
 			},
-			tabline    = {},
-			extensions = {},
+			tabline           = {},
+			extensions        = {},
 		})
 	end,
 }
