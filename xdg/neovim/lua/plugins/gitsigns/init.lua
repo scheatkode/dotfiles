@@ -25,17 +25,13 @@
 return {
 	'lewis6991/gitsigns.nvim',
 
-	opt   = true,
 	event = {
 		'BufReadPost',
 		'FileReadPre',
 	},
 
-	requires = {
-		{ 'nvim-lua/plenary.nvim' },
-	},
-	wants = {
-		'plenary.nvim'
+	dependencies = {
+		'nvim-lua/plenary.nvim',
 	},
 
 	config = function()
