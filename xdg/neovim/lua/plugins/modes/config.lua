@@ -1,12 +1,10 @@
 return {
 	setup = function()
-		local lazy      = require('load.on_member_call')
-		local ok, hydra = pcall(require, 'hydra')
+		local lazy  = require('load.on_member_call')
+		local hydra = require('hydra')
 
-		if not ok then
-			require('log').error('Tried loading plugin ... unsuccessfully ‼', 'hydra')
-			return ok
-		end
+		local dap   = lazy('dap')
+		local dapui = lazy('dapui')
 
 		hydra({
 			name  = 'Side scroll',
@@ -34,20 +32,12 @@ return {
 			},
 		})
 
-		local dap   = lazy('dap')
-		local dapui = lazy('dapui')
-
 		hydra({
 			name   = 'Debug',
 			body   = '<leader>D',
 			config = {
 				color = 'pink',
 				invoke_on_body = true,
-				hint = {
-					type = 'window',
-					position = 'top',
-					border = 'rounded'
-				},
 				on_enter = function()
 					dap.continue()
 					dapui.open({})
