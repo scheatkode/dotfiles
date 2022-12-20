@@ -1,13 +1,7 @@
 return {
 	setup = function()
-		local ok, snippets = pcall(require, 'luasnip')
-
-		if not ok then
-			require('log').error('Tried loading plugin ... unsuccessfully ‼', 'luasnip')
-			return ok
-		end
-
-		local types = require('luasnip.util.types')
+		local snippets = require('luasnip')
+		local types    = require('luasnip.util.types')
 
 		snippets.config.set_config({
 			history = false,
@@ -32,8 +26,15 @@ return {
 			},
 		})
 
-		for _, ft in ipairs(vim.api.nvim_get_runtime_file('lua/plugins/snippets/*/init.lua', true)) do
+		for _, ft in
+			ipairs(
+				vim.api.nvim_get_runtime_file(
+					'lua/plugins/snippets/*/init.lua',
+					true
+				)
+			)
+		do
 			loadfile(ft)().setup()
 		end
-	end
+	end,
 }
