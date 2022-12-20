@@ -1,26 +1,9 @@
 return {
 	setup = function()
-		local has_treesitter, treesitter = pcall(require, 'nvim-treesitter.configs')
-		local has_textobjects, _         = pcall(require, 'nvim-treesitter-textobjects')
-		local has_commentstring, _       = pcall(require, 'ts_context_commentstring')
-
-		if not has_treesitter then
-			print('‼ Tried loading treesitter ... unsuccessfully.')
-			return has_treesitter
-		end
-
-		if not has_textobjects then
-			print('‼ Tried loading treesitter-textobjects ... unsuccessfully.')
-		end
-
-		if not has_commentstring then
-			print('‼ Tried loading treesitter-comment-string ... unsuccessfully.')
-		end
-
 		local flip           = require('f.function.flip')
 		local is_file_bigger = require('user.predicates.is_file_bigger')
 
-		treesitter.setup({
+		require('nvim-treesitter.configs').setup({
 			ensure_installed = {
 				'awk',
 				'bash',
@@ -69,7 +52,7 @@ return {
 			highlight   = {
 				enable = true,
 				additional_vim_regex_highlighting = false,
-				disable = flip(is_file_bigger(1048576)) -- 1 MiB,
+				disable = flip(is_file_bigger(1048576)), -- 1 MiB,
 			},
 
 			context_commentstring = {
@@ -89,7 +72,7 @@ return {
 					node_incremental  = '<leader>a',
 					scope_incremental = '<leader>s',
 					node_decremental  = '<leader>i',
-				}
+				},
 			},
 
 			textobjects = {
@@ -135,8 +118,7 @@ return {
 						},
 					},
 
-					goto_next_end = {
-					},
+					goto_next_end = {},
 
 					goto_previous_start = {
 						['[f'] = {
@@ -165,8 +147,7 @@ return {
 						},
 					},
 
-					goto_previous_end = {
-					},
+					goto_previous_end = {},
 				},
 
 				select = {
@@ -203,5 +184,5 @@ return {
 				},
 			},
 		})
-	end
+	end,
 }
