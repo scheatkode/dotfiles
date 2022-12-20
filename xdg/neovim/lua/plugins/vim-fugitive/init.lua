@@ -46,12 +46,6 @@
 return {
 	'tpope/vim-fugitive',
 
-	opt = true,
-
-	cmd = {
-		'G',
-		'G%',
-	},
 	keys = {
 		'<leader>gg',
 	},
