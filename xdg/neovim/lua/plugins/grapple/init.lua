@@ -1,8 +1,6 @@
 return {
 	'cbochs/grapple.nvim',
 
-	opt = true,
-
 	keys = {
 		'<leader>h',
 		'<leader>hh',
@@ -21,11 +19,7 @@ return {
 	},
 
 	config = function()
-		require('grapple').setup({
-			popup_options = {
-				border = 'none'
-			}
-		})
+		require('plugins.grapple.config').setup()
 		require('plugins.grapple.keys').setup()
-	end
+	end,
 }
