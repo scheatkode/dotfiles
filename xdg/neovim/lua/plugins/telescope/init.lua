@@ -1,14 +1,12 @@
-return { 'nvim-telescope/telescope.nvim', opt = true,
-	cmd = {
-		'Telescope'
-	},
+return {
+	'nvim-telescope/telescope.nvim',
 
-	module_pattern = {
-		'telescope.*'
+	cmd = {
+		'Telescope',
 	},
 
 	keys = {
-		{ 'c', '<c-r><c-r>' },
+		'<c-r><c-r>',
 		'<leader><leader>',
 		'<leader>bb',
 		'<leader>Bb',
@@ -90,18 +88,15 @@ return { 'nvim-telescope/telescope.nvim', opt = true,
 		'<leader>;',
 	},
 
-	requires = {
-		{ 'nvim-lua/popup.nvim' },
-		{ 'nvim-lua/plenary.nvim' },
-		{ 'nvim-telescope/telescope-project.nvim' }, -- project picker
-		{ 'nvim-telescope/telescope-fzf-native.nvim' }, -- better sorter
-	},
-
-	wants = {
-		'popup.nvim',
-		'plenary.nvim',
-		'telescope-project.nvim',
-		'telescope-fzf-native.nvim',
+	dependencies = {
+		'nvim-lua/popup.nvim',
+		'nvim-lua/plenary.nvim',
+		'nvim-telescope/telescope-project.nvim',
+		'nvim-telescope/telescope-file-browser.nvim',
+		{
+			'nvim-telescope/telescope-fzf-native.nvim',
+			build = 'make',
+		},
 	},
 
 	config = function()

@@ -1,17 +1,10 @@
---- telescope configuration
-
 return {
 	setup = function()
-		local has_telescope, telescope = pcall(require, 'telescope')
+		local telescope = require('telescope')
 
-		if not has_telescope then
-			require('log').error('Tried loading plugin ... unsuccessfully ‼', 'telescope')
-			return has_telescope
-		end
-
-		pcall(telescope.load_extension, 'file_browser') -- file browser
-		pcall(telescope.load_extension, 'fzf') -- superfast sorter
-		pcall(telescope.load_extension, 'project') -- project picker
+		telescope.load_extension('file_browser')
+		telescope.load_extension('fzf')
+		telescope.load_extension('project')
 
 		local actions    = require('telescope.actions')
 		local layout     = require('telescope.actions.layout')
@@ -20,12 +13,7 @@ return {
 		local custom_actions = require('plugins.telescope.custom')
 		local custom_pickers = require('plugins.telescope.pickers')
 
-		--- setup {{{1
-
 		telescope.setup({
-
-			--- defaults {{{2
-
 			defaults = {
 
 				border = false,
@@ -59,14 +47,14 @@ return {
 					horizontal = {
 						width         = { padding = 0.05 },
 						height        = { padding = 0.05 },
-						preview_width = 0.6
+						preview_width = 0.6,
 					},
 
 					vertical = {
 						width          = { padding = 0.3 },
 						height         = { padding = 0.05 },
-						preview_height = 0.5
-					}
+						preview_height = 0.5,
+					},
 				},
 
 				mappings = {
@@ -87,10 +75,12 @@ return {
 						['<c-u>'] = actions.preview_scrolling_up,
 						['<c-d>'] = actions.preview_scrolling_down,
 
-						['<c-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
+						['<c-q>'] = actions.smart_send_to_qflist
+							+ actions.open_qflist,
 
 						['<c-a>'] = actions.toggle_all,
-						['<tab>'] = actions.toggle_selection + actions.move_selection_next,
+						['<tab>'] = actions.toggle_selection
+							+ actions.move_selection_next,
 
 						['<c-t>'] = actions.move_to_top,
 						['<c-z>'] = actions.move_to_middle,
@@ -99,7 +89,7 @@ return {
 						['<c-c>'] = actions.close,
 						['<esc>'] = actions.close,
 
-						['<M-p>'] = layout.toggle_preview
+						['<M-p>'] = layout.toggle_preview,
 					},
 
 					n = {
@@ -122,10 +112,12 @@ return {
 						['<c-u>'] = actions.preview_scrolling_up,
 						['<c-d>'] = actions.preview_scrolling_down,
 
-						['<c-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
+						['<c-q>'] = actions.smart_send_to_qflist
+							+ actions.open_qflist,
 
 						['<c-a>'] = actions.toggle_all,
-						['<tab>'] = actions.toggle_selection + actions.move_selection_next,
+						['<tab>'] = actions.toggle_selection
+							+ actions.move_selection_next,
 
 						['<c-t>'] = actions.move_to_top,
 						['gg']    = actions.move_to_top,
@@ -138,12 +130,10 @@ return {
 						['<esc>'] = actions.close,
 						['q']     = actions.close,
 
-						['<M-p>'] = layout.toggle_preview
+						['<M-p>'] = layout.toggle_preview,
 					},
 				},
 			},
-
-			--- pickers {{{2
 
 			vimgrep_arguments = (function()
 				if vim.fn.executable('rg') then
@@ -171,7 +161,7 @@ return {
 			end)(),
 
 			file_ignore_patterns = {
-				'%.git'
+				'%.git',
 			},
 
 			pickers = {
@@ -179,27 +169,33 @@ return {
 					file_ignore_patterns = { '%.png', '%.jpg', '%webp' },
 					mappings = {
 						i = {
-							['<C-f>'] = custom_actions.select_directory(custom_pickers.find_files),
+							['<C-f>'] = custom_actions.select_directory(
+								custom_pickers.find_files
+							),
 						},
 						n = {
-							['<C-f>'] = custom_actions.select_directory(custom_pickers.find_files),
-						}
-					}
+							['<C-f>'] = custom_actions.select_directory(
+								custom_pickers.find_files
+							),
+						},
+					},
 				},
 
 				live_grep = {
 					mappings = {
 						i = {
-							['<C-f>'] = custom_actions.select_directory(custom_pickers.live_grep),
+							['<C-f>'] = custom_actions.select_directory(
+								custom_pickers.live_grep
+							),
 						},
 						n = {
-							['<C-f>'] = custom_actions.select_directory(custom_pickers.live_grep),
-						}
-					}
-				}
+							['<C-f>'] = custom_actions.select_directory(
+								custom_pickers.live_grep
+							),
+						},
+					},
+				},
 			},
-
-			--- extensions {{{2
 
 			extensions = {
 				fzf = {
@@ -213,8 +209,7 @@ return {
 					filetypes = { 'jpg', 'jpeg', 'png', 'webp', 'pdf', 'mkv' },
 					find_cmd  = 'rg',
 				},
-			}
-			--- }}}
+			},
 		})
-	end
+	end,
 }
