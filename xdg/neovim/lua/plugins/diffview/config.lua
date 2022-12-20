@@ -4,7 +4,7 @@ return {
 		local actions  = require('diffvew.actions')
 
 		diffview.setup({
-			diff_binaries = false, -- Show diffs for binaries
+			diff_binaries    = false, -- Show diffs for binaries
 			enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
 
 			git_cmd = { 'git' }, -- The git executable followed by default args.
@@ -123,9 +123,9 @@ return {
 
 				diff4 = {
 					-- Mappings in 4-way diff layouts
-					{ { 'n', 'x' }, "1do", actions.diffget('base') }, -- Obtain the diff hunk from the BASE version of the file
-					{ { 'n', 'x' }, "2do", actions.diffget('ours') }, -- Obtain the diff hunk from the OURS version of the file
-					{ { 'n', 'x' }, "3do", actions.diffget('theirs') }, -- Obtain the diff hunk from the THEIRS version of the file
+					{ { 'n', 'x' }, '1do', actions.diffget('base') }, -- Obtain the diff hunk from the BASE version of the file
+					{ { 'n', 'x' }, '2do', actions.diffget('ours') }, -- Obtain the diff hunk from the OURS version of the file
+					{ { 'n', 'x' }, '3do', actions.diffget('theirs') }, -- Obtain the diff hunk from the THEIRS version of the file
 				},
 
 				file_panel = {
@@ -188,5 +188,5 @@ return {
 				},
 			},
 		})
-	end
+	end,
 }

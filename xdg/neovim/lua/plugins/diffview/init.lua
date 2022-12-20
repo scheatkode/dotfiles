@@ -1,7 +1,6 @@
 return { -- ediff-like diff view
 	'sindrets/diffview.nvim',
 
-	opt = true,
 	cmd = {
 		'DiffviewClose',
 		'DiffviewFileHistory',
@@ -12,11 +11,7 @@ return { -- ediff-like diff view
 		'DiffviewToggleFiles',
 	},
 
-	module_pattern = {
-		'diffview.*'
-	},
-
 	config = function()
-		require('plugins.diff.config').setup()
-	end
+		require('plugins.diffview.config').setup()
+	end,
 }
