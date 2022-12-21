@@ -29,7 +29,7 @@ return {
 		for _, ft in
 			ipairs(
 				vim.api.nvim_get_runtime_file(
-					'lua/plugins/snippets/*/init.lua',
+					'lua/plugins/LuaSnip/*/init.lua',
 					true
 				)
 			)
