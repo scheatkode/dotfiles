@@ -272,6 +272,7 @@ zinit wait:'1b' silent from:gh-r as:program for \
     bpick:'pueued-*'                            \
    atload:'pueued --daemonize > /dev/null 2>&1' \
        mv:'pueued-* -> pueued'                  \
+     pick:'pueued'                              \
             @Nukesor/pueue                      \
    atload:'eval "$(zoxide init zsh)"'           \
      pick:'zoxide'                              \
