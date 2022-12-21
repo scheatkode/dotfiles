@@ -7,8 +7,8 @@ return {
 		local s  = snippet.s
 		local i  = snippet.insert_node
 		local t  = snippet.text_node
-		local d  = snippet.dynamic_node
 		local c  = snippet.choice_node
+		local d  = snippet.dynamic_node
 
 		local r = require('luasnip.extras').rep
 		local f = require('luasnip.extras.fmt').fmta
@@ -34,11 +34,13 @@ return {
 						t(info.err_name),
 						-- TODO: Even better if instead of the function name, we had
 						-- an input node.
-						t(string.format(
-							'fmt.Errorf("%s", %s)',
-							info.func_name,
-							info.err_name
-						)),
+						t(
+							string.format(
+								'fmt.Errorf("%s", %s)',
+								info.func_name,
+								info.err_name
+							)
+						),
 					})
 				end
 
@@ -74,16 +76,14 @@ return {
 		local handlers = {
 			parameter_list = function(node, info)
 				local result = {}
-				local count  = node:named_child_count()
+				local count = node:named_child_count()
 
 				for idx = 0, count - 1 do
-					local matching  = node:named_child(idx)
+					local matching = node:named_child(idx)
 					local type_node = matching:field('type')[1]
 
-					result[#result + 1] = transform(
-						vim.treesitter.get_node_text(type_node, 0),
-						info
-					)
+					result[#result + 1] =
+						transform(vim.treesitter.get_node_text(type_node, 0), info)
 
 					if idx ~= count - 1 then
 						result[#result + 1] = t({ ', ' })
@@ -100,8 +100,8 @@ return {
 
 		local function_node_types = {
 			function_declaration = true,
-			method_declaration   = true,
-			func_literal         = true,
+			method_declaration = true,
+			func_literal = true,
 		}
 
 		local function get_method(expression)
@@ -119,7 +119,7 @@ return {
 		local function result_type(info)
 			local ts_utils = require('nvim-treesitter.ts_utils')
 
-			local cursor_node   = ts_utils.get_node_at_cursor()
+			local cursor_node = ts_utils.get_node_at_cursor()
 			local function_node = get_method(cursor_node)
 
 			if not function_node then
@@ -127,13 +127,16 @@ return {
 				return t('')
 			end
 
-			local query = vim.treesitter.parse_query('go', [[
+			local query = vim.treesitter.parse_query(
+				'go',
+				[[
 				[
 					(method_declaration   result: (_) @id)
 					(function_declaration result: (_) @id)
 					(func_literal         result: (_) @id)
 				]
-			]])
+			]]
+			)
 
 			for _, node in query:iter_captures(function_node, 0) do
 				if handlers[node:type()] then
@@ -146,28 +149,34 @@ return {
 			return sn(
 				nil,
 				result_type({
-					index     = 0,
-					err_name  = args[1][1],
+					index = 0,
+					err_name = args[1][1],
 					func_name = args[2][1],
 				})
 			)
 		end
 
 		snippet.add_snippets('go', {
-			s('eif', f([[
+			s(
+				'eif',
+				f(
+					[[
 <val>, <err> := <f>(<args>)
 if <err_var> != nil {
 	return <result>
 }
-<finish>]], {
-				val     = i(1),
-				err     = i(2, 'err'),
-				f       = i(3),
-				args    = i(4),
-				err_var = r(2),
-				result  = d(5, return_values, { 2, 3 }),
-				finish  = i(0),
-			}))
+<finish>]],
+					{
+						val     = i(1),
+						err     = i(2, 'err'),
+						f       = i(3),
+						args    = i(4),
+						err_var = r(2),
+						result  = d(5, return_values, { 2, 3 }),
+						finish  = i(0),
+					}
+				)
+			),
 		})
-	end
+	end,
 }
