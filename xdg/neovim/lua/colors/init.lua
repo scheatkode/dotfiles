@@ -381,6 +381,9 @@ local function generate_highlights(colors, config)
 		['@text.literal']          = { link = 'String', default = true },
 		['@text.uri']              = { link = 'Underlined', default = true },
 
+		['@text.diff.add']    = { link = 'diffAdded' },
+		['@text.diff.delete'] = { link = 'diffRemoved' },
+
 		['@comment']      = { link = 'Comment', default = true },
 		['@text.note']    = { link = 'SpecialComment', default = true },
 		['@text.warning'] = { link = 'Todo', default = true },
