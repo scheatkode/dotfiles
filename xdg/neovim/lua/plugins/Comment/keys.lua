@@ -57,12 +57,6 @@ return {
 		-- toggle in operator pending mode
 		vim.keymap.set(
 			'n',
-			'<leader>//',
-			'<Plug>(comment_toggle_linewise)',
-			{ remap = true }
-		)
-		vim.keymap.set(
-			'n',
 			'gc',
 			'<Plug>(comment_toggle_linewise)',
 			{ remap = true }

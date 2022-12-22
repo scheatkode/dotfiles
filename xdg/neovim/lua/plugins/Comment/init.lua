@@ -2,12 +2,11 @@ return {
 	'numToStr/Comment.nvim',
 
 	keys = {
-		'<leader>/',
-		'gcc',
+		{ '<leader>/', mode = { 'n', 'x' } },
+		{ 'gb', mode = { 'n', 'x' } },
+		{ 'gc', mode = { 'n', 'x' } },
 		'gcb',
-		'gco',
-		'gcO',
-		'gcA',
+		'gcc',
 	},
 
 	dependencies = {
