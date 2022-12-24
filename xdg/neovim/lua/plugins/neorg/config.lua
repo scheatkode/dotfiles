@@ -69,14 +69,6 @@ return {
 					},
 				},
 
-				['core.gtd.base'] = {
-					config = {
-						workspace = 'brain',
-					},
-				},
-
-				['core.gtd.ui'] = {},
-
 				['core.norg.qol.toc'] = {
 					config = {
 						close_split_on_jump = false,

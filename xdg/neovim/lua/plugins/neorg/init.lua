@@ -9,6 +9,6 @@ return {
 	},
 
 	config = function()
-		require('plugins.notes.config').setup()
+		require('plugins.neorg.config').setup()
 	end,
 }
