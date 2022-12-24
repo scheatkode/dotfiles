@@ -55,8 +55,15 @@ return {
 		vim.opt.runtimepath:prepend(options.install_path)
 
 		require('lazy').setup('plugins', {
-			defaults = { lazy = true },
-			change_detection = { enabled = false },
+			defaults = {
+				lazy = true,
+			},
+			diff = {
+				cmd = 'git',
+			},
+			change_detection = {
+				enabled = false,
+			},
 			lockfile = vim.fn.stdpath('data') .. '/lazy-lock.json',
 		})
 	end,
