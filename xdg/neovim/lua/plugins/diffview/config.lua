@@ -1,7 +1,7 @@
 return {
 	setup = function()
 		local diffview = require('diffview')
-		local actions  = require('diffvew.actions')
+		local actions  = require('diffview.actions')
 
 		diffview.setup({
 			diff_binaries    = false, -- Show diffs for binaries
