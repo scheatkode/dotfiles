@@ -58,17 +58,17 @@ return {
 
 			vim.api.nvim_create_autocmd('ColorScheme', {
 				group    = augroup,
-				callback = when(predicate, noop(), register_highlight),
+				callback = when(predicate, register_highlight, noop()),
 			})
 
 			vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType', 'InsertLeave' }, {
 				group    = augroup,
-				callback = when(predicate, noop(), toggle_trailing('n')),
+				callback = when(predicate, toggle_trailing('n'), noop()),
 			})
 
 			vim.api.nvim_create_autocmd('InsertEnter', {
 				group    = augroup,
-				callback = when(predicate, noop(), toggle_trailing('i')),
+				callback = when(predicate, toggle_trailing('i'), noop()),
 			})
 		end
 
@@ -77,7 +77,7 @@ return {
 			predicates(
 				should_highlight,
 				negate(is_window_type('popup')),
-				is_file_bigger(1048576)-- 1 MiB
+				negate(is_file_bigger(1048576))-- 1 MiB
 			)
 		)
 	end
