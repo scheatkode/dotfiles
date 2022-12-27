@@ -19,15 +19,15 @@
 [rebase]
    autoStash = true
 
-[init]
-   defaultBranch = main
-
 [core]
    editor = nvim
    pager  = delta
 
 [merge]
 	tool = nvimdiff
+
+[advice]
+	addEmptyPathspec = false
 
 [color]
 	branch      = auto
