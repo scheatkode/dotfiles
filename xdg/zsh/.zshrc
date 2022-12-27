@@ -154,13 +154,6 @@ autoload -Uz _zinit
 
 setopt promptsubst
 
-# these plugins provide many aliases - atload:''.
-
-zinit wait:'0a' lucid for \
-      OMZ::lib/git.zsh    \
-   atload:'unalias grv'   \
-      OMZ::plugins/git/git.plugin.zsh
-
 # provide a simple prompt until the theme finishes loading.
 
 PS1='Loading prompt ... '
@@ -186,7 +179,6 @@ zinit wait:'0b' lucid light-mode for                              \
       OMZ::lib/completion.zsh                                     \
       OMZ::lib/diagnostics.zsh                                    \
       OMZ::lib/functions.zsh                                      \
-      OMZ::lib/git.zsh                                            \
       OMZ::lib/grep.zsh                                           \
       OMZ::lib/misc.zsh                                           \
       OMZ::lib/spectrum.zsh                                       \
