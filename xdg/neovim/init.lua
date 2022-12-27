@@ -41,8 +41,3 @@ require('colors').load('gruvvy-ng')
 
 require('diagnostics').setup()
 require('plugman').setup()
-
--- garbage collection
-
-collectgarbage('setpause', 260)
-collectgarbage('setstepmul', 500)
