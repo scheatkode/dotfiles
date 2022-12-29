@@ -193,8 +193,9 @@ zinit wait:'0b' lucid light-mode for                              \
   atload:'_zsh_autosuggest_start'                                 \
          zsh-users/zsh-autosuggestions
 
-zinit wait:'0b' lucid light-mode as:completion for \
-      OMZ::plugins/docker/_docker                  \
+zinit wait:'1c' blockf as:'completion' for \
+      OMZ::plugins/docker/_docker          \
+      OMZ::plugins/golang/_golang          \
       OMZ::plugins/ripgrep/_ripgrep
 
 # recommended be loaded last.
