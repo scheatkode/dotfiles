@@ -5,7 +5,7 @@ set -u
 
 set -o errexit
 
-git -c color.ui=always log \
+git log --color=always     \
 	--all                   \
 	--graph                 \
 	--decorate              \
