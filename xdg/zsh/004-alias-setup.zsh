@@ -178,7 +178,7 @@ alias 'grho'='git reset origin/$(git_current_branch) --hard'
 alias 'grm'='git rm'
 alias 'grmc'='git rm --cached'
 
-alias 'gsp'='git stash push'
+alias 'gsu'='git stash push'
 alias 'gsa'='git stash apply'
 alias 'gsc'='git stash clear'
 alias 'gsd'='git stash drop'
