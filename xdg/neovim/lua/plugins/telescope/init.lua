@@ -42,6 +42,7 @@ return {
 		'<leader>sds',
 		'<leader>sws',
 		'<leader>sdd',
+		'<leader>su',
 	},
 
 	dependencies = {
@@ -53,6 +54,7 @@ return {
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make',
 		},
+		'debugloop/telescope-undo.nvim',
 	},
 
 	config = function()

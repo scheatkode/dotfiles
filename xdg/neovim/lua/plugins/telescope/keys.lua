@@ -105,5 +105,12 @@ return {
 			remap = true,
 			nowait = true,
 		})
+
+		-- undo tree
+		vim.keymap.set(
+			'n',
+			'<leader>su',
+			require('telescope').extensions.undo.undo
+		)
 	end,
 }

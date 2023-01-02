@@ -9,6 +9,8 @@ return {
 		local custom_actions = require('plugins.telescope.custom')
 		local custom_pickers = require('plugins.telescope.pickers')
 
+		local undo_actions = require('telescope-undo.actions')
+
 		telescope.setup({
 			defaults = {
 
@@ -205,10 +207,31 @@ return {
 					filetypes = { 'jpg', 'jpeg', 'png', 'webp', 'pdf', 'mkv' },
 					find_cmd  = 'rg',
 				},
+
+				undo = {
+					use_delta = false,
+
+					mappings = {
+						i = {
+							['<CR>']  = undo_actions.restore,
+							['<C-s>'] = undo_actions.yank_additions,
+							['<C-x>'] = undo_actions.yank_deletions,
+						},
+
+						n = {
+							['<CR>']  = undo_actions.restore,
+							['<C-s>'] = undo_actions.yank_additions,
+							['<C-x>'] = undo_actions.yank_deletions,
+						}
+					}
+				}
 			},
 		})
+
 		telescope.load_extension('file_browser')
 		telescope.load_extension('fzf')
 		telescope.load_extension('project')
+		telescope.load_extension('undo')
+
 	end,
 }
