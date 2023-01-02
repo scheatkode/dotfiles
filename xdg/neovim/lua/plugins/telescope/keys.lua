@@ -18,7 +18,7 @@ return {
 		vim.keymap.set('n', '<leader>sG', function()
 			pickers.live_grep({ grep_open_files = true })
 		end)
-		vim.keymap.set('n', '<leader>st', pickers.buffer_fuzzy)
+		vim.keymap.set('n', '<leader>st', pickers.current_buffer_fuzzy_find)
 
 		-- grep string
 		vim.keymap.set('n', '<leader>ss', pickers.grep_string)
