@@ -2,10 +2,6 @@ return {
 	setup = function()
 		local telescope = require('telescope')
 
-		telescope.load_extension('file_browser')
-		telescope.load_extension('fzf')
-		telescope.load_extension('project')
-
 		local actions    = require('telescope.actions')
 		local layout     = require('telescope.actions.layout')
 		local previewers = require('telescope.previewers')
@@ -211,5 +207,8 @@ return {
 				},
 			},
 		})
+		telescope.load_extension('file_browser')
+		telescope.load_extension('fzf')
+		telescope.load_extension('project')
 	end,
 }
