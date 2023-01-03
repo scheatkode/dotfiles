@@ -3,7 +3,6 @@ return {
 		require('user.mappings.custom.alternate').setup()
 		require('user.mappings.custom.autocorrect').setup()
 		require('user.mappings.custom.buffers').setup()
-		require('user.mappings.custom.command').setup()
 		require('user.mappings.custom.escape').setup()
 		require('user.mappings.custom.highlight').setup()
 		require('user.mappings.custom.jumplist').setup()

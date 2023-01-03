@@ -8,7 +8,7 @@ return {
 			end
 		end
 
-		vim.keymap.set({ 'n', 'x', 'o' }, ':', search(1), { expr = true })
+		vim.keymap.set({ 'n', 'x', 'o' }, ';', search(1), { expr = true })
 		vim.keymap.set({ 'n', 'x', 'o' }, ',', search(0), { expr = true })
-	end
+	end,
 }
