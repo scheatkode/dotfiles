@@ -24,17 +24,6 @@ return {
 		-- them.
 		local nvim_win_get_cursor = vim.api.nvim_win_get_cursor
 		local nvim_buf_get_lines  = vim.api.nvim_buf_get_lines
-		local nvim_feedkeys       = vim.api.nvim_feedkeys
-
-		-- The result of running this function won't change over time.
-		-- Memoizing its result beforehand offers a small performance
-		-- boost.
-		local expand_or_jump = vim.api.nvim_replace_termcodes(
-			'<Plug>luasnip-expand-or-jump', true, true, true
-		)
-		local jump_prev = vim.api.nvim_replace_termcodes(
-			'<Plug>luasnip-jump-prev', true, true, true
-		)
 
 		-- Check for plugin existence
 		local has_completion, completion = pcall(require, 'cmp')
@@ -133,7 +122,7 @@ return {
 					if completion.visible() then
 						completion.select_next_item()
 					elseif snippets.expand_or_locally_jumpable() then
-						nvim_feedkeys(expand_or_jump, '', false)
+						snippets.expand_or_jump()
 					elseif has_words_before() then
 						completion.complete()
 					else
@@ -147,7 +136,10 @@ return {
 						---This is intended for the above coercion.
 						---@diagnostic disable-next-line: redundant-parameter
 					elseif snippets.jumpable(-1) then
-						nvim_feedkeys(jump_prev, '', false)
+						---In case the snippets engine is not available, this block
+						---is never evaluated due to the above coercion where
+						---`jumpable` always returns `false`.
+						snippets.jump(-1)
 					else
 						fallback()
 					end
