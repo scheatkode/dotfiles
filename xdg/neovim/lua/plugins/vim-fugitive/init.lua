@@ -46,6 +46,13 @@
 return {
 	'tpope/vim-fugitive',
 
+	cmd = {
+		'G',
+		'Git',
+		'GcLog',
+		'Gdiffsplit',
+	},
+
 	keys = {
 		'<leader>gg',
 	},
