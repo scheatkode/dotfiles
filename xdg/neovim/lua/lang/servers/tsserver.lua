@@ -18,10 +18,13 @@ return {
 	},
 
 	root_dir = lspconfig.util.root_pattern(
-		'.git',
 		'pnpm-workspace.yaml',
+		'pnpm-lock.yaml',
+		'yarn.lock',
+		'package-lock.json',
+		'.git',
 		'tsconfig.json',
 		'jsconfig.json',
 		'package.json'
-	)
+	),
 }
