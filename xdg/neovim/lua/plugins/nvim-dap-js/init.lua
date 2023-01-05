@@ -14,8 +14,10 @@ return {
 			debugger_path = string.format(
 				'%s/%s',
 				vim.fn.stdpath('data'),
-				'mason/packages/js-debug-adapter'
+				'mason/bin/js-debug-adapter'
 			),
+
+			debugger_cmd = { 'js-debug-adapter' }
 		})
 	end,
 }
