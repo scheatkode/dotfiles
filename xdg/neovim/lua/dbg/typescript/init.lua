@@ -12,6 +12,14 @@ return {
 			sourceMaps  = true,
 			skipFiles   = { '<node_internals>/**', 'node_modules/**' },
 		}, {
+			name              = 'Debug current file (pwa-node with deno)',
+			type              = 'pwa-node',
+			request           = 'launch',
+			cwd               = vim.loop.cwd(),
+			runtimeArgs       = { 'run', '--inspect-brk', '--allow-all', '${file}' },
+			runtimeExecutable = 'deno',
+			attachSimplePort  = 9229,
+		}, {
 			name              = 'Jest (Node2 with ts-node)',
 			type              = 'node2',
 			request           = 'launch',
