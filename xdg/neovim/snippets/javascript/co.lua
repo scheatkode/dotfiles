@@ -7,7 +7,7 @@ local f = require('luasnip.extras.fmt').fmta
 
 snippet.add_snippets('javascript', {
 	s(
-		'const',
+		'co',
 		f(
 			[[
 			const <name> = <expr>
