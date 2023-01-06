@@ -35,26 +35,59 @@ return {
 		hydra({
 			name = 'Debug',
 			body = '<leader>D',
+			hint = [[
+ ^ ^Step   ^ ^           Action
+ ^-^------ ^ ^ --------------------------- 
+ _K_: up   ^ ^     _t_: toggle breakpoint
+ _O_: out  ^ ^     _T_: clear breakpaints
+ _o_: over ^ ^ _<C-k>_: evaluate variable
+ _i_: into ^ ^     _c_: continue
+ _J_: down ^ ^     _C_: continue to cursor
+ ^ ^       ^ ^     _r_: toggle repl
+
+ ^ ^      _q_: exit ^ ^   _x_: terminate
+]],
 			config = {
 				invoke_on_body = true,
 				color = 'pink',
+				hint = {
+					type = 'window',
+					offset = 2,
+					position = 'bottom-right',
+				},
 				on_enter = function()
-					dap.continue()
-					dapui.open({})
+					dapui.open()
 				end,
 				on_exit = function()
-					dap.clear_breakpoints()
-					dapui.close({})
+					dapui.close()
 				end,
 			},
-			heads  = {
-				{ 'C', dap.continue, { desc = 'continue' } },
-				{ '-', dap.toggle_breakpoint, { desc = 'toggle breakpoint' } },
-				{ 'I', dap.step_into, { desc = 'step into' } },
-				{ 'O', dap.step_over, { desc = 'step over' } },
-				{ 'K', dapui.eval, { desc = 'evaluate variable' } },
-				{ 'q', dap.terminate, { desc = 'terminate', exit = true } },
-			}
+			mode = {
+				'n',
+			},
+			heads = {
+				{ 'c', dap.continue, { desc = 'continue' } },
+				{ 'C', dap.run_to_cursor, { desc = 'run to cursor' } },
+				{ 't', dap.toggle_breakpoint, { desc = 'toggle breakpoint' } },
+				{ 'T', dap.clear_breakpoints, { desc = 'clear breakpoints' } },
+				{ 'i', dap.step_into, { desc = 'step into' } },
+				{ 'o', dap.step_over, { desc = 'step over' } },
+				{ 'O', dap.step_out, { desc = 'step out' } },
+				{ 'J', dap.down, { desc = 'go down the stacktrace' } },
+				{ 'K', dap.up, { desc = 'go up the stacktrace' } },
+				{ '<C-k>', dapui.eval, { desc = 'evaluate variable' } },
+				{ 'x', dap.terminate, { desc = 'terminate' } },
+				{ 'q', nil, { desc = 'exit', nowait = true, exit = true } },
+				{ '<Esc>', nil, { desc = false, nowait = true, exit = true } },
+
+				{
+					'r',
+					function()
+						require('dap').repl.toggle()
+					end,
+					{ exit = true, desc = 'open repl' },
+				},
+			},
 		})
 	end,
 }
