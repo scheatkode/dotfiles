@@ -1,4 +1,4 @@
-vim.opt.syntax = 'on'
+vim.opt_local.syntax = 'on'
 
 vim.keymap.set('n', '<Tab>', '<Plug>fugitive:=', {
 	buffer = true,
