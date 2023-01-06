@@ -7,9 +7,9 @@ return {
 		local dapui = lazy('dapui')
 
 		hydra({
-			name  = 'Side scroll',
-			mode  = 'n',
-			body  = 'z',
+			name = 'Side scroll',
+			mode = 'n',
+			body = 'z',
 			heads = {
 				{ 'h', '5zh' },
 				{ 'l', '5zl', { desc = '←/→' } },
@@ -19,9 +19,9 @@ return {
 		})
 
 		hydra({
-			name  = 'Window resizing',
-			mode  = 'n',
-			body  = '<C-w>',
+			name = 'Window resizing',
+			mode = 'n',
+			body = '<C-w>',
 			heads = {
 				{ '<', '5<C-w><' },
 				{ '>', '5<C-w>>', { desc = '5 × ←/→' } },
@@ -33,11 +33,11 @@ return {
 		})
 
 		hydra({
-			name   = 'Debug',
-			body   = '<leader>D',
+			name = 'Debug',
+			body = '<leader>D',
 			config = {
-				color = 'pink',
 				invoke_on_body = true,
+				color = 'pink',
 				on_enter = function()
 					dap.continue()
 					dapui.open({})
