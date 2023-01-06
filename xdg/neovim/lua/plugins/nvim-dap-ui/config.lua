@@ -26,11 +26,6 @@ return {
 					position = 'left',
 					size     = 40,
 				},
-				{
-					elements = { 'repl' },
-					position = 'bottom',
-					size     = 10,
-				},
 			},
 
 			floating = {
