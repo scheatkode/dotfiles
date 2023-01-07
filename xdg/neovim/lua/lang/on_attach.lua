@@ -113,10 +113,10 @@ return {
 			})
 
 			-- signature help
-			vim.keymap.set({ 'n', 'x' }, '<M-s>', vim.lsp.buf.signature_help, {
-				buffer = bufnr,
-				desc   = 'Show signature help',
-			})
+			-- vim.keymap.set({ 'n', 'i' }, '<M-s>', vim.lsp.buf.signature_help, {
+			-- 	buffer = bufnr,
+			-- 	desc   = 'Show signature help',
+			-- })
 
 			-- workspace management
 			vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder, {
