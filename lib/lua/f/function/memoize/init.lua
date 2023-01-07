@@ -1,8 +1,8 @@
----This module strays of the beaten path of naively hashing or
----storing argument values as-is in a single table by abusing
----closures and recursion. This is done by building several
----implicit argument trees *inside* of the built closures,
----which are of course, tail-call optimized.
+---This module strays off the beaten path of naively hashing or storing
+---argument values as-is in a single table by abusing closures and
+---recursion. This is done by building several implicit argument trees
+---*inside* of the built closures, which are of course, tail-call
+---optimized.
 
 local select       = select
 local setmetatable = setmetatable
@@ -10,8 +10,8 @@ local setmetatable = setmetatable
 local pack   = require('compat.table.pack')
 local unpack = require('compat.table.unpack')
 
----Storing a closure is more memory and speed efficient than
----storing the actual return values in a cache table.
+---Storing a closure is more memory and speed efficient than storing
+---the actual return values in a cache table.
 ---@vararg any
 ---@return function
 local function enclose(...)
@@ -32,8 +32,7 @@ local function return_or_empty(arg)
 	return (arg == nil and {}) or arg
 end
 
----Build a memoization function that can handle the 1-argument
----case.
+---Build a memoization function that can handle the 1-argument case.
 ---@param f function
 ---@return function
 local function memoize_1(f)
@@ -59,8 +58,8 @@ end
 ---@param f function Function to memoize
 ---@return function m Memoized function
 local function memoize_n(n, f)
-	-- Handle the `0` case to avoid infinite loops and keep the
-	-- general case simple.
+	-- Handle the `0` case to avoid infinite loops and keep the general
+	-- case simple.
 	if n == 0 then
 		local memoized
 
@@ -74,18 +73,17 @@ local function memoize_n(n, f)
 		end
 	end
 
-	-- Small optimization for the `1` case since unary functions
-	-- are most common.
+	-- Small optimization for the `1` case since unary functions are most
+	-- common.
 	if n == 1 then
 		return memoize_1(f)
 	end
 
-	-- Create a locally scoped implicit weak table for storing
-	-- the arguments.
+	-- Create a locally scoped implicit weak table for storing the
+	-- arguments.
 	local lookup = weak_table()
 
-	-- Handle the general `n`-arguments case.
-	-- return function(arg, ...)
+	-- Handle the general `n`-arguments case. return function(arg, ...)
 	local m = function(arg, ...)
 		local k = return_or_empty(arg)
 		local r = lookup[k]
@@ -94,8 +92,8 @@ local function memoize_n(n, f)
 			return r(...)
 		end
 
-		-- Create a new argument memoizer that will handle this
-		-- argument value in the future.
+		-- Create a new argument memoizer that will handle this argument
+		-- value in the future.
 		r = memoize_n(n - 1, function(...)
 			return f(arg, ...)
 		end)
@@ -109,8 +107,8 @@ local function memoize_n(n, f)
 	return m
 end
 
----Given an expensive pure function `f`, cache the number of
----arguments and their values to speed up returning.
+---Given an expensive pure function `f`, cache the number of arguments
+---and their values to speed up returning.
 ---@param f function Function to memoize
 ---@return function m Memoized function
 local function memoize(f)
