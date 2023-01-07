@@ -1,1 +1,1 @@
-vim.opt.syntax = 'on'
+vim.opt_local.syntax = 'on'
