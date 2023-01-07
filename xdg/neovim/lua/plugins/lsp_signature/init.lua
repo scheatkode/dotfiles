@@ -11,5 +11,6 @@ return {
 
 	config = function()
 		require('plugins.lsp_signature.config').setup()
+		require('plugins.lsp_signature.keys').setup()
 	end,
 }
