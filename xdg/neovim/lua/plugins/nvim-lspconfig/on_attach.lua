@@ -143,12 +143,4 @@ return function(_, bufnr, _)
 		buffer = bufnr,
 		desc = 'Format code in current buffer',
 	})
-
-	-- plugins
-
-	local has_signature, signature = pcall(require, 'lsp_signature')
-
-	if has_signature then
-		signature.on_attach()
-	end
 end
