@@ -22,7 +22,7 @@ return {
 			-- This is mandatory, otherwise border config won't get
 			-- registered. if you want to hook lspsaga or other signature
 			-- handler, set to `false`.
-			bind = true,
+			bind = false,
 
 			-- Makes the floating window have less priority over other
 			-- floating windows.
@@ -40,6 +40,29 @@ return {
 			-- Show hint in a floating window, set to false for virtual
 			-- text only mode.
 			floating_window = true,
+
+			floating_window_off_y = function(floating_options)
+				local linenr    = vim.api.nvim_win_get_cursor(0)[1]
+				local pumheight = vim.o.pumheight
+				local winline   = vim.fn.winline()
+				local winheight = vim.fn.winheight(0)
+
+				if floating_options.height < winline - 1 then
+					return 0
+				end
+
+				-- window top
+				if linenr < pumheight then
+					return pumheight
+				end
+
+				-- window bottom
+				if winheight - winline < pumheight then
+					return -pumheight
+				end
+
+				return 0
+			end,
 
 			-- Try to place the floating above the current line when
 			-- possible. Note: will set to `true` when fully tested, set to
@@ -65,14 +88,29 @@ return {
 			max_width = 50,
 
 			handler_opts = {
-				border = 'rounded', -- double, single, shadow, none
+				border = 'none', -- double, single, shadow, none
 			},
-
-			-- Manual toggle key.
-			toggle_key = '<M-s>',
-
-			-- Next signature selection key, for looping through overloads.
-			select_signature_key = '<M-n>',
 		})
+
+		-- NOTE(scheatkode): Looking at this plugin's code, it's a hot
+		-- mess of spaghetti riddled with bugs. A PR or custom
+		-- implementation is in order but until I do, the hacks below make
+		-- it usable for the time being. *Yes, most of the configuration
+		-- passed to `setup` is not taken into account*.
+		-- PS: No offence intended to the author.
+		---@diagnostic disable: undefined-global
+		vim.api.nvim_create_autocmd('InsertLeave', {
+			group = vim.api.nvim_create_augroup('Lsp_signature_hacks', { clear = true }),
+			callback = function()
+				local winnr = _LSP_SIG_CFG.winnr
+
+				if winnr and winnr > 0 and vim.api.nvim_win_is_valid(winnr) then
+					require('lsp_signature').toggle_float_win()
+				end
+			end,
+		})
+
+		_LSP_SIG_CFG.handler_opts.border = 'none'
+		_LSP_SIG_CFG.hint_enable = false
 	end,
 }
