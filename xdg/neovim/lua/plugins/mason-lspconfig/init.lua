@@ -6,6 +6,6 @@ return {
 	},
 
 	config = function()
-		require('mason-lspconfig').setup()
+		require('plugins.mason-lspconfig.config').setup()
 	end,
 }
