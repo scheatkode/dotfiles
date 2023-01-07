@@ -1,5 +1,3 @@
-vim.opt_local.syntax = 'on'
-
 vim.keymap.set('n', '<Tab>', '<Plug>fugitive:=', {
 	buffer = true,
 	desc   = 'Toggle an inline diff of the file under the cursor.',
