@@ -37,40 +37,40 @@ function  trim(s) { return ltrim(rtrim(s)); }
 
 function print_insertions(author) {
 	if(stats["Total"]["insertions"] > 0) {
-		printf "\t  insertions:    %s\t(%s)\n", \
-			green("%d", stats[author]["insertions"]), \
+		printf "\t  insertions:    %s\t(%s)\n",          \
+			green("%d",     stats[author]["insertions"]), \
 			green("%.0f%%", stats[author]["insertions"] / stats["Total"]["insertions"] * 100);
 	}
 }
 
 function print_deletions(author) {
 	if(stats["Total"]["deletions"] > 0) {
-		printf "\t  deletions:     %s\t(%s)\n", \
-			red("%d", stats[author]["deletions"]), \
+		printf "\t  deletions:     %s\t(%s)\n",       \
+			red("%d",     stats[author]["deletions"]), \
 			red("%.0f%%", stats[author]["deletions"] / stats["Total"]["deletions"] * 100);
 	}
 }
 
 function print_files(author) {
 	if(stats["Total"]["files"] > 0) {
-		printf "\t  files:         %s\t(%s)\n", \
-			blue("%d", stats[author]["files"]), \
+		printf "\t  files:         %s\t(%s)\n",    \
+			blue("%d",     stats[author]["files"]), \
 			blue("%.0f%%", stats[author]["files"] / stats["Total"]["files"] * 100);
 	}
 }
 
 function print_commits(author) {
 	if(stats["Total"]["commits"] > 0) {
-		printf "\t  commits:       %s\t(%s)\n", \
-			magenta("%d", stats[author]["commits"]), \
+		printf "\t  commits:       %s\t(%s)\n",         \
+			magenta("%d",     stats[author]["commits"]), \
 			magenta("%.0f%%", stats[author]["commits"] / stats["Total"]["commits"] * 100);
 	}
 }
 
 function print_lines(author) {
 	if ((stats["Total"]["insertions"] + stats["Total"]["deletions"]) * 100 > 0) {
-		printf "\t  lines changed: %s\t(%s)\n", \
-			yellow("%d", stats[author]["insertions"] + stats[author]["deletions"]), \
+		printf "\t  lines changed: %s\t(%s)\n",                                          \
+			yellow("%d",      stats[author]["insertions"] + stats[author]["deletions"]),  \
 			yellow("%.0f%%", (stats[author]["insertions"] + stats[author]["deletions"]) / \
 				(stats["Total"]["insertions"] + stats["Total"]["deletions"]) * 100);
 	} else {
@@ -130,9 +130,9 @@ BEGIN {
 }
 
 /^[0-9]/ {
-	stats[author]["insertions"] += $1;
-	stats[author]["deletions"]  += $2;
-	stats[author]["files"]      += 1;
+	stats[author]["insertions"]  += $1;
+	stats[author]["deletions"]   += $2;
+	stats[author]["files"]       += 1;
 	stats["Total"]["insertions"] += $1;
 	stats["Total"]["deletions"]  += $2;
 	stats["Total"]["files"]      += 1;
