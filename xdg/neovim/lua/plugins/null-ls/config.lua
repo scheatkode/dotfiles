@@ -60,7 +60,7 @@ return {
 			debounce = 250,
 			default_timeout = 5000,
 			diagnostics_format = '#{m}',
-			on_attach = require('plugins.nvim-lspconfig.on_attach'),
+			on_attach = require('lang.on_attach').setup(),
 			root_dir = vim.loop.cwd,
 			sources = {
 				djlint,
