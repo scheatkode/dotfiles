@@ -291,10 +291,10 @@ local function generate_highlights(colors, config)
 		DiagnosticUnderlineInfo  = { sp = colors.diag.info, undercurl = true },
 		DiagnosticUnderlineHint  = { sp = colors.diag.hint, undercurl = true },
 
-		DiagnosticLineBackgroundError = { bg = colors.bgs.red, blend = 80 },
-		DiagnosticLineBackgroundWarn = { bg = colors.bgs.yellow, blend = 80 },
-		DiagnosticLineBackgroundInfo = { bg = colors.bgs.blue, blend = 80 },
-		DiagnosticLineBackgroundHint = { bg = colors.bgs.aqua, blend = 80 },
+		DiagnosticLineBackgroundError = { bg = 'NONE' },
+		DiagnosticLineBackgroundWarn = { bg = 'NONE' },
+		DiagnosticLineBackgroundInfo = { bg = 'NONE' },
+		DiagnosticLineBackgroundHint = { bg = 'NONE' },
 
 		LspSignatureActiveParameter = { fg = colors.diag.warning },
 		LspCodeLens                 = { fg = colors.fg_comment },
