@@ -13,3 +13,12 @@
 ;; //  ╰── captures ──╯
 ;; ```
 (expression_list (_) @swappable)
+
+;; arguments of function calls
+;;
+;; ```go
+;; do_something(some_variable, some_other_variable)
+;; //           ╰───────────╯  ╰─────────────────╯
+;; //                ╰── captures ──╯
+;; ```
+(argument_list (_) @swappable)
