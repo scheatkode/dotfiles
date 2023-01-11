@@ -11,9 +11,7 @@ return {
 		'FileType',
 	},
 
-	build = function()
-		require('nvim-treesitter.install').update({ with_sync = true })
-	end,
+	build = ':TSUpdate',
 
 	config = function()
 		require('plugins.nvim-treesitter.config').setup()
