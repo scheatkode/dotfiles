@@ -5,11 +5,11 @@ return {
 		'EasyAlign',
 	},
 	keys = {
-		'<leader>t',
-		'<leader>ta',
-		'<leader>tl',
-		'<Plug>(EasyAlign)',
-		'<Plug>(LiveEasyAlign)',
+		{ '<leader>t',             mode = { 'n', 'x' } },
+		{ '<leader>ta',            mode = { 'n', 'x' } },
+		{ '<leader>tl',            mode = { 'n', 'x' } },
+		{ '<Plug>(EasyAlign)',     mode = { 'n', 'x' } },
+		{ '<Plug>(LiveEasyAlign)', mode = { 'n', 'x' } },
 	},
 
 	config = function()
