@@ -1,0 +1,13 @@
+# Set default behavior to automatically normalize line endings.
+* text=auto
+
+# Items with `binary` is treated as binary file.
+# Items with `eol=lf` is converted to LF on checkin, back to LF on checkout.
+# Items with `eol=crlf` is converted to LF on checkin, back to CRLF on checkout.
+
+*.gif             binary
+*.ico             binary
+*.jpg             binary
+*.png             binary
+*.ttf             binary
+*.woff            binary
