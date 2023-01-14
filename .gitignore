@@ -50,3 +50,8 @@ tags
 
 **/pulse/*
 !**/pulse/daemon.conf
+
+# —— GMAILCTL SPECIFIC —————————————————————————————————————————————————————————
+
+**/gmailctl/credentials.json
+**/gmailctl/token.json

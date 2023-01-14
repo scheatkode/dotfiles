@@ -11,3 +11,7 @@
 *.png             binary
 *.ttf             binary
 *.woff            binary
+
+# Below is a list of patterns and individual paths for secret files that should
+# never be committed in clear-text to the repository.
+xdg/gmailctl/**   diff=git-crypt filter=git-crypt
