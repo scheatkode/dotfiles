@@ -5,6 +5,7 @@
 #
 
 export            CARGO_HOME="${XDG_DATA_HOME}/cargo"
+export                GOPATH="${XDG_DATA_HOME}/go"
 export           RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 
 export npm_config_userconfig="${XDG_CONFIG_HOME}/npm/npmrc"
