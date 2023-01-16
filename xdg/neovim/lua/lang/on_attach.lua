@@ -124,18 +124,36 @@ return {
 				desc   = 'Add folder to workspace',
 			})
 			vim.keymap.set('n', '<leader>cwd', vim.lsp.buf.remove_workspace_folder, {
-					buffer = bufnr,
-					desc   = 'Remove folder from workspace',
-				}
-			)
+				buffer = bufnr,
+				desc   = 'Remove folder from workspace',
+			})
 			vim.keymap.set('n', '<leader>cwl', vim.lsp.buf.list_workspace_folders, {
 				buffer = bufnr,
 				desc   = 'Remove folder from workspace',
 			})
 
 			-- code formatting
+
+			-- Special case for `null-ls` since it usually runs along with
+			-- another LSP in the same buffer, if `null-ls` can format, let
+			-- it do its thing. Otherwise fall back to the main LSP.
 			local format = function()
-				return vim.lsp.buf.format({ async = true })
+				local buf = vim.api.nvim_get_current_buf()
+				local fmt = #require('null-ls.sources').get_available(
+					vim.bo[buf].filetype,
+					'NULL_LS_FORMATTING'
+				) > 0
+
+				return vim.lsp.buf.format({
+					async  = true,
+					filter = function(client)
+						if fmt then
+							return client.name == 'null-ls'
+						end
+
+						return client.name ~= 'null-ls'
+					end,
+				})
 			end
 
 			vim.keymap.set({ 'n', 'x' }, '<leader>cf', format, {
