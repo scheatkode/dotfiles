@@ -18,7 +18,6 @@ return {
 		rules[#rules + 1] = rule(' ', ' '):with_pair(function(options)
 			local pair = options.line:sub(options.col - 1, options.col)
 			return vim.tbl_contains({
-				'()',
 				'[]',
 				'{}',
 				'%%',
@@ -37,14 +36,6 @@ return {
 				return options.prev_char:match('.%%%') ~= nil
 			end)
 			:use_key('%')
-
-		-- remove spaces between parenthesis
-		rules[#rules + 1] = rule('( ', ' )')
-			:with_pair(cond.none())
-			:with_move(function(options)
-				return options.prev_char:match('.%)') ~= nil
-			end)
-			:use_key(')')
 
 		-- remove spaces between curly brackets
 		rules[#rules + 1] = rule('{ ', ' }')
