@@ -184,6 +184,10 @@ return {
 					},
 				},
 			},
+
+			playground = {
+				enable = false,
+			}
 		})
 	end,
 }
