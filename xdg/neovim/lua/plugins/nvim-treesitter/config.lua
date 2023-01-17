@@ -133,27 +133,69 @@ return {
 							desc  = 'Go to previous loop',
 						},
 					},
-
 				},
 
 				select = {
-					enable = true,
+					enable    = true,
+					lookahead = true,
 
 					keymaps = {
-						['ab'] = '@block.outer',
-						['ib'] = '@block.inner',
-						['ac'] = '@class.outer',
-						['ic'] = '@class.inner',
-						['aC'] = '@comment.outer',
-						['iC'] = '@comment.inner',
-						['ai'] = '@conditional.outer',
-						['ii'] = '@conditional.inner',
-						['al'] = '@loop.outer',
-						['il'] = '@loop.inner',
-						['aP'] = '@parameter.outer',
-						['iP'] = '@parameter.inner',
-						['af'] = '@function.outer',
-						['if'] = '@function.inner',
+						['ab'] = {
+							query = '@block.outer',
+							desc  = 'Select around block region',
+						},
+						['ib'] = {
+							query = '@block.inner',
+							desc  = 'Select inside block region',
+						},
+						['aC'] = {
+							query = '@class.outer',
+							desc  = 'Select around class region',
+						},
+						['iC'] = {
+							query = '@class.inner',
+							desc  = 'Select inside class region',
+						},
+						['a/'] = {
+							query = '@comment.outer',
+							desc  = 'Select around comment region',
+						},
+						['i/'] = {
+							query = '@comment.inner',
+							desc  = 'Select inside comment region',
+						},
+						['ai'] = {
+							query = '@conditional.outer',
+							desc  = 'Select around conditional region',
+						},
+						['ii'] = {
+							query = '@conditional.inner',
+							desc  = 'Select inside conditional region',
+						},
+						['al'] = {
+							query = '@loop.outer',
+							desc  = 'Select around loop region',
+						},
+						['il'] = {
+							query = '@loop.inner',
+							desc  = 'Select inside loop region',
+						},
+						['aP'] = {
+							query = '@parameter.outer',
+							desc  = 'Select around parameter region',
+						},
+						['iP'] = {
+							query = '@parameter.inner',
+							desc  = 'Select inside parameter region',
+						},
+						['af'] = {
+							query = '@function.outer',
+							desc  = 'Select around function region',
+						},
+						['if'] = {
+							query = '@function.inner',
+							desc  = 'Select inside function region',
+						},
 					},
 				},
 
