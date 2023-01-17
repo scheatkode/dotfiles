@@ -1,3 +1,5 @@
+;; extends
+
 ;; element attributes
 ;;
 ;; ```html
@@ -6,4 +8,3 @@
 ;; //              ╰─ captures ─╯
 ;; ```
 (element (_ (attribute) @swappable))
-

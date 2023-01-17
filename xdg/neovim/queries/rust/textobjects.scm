@@ -1,3 +1,5 @@
+;; extends
+
 ((enum_variant)                     @swappable)
 ((field_declaration)                @swappable)
 ((function_item)                    @swappable)

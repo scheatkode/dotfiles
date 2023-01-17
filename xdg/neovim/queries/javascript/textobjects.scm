@@ -1,3 +1,5 @@
+;; extends
+
 ;; formal parameters in function declarations
 ;;
 ;; ```typescript

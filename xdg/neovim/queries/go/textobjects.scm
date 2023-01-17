@@ -1,3 +1,5 @@
+;; extends
+
 ;; elements of struct definition
 ;;
 ;; ```go

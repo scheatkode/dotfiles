@@ -1,3 +1,5 @@
+;; extends
+
 ;; Arguments in function calls.
 ;; ```python
 ;; print('something', 'something else')
