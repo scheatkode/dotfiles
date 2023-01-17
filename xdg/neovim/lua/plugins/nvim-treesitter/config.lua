@@ -49,7 +49,6 @@ return {
 			autopairs   = { enable = true },
 			autotag     = { enable = true },
 			indent      = { enable = true },
-			lsp_interop = { enable = true },
 			highlight   = {
 				enable = true,
 				additional_vim_regex_highlighting = false,
@@ -77,17 +76,6 @@ return {
 			},
 
 			textobjects = {
-				lookahead = true,
-
-				lsp_interop = {
-					enable = true,
-
-					peek_definition_code = {
-						['<leader>cpf'] = '@function.outer',
-						['<leader>cpc'] = '@class.outer',
-					},
-				},
-
 				move = {
 					enable    = true,
 					set_jumps = true, -- update the jumplist
@@ -187,7 +175,7 @@ return {
 
 			playground = {
 				enable = false,
-			}
+			},
 		})
 	end,
 }
