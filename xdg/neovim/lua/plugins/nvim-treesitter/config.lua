@@ -80,7 +80,7 @@ return {
 					enable    = true,
 					set_jumps = true, -- update the jumplist
 
-					goto_next_start = {
+					goto_next = {
 						[']f'] = {
 							query = '@function.inner',
 							desc  = 'Go to next function',
@@ -107,9 +107,7 @@ return {
 						},
 					},
 
-					goto_next_end = {},
-
-					goto_previous_start = {
+					goto_previous = {
 						['[f'] = {
 							query = '@function.inner',
 							desc  = 'Go to previous function',
@@ -136,7 +134,6 @@ return {
 						},
 					},
 
-					goto_previous_end = {},
 				},
 
 				select = {
