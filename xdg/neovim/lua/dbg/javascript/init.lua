@@ -1,4 +1,9 @@
 return {
+	before = function()
+		-- Ensure debugger config is loaded.
+		require('dap-vscode-js')
+	end,
+
 	adapter = {},
 
 	configuration = {
