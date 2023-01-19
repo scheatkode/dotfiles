@@ -6,9 +6,8 @@
 
 do
 	local pack_path = (
-		 os.getenv('XDG_CONFIG_HOME')
-			  or os.getenv('HOME') .. '/.config'
-		 ) .. '/lib/lua'
+		os.getenv('XDG_CONFIG_HOME') or os.getenv('HOME') .. '/.config'
+	) .. '/lib/lua'
 
 	package.path = string.format(
 		'%s;%s/?.lua;%s/?/init.lua',
@@ -37,7 +36,7 @@ require('user.providers').setup()
 require('user.autocmd').setup()
 require('scheatkode.autocmds').setup()
 
-require('colors').load('gruvvy-ng')
+require('colors').load('gruvbox')
 
 require('diagnostics').setup()
 require('plugman').setup()

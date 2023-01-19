@@ -6,7 +6,7 @@ return {
 				component_separators = { left = ' ', right = ' ' },
 				icons_enabled        = true,
 				section_separators   = { left = ' ', right = ' ' },
-				theme                = require('colors').current().lualine(),
+				theme                = require('lualine.themes.gruvbox_dark'),
 				disabled_filetypes   = {
 					statusline = {
 						'dapui_breakpoints',
