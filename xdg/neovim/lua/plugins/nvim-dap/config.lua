@@ -1,24 +1,30 @@
 return {
 	setup = function()
-
-		vim.fn.sign_define('DapBreakpointRejected', {
-			text   = '🛑',
-			texthl = '',
-			linehl = '',
-			numhl  = '',
-		})
-
 		vim.fn.sign_define('DapBreakpoint', {
-			text   = '→',
+			text   = '',
 			texthl = 'Error',
 			linehl = '',
 			numhl  = '',
 		})
 
-		vim.fn.sign_define('DapStopped', {
-			text   = '→',
-			texthl = 'Success',
+		vim.fn.sign_define('DapBreakpointCondition', {
+			text   = 'ﳁ',
+			texthl = 'Question',
 			linehl = '',
+			numhl  = '',
+		})
+
+		vim.fn.sign_define('DapBreakpointRejected', {
+			text   = '',
+			texthl = 'Warning',
+			linehl = '',
+			numhl  = '',
+		})
+
+		vim.fn.sign_define('DapStopped', {
+			text   = '▶',
+			texthl = 'Success',
+			linehl = 'CursorLine',
 			numhl  = '',
 		})
 
