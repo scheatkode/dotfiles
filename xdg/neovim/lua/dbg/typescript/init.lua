@@ -1,5 +1,5 @@
 return {
-	before = function()
+	setup = function()
 		-- Ensure debugger config is loaded.
 		require('dap-vscode-js')
 	end,
@@ -35,8 +35,7 @@ return {
 			sourceMaps        = true,
 			port              = 9229,
 			skipFiles         = { '<node_internals>/**', 'node_modules/**' },
-		},
-		{
+		}, {
 			-- If using in a monorepo, don't forget to `:h :cd` into the package
 			-- directory.
 			name    = 'Debug current test file (pwa-node with vitest)',
@@ -56,8 +55,7 @@ return {
 				'${workspaceFolder}/**',
 				'!**/node_modules/**',
 			},
-		},
-		{
+		}, {
 			name                     = 'Attach to running remote process',
 			type                     = 'pwa-node',
 			request                  = 'attach',

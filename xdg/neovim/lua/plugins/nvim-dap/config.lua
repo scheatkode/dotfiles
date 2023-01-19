@@ -43,8 +43,8 @@ return {
 			local name     = string.match(config, '(%w+)/init.lua$')
 			local settings = loadfile(config)()
 
-			if type(settings.before) == 'function' then
-				settings.before()
+			if type(settings.setup) == 'function' then
+				settings.setup()
 			end
 
 			dap.adapters[name]       = settings.adapter

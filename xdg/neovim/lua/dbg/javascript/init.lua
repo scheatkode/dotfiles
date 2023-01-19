@@ -1,5 +1,5 @@
 return {
-	before = function()
+	setup = function()
 		-- Ensure debugger config is loaded.
 		require('dap-vscode-js')
 	end,
