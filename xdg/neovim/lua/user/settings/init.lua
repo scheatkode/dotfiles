@@ -22,5 +22,6 @@ return {
 		require('user.settings.misc').setup()
 		require('user.settings.backup').setup()
 		require('user.settings.wrap').setup()
+		require('user.settings.menus').setup()
 	end
 }
