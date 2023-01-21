@@ -1,3 +1,5 @@
+---@diagnostic disable-next-line: unknown-diag-code
+---@diagnostic disable-next-line: incorrect_standard_library_use, deprecated
 local unpack = table.unpack or unpack
 
 ---Returns the elements from the given list. This function is
