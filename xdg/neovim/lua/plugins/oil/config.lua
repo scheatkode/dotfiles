@@ -38,6 +38,10 @@ return {
 				['`'] = 'actions.cd',
 				['~'] = 'actions.tcd',
 				['H'] = 'actions.toggle_hidden',
+
+				['K']     = 'actions.preview',
+				['<C-b>'] = 'actions.preview_scroll_up',
+				['<C-f>'] = 'actions.preview_scroll_down',
 			},
 		})
 	end,
