@@ -3,14 +3,14 @@ return {
 		local lazy        = require('load')
 		local deep_extend = require('tablex.deep_extend')
 
-		require('lang.protocol').setup()
-		require('lang.handlers').setup()
+		require('lsp.protocol').setup()
+		require('lsp.handlers').setup()
 
-		local flags        = require('lang.flags').setup()
-		local on_attach    = require('lang.on_attach').setup()
+		local flags        = require('lsp.flags').setup()
+		local on_attach    = require('lsp.on_attach').setup()
 		local capabilities = deep_extend(
 			'force',
-			require('lang.capabilities').setup(),
+			require('lsp.capabilities').setup(),
 			vim.lsp.protocol.make_client_capabilities()
 		)
 
@@ -49,7 +49,7 @@ return {
 		mason_lspconfig.setup_handlers({
 			function(server)
 				local has_config, config =
-					pcall(require, 'lang.servers.' .. server)
+					pcall(require, 'lsp.servers.' .. server)
 
 				if not has_config then
 					return lspconfig[server].setup(default_config)

@@ -1,9 +1,9 @@
 return {
 	setup = function()
-		local extensions = require('lang.extensions')
+		local extensions = require('lsp.extensions')
 
 		return function(client, bufnr, _)
-			require('lang.completion').setup(client, bufnr)
+			require('lsp.completion').setup(client, bufnr)
 
 			-- go to declaration
 			vim.keymap.set('n', '<leader>cD', vim.lsp.buf.declaration, {
