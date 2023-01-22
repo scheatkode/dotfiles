@@ -1,10 +1,9 @@
 return {
 	setup = function()
-		local lazy       = require('load.on_member_call')
-		local extensions = lazy('lang.extensions')
+		local extensions = require('lang.extensions')
 
-		return function(_, bufnr, _)
-			vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
+		return function(client, bufnr, _)
+			require('lang.completion').setup(client, bufnr)
 
 			-- go to declaration
 			vim.keymap.set('n', '<leader>cD', vim.lsp.buf.declaration, {
@@ -146,12 +145,12 @@ return {
 
 				return vim.lsp.buf.format({
 					async  = true,
-					filter = function(client)
+					filter = function(current_client)
 						if fmt then
-							return client.name == 'null-ls'
+							return current_client.name == 'null-ls'
 						end
 
-						return client.name ~= 'null-ls'
+						return current_client.name ~= 'null-ls'
 					end,
 				})
 			end
