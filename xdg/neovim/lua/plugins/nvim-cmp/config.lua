@@ -165,11 +165,5 @@ return {
 				},
 			},
 		})
-
-		-- TODO(scheatkode): Refactor this
-
-		vim.api.nvim_set_hl(0, 'CmpItemMenu', { link = 'NonText' })
-		vim.api.nvim_set_hl(0, 'CmpItemKind', { link = 'Special' })
-		vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { link = 'Error' })
 	end
 }
