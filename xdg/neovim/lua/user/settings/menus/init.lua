@@ -27,8 +27,8 @@ return {
 			'menuone', -- Use the pop-up menu also when there is only one match
 			'preview', -- Show extra information about the currently selected item
 			-- 'longest',  -- Only insert the longest common match
-			'noinsert', -- Do not insert any text for a match
-			'noselect', -- Do not autoselect a match
+			-- 'noinsert', -- Do not insert any text for a match
+			-- 'noselect', -- Do not autoselect a match
 		}
 
 		vim.opt.pumheight     = 8
