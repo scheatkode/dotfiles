@@ -1,3 +1,14 @@
+local constant = require('f.function.constant')
+local extend = require('tablex.deep_extend')
+
+local protocol = require('vim.lsp.protocol')
+local util = require('vim.lsp.util')
+
+local type = type
+
+local api = vim.api
+local lsp = vim.lsp
+
 ---@class lsp.CompletionItemLabelDetails
 ---@field detail nil|string
 ---@field description nil|string
@@ -57,14 +68,6 @@
 ---@field isIncomplete boolean
 ---@field itemDefaults lsp.ItemDefaults|nil
 ---@field items lsp.CompletionItem[]
-
-local type = type
-
-local protocol = require('vim.lsp.protocol')
-local util = require('vim.lsp.util')
-
-local api = vim.api
-local lsp = vim.lsp
 
 --- Convert UTF index to `encoding` index.
 --- Convenience wrapper around vim.str_byteindex
@@ -240,37 +243,6 @@ local function text_document_completion_list_to_complete_items(result, prefix)
 	return matches
 end
 
-local function make_lsp_additional_text_edits(client, bufnr)
-	return function()
-		local completed_item = vim.v.completed_item
-
-		if
-			not (
-				completed_item
-				and completed_item.user_data
-				and completed_item.user_data.nvim
-				and completed_item.user_data.nvim.lsp
-				and completed_item.user_data.nvim.lsp.completion_item
-				and completed_item.user_data.nvim.lsp.completion_item.additionalTextEdits
-			)
-		then
-			return
-		end
-
-		local pos  = api.nvim_win_get_cursor(0)
-		local lnum = pos[1]
-		local item = completed_item.user_data.nvim.lsp.completion_item
-
-		-- text edit in the same line would mess with the cursor position
-		local edits = vim.tbl_filter(
-			function(x)
-			return x.range.start.line ~= (lnum - 1)
-		end, item.additionalTextEdits)
-
-		lsp.util.apply_text_edits(edits, bufnr, client.offset_encoding)
-	end
-end
-
 --- Implements 'omnifunc' compatible LSP completion.
 ---
 ---@see |:h complete-functions|
@@ -356,25 +328,89 @@ local function omnifunc(findstart, _)
 	return -2
 end
 
-local function newline()
-	return vim.fn.pumvisible() ~= 0 and '<C-y>' or '<CR>'
+local function apply_lsp_additional_text_edits(context)
+	local completed_item = vim.v.completed_item
+
+	if
+		not (
+			completed_item
+			and completed_item.user_data
+			and completed_item.user_data.nvim
+			and completed_item.user_data.nvim.lsp
+			and completed_item.user_data.nvim.lsp.completion_item
+			and completed_item.user_data.nvim.lsp.completion_item.additionalTextEdits
+		)
+	then
+		return
+	end
+
+	local pos  = api.nvim_win_get_cursor(0)
+	local lnum = pos[1]
+	local item = completed_item.user_data.nvim.lsp.completion_item
+
+	-- text edit in the same line would mess with the cursor position
+	local edits = vim.tbl_filter(function(x)
+		return x.range.start.line ~= (lnum - 1)
+	end, item.additionalTextEdits)
+
+	lsp.util.apply_text_edits(
+		edits,
+		context.bufnr,
+		context.client.offset_encoding
+	)
 end
 
+local function on_complete_done(context)
+	return function()
+		apply_lsp_additional_text_edits(context)
+	end
+end
+
+local function commit_completion(context)
+	return function()
+		if vim.fn.pumvisible() ~= 0 then
+			if vim.fn.complete_info()['selected'] == -1 then
+				-- gotta live without completeopt+='preview' because of this.
+				-- @see https://github.com/neovim/neovim/pull/13854
+				-- @see https://github.com/neovim/neovim/issues/16488
+				api.nvim_select_popupmenu_item(0, true, true, {})
+			end
+
+			return ''
+		end
+
+		return context.newline()
+	end
+end
+
+local newline = constant('<CR>')
+
 return {
-	setup = function(client, bufnr)
-		-- Enter keys accepts current completion.
-		vim.keymap.set('i', '<CR>', newline, {
-			buffer = bufnr,
-			expr   = true,
-			remap  = true,
+	setup = function(client, bufnr, overrides)
+		local defaults = {
+			newline = newline,
+		}
+
+		local context = extend('force', defaults, overrides or {}, {
+			bufnr  = bufnr,
+			client = client,
 		})
 
-		api.nvim_create_autocmd('CompleteDone', {
-			callback = make_lsp_additional_text_edits(client, bufnr),
-			buffer   = bufnr,
-			group    = api.nvim_create_augroup('LSPAdditionalTextEdits', {
+		-- Enter keys accepts current completion.
+		vim.keymap.set('i', '<CR>', commit_completion(context), {
+			buffer = bufnr,
+			expr   = true,
+		})
+
+		local augroup =
+			api.nvim_create_augroup(string.format('LspOmnifunc%d', bufnr), {
 				clear = true,
-			}),
+			})
+
+		api.nvim_create_autocmd('CompleteDone', {
+			callback = on_complete_done(context),
+			buffer   = bufnr,
+			group    = augroup,
 		})
 
 		if _G.custom == nil then
