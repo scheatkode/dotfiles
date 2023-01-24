@@ -374,21 +374,20 @@ local function commit_completion(context)
 				-- @see https://github.com/neovim/neovim/pull/13854
 				-- @see https://github.com/neovim/neovim/issues/16488
 				api.nvim_select_popupmenu_item(0, true, true, {})
+				return ''
 			end
 
-			return ''
+			return '<C-y>'
 		end
 
 		return context.newline()
 	end
 end
 
-local newline = constant('<CR>')
-
 return {
 	setup = function(client, bufnr, overrides)
 		local defaults = {
-			newline = newline,
+			newline = constant('<CR>'),
 		}
 
 		local context = extend('force', defaults, overrides or {}, {
