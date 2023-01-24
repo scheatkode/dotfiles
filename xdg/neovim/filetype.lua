@@ -1,14 +1,12 @@
 -- Language: Bazel/Please build definition file
 vim.filetype.add({
-	ext = {
-		['build_defs'] = 'python.bzl',
-		['bzl']        = 'python.bzl',
-	},
 	filename = {
 		['BUILD'] = 'python.bzl',
 	},
 	pattern = {
-		['BUILD%..*'] = 'python.bzl',
+		['.*%.build_defs'] = 'python.bzl',
+		['.*%.bzl']        = 'python.bzl',
+		['BUILD%..*']      = 'python.bzl',
 	},
 })
 
