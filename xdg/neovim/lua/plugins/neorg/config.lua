@@ -63,12 +63,6 @@ return {
 					},
 				},
 
-				['core.norg.completion'] = {
-					config = {
-						engine = 'nvim-cmp',
-					},
-				},
-
 				['core.norg.qol.toc'] = {
 					config = {
 						close_split_on_jump = false,
