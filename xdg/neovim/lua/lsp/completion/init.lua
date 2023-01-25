@@ -405,21 +405,19 @@ return {
 			client = client,
 		})
 
-		-- Enter keys accepts current completion.
-		vim.keymap.set('i', '<CR>', commit_completion(context), {
-			buffer = bufnr,
-			expr   = true,
-		})
+		local augroup = api.nvim_create_augroup('completion', { clear = false })
 
-		local augroup =
-			api.nvim_create_augroup(string.format('LspOmnifunc%d', bufnr), {
-				clear = true,
-			})
-
+		api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 		api.nvim_create_autocmd('CompleteDone', {
 			callback = on_complete_done(context),
 			buffer   = bufnr,
 			group    = augroup,
+		})
+
+		-- Enter keys accepts current completion.
+		vim.keymap.set('i', '<CR>', commit_completion(context), {
+			buffer = bufnr,
+			expr   = true,
 		})
 
 		if _G.custom == nil then
