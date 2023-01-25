@@ -9,6 +9,15 @@ local type = type
 local api = vim.api
 local lsp = vim.lsp
 
+local triggers = {
+	start_completion = constant(
+		api.nvim_replace_termcodes('<C-x><C-o>', true, true, true)
+	),
+	accept_completion = constant(
+		api.nvim_replace_termcodes('<C-y>', true, true, true)
+	),
+}
+
 ---@class lsp.CompletionItemLabelDetails
 ---@field detail nil|string
 ---@field description nil|string
@@ -370,10 +379,39 @@ local function apply_lsp_additional_text_edits(context)
 	)
 end
 
+local function debounce(delay, f)
+	local timer = vim.loop.new_timer()
+
+	return function()
+		local debounced = function()
+			timer:stop()
+			f()
+		end
+
+		timer:start(delay, 0, vim.schedule_wrap(debounced))
+	end
+end
+
 local function on_complete_done(context)
 	return function()
 		apply_lsp_additional_text_edits(context)
 	end
+end
+
+local function on_text_changed_i(context)
+	local function trigger_completion()
+		if
+			api.nvim_get_current_line()
+				:sub(1, api.nvim_win_get_cursor(0)[2])
+				:match('[%w_.@-]$')
+		then
+			if not api.nvim_get_mode().mode:match('^[^i]') then
+				api.nvim_feedkeys(triggers.start_completion(), 'n', false)
+			end
+		end
+	end
+
+	return debounce(context.autocomplete, trigger_completion)
 end
 
 local function commit_completion(context)
@@ -387,7 +425,7 @@ local function commit_completion(context)
 				return ''
 			end
 
-			return '<C-y>'
+			return triggers.accept_completion()
 		end
 
 		return context.newline()
@@ -397,7 +435,8 @@ end
 return {
 	setup = function(client, bufnr, overrides)
 		local defaults = {
-			newline = constant('<CR>'),
+			autocomplete = false,
+			newline      = constant('<CR>'),
 		}
 
 		local context = extend('force', defaults, overrides or {}, {
@@ -413,6 +452,13 @@ return {
 			buffer   = bufnr,
 			group    = augroup,
 		})
+		if context.autocomplete and context.autocomplete > 0 then
+			api.nvim_create_autocmd('TextChangedI', {
+				callback = on_text_changed_i(context),
+				buffer   = bufnr,
+				group    = augroup,
+			})
+		end
 
 		-- Enter keys accepts current completion.
 		vim.keymap.set('i', '<CR>', commit_completion(context), {
