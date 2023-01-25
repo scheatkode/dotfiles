@@ -1,8 +1,8 @@
 local constant = require('f.function.constant')
-local extend = require('tablex.deep_extend')
+local extend   = require('tablex.deep_extend')
 
 local protocol = require('vim.lsp.protocol')
-local util = require('vim.lsp.util')
+local util     = require('vim.lsp.util')
 
 local type = type
 
@@ -201,6 +201,16 @@ local function text_document_completion_list_to_complete_items(result, prefix)
 		items =
 			vim.fn.matchfuzzy(items, prefix, { text_cb = get_completion_word })
 	end
+
+	table.sort(items, function(a, b)
+		-- respect sort order from the language server.
+		if a.sortText and b.sortText then
+			return a.sortText < b.sortText
+		end
+
+		-- otherwise keep the sorted items as returned when fuzzy matching.
+		return true
+	end)
 
 	local matches = {}
 
