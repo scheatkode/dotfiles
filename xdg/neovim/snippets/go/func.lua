@@ -15,9 +15,9 @@ func <name>(<params>) <ret> {
 }
 			]],
 			{
-				name   = i(1, 'main'),
+				name   = i(1),
 				params = i(2),
-				ret    = i(3, 'error'),
+				ret    = i(3),
 				finish = i(0),
 			}
 		)
