@@ -3,7 +3,9 @@ local function rename()
 	local parameters = vim.lsp.util.make_position_params()
 
 	local function rename_handler(_, result, context, _)
-		if not result then return end
+		if not result then
+			return
+		end
 
 		-- apply renames
 		local client = vim.lsp.get_client_by_id(context.client_id)
@@ -16,7 +18,8 @@ local function rename()
 		if result.documentChanges then
 			for _, changed_file in pairs(result.documentChanges) do
 				changed_files_count     = changed_files_count + 1
-				changed_instances_count = changed_instances_count + #changed_file.edits
+				changed_instances_count = changed_instances_count
+					+ #changed_file.edits
 			end
 		elseif result.changes then
 			for _, changed_file in pairs(result.changes) do
@@ -25,21 +28,30 @@ local function rename()
 			end
 		end
 
-		print(string.format(
-			'Renamed %s instance%s in %s file%s. %s',
-			changed_instances_count,
-			changed_instances_count == 1 and '' or 's',
-			changed_files_count,
-			changed_files_count == 1 and '' or 's',
-			changed_files_count > 1 and '`:wa` to save them all' or ''
-		))
+		print(
+			string.format(
+				'Renamed %s instance%s in %s file%s. %s',
+				changed_instances_count,
+				changed_instances_count == 1 and '' or 's',
+				changed_files_count,
+				changed_files_count == 1 and '' or 's',
+				changed_files_count > 1 and '`:wa` to save them all' or ''
+			)
+		)
 	end
 
 	local function input_handler(new)
-		if not new or #new == 0 or current == new then return end
+		if not new or #new == 0 or current == new then
+			return
+		end
 
 		parameters.newName = new
-		vim.lsp.buf_request(0, 'textDocument/rename', parameters, rename_handler)
+		vim.lsp.buf_request(
+			0,
+			'textDocument/rename',
+			parameters,
+			rename_handler
+		)
 	end
 
 	local opts = {
@@ -51,5 +63,5 @@ local function rename()
 end
 
 return {
-	rename = rename
+	rename = rename,
 }
