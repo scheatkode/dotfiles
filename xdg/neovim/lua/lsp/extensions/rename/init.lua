@@ -1,4 +1,4 @@
-local function rename()
+return function()
 	local current    = vim.fn.expand('<cword>')
 	local parameters = vim.lsp.util.make_position_params()
 
@@ -55,13 +55,9 @@ local function rename()
 	end
 
 	local opts = {
-		prompt = 'New Name: ',
+		prompt  = 'New Name: ',
 		default = current,
 	}
 
 	vim.ui.input(opts, input_handler)
 end
-
-return {
-	rename = rename,
-}
