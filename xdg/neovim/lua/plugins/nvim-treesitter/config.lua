@@ -203,11 +203,23 @@ return {
 					enable = true,
 
 					swap_next = {
-						['<leader>cs'] = '@swappable',
+						['<leader>cs'] = {
+							desc  = 'Swap current node with next',
+							query = {
+								'@swappable',
+								'@parameter.*',
+							},
+						},
 					},
 
 					swap_previous = {
-						['<leader>cS'] = '@swappable',
+						['<leader>cS'] = {
+							desc  = 'Swap current node with previous',
+							query = {
+								'@swappable',
+								'@parameter.*',
+							},
+						},
 					},
 				},
 			},
