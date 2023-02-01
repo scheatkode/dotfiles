@@ -2,10 +2,10 @@ return {
 	setup = function()
 		local extensions = require('lsp.extensions')
 
-		return function(client, bufnr, _)
-			if client.supports_method('textDocument/completion') then
-				require('lsp.completion').setup(client, bufnr)
-			end
+		return function(_, bufnr, _)
+			-- if client.supports_method('textDocument/completion') then
+			-- 	require('lsp.completion').setup(client, bufnr)
+			-- end
 
 			-- go to declaration
 			vim.keymap.set('n', '<leader>cD', vim.lsp.buf.declaration, {
