@@ -66,7 +66,9 @@ end
 ---
 ---@param config table
 local function dim_on_focus_lost(config)
-	if not config.dim_on_focus_lost then return end
+	if not config.dim_on_focus_lost then
+		return
+	end
 
 	local augroup = vim.api.nvim_create_augroup('DimOnInactive', { clear = true })
 
@@ -200,7 +202,7 @@ local function generate_highlights(colors, config)
 		Visual       = { bg = colors.bg2 },
 		VisualNOS    = { link = 'Visual' },
 		WarningMsg   = { fg = colors.red, bold = true },
-		Whitespace   = { fg = colors.bg3 },
+		Whitespace   = { fg = colors.bg2 },
 		WildMenu     = { link = 'Pmenu' },
 
 		Constant  = { fg   = colors.purple },
