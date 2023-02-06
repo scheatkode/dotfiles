@@ -208,6 +208,7 @@ return {
 							query = {
 								'@swappable',
 								'@parameter.*',
+								'@function.*',
 							},
 						},
 					},
@@ -218,6 +219,7 @@ return {
 							query = {
 								'@swappable',
 								'@parameter.*',
+								'@function.*',
 							},
 						},
 					},
