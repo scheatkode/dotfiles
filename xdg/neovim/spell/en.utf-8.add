@@ -14,3 +14,6 @@ wildcard
 globbing
 oct
 ascii
+entrypoint
+mutex
+toolchain
