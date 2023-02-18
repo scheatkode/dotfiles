@@ -83,8 +83,8 @@ local dashboard = dashboards[1]
 settings = {
 	-- >> default applications <<
 
-	terminal          = 'alacritty',
-	floating_terminal = 'alacritty',
+	terminal          = 'wezterm',
+	floating_terminal = 'wezterm',
 	browser           = 'firefox',
 	-- file_manager = ''
 	-- editor = ''
@@ -211,7 +211,7 @@ require('bindings').setup({
 				local tempfile = os.tmpname()
 
 				awful.spawn.easy_async_with_shell(
-					string.format('chmod o-r "%s"; alacritty -e nvim "%s"', tempfile, tempfile),
+					string.format('chmod o-r "%s"; wezterm start -- nvim "%s"', tempfile, tempfile),
 					function()
 						awful.spawn.with_shell(string.format('cat "%s" | xclip -selection clipboard; rm "%s"', tempfile, tempfile))
 					end
@@ -235,8 +235,3 @@ require('modules.flash').setup()
 
 -- local lockscreen = require('components.lockscreen')
 -- -- lockscreen.init()
-
--- garbage collection.
-
-collectgarbage('setpause',   260)
-collectgarbage('setstepmul', 500)
