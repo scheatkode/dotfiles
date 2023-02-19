@@ -1,7 +1,7 @@
 return {
 	setup = function()
 		local assertx = require('assertx')
-		local WEZTERM = os.getenv('WEZTERM_UNIX_SOCKET')
+		local WEZTERM = os.getenv('TERM_PROGRAM') == 'WezTerm'
 
 		local function jump(vdirection, pdirection)
 			return function()
@@ -11,7 +11,7 @@ return {
 				vim.api.nvim_command(string.format('wincmd %s', vdirection))
 
 				-- stop if we're not in a wezterm instance
-				if WEZTERM == nil then
+				if not WEZTERM then
 					return
 				end
 
