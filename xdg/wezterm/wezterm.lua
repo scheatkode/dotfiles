@@ -181,17 +181,21 @@ local function setup()
 			return
 		end
 
-		file:write(pane:get_lines_as_text(10000))
+		file:write(pane:get_lines_as_text())
+		file:flush()
 		file:close()
 
 		window:perform_action(
 			wt.action({
 				SpawnCommandInNewTab = {
-					args = { 'nvim', tmpfile, '-c', 'call cursor(10000, 0)' },
+					args = { 'nvim', tmpfile, '-c', 'normal G' },
 				},
 			}),
 			pane
 		)
+
+		wt.sleep_ms(1000)
+		os.remove(tmpfile)
 	end)
 
 	---Predicate that checks whether the current running process is Vim or Neovim.
