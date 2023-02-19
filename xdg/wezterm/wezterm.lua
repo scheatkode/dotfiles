@@ -288,6 +288,9 @@ local function setup()
 			brightness = 0.5,
 		},
 
+		-- Disable cursor blinking
+		cursor_blink_rate = 0,
+
 		-- Run ZSH by default
 		default_prog = { 'zsh' },
 
@@ -297,6 +300,8 @@ local function setup()
 		}),
 		font_size = 13,
 		line_height = 1.35,
+
+		enable_csi_u_key_encoding = true,
 
 		launch_menu = {},
 
