@@ -11,7 +11,7 @@ package.path = string.format(
 	'%s;%s/?.lua;%s/?/init.lua',
 	package.path,
 	string.format('%s/lib/lua', repository_path),
-	string.format('%s/src/dot', repository_path)
+	string.format('%s/src/dotman', repository_path)
 )
 
 local color  = require('terminal.color')
@@ -113,22 +113,18 @@ end
 
 act('Setting up shell profile', function () setup('../.profile', 'profile') end)
 
-act('Setting up alacritty',  function () setup('alacritty')      end)
 act('Setting up alsa',       function () setup('alsa')           end)
 act('Setting up awesome',    function () setup('awesome')        end)
 act('Setting up btop',       function () setup('btop')           end)
-act('Setting up feh',        function () setup('feh')            end)
-act('Setting up fontconfig', function () setup('fontconfig')     end)
 act('Setting up git',        function () setup('git')            end)
 act('Setting up gmailctl',   function () setup('gmailctl')       end)
 act('Setting up gnupg',      function () setup('gnupg', 'gpg')   end)
-act('Setting up lazygit',    function () setup('lazygit')        end)
 act('Setting up mpd',        function () setup('mpd')            end)
 act('Setting up ncmpcpp',    function () setup('ncmpcpp')        end)
 act('Setting up neovim',     function () setup('nvim', 'neovim') end)
 act('Setting up picom',      function () setup('picom')          end)
 act('Setting up pueue',      function () setup('pueue')          end)
-act('Setting up tmux',       function () setup('tmux')           end)
+act('Setting up wezterm',    function () setup('wezterm')        end)
 act('Setting up x11',        function () setup('x11')            end)
 act('Setting up zsh',        function () setup('zsh')            end)
 
