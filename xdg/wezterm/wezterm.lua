@@ -339,6 +339,22 @@ local function setup()
 				}),
 			},
 
+			-- Fat fingered aliases
+			{
+				key = '\\',
+				mods = 'LEADER|ALT',
+				action = wt.action({
+					SplitHorizontal = { domain = 'CurrentPaneDomain' },
+				}),
+			},
+			{
+				key = '-',
+				mods = 'LEADER|ALT',
+				action = wt.action({
+					SplitVertical = { domain = 'CurrentPaneDomain' },
+				}),
+			},
+
 			-- Pane zooming
 			{ key = '=', mods = 'ALT', action = wt.action.TogglePaneZoomState },
 			{
@@ -438,6 +454,13 @@ local function setup()
 			{
 				key = 'n',
 				mods = 'LEADER',
+				action = wt.action({ SpawnTab = 'CurrentPaneDomain' }),
+			},
+
+			-- Fat fingered alias
+			{
+				key = 'n',
+				mods = 'LEADER|ALT',
 				action = wt.action({ SpawnTab = 'CurrentPaneDomain' }),
 			},
 
