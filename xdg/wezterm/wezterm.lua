@@ -332,6 +332,7 @@ local function setup()
 		-- I'll have my own, thank you
 		disable_default_key_bindings = true,
 		keys = require('keys').setup(),
+		key_tables = require('key_tables').setup(),
 	}
 end
 
