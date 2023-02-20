@@ -1,0 +1,24 @@
+default partial xkb_symbols "kbd_keypad" {
+	key.type[Group1]="FOUR_LEVEL";
+
+   //             Unmodified       Shift           AltGr            Shift+AltGr
+	// number row
+	key <AE07> { [ NoSymbol,        NoSymbol,       7,               a     ] };
+	key <AE08> { [ NoSymbol,        NoSymbol,       8,               b     ] };
+	key <AE09> { [ NoSymbol,        NoSymbol,       9,               c     ] };
+
+	// upper row
+	key <AD07> { [ NoSymbol,        NoSymbol,       4,               d     ] };
+	key <AD08> { [ NoSymbol,        NoSymbol,       5,               e     ] };
+	key <AD09> { [ NoSymbol,        NoSymbol,       6,               f     ] };
+
+	// home row
+	key <AC07> { [ NoSymbol,        NoSymbol,       1,               equal ] };
+	key <AC08> { [ NoSymbol,        NoSymbol,       2,               x     ] };
+	key <AC09> { [ NoSymbol,        NoSymbol,       3,               colon ] };
+
+	// lower row
+	key <AB07> { [ NoSymbol,        NoSymbol,       0                      ] };
+	key <AB08> { [ NoSymbol,        NoSymbol,       0                      ] };
+	key <AB09> { [ NoSymbol,        NoSymbol,       period                 ] };
+};
