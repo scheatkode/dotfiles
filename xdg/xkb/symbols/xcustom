@@ -22,3 +22,23 @@ default partial xkb_symbols "kbd_keypad" {
 	key <AB08> { [ NoSymbol,        NoSymbol,       0                      ] };
 	key <AB09> { [ NoSymbol,        NoSymbol,       period                 ] };
 };
+
+default partial xkb_symbols "kbd_hexpad" {
+	key.type[Group1]="FOUR_LEVEL";
+
+   //             Unmodified       Shift           AltGr            Shift+AltGr
+	// upper row
+	key <AD07> { [ NoSymbol,        NoSymbol,       7,               a      ] };
+	key <AD08> { [ NoSymbol,        NoSymbol,       8,               b      ] };
+	key <AD09> { [ NoSymbol,        NoSymbol,       9,               c      ] };
+
+	// home row
+	key <AC07> { [ NoSymbol,        NoSymbol,       4,               d      ] };
+	key <AC08> { [ NoSymbol,        NoSymbol,       5,               e      ] };
+	key <AC09> { [ NoSymbol,        NoSymbol,       6,               f      ] };
+
+	// lower row
+	key <AB07> { [ NoSymbol,        NoSymbol,       1,               equal  ] };
+	key <AB08> { [ NoSymbol,        NoSymbol,       2,               x      ] };
+	key <AB09> { [ NoSymbol,        NoSymbol,       3,               period ] };
+}
