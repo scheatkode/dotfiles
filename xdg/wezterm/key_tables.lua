@@ -118,7 +118,7 @@ return {
 				-- copy
 				{
 					key = 'y',
-					mods = 'SHIFT',
+					mods = 'NONE',
 					action = act.Multiple({
 						act.CopyTo('ClipboardAndPrimarySelection'),
 						act.CopyMode('Close'),
