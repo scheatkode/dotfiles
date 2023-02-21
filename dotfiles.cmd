@@ -8,27 +8,34 @@
 GOTO :WINDOWS_CMD_SCRIPT
 ::WINJUMP
 
+set -e
 set -u
+
+has () {
+	command -v "${1}" >/dev/null 2>&1
+}
 
 # no need for complicated checks here, just try running a lua
 # interpreter in succession and print an error message if all
 # else fails.
-if                                            \
-		luajit src/dotman/init.lua 2> /dev/null \
-	|| lua    src/dotman/init.lua 2> /dev/null
-then
+if has luajit; then
+	luajit src/dotman/init.lua "${@}"
+	exit 0
+fi
+
+if has lua; then
+	lua src/dotman/init.lua "${@}"
 	exit 0
 fi
 
 # fallback to neovim as a lua runtime.
-if                                        \
+if has nvim; then
 	nvim                                   \
 		--headless                          \
 		--noplugin                          \
 		--clean                             \
 		--cmd 'luafile src/dotman/init.lua' \
-		--cmd 'qa' 2> /dev/null
-then
+		--cmd 'qa' -- "${@}"
 	exit 0
 fi
 
