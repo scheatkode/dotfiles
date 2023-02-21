@@ -65,6 +65,27 @@ return {
 				action = wt.action.EmitEvent('ActivatePaneDirectionDown'),
 			},
 
+			{
+				key = 'l',
+				mods = 'LEADER',
+				action = wt.action.ActivatePaneDirection('Right'),
+			},
+			{
+				key = 'k',
+				mods = 'LEADER',
+				action = wt.action.ActivatePaneDirection('Up'),
+			},
+			{
+				key = 'h',
+				mods = 'LEADER',
+				action = wt.action.ActivatePaneDirection('Left'),
+			},
+			{
+				key = 'j',
+				mods = 'LEADER',
+				action = wt.action.ActivatePaneDirection('Down'),
+			},
+
 			-- Pane size
 			{
 				key = 'h',
@@ -167,7 +188,7 @@ return {
 
 			{
 				key = 'l',
-				mods = 'LEADER',
+				mods = 'LEADER|SHIFT',
 				action = wt.action.ShowLauncher,
 			},
 
