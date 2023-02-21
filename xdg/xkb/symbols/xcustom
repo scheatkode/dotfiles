@@ -41,4 +41,4 @@ default partial xkb_symbols "kbd_hexpad" {
 	key <AB07> { [ NoSymbol,        NoSymbol,       1,               equal  ] };
 	key <AB08> { [ NoSymbol,        NoSymbol,       2,               x      ] };
 	key <AB09> { [ NoSymbol,        NoSymbol,       3,               period ] };
-}
+};
