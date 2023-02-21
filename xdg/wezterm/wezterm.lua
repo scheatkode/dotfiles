@@ -301,8 +301,6 @@ local function setup()
 		font_size = 13,
 		line_height = 1.35,
 
-		enable_csi_u_key_encoding = true,
-
 		launch_menu = {},
 
 		-- Nonsense
