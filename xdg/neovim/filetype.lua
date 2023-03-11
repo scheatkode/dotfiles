@@ -12,7 +12,7 @@ vim.filetype.add({
 
 -- Language: Cisco configuration
 vim.filetype.add({
-	ext = {
+	extension = {
 		['cisco'] = 'cisco',
 		['ios']   = 'cisco',
 	},
@@ -20,7 +20,7 @@ vim.filetype.add({
 
 -- Language: d2 diagram definition file
 vim.filetype.add({
-	ext = {
+	extension = {
 		['d2'] = 'd2',
 	},
 })
@@ -41,7 +41,7 @@ vim.filetype.add({
 
 -- Language: Jinja2 templates
 vim.filetype.add({
-	ext = {
+	extension = {
 		['jinja']  = 'jinja',
 		['jinja2'] = 'jinja',
 		['j2']     = 'jinja',
@@ -60,14 +60,14 @@ vim.filetype.add({
 
 -- Language: SAS analytics programming language
 vim.filetype.add({
-	ext = {
+	extension = {
 		['sas'] = 'sas',
 	},
 })
 
 -- Language: Salt States template
 vim.filetype.add({
-	ext = {
+	extension = {
 		['sls'] = 'sls.yaml',
 	},
 })
