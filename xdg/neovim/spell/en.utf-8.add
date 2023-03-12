@@ -17,3 +17,5 @@ ascii
 entrypoint
 mutex
 toolchain
+linter
+config
