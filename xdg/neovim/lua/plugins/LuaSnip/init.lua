@@ -1,7 +1,9 @@
 return {
 	'L3MON4D3/LuaSnip',
 
-	event = 'InsertEnter',
+	keys = {
+		{ '<M-CR>', mode = { 'i' } },
+	},
 
 	config = function()
 		require('plugins.LuaSnip.config').setup()
