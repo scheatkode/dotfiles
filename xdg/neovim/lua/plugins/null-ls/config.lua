@@ -14,6 +14,8 @@ return {
 			filetypes = {
 				'jinja',
 				'sls',
+				'sls.jinja',
+				'sls.yaml',
 				'yaml',
 			},
 		})
