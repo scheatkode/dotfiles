@@ -23,6 +23,9 @@
    editor = nvim
    pager  = delta
 
+[diff]
+	algorithm = histogram
+
 [merge]
 	tool = nvimdiff
 
