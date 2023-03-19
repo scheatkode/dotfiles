@@ -5,7 +5,7 @@ local s = snippet.s
 
 local f = require('luasnip.extras.fmt').fmta
 
-snippet.add_snippets('sls', {
+snippet.add_snippets('jinja', {
 	s(
 		'ifelse',
 		f(
@@ -18,8 +18,8 @@ snippet.add_snippets('sls', {
 			]],
 			{
 				condition = i(1, 'true'),
-				truthy    = i(2, '# do something'),
-				falsy     = i(3, '# do something else'),
+				truthy    = i(2, '{#- do something -#}'),
+				falsy     = i(3, '{#- do something else -#}'),
 				finish    = i(0),
 			}
 		)

@@ -5,7 +5,7 @@ local s = snippet.s
 
 local f = require('luasnip.extras.fmt').fmta
 
-snippet.add_snippets('sls', {
+snippet.add_snippets('jinja', {
 	s(
 		'if',
 		f(
@@ -16,7 +16,7 @@ snippet.add_snippets('sls', {
 			]],
 			{
 				condition = i(1, 'true'),
-				body      = i(2, '# do something'),
+				body      = i(2, '{#- do something -#}'),
 				finish    = i(0),
 			}
 		)
