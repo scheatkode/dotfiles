@@ -1,20 +1,20 @@
 return {
-	'numToStr/Comment.nvim',
+	"numToStr/Comment.nvim",
 
 	keys = {
-		{ '<leader>/', mode = { 'n', 'x' } },
-		{ 'gb', mode = { 'n', 'x' } },
-		{ 'gc', mode = { 'n', 'x' } },
-		'gcb',
-		'gcc',
+		{ "<leader>/", mode = { "n", "x" } },
+		{ "gb", mode = { "n", "x" } },
+		{ "gc", mode = { "n", "x" } },
+		"gcb",
+		"gcc",
 	},
 
 	dependencies = {
-		'JoosepAlviste/nvim-ts-context-commentstring',
+		"JoosepAlviste/nvim-ts-context-commentstring",
 	},
 
 	config = function()
-		require('plugins.Comment.config').setup()
-		require('plugins.Comment.keys').setup()
+		require("plugins.Comment.config").setup()
+		require("plugins.Comment.keys").setup()
 	end,
 }

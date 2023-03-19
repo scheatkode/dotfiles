@@ -19,20 +19,20 @@
 local compat = {}
 
 --- Boolean flag for Lua 5.1 or LuaJit.
-compat.lua51 = _VERSION == 'Lua 5.1'
+compat.lua51 = _VERSION == "Lua 5.1"
 
 --- Boolean flag for LuaJit.
-compat.luajit = type(jit) == 'table'
+compat.luajit = type(jit) == "table"
 
 --- Boolean flag for Neovim.
-compat.neovim = type(vim) == 'table'
+compat.neovim = type(vim) == "table"
 
 --- Boolean flag for LuaJit  with Lua 5.2 compatibility
 --- compiled in. Detection happens with `goto` since it
 --- is considered  a keyword when 5.2  compatibility is
 --- enabled in LuaJit.
 if compat.luajit then
-	compat.luajit52 = not loadstring('local goto = 1')
+	compat.luajit52 = not loadstring("local goto = 1")
 end
 
 --- The directory  separator character for  the current
@@ -40,7 +40,7 @@ end
 compat.path_separator = _G.package.config:sub(1, 1)
 
 --- Boolean flag for Windows detection.
-compat.is_windows = compat.path_separator == '\\'
+compat.is_windows = compat.path_separator == "\\"
 
 --- Execute  a  shell  command   in  a  compatible  and
 --- platform independent  way. This is  a compatibility
@@ -63,7 +63,7 @@ compat.is_windows = compat.path_separator == '\\'
 function compat.execute(command)
 	local r1, r2, r3 = os.execute(command)
 
-	if r2 == 'No error' and r3 == 0 and compat.is_windows then
+	if r2 == "No error" and r3 == 0 and compat.is_windows then
 		--- `os.execute` bug in Lua 5.2/5.3 not reporting `-1` properly on
 		--- Windows was fixed in 5.4.
 
@@ -117,9 +117,9 @@ if compat.lua51 then --- define lua 5.2 style `load()`
 		function compat.load(str, source, mode, env)
 			local chunk, err
 
-			if type(str) == 'string' then
-				if str:byte(1) == 27 and not (mode or 'bt'):find('b') then
-					return nil, 'attempt to load a binary chunk'
+			if type(str) == "string" then
+				if str:byte(1) == 27 and not (mode or "bt"):find("b") then
+					return nil, "attempt to load a binary chunk"
 				end
 
 				chunk, err = loadstring(str, source)
@@ -164,12 +164,12 @@ else
 		local name
 		local up = 0
 
-		f = (type(f) == 'function' and f or debug.getinfo(f + 1, 'f').func)
+		f = (type(f) == "function" and f or debug.getinfo(f + 1, "f").func)
 
 		repeat
 			up = up + 1
 			name = debug.getupvalue(f, up)
-		until name == '_ENV' or name == nil
+		until name == "_ENV" or name == nil
 
 		if name then
 			debug.upvaluejoin(f, up, function()
@@ -196,12 +196,12 @@ else
 		local up = 0
 
 		f = f or 0
-		f = (type(f) == 'function' and f or debug.getinfo(f + 1, 'f').func)
+		f = (type(f) == "function" and f or debug.getinfo(f + 1, "f").func)
 
 		repeat
 			up = up + 1
 			name, value = debug.getupvalue(f, up)
-		until name == '_ENV' or name == nil
+		until name == "_ENV" or name == nil
 
 		return value
 	end
@@ -215,7 +215,7 @@ end
 --- @return table a table with field `n` set to the length
 if not table.pack then
 	function compat.table_pack(...)
-		return { n = select('#', ...), ... }
+		return { n = select("#", ...), ... }
 	end
 else
 	compat.table_pack = table.pack
@@ -251,35 +251,35 @@ if not package.searchpath then
 	--- @return nil, string on failure, the error string lists the paths tried
 	function compat.package_searchpath(name, path, sep, separator)
 		assert(
-			type(name) == 'string',
+			type(name) == "string",
 			("bad argument #1 to 'searchpath' (string expected, got %s)"):format(
 				type(path),
 				2
 			)
 		)
 		assert(
-			type(path) == 'string',
+			type(path) == "string",
 			("bad argument #2 to 'searchpath' (string expected, got %s)"):format(
 				type(path),
 				2
 			)
 		)
 		assert(
-			sep == nil or type(sep) == 'string',
+			sep == nil or type(sep) == "string",
 			("bad argument #3 to 'searchpath' (string expected, got %s)"):format(
 				type(path),
 				2
 			)
 		)
 		assert(
-			separator == nil or type(separator) == 'string',
+			separator == nil or type(separator) == "string",
 			("bad argument #4 to 'searchpath' (string expected, got %s)"):format(
 				type(path),
 				2
 			)
 		)
 
-		sep = sep or '.'
+		sep = sep or "."
 		separator = separator or compat.path_separator
 
 		do
@@ -294,9 +294,9 @@ if not package.searchpath then
 
 		local paths_tried = {}
 
-		for m in path:gmatch('[^;]+') do
-			local nm = m:gsub('?', name)
-			local f = io.open(nm, 'r')
+		for m in path:gmatch("[^;]+") do
+			local nm = m:gsub("?", name)
+			local f = io.open(nm, "r")
 
 			paths_tried[#paths_tried + 1] = nm
 
@@ -335,14 +335,14 @@ if not warn then
 	---
 	--- @vararg ... any
 	function compat.warn(arg1, ...)
-		if type(arg1) == 'string' and arg1:sub(1, 1) == '@' then
+		if type(arg1) == "string" and arg1:sub(1, 1) == "@" then
 			--- control message
-			if arg1 == '@on' then
+			if arg1 == "@on" then
 				enabled = true
 				return
 			end
 
-			if arg1 == '@off' then
+			if arg1 == "@off" then
 				enabled = false
 				return
 			end
@@ -352,8 +352,8 @@ if not warn then
 		end
 
 		if enabled then
-			io.stderr:write('Lua warning: ', arg1, ...)
-			io.stderr:write('\n')
+			io.stderr:write("Lua warning: ", arg1, ...)
+			io.stderr:write("\n")
 		end
 	end
 else

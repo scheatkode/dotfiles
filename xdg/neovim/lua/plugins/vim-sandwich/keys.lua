@@ -1,82 +1,82 @@
 return {
 	setup = function()
 		vim.keymap.set(
-			{ 'n', 'x' },
-			'<leader>tsa',
-			'<Plug>(operator-sandwich-add)',
+			{ "n", "x" },
+			"<leader>tsa",
+			"<Plug>(operator-sandwich-add)",
 			{
 				remap = true,
-				desc = 'Add surrounding character',
+				desc = "Add surrounding character",
 			}
 		)
 
 		vim.keymap.set(
-			{ 'n', 'x' },
-			'<leader>sa',
-			'<Plug>(operator-sandwich-add)',
+			{ "n", "x" },
+			"<leader>sa",
+			"<Plug>(operator-sandwich-add)",
 			{
 				remap = true,
-				desc = 'Add surrounding character',
+				desc = "Add surrounding character",
 			}
 		)
 
 		vim.keymap.set(
-			'n',
-			'<leader>tsd',
-			'<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)',
-			{ remap = true, desc = 'Delete surrounding character' }
+			"n",
+			"<leader>tsd",
+			"<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)",
+			{ remap = true, desc = "Delete surrounding character" }
 		)
 		vim.keymap.set(
-			'n',
-			'<leader>tsD',
-			'<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',
-			{ remap = true, desc = 'Delete surrounding character automatically' }
+			"n",
+			"<leader>tsD",
+			"<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)",
+			{ remap = true, desc = "Delete surrounding character automatically" }
 		)
 		vim.keymap.set(
-			'n',
-			'<leader>tsc',
-			'<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)',
-			{ remap = true, desc = 'Change surrounding character' }
+			"n",
+			"<leader>tsc",
+			"<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)",
+			{ remap = true, desc = "Change surrounding character" }
 		)
 		vim.keymap.set(
-			'n',
-			'<leader>tsC',
-			'<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)',
-			{ remap = true, desc = 'Change surrounding character automatically' }
+			"n",
+			"<leader>tsC",
+			"<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)",
+			{ remap = true, desc = "Change surrounding character automatically" }
 		)
 
-		vim.keymap.set({ 'x', 'o' }, 'is', '<Plug>(textobj-sandwich-query-i)', {
+		vim.keymap.set({ "x", "o" }, "is", "<Plug>(textobj-sandwich-query-i)", {
 			remap = true,
-			desc = 'Select inside surrounding character',
+			desc = "Select inside surrounding character",
 		})
-		vim.keymap.set({ 'x', 'o' }, 'as', '<Plug>(textobj-sandwich-query-a)', {
+		vim.keymap.set({ "x", "o" }, "as", "<Plug>(textobj-sandwich-query-a)", {
 			remap = true,
-			desc = 'Select around surrounding character',
+			desc = "Select around surrounding character",
 		})
-		vim.keymap.set({ 'x', 'o' }, 'iS', '<Plug>(textobj-sandwich-auto-i)', {
+		vim.keymap.set({ "x", "o" }, "iS", "<Plug>(textobj-sandwich-auto-i)", {
 			remap = true,
-			desc = 'Select inside surrounding character automatically',
+			desc = "Select inside surrounding character automatically",
 		})
-		vim.keymap.set({ 'x', 'o' }, 'aS', '<Plug>(textobj-sandwich-auto-a)', {
+		vim.keymap.set({ "x", "o" }, "aS", "<Plug>(textobj-sandwich-auto-a)", {
 			remap = true,
-			desc = 'Select around surrounding character automatically',
+			desc = "Select around surrounding character automatically",
 		})
 		vim.keymap.set(
-			{ 'x', 'o' },
-			'im',
-			'<Plug>(textobj-sandwich-literal-query-i)',
+			{ "x", "o" },
+			"im",
+			"<Plug>(textobj-sandwich-literal-query-i)",
 			{
 				remap = true,
-				desc = 'Select inside surrounding character literally',
+				desc = "Select inside surrounding character literally",
 			}
 		)
 		vim.keymap.set(
-			{ 'x', 'o' },
-			'am',
-			'<Plug>(textobj-sandwich-literal-query-a)',
+			{ "x", "o" },
+			"am",
+			"<Plug>(textobj-sandwich-literal-query-a)",
 			{
 				remap = true,
-				desc = 'Select around surrounding character literally',
+				desc = "Select around surrounding character literally",
 			}
 		)
 	end,

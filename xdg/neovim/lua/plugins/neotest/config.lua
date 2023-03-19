@@ -1,8 +1,8 @@
 return {
 	setup = function()
-		require('neotest').setup({
+		require("neotest").setup({
 			adapters = {
-				require('neotest-plenary'),
+				require("neotest-plenary"),
 			},
 		})
 	end,

@@ -1,7 +1,7 @@
-local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local has_lspconfig, lspconfig = pcall(require, "lspconfig")
 
 if not has_lspconfig then
-	print('‼ Tried loading lspconfig for denols ... unsuccessfully.')
+	print("‼ Tried loading lspconfig for denols ... unsuccessfully.")
 	return has_lspconfig
 end
 
@@ -9,7 +9,7 @@ end
 
 return {
 	filetypes = {
-		'dart',
+		"dart",
 	},
 
 	init_options = {
@@ -20,5 +20,5 @@ return {
 		suggestFromUnimportedLibraries = true,
 	},
 
-	root_dir = lspconfig.util.root_pattern("pubspec.yaml")
+	root_dir = lspconfig.util.root_pattern("pubspec.yaml"),
 }

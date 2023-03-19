@@ -1,16 +1,16 @@
-local snippet = require('luasnip')
+local snippet = require("luasnip")
 
 local i = snippet.insert_node
 local s = snippet.s
 
-local f = require('luasnip.extras.fmt').fmta
+local f = require("luasnip.extras.fmt").fmta
 
-snippet.add_snippets('go', {
+snippet.add_snippets("go", {
 	s(
-		'map',
+		"map",
 		f([[map[<key>]<value><finish>]], {
-			key    = i(1, 'type'),
-			value  = i(2, 'type'),
+			key = i(1, "type"),
+			value = i(2, "type"),
 			finish = i(0),
 		})
 	),

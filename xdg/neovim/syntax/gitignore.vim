@@ -5,7 +5,7 @@
 " for later versions: quit when a syntax file was already loaded
 if version < 600
 	syntax clear
-elseif exists('b:current_syntax')
+elseif exists("b:current_syntax")
 	finish
 endif
 
@@ -27,6 +27,6 @@ hi def link gitignore_file      Type
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
-let b:current_syntax = 'gitignore'
+let b:current_syntax = "gitignore"
 
 setlocal commentstring=#\ %s

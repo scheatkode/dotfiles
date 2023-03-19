@@ -1,4 +1,4 @@
-local partial = require('f.function.partial')
+local partial = require("f.function.partial")
 
 ---Convert `f`, a function that takes multiple arguments into
 ---a sequence of functions that take an arbitrary number of
@@ -16,14 +16,14 @@ local partial = require('f.function.partial')
 ---@param n number?
 ---@return function
 local function curry(f, n)
-	n = n or debug.getinfo(f, 'u').nparams or 2
+	n = n or debug.getinfo(f, "u").nparams or 2
 
 	if n < 2 then
 		return f
 	end
 
 	return function(...)
-		local nargs = select('#', ...)
+		local nargs = select("#", ...)
 
 		if nargs >= n then
 			return f(...)

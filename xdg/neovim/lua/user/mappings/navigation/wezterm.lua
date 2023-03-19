@@ -1,14 +1,14 @@
 return {
 	setup = function()
-		local assertx = require('assertx')
-		local WEZTERM = os.getenv('TERM_PROGRAM') == 'WezTerm'
+		local assertx = require("assertx")
+		local WEZTERM = os.getenv("TERM_PROGRAM") == "WezTerm"
 
 		local function jump(vdirection, pdirection)
 			return function()
 				-- window id before jump
 				local current_window = vim.api.nvim_get_current_win()
 
-				vim.api.nvim_command(string.format('wincmd %s', vdirection))
+				vim.api.nvim_command(string.format("wincmd %s", vdirection))
 
 				-- stop if we're not in a wezterm instance
 				if not WEZTERM then
@@ -20,7 +20,7 @@ return {
 				end
 
 				local command = string.format(
-					'wezterm cli activate-pane-direction %s',
+					"wezterm cli activate-pane-direction %s",
 					pdirection
 				)
 
@@ -39,9 +39,29 @@ return {
 
 		--- mappings
 
-		vim.keymap.set('n', '<M-k>', jump('k', 'Up'), { nowait = true, desc = 'Go to the pane above' })
-		vim.keymap.set('n', '<M-j>', jump('j', 'Down'), { nowait = true, desc = 'Go to the pane below' })
-		vim.keymap.set('n', '<M-h>', jump('h', 'Left'), { nowait = true, desc = 'Go to the pane on the left' })
-		vim.keymap.set('n', '<M-l>', jump('l', 'Right'), { nowait = true, desc = 'Go to the pane on the right' })
+		vim.keymap.set(
+			"n",
+			"<M-k>",
+			jump("k", "Up"),
+			{ nowait = true, desc = "Go to the pane above" }
+		)
+		vim.keymap.set(
+			"n",
+			"<M-j>",
+			jump("j", "Down"),
+			{ nowait = true, desc = "Go to the pane below" }
+		)
+		vim.keymap.set(
+			"n",
+			"<M-h>",
+			jump("h", "Left"),
+			{ nowait = true, desc = "Go to the pane on the left" }
+		)
+		vim.keymap.set(
+			"n",
+			"<M-l>",
+			jump("l", "Right"),
+			{ nowait = true, desc = "Go to the pane on the right" }
+		)
 	end,
 }

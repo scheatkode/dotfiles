@@ -1,5 +1,5 @@
-local pack   = require('compat.table.pack')
-local unpack = require('compat.table.unpack')
+local pack = require("compat.table.pack")
+local unpack = require("compat.table.unpack")
 
 ---A function that partially applies given arguments to the
 ---right of function `f`, producing another function with
@@ -26,8 +26,8 @@ local unpack = require('compat.table.unpack')
 ---@vararg any
 ---@return function
 local function rpartial(f, ...)
-	local params   = pack(...)
-	local paramlen = select('#', ...)
+	local params = pack(...)
+	local paramlen = select("#", ...)
 
 	return function(...)
 		local t = pack(...)

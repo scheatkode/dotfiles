@@ -4,11 +4,11 @@
 ---*inside* of the built closures, which are of course, tail-call
 ---optimized.
 
-local select       = select
+local select = select
 local setmetatable = setmetatable
 
-local pack   = require('compat.table.pack')
-local unpack = require('compat.table.unpack')
+local pack = require("compat.table.pack")
+local unpack = require("compat.table.unpack")
 
 ---Storing a closure is more memory and speed efficient than storing
 ---the actual return values in a cache table.
@@ -25,7 +25,7 @@ end
 ---Create a weak table.
 ---@return table
 local function weak_table()
-	return setmetatable({}, { __mode = 'kv' })
+	return setmetatable({}, { __mode = "kv" })
 end
 
 local function return_or_empty(arg)
@@ -98,7 +98,7 @@ local function memoize_n(n, f)
 			return f(arg, ...)
 		end)
 
-		print(debug.getinfo(1, 'n').istailcall)
+		print(debug.getinfo(1, "n").istailcall)
 
 		lookup[k] = r
 		return r(...)
@@ -115,14 +115,14 @@ local function memoize(f)
 	local memoized = weak_table()
 
 	return function(...)
-		local n  = select('#', ...)
+		local n = select("#", ...)
 		local mf = memoized[n]
 
 		if mf then
 			return mf(...)
 		end
 
-		mf          = memoize_n(n, f)
+		mf = memoize_n(n, f)
 		memoized[n] = mf
 
 		return mf(...)

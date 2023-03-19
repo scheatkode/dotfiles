@@ -1,14 +1,14 @@
-local lazy = require('load.on_module_call')
-local deep_extend = lazy('tablex.deep_extend')
+local lazy = require("load.on_module_call")
+local deep_extend = lazy("tablex.deep_extend")
 
 local function get_vertical(options)
 	local defaults = {
-		layout_strategy = 'vertical',
-		sorting_strategy = 'descending',
+		layout_strategy = "vertical",
+		sorting_strategy = "descending",
 		results_title = false,
 
 		layout_config = {
-			prompt_position = 'bottom',
+			prompt_position = "bottom",
 			preview_cutoff = 1,
 
 			width = function(_, max_columns, _)
@@ -21,17 +21,17 @@ local function get_vertical(options)
 		},
 	}
 
-	return deep_extend('force', defaults, options or {})
+	return deep_extend("force", defaults, options or {})
 end
 
 local function get_command(options)
 	local defaults = {
-		layout_strategy = 'vertical',
-		sorting_strategy = 'descending',
+		layout_strategy = "vertical",
+		sorting_strategy = "descending",
 		results_title = false,
 
 		layout_config = {
-			prompt_position = 'top',
+			prompt_position = "top",
 			preview_cutoff = 1,
 
 			width = function(_, max_columns, _)
@@ -44,7 +44,7 @@ local function get_command(options)
 		},
 	}
 
-	return deep_extend('force', defaults, options or {})
+	return deep_extend("force", defaults, options or {})
 end
 
 return {

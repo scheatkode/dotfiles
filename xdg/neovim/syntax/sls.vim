@@ -5,15 +5,15 @@
 " for later versions: quit when a syntax file was already loaded
 if version < 600
 	syntax clear
-elseif exists('b:current_syntax')
+elseif exists("b:current_syntax")
 	finish
 endif
 
 let s:keepcpo = &cpo
 set cpo&vim
 
-if !exists('main_syntax')
-	let main_syntax = 'yaml'
+if !exists("main_syntax")
+	let main_syntax = "yaml"
 endif
 
 runtime! syntax/yaml.vim
@@ -36,4 +36,4 @@ hi def link salt_stateErrors      Error
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
-let b:current_syntax = 'sls'
+let b:current_syntax = "sls"

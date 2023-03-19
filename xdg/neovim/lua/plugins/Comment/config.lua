@@ -1,7 +1,7 @@
 return {
 	setup = function()
-		local comment = require('Comment')
-		local ts = require('ts_context_commentstring.integrations.comment_nvim')
+		local comment = require("Comment")
+		local ts = require("ts_context_commentstring.integrations.comment_nvim")
 
 		return comment.setup({
 			-- add a space between comment and the line
@@ -9,15 +9,15 @@ return {
 
 			-- lines that should be ignored while (un)commenting
 			-- example: use '^$' to ignore empty lines
-			ignore = '^$',
+			ignore = "^$",
 
 			-- whether to create basic (operator-pending) and extra
 			-- mappings for normal/visual mode
 			mappings = {
 				-- operator-pending mapping
-				basic    = false,
+				basic = false,
 				-- extra mapping
-				extra    = false,
+				extra = false,
 				-- extended mapping
 				extended = false,
 			},

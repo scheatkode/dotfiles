@@ -1,13 +1,13 @@
 return {
 	setup = function()
-		vim.keymap.set({ 'n', 'x' }, '<leader>ta', '<Plug>(EasyAlign)', {
+		vim.keymap.set({ "n", "x" }, "<leader>ta", "<Plug>(EasyAlign)", {
 			remap = true,
-			desc  = 'Align text',
+			desc = "Align text",
 		})
 
-		vim.keymap.set({ 'n', 'x' }, '<leader>tl', '<Plug>(LiveEasyAlign)', {
+		vim.keymap.set({ "n", "x" }, "<leader>tl", "<Plug>(LiveEasyAlign)", {
 			remap = true,
-			desc  = 'Align text with preview',
+			desc = "Align text with preview",
 		})
 	end,
 }

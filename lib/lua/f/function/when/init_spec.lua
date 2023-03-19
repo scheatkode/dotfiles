@@ -1,11 +1,11 @@
 local fmt = string.format
 
-local f        = require('f')
-local constant = require('f.function.constant')
-local when     = require('f.function.when')
+local f = require("f")
+local constant = require("f.function.constant")
+local when = require("f.function.when")
 
-describe('function', function()
-	describe('when', function()
+describe("function", function()
+	describe("when", function()
 		f.zip(
 			f.random(0, 1000):take(50),
 			f.random(0, 1000):take(50),
@@ -13,7 +13,7 @@ describe('function', function()
 		):foreach(function(condition, if_true, if_false)
 			it(
 				fmt(
-					'should return %3d if %3d is odd or %3d otherwise',
+					"should return %3d if %3d is odd or %3d otherwise",
 					if_true,
 					condition,
 					if_false

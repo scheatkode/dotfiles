@@ -28,7 +28,7 @@ end
 ---@vararg any
 ---@return function
 local function partial(f, ...)
-	for i = 1, select('#', ...) do
+	for i = 1, select("#", ...) do
 		f = part(f, select(i, ...))
 	end
 

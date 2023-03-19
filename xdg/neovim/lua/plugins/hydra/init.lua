@@ -1,13 +1,13 @@
 return {
-	'anuvyklack/hydra.nvim',
+	"anuvyklack/hydra.nvim",
 
 	keys = {
-		'z',
-		'<C-w>',
-		'<leader>D',
+		"z",
+		"<C-w>",
+		"<leader>D",
 	},
 
 	config = function()
-		require('plugins.hydra.config').setup()
+		require("plugins.hydra.config").setup()
 	end,
 }

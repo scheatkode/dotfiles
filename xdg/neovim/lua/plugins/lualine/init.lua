@@ -1,15 +1,15 @@
 return {
-	'nvim-lualine/lualine.nvim',
+	"nvim-lualine/lualine.nvim",
 
 	dependencies = {
-		'kyazdani42/nvim-web-devicons',
+		"kyazdani42/nvim-web-devicons",
 	},
 
 	event = {
-		'VimEnter',
+		"VimEnter",
 	},
 
 	config = function()
-		require('plugins.lualine.config').setup()
+		require("plugins.lualine.config").setup()
 	end,
 }

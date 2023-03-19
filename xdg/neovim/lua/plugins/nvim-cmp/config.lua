@@ -1,22 +1,22 @@
 return {
 	setup = function(overrides)
-		local constant = require('f.function.constant')
-		local extend   = require('tablex.deep_extend')
+		local constant = require("f.function.constant")
+		local extend = require("tablex.deep_extend")
 
 		local defaults = {
-			icons    = require('meta.icon.lsp').presets.default,
+			icons = require("meta.icon.lsp").presets.default,
 			maxwidth = 50,
-			sources  = {
-				nvim_lsp = '[lsp]',
-				path     = '[path]',
+			sources = {
+				nvim_lsp = "[lsp]",
+				path = "[path]",
 			},
 		}
 
-		local options = extend('force', defaults, overrides or {})
+		local options = extend("force", defaults, overrides or {})
 
 		-- Check for plugin existence
-		local has_completion, completion = pcall(require, 'cmp')
-		local has_snippets, snippets     = pcall(require, 'luasnip')
+		local has_completion, completion = pcall(require, "cmp")
+		local has_snippets, snippets = pcall(require, "luasnip")
 
 		if not has_completion or not has_snippets then
 			return has_completion
@@ -27,8 +27,8 @@ return {
 			-- engine yet avoid errors when snippets are not available.
 			snippets = {
 				expand_or_locally_jumpable = constant(false),
-				expand_or_jumpable         = constant(false),
-				jumpable                   = constant(false),
+				expand_or_jumpable = constant(false),
+				jumpable = constant(false),
 			}
 		end
 
@@ -76,30 +76,36 @@ return {
 			},
 
 			mapping = {
-				['<C-x><C-x>'] = completion.mapping.complete(),
-				['<C-x><C-o>'] = completion.mapping.complete(),
+				["<C-x><C-x>"] = completion.mapping.complete(),
+				["<C-x><C-o>"] = completion.mapping.complete(),
 
-				['<C-p>'] = completion.mapping.select_prev_item(),
-				['<C-n>'] = completion.mapping.select_next_item(),
-				['<C-b>'] = completion.mapping(completion.mapping.scroll_docs(-4), { 'i' }),
-				['<C-f>'] = completion.mapping(completion.mapping.scroll_docs(4), { 'i' }),
+				["<C-p>"] = completion.mapping.select_prev_item(),
+				["<C-n>"] = completion.mapping.select_next_item(),
+				["<C-b>"] = completion.mapping(
+					completion.mapping.scroll_docs(-4),
+					{ "i" }
+				),
+				["<C-f>"] = completion.mapping(
+					completion.mapping.scroll_docs(4),
+					{ "i" }
+				),
 
-				['<C-e>'] = completion.mapping({
+				["<C-e>"] = completion.mapping({
 					i = completion.mapping.abort(),
 					c = completion.mapping.close(),
 				}),
 
-				['<CR>'] = completion.mapping.confirm({
+				["<CR>"] = completion.mapping.confirm({
 					behavior = completion.ConfirmBehavior.Replace,
-					select   = true,
+					select = true,
 				}),
 
-				['<C-y>'] = completion.mapping.confirm({
+				["<C-y>"] = completion.mapping.confirm({
 					behavior = completion.ConfirmBehavior.Replace,
-					select   = true,
+					select = true,
 				}),
 
-				['<Tab>'] = completion.mapping(function(fallback)
+				["<Tab>"] = completion.mapping(function(fallback)
 					if completion.visible() then
 						completion.select_next_item()
 					elseif snippets.expand_or_locally_jumpable() then
@@ -107,9 +113,9 @@ return {
 					else
 						fallback()
 					end
-				end, { 'i', 's' }),
+				end, { "i", "s" }),
 
-				['<S-Tab>'] = completion.mapping(function(fallback)
+				["<S-Tab>"] = completion.mapping(function(fallback)
 					if completion.visible() then
 						completion.select_prev_item()
 						---This is intended for the above coercion.
@@ -122,12 +128,12 @@ return {
 					else
 						fallback()
 					end
-				end, { 'i', 's' })
+				end, { "i", "s" }),
 			},
 
 			sources = completion.config.sources({
-				{ name = 'nvim_lsp' },
-				{ name = 'path' },
+				{ name = "nvim_lsp" },
+				{ name = "path" },
 			}),
 
 			sorting = {
@@ -143,5 +149,5 @@ return {
 				},
 			},
 		})
-	end
+	end,
 }

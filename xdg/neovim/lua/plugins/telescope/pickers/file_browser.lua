@@ -1,4 +1,4 @@
-local telescope = require('telescope')
+local telescope = require("telescope")
 
 return function(options)
 	options = options or {}

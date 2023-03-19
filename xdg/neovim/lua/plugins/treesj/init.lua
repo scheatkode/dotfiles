@@ -1,13 +1,13 @@
 return {
-	'Wansmer/treesj',
+	"Wansmer/treesj",
 
 	keys = {
-		'gS',
-		'gJ',
+		"gS",
+		"gJ",
 	},
 
 	config = function()
-		require('plugins.treesj.config').setup()
-		require('plugins.treesj.keys').setup()
+		require("plugins.treesj.config").setup()
+		require("plugins.treesj.keys").setup()
 	end,
 }

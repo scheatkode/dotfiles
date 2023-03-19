@@ -7,7 +7,7 @@ if not table.pack then
 	---@return table
 	return function(...)
 		return {
-			n = select('#', ...),
+			n = select("#", ...),
 			...,
 		}
 	end

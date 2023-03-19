@@ -1,17 +1,17 @@
-local f = require('f')
+local f = require("f")
 
-local typex, istypex = require('typex')()
+local typex, istypex = require("typex")()
 
-describe('typex', function()
-	describe('when called with a primitive type', function()
+describe("typex", function()
+	describe("when called with a primitive type", function()
 		f.iterate({
 			true,
 			false,
 			42,
 			0,
 			4.20,
-			'',
-			'foobar',
+			"",
+			"foobar",
 			function() end,
 		}):foreach(function(x)
 			it(
@@ -23,18 +23,18 @@ describe('typex', function()
 		end)
 
 		it('should return "nil" when given nil', function()
-			assert.same('nil', typex(nil))
+			assert.same("nil", typex(nil))
 		end)
 
 		it('should return "thread" when given a coroutine', function()
 			local v = coroutine.create(function() end)
-			assert.same('thread', typex(v))
+			assert.same("thread", typex(v))
 		end)
 	end)
 
-	describe('when given a file type', function()
-		it('should return the same type as io.type()', function()
-			local v = io.open('/dev/null') -- TODO(scheatkode): Check windows too
+	describe("when given a file type", function()
+		it("should return the same type as io.type()", function()
+			local v = io.open("/dev/null") -- TODO(scheatkode): Check windows too
 
 			assert.same(io.type(v), typex(v))
 			v:close()
@@ -42,25 +42,25 @@ describe('typex', function()
 		end)
 	end)
 
-	describe('when given a table', function()
+	describe("when given a table", function()
 		it(
-			'should return the value of the __type metafield if available',
+			"should return the value of the __type metafield if available",
 			function()
 				assert.same(
-					'foobar',
-					typex(setmetatable({}, { __type = 'foobar' }))
+					"foobar",
+					typex(setmetatable({}, { __type = "foobar" }))
 				)
 			end
 		)
 
 		it(
-			'should return the result of the __type metafield function if available',
+			"should return the result of the __type metafield function if available",
 			function()
 				assert.same(
-					'foobar',
+					"foobar",
 					typex(setmetatable({}, {
 						__type = function()
-							return 'foobar'
+							return "foobar"
 						end,
 					}))
 				)
@@ -68,28 +68,28 @@ describe('typex', function()
 		)
 
 		it('should return "table" if __type is a field', function()
-			assert.same('table', typex({ __type = 'foobar' }))
+			assert.same("table", typex({ __type = "foobar" }))
 		end)
 
 		it('should return "table" if no __type metafield is found', function()
-			assert.same('table', typex({}))
+			assert.same("table", typex({}))
 		end)
 	end)
 
-	describe('(is_typex)', function()
-		describe('when called with a primitive type', function()
+	describe("(is_typex)", function()
+		describe("when called with a primitive type", function()
 			f.iterate({
 				true,
 				false,
 				42,
 				0,
 				4.20,
-				'',
-				'foobar',
+				"",
+				"foobar",
 				function() end,
 			}):foreach(function(x)
 				it(
-					'should return true for variable of type ' .. typex(x),
+					"should return true for variable of type " .. typex(x),
 					function()
 						assert.is_true(istypex(type(x), x))
 					end
@@ -97,18 +97,18 @@ describe('typex', function()
 			end)
 
 			it('should return "nil" when given nil', function()
-				assert.is_true(istypex('nil', nil))
+				assert.is_true(istypex("nil", nil))
 			end)
 
 			it('should return "thread" when given a coroutine', function()
 				local v = coroutine.create(function() end)
-				assert.is_true(istypex('thread', v))
+				assert.is_true(istypex("thread", v))
 			end)
 		end)
 
-		describe('when given a file type', function()
-			it('should return the same type as io.type()', function()
-				local v = io.open('/dev/null') -- TODO(scheatkode): Check windows too
+		describe("when given a file type", function()
+			it("should return the same type as io.type()", function()
+				local v = io.open("/dev/null") -- TODO(scheatkode): Check windows too
 
 				assert.is_true(istypex(io.type(v), v))
 				v:close()
@@ -116,48 +116,48 @@ describe('typex', function()
 			end)
 		end)
 
-		describe('when given a table', function()
+		describe("when given a table", function()
 			it(
-				'should return the value of the __type metafield if available',
+				"should return the value of the __type metafield if available",
 				function()
 					assert.is_true(
-						istypex('foobar', setmetatable({}, { __istype = 'foobar' }))
+						istypex("foobar", setmetatable({}, { __istype = "foobar" }))
 					)
 				end
 			)
 
 			it(
-				'should return the result of the __type metafield function if available',
+				"should return the result of the __type metafield function if available",
 				function()
 					local fun = function(_, x)
-						return x == 'foobar'
+						return x == "foobar"
 					end
 
 					assert.is_true(
-						istypex('foobar', setmetatable({}, { __istype = fun }))
+						istypex("foobar", setmetatable({}, { __istype = fun }))
 					)
 					assert.is_false(
-						istypex('foobaz', setmetatable({}, { __istype = fun }))
+						istypex("foobaz", setmetatable({}, { __istype = fun }))
 					)
 				end
 			)
 
 			it('should return "table" if __type is a field', function()
-				assert.is_true(istypex('table', { __istype = 'foobar' }))
+				assert.is_true(istypex("table", { __istype = "foobar" }))
 			end)
 
 			it(
 				'should return "table" if no __type metafield is found',
 				function()
-					assert.is_true(istypex('table', {}))
+					assert.is_true(istypex("table", {}))
 				end
 			)
 		end)
 
-		describe('when given an invalid type checker', function()
-			it('should raise an error', function()
+		describe("when given an invalid type checker", function()
+			it("should raise an error", function()
 				assert.error(function()
-					istypex('foobar', setmetatable({}, { __istype = true }))
+					istypex("foobar", setmetatable({}, { __istype = true }))
 				end)
 			end)
 		end)

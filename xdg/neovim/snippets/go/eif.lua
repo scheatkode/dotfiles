@@ -1,23 +1,23 @@
 -- Thanks TJ !
-local snippet = require('luasnip')
+local snippet = require("luasnip")
 
 local sn = snippet.sn
-local s  = snippet.s
-local i  = snippet.insert_node
-local t  = snippet.text_node
-local c  = snippet.choice_node
-local d  = snippet.dynamic_node
+local s = snippet.s
+local i = snippet.insert_node
+local t = snippet.text_node
+local c = snippet.choice_node
+local d = snippet.dynamic_node
 
-local r = require('luasnip.extras').rep
-local f = require('luasnip.extras.fmt').fmta
+local r = require("luasnip.extras").rep
+local f = require("luasnip.extras.fmt").fmta
 
 local transforms = {
 	int = function(_, _)
-		return t('0')
+		return t("0")
 	end,
 
 	bool = function(_, _)
-		return t('false')
+		return t("false")
 	end,
 
 	string = function(_, _)
@@ -42,20 +42,20 @@ local transforms = {
 			})
 		end
 
-		return t('err')
+		return t("err")
 	end,
 
 	-- Types with a '*' mean they are pointers, so return nil
 	[function(text)
-		return string.find(text, '*', 1, true) ~= nil
+		return string.find(text, "*", 1, true) ~= nil
 	end] = function(_, _)
-		return t('nil')
+		return t("nil")
 	end,
 }
 
 local function transform(text, info)
 	local condition_matches = function(condition, ...)
-		if type(condition) == 'string' then
+		if type(condition) == "string" then
 			return condition == text
 		end
 
@@ -74,17 +74,17 @@ end
 local handlers = {
 	parameter_list = function(node, info)
 		local result = {}
-		local count  = node:named_child_count()
+		local count = node:named_child_count()
 
 		for idx = 0, count - 1 do
-			local matching  = node:named_child(idx)
-			local type_node = matching:field('type')[1]
+			local matching = node:named_child(idx)
+			local type_node = matching:field("type")[1]
 
 			result[#result + 1] =
 				transform(vim.treesitter.get_node_text(type_node, 0), info)
 
 			if idx ~= count - 1 then
-				result[#result + 1] = t({ ', ' })
+				result[#result + 1] = t({ ", " })
 			end
 		end
 
@@ -98,8 +98,8 @@ local handlers = {
 
 local function_node_types = {
 	function_declaration = true,
-	method_declaration   = true,
-	func_literal         = true,
+	method_declaration = true,
+	func_literal = true,
 }
 
 local function get_method(expression)
@@ -115,17 +115,17 @@ local function get_method(expression)
 end
 
 local function result_type(info)
-	local ts_utils      = require('nvim-treesitter.ts_utils')
-	local cursor_node   = ts_utils.get_node_at_cursor()
+	local ts_utils = require("nvim-treesitter.ts_utils")
+	local cursor_node = ts_utils.get_node_at_cursor()
 	local function_node = get_method(cursor_node)
 
 	if not function_node then
-		print('Not inside of a function')
-		return t('')
+		print("Not inside of a function")
+		return t("")
 	end
 
 	local query = vim.treesitter.parse_query(
-		'go',
+		"go",
 		[[
 			[
 				(method_declaration   result: (_) @id)
@@ -146,16 +146,16 @@ local function return_values(args)
 	return sn(
 		nil,
 		result_type({
-			index     = 0,
-			err_name  = args[1][1],
+			index = 0,
+			err_name = args[1][1],
 			func_name = args[2][1],
 		})
 	)
 end
 
-snippet.add_snippets('go', {
+snippet.add_snippets("go", {
 	s(
-		'eif',
+		"eif",
 		f(
 			[[
 <val>, <err> := <f>(<args>)
@@ -164,13 +164,13 @@ if <err_var> != nil {
 }
 <finish>]],
 			{
-				val     = i(1),
-				err     = i(2, 'err'),
-				f       = i(3),
-				args    = i(4),
+				val = i(1),
+				err = i(2, "err"),
+				f = i(3),
+				args = i(4),
 				err_var = r(2),
-				result  = d(5, return_values, { 2, 3 }),
-				finish  = i(0),
+				result = d(5, return_values, { 2, 3 }),
+				finish = i(0),
 			}
 		)
 	),

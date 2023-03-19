@@ -1,15 +1,15 @@
-require('bustex')
+require("bustex")
 
-local f = require('f')
+local f = require("f")
 
 local nil_gen = function()
 	return nil
 end
 
-describe('functional', function()
-	describe('iterators', function()
-		describe('basic behaviour', function()
-			it('should wrap an iterator triplet into a table', function()
+describe("functional", function()
+	describe("iterators", function()
+		describe("basic behaviour", function()
+			it("should wrap an iterator triplet into a table", function()
 				local wrapped = f.wrap(nil_gen, true, true)
 
 				assert.same(nil_gen, wrapped.generator)
@@ -18,7 +18,7 @@ describe('functional', function()
 			end)
 
 			it(
-				'should unwrap an iterator metatable into the iterator triplet',
+				"should unwrap an iterator metatable into the iterator triplet",
 				function()
 					local ungen, unparameter, unstate =
 						f.unwrap(f.wrap(nil_gen, true, true))
@@ -29,7 +29,7 @@ describe('functional', function()
 				end
 			)
 
-			it('should run the first iteration when called directly', function()
+			it("should run the first iteration when called directly", function()
 				local t = { 1, 2, 3, 4 }
 				local i = f.iterate(t)
 
@@ -40,7 +40,7 @@ describe('functional', function()
 			end)
 
 			it(
-				'should still iterate over the given object after being stateful',
+				"should still iterate over the given object after being stateful",
 				function()
 					local t = { 1, 2, 3, 4 }
 					local i = 0
@@ -53,7 +53,7 @@ describe('functional', function()
 			)
 
 			it(
-				'should iterate over the given object when called repeatedly after being stateful',
+				"should iterate over the given object when called repeatedly after being stateful",
 				function()
 					local t = { 1, 2, 3, 4 }
 					local i = f.iterate(t):with_suppressed_state()
@@ -66,56 +66,56 @@ describe('functional', function()
 			)
 
 			it(
-				'should iterate over the given object when called repeatedly after being stateful',
+				"should iterate over the given object when called repeatedly after being stateful",
 				function()
-					local t = { 'a', 'b', 'c', 'd' }
+					local t = { "a", "b", "c", "d" }
 					local i = f.iterate(t):with_suppressed_state()
 
-					assert.same('a', i())
-					assert.same('b', i())
-					assert.same('c', i())
-					assert.same('d', i())
+					assert.same("a", i())
+					assert.same("b", i())
+					assert.same("c", i())
+					assert.same("d", i())
 				end
 			)
 
 			it(
-				'should iterate over the given object when called repeatedly then return nil before dying, after being stateful',
+				"should iterate over the given object when called repeatedly then return nil before dying, after being stateful",
 				function()
-					local t = { 'a', 'b', 'c', 'd' }
+					local t = { "a", "b", "c", "d" }
 					local i = f.iterate(t):with_suppressed_state()
 
-					assert.same('a', i())
-					assert.same('b', i())
-					assert.same('c', i())
-					assert.same('d', i())
+					assert.same("a", i())
+					assert.same("b", i())
+					assert.same("c", i())
+					assert.same("d", i())
 					assert.same(nil, i())
 				end
 			)
 
 			it(
-				'should iterate over the given object when called repeatedly then return nil before dying and raising an error after another call, after being stateful',
+				"should iterate over the given object when called repeatedly then return nil before dying and raising an error after another call, after being stateful",
 				function()
-					local t = { 'a', 'b', 'c', 'd' }
+					local t = { "a", "b", "c", "d" }
 					local i = f.iterate(t):with_suppressed_state()
 
-					assert.same('a', i())
-					assert.same('b', i())
-					assert.same('c', i())
-					assert.same('d', i())
+					assert.same("a", i())
+					assert.same("b", i())
+					assert.same("c", i())
+					assert.same("d", i())
 					assert.same(nil, i())
 					assert.error(i)
 				end
 			)
 
-			it('should specify that it is an iterator', function()
+			it("should specify that it is an iterator", function()
 				local t = { 1, 2, 3, 4 }
 				local i = f.iterate(t)
 
-				assert.same('<iterator>', tostring(i))
+				assert.same("<iterator>", tostring(i))
 			end)
 
 			it(
-				'should be a (somewhat) drop-in replacement for ipairs',
+				"should be a (somewhat) drop-in replacement for ipairs",
 				function()
 					local t = { 1, 2, 3, 4 }
 					local r = {}
@@ -129,7 +129,7 @@ describe('functional', function()
 				end
 			)
 
-			it('should be a (somewhat) drop-in replacement for pairs', function()
+			it("should be a (somewhat) drop-in replacement for pairs", function()
 				local t = { first = 1, second = 2, third = 3, fourth = 4 }
 				local r = {}
 
@@ -140,7 +140,7 @@ describe('functional', function()
 				assert.same(t, r)
 			end)
 
-			it('should iterate over all elements', function()
+			it("should iterate over all elements", function()
 				local t = { first = 1, second = 2, third = 3, fourth = 4 }
 				local r = {}
 
@@ -152,7 +152,7 @@ describe('functional', function()
 			end)
 
 			it(
-				'should iterate over the values generated by the given generator function',
+				"should iterate over the values generated by the given generator function",
 				function()
 					local range_gen = function(p, s)
 						local stop, step = p[1], p[2]
@@ -175,9 +175,9 @@ describe('functional', function()
 			)
 
 			it(
-				'should keep returning nil when iterating an empty string',
+				"should keep returning nil when iterating an empty string",
 				function()
-					local i = f.iterate('')
+					local i = f.iterate("")
 
 					assert.same(nil, i())
 					assert.same(nil, i())
@@ -187,9 +187,9 @@ describe('functional', function()
 			)
 		end)
 
-		describe('construction', function()
+		describe("construction", function()
 			it(
-				'should not generate an iterator over a non iterable object',
+				"should not generate an iterator over a non iterable object",
 				function()
 					assert.error(function()
 						f.iterate(0)
@@ -197,11 +197,11 @@ describe('functional', function()
 				end
 			)
 
-			it('should generate an iterator over the given string', function()
+			it("should generate an iterator over the given string", function()
 				local i = 1
-				local t = { 's', 'o', 'm', 'e', 't', 'h', 'i', 'n', 'g' }
+				local t = { "s", "o", "m", "e", "t", "h", "i", "n", "g" }
 
-				for k, v in f.iterate('something') do
+				for k, v in f.iterate("something") do
 					assert.same(k, i)
 					assert.same(v, t[i])
 
@@ -209,7 +209,7 @@ describe('functional', function()
 				end
 			end)
 
-			it('should generate an iterator over the given table', function()
+			it("should generate an iterator over the given table", function()
 				local i = 1
 				local t = { 1, 2, 3, 4, 5 }
 
@@ -222,7 +222,7 @@ describe('functional', function()
 			end)
 
 			it(
-				'should always return a valid iterator even when given an iterator',
+				"should always return a valid iterator even when given an iterator",
 				function()
 					local t = { 1, 2, 3 }
 					local r = {}
@@ -236,7 +236,7 @@ describe('functional', function()
 			)
 
 			it(
-				'should still return a valid iterator even when given an iterator',
+				"should still return a valid iterator even when given an iterator",
 				function()
 					local t = { 1, 2, 3 }
 					local r = {}
@@ -250,7 +250,7 @@ describe('functional', function()
 			)
 
 			it(
-				'should return a valid iterator when recycling an iterator nevertheless',
+				"should return a valid iterator when recycling an iterator nevertheless",
 				function()
 					local s = { 1, 2, 3 }
 					local t = { 4, 5, 6 }
@@ -265,8 +265,8 @@ describe('functional', function()
 			)
 		end)
 
-		describe('ranging', function()
-			it('should generate a range of numbers', function()
+		describe("ranging", function()
+			it("should generate a range of numbers", function()
 				local i = 1
 
 				for _, k in f.range(20) do
@@ -275,7 +275,7 @@ describe('functional', function()
 				end
 			end)
 
-			it('should generate a range of numbers starting from 1', function()
+			it("should generate a range of numbers starting from 1", function()
 				local i = 1
 
 				f.range(20):foreach(function(x)
@@ -285,7 +285,7 @@ describe('functional', function()
 			end)
 
 			it(
-				'should generate a range of numbers with a specified start',
+				"should generate a range of numbers with a specified start",
 				function()
 					local i = 10
 
@@ -297,7 +297,7 @@ describe('functional', function()
 			)
 
 			it(
-				'should generate a range of numbers with a specified step',
+				"should generate a range of numbers with a specified step",
 				function()
 					local i = 1
 
@@ -309,7 +309,7 @@ describe('functional', function()
 			)
 
 			it(
-				'should generate a range of numbers with a decimal step',
+				"should generate a range of numbers with a decimal step",
 				function()
 					local i = 1
 
@@ -321,7 +321,7 @@ describe('functional', function()
 			)
 
 			it(
-				'should generate a range of numbers with a negative step',
+				"should generate a range of numbers with a negative step",
 				function()
 					local i = 100
 
@@ -333,7 +333,7 @@ describe('functional', function()
 			)
 
 			it(
-				'should keep generating nil when ranging is not possible',
+				"should keep generating nil when ranging is not possible",
 				function()
 					local i = f.range(0)
 
@@ -344,7 +344,7 @@ describe('functional', function()
 				end
 			)
 
-			it('should be somewhat fast', function()
+			it("should be somewhat fast", function()
 				local i = 1
 
 				f.range(20):foreach(function(x)
@@ -354,14 +354,14 @@ describe('functional', function()
 			end)
 		end)
 
-		describe('infinite generations', function()
-			it('should generate indefinitely', function()
+		describe("infinite generations", function()
+			it("should generate indefinitely", function()
 				f.duplicate(47):take(20):foreach(function(x)
 					assert.same(47, x)
 				end)
 			end)
 
-			it('should still generate indefinitely', function()
+			it("should still generate indefinitely", function()
 				f.duplicate(1, 2, 3, 4, 5)
 					:take(20)
 					:foreach(function(a, b, c, d, e)
@@ -373,19 +373,19 @@ describe('functional', function()
 					end)
 			end)
 
-			it('should only generate zeros', function()
+			it("should only generate zeros", function()
 				f.zeros():take(20):foreach(function(x)
 					assert.same(0, x)
 				end)
 			end)
 
-			it('should only generate ones', function()
+			it("should only generate ones", function()
 				f.ones():take(20):foreach(function(x)
 					assert.same(1, x)
 				end)
 			end)
 
-			it('should generate an iterator from the given function', function()
+			it("should generate an iterator from the given function", function()
 				local round = 0
 
 				f.tabulate(function(x)
@@ -399,9 +399,9 @@ describe('functional', function()
 			end)
 		end)
 
-		describe('random sampling', function()
+		describe("random sampling", function()
 			it(
-				'should generate pseudo-random real numbers in the [0,1] interval',
+				"should generate pseudo-random real numbers in the [0,1] interval",
 				function()
 					assert.truthy(f.random():take(20):every(function(x)
 						return x >= 0 and x < 1
@@ -410,14 +410,14 @@ describe('functional', function()
 				end
 			)
 
-			it('should raise an error if the interval is empty', function()
+			it("should raise an error if the interval is empty", function()
 				assert.error(function()
 					f.random(0)
 				end)
 			end)
 
 			it(
-				'should generate pseudo-random integers in the specified interval',
+				"should generate pseudo-random integers in the specified interval",
 				function()
 					assert.truthy(f.random(1024):take(20):every(function(x)
 						return math.floor(x) == x
@@ -426,7 +426,7 @@ describe('functional', function()
 			)
 
 			it(
-				'should still generate pseudo-random integers lesser than the given bound',
+				"should still generate pseudo-random integers lesser than the given bound",
 				function()
 					assert.truthy(f.random(2):take(20):every(function(x)
 						return math.floor(x) == x
@@ -434,20 +434,20 @@ describe('functional', function()
 				end
 			)
 
-			it('should generate only zeros from the bounded interval', function()
+			it("should generate only zeros from the bounded interval", function()
 				assert.truthy(f.random(0, 1):take(20):every(function(x)
 					return x == 0
 				end))
 			end)
 
-			it('should still generate only the lower bound', function()
+			it("should still generate only the lower bound", function()
 				assert.truthy(f.random(1024, 1025):take(20):every(function(x)
 					return x == 1024
 				end))
 			end)
 
 			it(
-				'should generate pseudo-random integers in the specified bound',
+				"should generate pseudo-random integers in the specified bound",
 				function()
 					assert.truthy(f.random(1024, 2048):take(20):every(function(x)
 						return x >= 1024 and x < 2048
@@ -458,67 +458,67 @@ describe('functional', function()
 			)
 		end)
 
-		describe('slicing', function()
-			describe('with nth', function()
-				it('should return the value from the n-th iteration', function()
+		describe("slicing", function()
+			describe("with nth", function()
+				it("should return the value from the n-th iteration", function()
 					-- assert.same(3, f.nth(3, f.range(5)))
 					assert.same(3, f.range(5):nth(3))
 				end)
 
 				it(
-					'should return nil when the iterator is fully consumed',
+					"should return nil when the iterator is fully consumed",
 					function()
 						assert.same(nil, f.range(5):nth(6))
 					end
 				)
 
-				it('should return the n-th element when given a table', function()
-					assert.same('c', f.nth(3, { 'a', 'b', 'c', 'd' }))
+				it("should return the n-th element when given a table", function()
+					assert.same("c", f.nth(3, { "a", "b", "c", "d" }))
 				end)
 
 				it(
-					'should return the n-th character when given a string',
+					"should return the n-th character when given a string",
 					function()
-						assert.same('c', f.nth(3, 'abcd'))
+						assert.same("c", f.nth(3, "abcd"))
 					end
 				)
 
 				it(
-					'should return nil when the given string is exceeded',
+					"should return nil when the given string is exceeded",
 					function()
-						assert.same(nil, f.nth(5, f.iterate('abcd')))
+						assert.same(nil, f.nth(5, f.iterate("abcd")))
 					end
 				)
 
-				it('should return nil when generating nil', function()
+				it("should return nil when generating nil", function()
 					assert.same(nil, f.nth(5, f.iterate(nil_gen, nil, nil)))
 				end)
 			end)
 
-			describe('with tail/head', function()
+			describe("with tail/head", function()
 				it(
-					'should always the iterator without its first element',
+					"should always the iterator without its first element",
 					function()
 						local r =
-							f.iterate({ 'first', 'second', 'third', 'fourth' })
+							f.iterate({ "first", "second", "third", "fourth" })
 
-						assert.same('second', r:tail():head())
-						assert.same('second', r:tail():head())
+						assert.same("second", r:tail():head())
+						assert.same("second", r:tail():head())
 					end
 				)
 
-				it('should always return nil', function()
-					f.iterate(''):tail():foreach(function(x)
+				it("should always return nil", function()
+					f.iterate(""):tail():foreach(function(x)
 						assert.same(nil, x)
 					end)
 				end)
 			end)
 		end)
 
-		describe('subsequences', function()
-			describe('using take', function()
+		describe("subsequences", function()
+			describe("using take", function()
 				it(
-					'should return an iterator on the subsequence of first n elements',
+					"should return an iterator on the subsequence of first n elements",
 					function()
 						f.duplicate(47):take_n(20):foreach(function(x)
 							assert.same(47, x)
@@ -526,14 +526,14 @@ describe('functional', function()
 					end
 				)
 
-				it('should return nil when iterator is exhausted', function()
-					f.iterate('a'):tail():take_n(20):foreach(function(x)
+				it("should return nil when iterator is exhausted", function()
+					f.iterate("a"):tail():take_n(20):foreach(function(x)
 						assert.same(nil, x)
 					end)
 				end)
 
 				it(
-					'should keep iterating while the predicate is valid',
+					"should keep iterating while the predicate is valid",
 					function()
 						local i = 1
 
@@ -549,7 +549,7 @@ describe('functional', function()
 				)
 
 				it(
-					'should detect when given a predicate and keep iterating while it is valid',
+					"should detect when given a predicate and keep iterating while it is valid",
 					function()
 						local i = 1
 
@@ -567,9 +567,9 @@ describe('functional', function()
 				)
 			end)
 
-			describe('using drop', function()
+			describe("using drop", function()
 				it(
-					'should return an iterator after skipping the first n elements',
+					"should return an iterator after skipping the first n elements",
 					function()
 						local i = 6
 
@@ -582,13 +582,13 @@ describe('functional', function()
 					end
 				)
 
-				it('should return nil when iterator is exhausted', function()
-					f.iterate('a'):drop_n(2):foreach(function(x)
+				it("should return nil when iterator is exhausted", function()
+					f.iterate("a"):drop_n(2):foreach(function(x)
 						assert.same(nil, x)
 					end)
 				end)
 
-				it('should keep skipping while the iterator is valid', function()
+				it("should keep skipping while the iterator is valid", function()
 					local i = 5
 
 					f.range(10)
@@ -603,10 +603,10 @@ describe('functional', function()
 					assert.same(i, 11)
 				end)
 
-				it('should return nil when the iterator is exhausted', function()
-					f.iterate('a')
+				it("should return nil when the iterator is exhausted", function()
+					f.iterate("a")
 						:drop_while(function(x)
-							return x == 'a'
+							return x == "a"
 						end)
 						:foreach(function(x)
 							assert.same(nil, x)
@@ -614,7 +614,7 @@ describe('functional', function()
 				end)
 
 				it(
-					'should detect when given a number of elements to skip',
+					"should detect when given a number of elements to skip",
 					function()
 						local i = 6
 
@@ -628,7 +628,7 @@ describe('functional', function()
 				)
 
 				it(
-					'should detect when given a predicate and keep skipping while it is valid',
+					"should detect when given a predicate and keep skipping while it is valid",
 					function()
 						local i = 5
 
@@ -646,9 +646,9 @@ describe('functional', function()
 				)
 			end)
 
-			describe('using split', function()
+			describe("using split", function()
 				it(
-					'should split the iterator into two with the given predicate',
+					"should split the iterator into two with the given predicate",
 					function()
 						local i = 1
 
@@ -665,7 +665,7 @@ describe('functional', function()
 				)
 
 				it(
-					'should split the iterator into two given a number of elements',
+					"should split the iterator into two given a number of elements",
 					function()
 						local i = 1
 
@@ -679,22 +679,22 @@ describe('functional', function()
 					end
 				)
 
-				it('should split the string given a separator', function()
+				it("should split the string given a separator", function()
 					local i = 0
 
-					f.split('ab,ab,ab', ','):foreach(function(x)
-						assert.same('ab', x)
+					f.split("ab,ab,ab", ","):foreach(function(x)
+						assert.same("ab", x)
 						i = i + 1
 					end)
 
 					assert.same(3, i)
 				end)
 
-				it('should split the string given a separator', function()
+				it("should split the string given a separator", function()
 					local i = 0
 
-					f.iterate('ab,ab,ab'):split(','):foreach(function(x)
-						assert.same('ab', x)
+					f.iterate("ab,ab,ab"):split(","):foreach(function(x)
+						assert.same("ab", x)
 						i = i + 1
 					end)
 
@@ -702,12 +702,12 @@ describe('functional', function()
 				end)
 
 				it(
-					'should split the string given a separator after skipping',
+					"should split the string given a separator after skipping",
 					function()
 						local i = 0
 
-						f.iterate('ab,ab,ab'):drop(4):split(','):foreach(function(x)
-							assert.same('ab', x)
+						f.iterate("ab,ab,ab"):drop(4):split(","):foreach(function(x)
+							assert.same("ab", x)
 							i = i + 1
 						end)
 
@@ -715,18 +715,18 @@ describe('functional', function()
 					end
 				)
 
-				it('should split the string into words', function()
+				it("should split the string into words", function()
 					local i = 0
 
-					f.iterate('abc abc abc'):words():foreach(function(x)
-						assert.same('abc', x)
+					f.iterate("abc abc abc"):words():foreach(function(x)
+						assert.same("abc", x)
 						i = i + 1
 					end)
 
 					assert.same(3, i)
 				end)
 
-				it('should split the string into lines', function()
+				it("should split the string into lines", function()
 					local i = 0
 
 					f.iterate([[abc
@@ -734,7 +734,7 @@ describe('functional', function()
                   abc]])
 						:lines()
 						:foreach(function(x)
-							assert.same('abc', x:gsub(' ', ''))
+							assert.same("abc", x:gsub(" ", ""))
 							i = i + 1
 						end)
 
@@ -743,25 +743,25 @@ describe('functional', function()
 			end)
 		end)
 
-		describe('indexing', function()
+		describe("indexing", function()
 			it(
-				'should return the first element of the index that matches',
+				"should return the first element of the index that matches",
 				function()
 					assert.same(2, f.range(5):index(2))
 				end
 			)
 
-			it('should return nil when no element matches', function()
+			it("should return nil when no element matches", function()
 				assert.same(nil, f.range(5):index(6))
 			end)
 
 			it(
-				'should return a table with all the indices of the elements that match',
+				"should return a table with all the indices of the elements that match",
 				function()
 					local i = 1
 					local t = { 1, 4, 6, 8, 11 }
 
-					f.iterate('abracadabra'):indexes('a'):foreach(function(x)
+					f.iterate("abracadabra"):indexes("a"):foreach(function(x)
 						assert.same(t[i], x)
 						i = i + 1
 					end)
@@ -771,8 +771,8 @@ describe('functional', function()
 			)
 		end)
 
-		describe('filtering', function()
-			describe('using filter', function()
+		describe("filtering", function()
+			describe("using filter", function()
 				it(
 					"should filter the elements that don't satisfy the given predicate",
 					function()
@@ -792,7 +792,7 @@ describe('functional', function()
 				)
 
 				it(
-					'should not iterate at all when the iterator is empty',
+					"should not iterate at all when the iterator is empty",
 					function()
 						local i = 0
 
@@ -805,7 +805,7 @@ describe('functional', function()
 					end
 				)
 
-				it('should even filter zipped iterators', function()
+				it("should even filter zipped iterators", function()
 					local i = 1
 
 					local t = {
@@ -833,7 +833,7 @@ describe('functional', function()
 				end)
 
 				it(
-					'should return nil when there is nothing to iterate over',
+					"should return nil when there is nothing to iterate over",
 					function()
 						local multi_nil_gen = function()
 							return nil, nil
@@ -853,28 +853,28 @@ describe('functional', function()
 				)
 			end)
 
-			describe('using grep', function()
-				it('should filter correctly using a string', function()
+			describe("using grep", function()
+				it("should filter correctly using a string", function()
 					local lines = {
-						'Lorem ipsum dolor sit amet, consectetur adipisicing elit, ',
-						'sed do eiusmod tempor incididunt ut labore et dolore magna ',
-						'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ',
-						'ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-						'Duis aute irure dolor in reprehenderit in voluptate velit ',
-						'esse cillum dolore eu fugiat nulla pariatur. Excepteur sint ',
-						'occaecat cupidatat non proident, sunt in culpa qui officia ',
-						'deserunt mollit anim id est laborum.',
+						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, ",
+						"sed do eiusmod tempor incididunt ut labore et dolore magna ",
+						"aliqua. Ut enim ad minim veniam, quis nostrud exercitation ",
+						"ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+						"Duis aute irure dolor in reprehenderit in voluptate velit ",
+						"esse cillum dolore eu fugiat nulla pariatur. Excepteur sint ",
+						"occaecat cupidatat non proident, sunt in culpa qui officia ",
+						"deserunt mollit anim id est laborum.",
 					}
 
 					local expected = {
-						'sed do eiusmod tempor incididunt ut labore et dolore magna ',
-						'ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-						'deserunt mollit anim id est laborum.',
+						"sed do eiusmod tempor incididunt ut labore et dolore magna ",
+						"ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+						"deserunt mollit anim id est laborum.",
 					}
 
 					local i = 1
 
-					f.iterate(lines):grep('lab'):foreach(function(x)
+					f.iterate(lines):grep("lab"):foreach(function(x)
 						assert.same(expected[i], x)
 						i = i + 1
 					end)
@@ -883,29 +883,29 @@ describe('functional', function()
 				end)
 
 				it(
-					'should filter correctly using a regular expression',
+					"should filter correctly using a regular expression",
 					function()
 						local lines = {
-							'Emily',
-							'Chloe',
-							'Megan',
-							'Jessica',
-							'Emma',
-							'Sarah',
-							'Elizabeth',
-							'Sophie',
-							'Olivia',
-							'Lauren',
+							"Emily",
+							"Chloe",
+							"Megan",
+							"Jessica",
+							"Emma",
+							"Sarah",
+							"Elizabeth",
+							"Sophie",
+							"Olivia",
+							"Lauren",
 						}
 
 						local expected = {
-							'Emily',
-							'Emma',
+							"Emily",
+							"Emma",
 						}
 
 						local i = 1
 
-						f.iterate(lines):grep('^Em'):foreach(function(x)
+						f.iterate(lines):grep("^Em"):foreach(function(x)
 							assert.same(expected[i], x)
 							i = i + 1
 						end)
@@ -915,9 +915,9 @@ describe('functional', function()
 				)
 			end)
 
-			describe('using partition', function()
+			describe("using partition", function()
 				it(
-					'should split the iterator depending on the given predicate',
+					"should split the iterator depending on the given predicate",
 					function()
 						local expected = {
 							{ 3, 1 },
@@ -940,9 +940,9 @@ describe('functional', function()
 			end)
 		end)
 
-		describe('reducing', function()
-			describe('using reduce', function()
-				it('should accumulate the iterator', function()
+		describe("reducing", function()
+			describe("using reduce", function()
+				it("should accumulate the iterator", function()
 					assert.same(
 						15,
 						f.reduce(function(acc, x)
@@ -958,7 +958,7 @@ describe('functional', function()
 				end)
 
 				it(
-					'should accumulate the iterator using predefined operators',
+					"should accumulate the iterator using predefined operators",
 					function()
 						assert.same(15, f.reduce(f.operator.add, 0, f.range(5)))
 						assert.same(15, f.range(5):reduce(f.operator.add, 0))
@@ -966,77 +966,77 @@ describe('functional', function()
 				)
 			end)
 
-			describe('using length', function()
-				it('should return the correct length of the table', function()
-					assert.same(5, f.length({ 'a', 'b', 'c', 'd', 'e' }))
+			describe("using length", function()
+				it("should return the correct length of the table", function()
+					assert.same(5, f.length({ "a", "b", "c", "d", "e" }))
 				end)
 
-				it('should return the correct length of the string', function()
-					assert.same(5, f.length('abcde'))
+				it("should return the correct length of the string", function()
+					assert.same(5, f.length("abcde"))
 				end)
 
-				it('should return 0 when the table is empty', function()
+				it("should return 0 when the table is empty", function()
 					assert.same(0, f.iterate({}):length())
 				end)
 
-				it('should return 0 when the iterator is empty', function()
+				it("should return 0 when the iterator is empty", function()
 					assert.same(0, f.length(f.range(0)))
 				end)
 			end)
 
-			describe('using is_null', function()
+			describe("using is_null", function()
 				it(
-					'should be false when the iterator is not exhausted',
+					"should be false when the iterator is not exhausted",
 					function()
-						assert.same(false, f.iterate({ 'a', 'b', 'c' }):is_null())
+						assert.same(false, f.iterate({ "a", "b", "c" }):is_null())
 					end
 				)
 
-				it('should be true when the iterator is not exhausted', function()
+				it("should be true when the iterator is not exhausted", function()
 					assert.same(true, f.iterate({}):is_null())
 				end)
 			end)
 
-			describe('using is_prefix_of', function()
+			describe("using is_prefix_of", function()
 				it(
-					'should be true when the first table is a prefix of the second',
+					"should be true when the first table is a prefix of the second",
 					function()
 						assert.same(
 							true,
-							f.is_prefix_of({ 'a' }, { 'a', 'b', 'c' })
+							f.is_prefix_of({ "a" }, { "a", "b", "c" })
 						)
 					end
 				)
 
-				it('should be true when the first table is empty', function()
-					assert.same(true, f.is_prefix_of({}, { 'a', 'b', 'c' }))
+				it("should be true when the first table is empty", function()
+					assert.same(true, f.is_prefix_of({}, { "a", "b", "c" }))
 				end)
 
 				it(
-					'should be false when the first table is not a prefix of the second',
+					"should be false when the first table is not a prefix of the second",
 					function()
-						assert.same(false, f.is_prefix_of({ 'a' }, {}))
+						assert.same(false, f.is_prefix_of({ "a" }, {}))
 					end
 				)
 
 				it(
-					'should be true when the first iterator is a prefix of the second',
+					"should be true when the first iterator is a prefix of the second",
 					function()
 						assert.same(true, f.is_prefix_of(f.range(5), f.range(6)))
 					end
 				)
 
 				it(
-					'should be false when the first iterator is not a prefix of the second',
+					"should be false when the first iterator is not a prefix of the second",
 					function()
 						assert.same(false, f.range(6):is_prefix_of(f.range(5)))
 					end
 				)
 			end)
 
-			describe('using every', function()
+			describe("using every", function()
 				it(
-					'should be true if the predicate is satisfied for every element',
+					"should be true if the predicate is satisfied for every element",
 					function()
 						assert.same(
 							true,
@@ -1048,7 +1048,7 @@ describe('functional', function()
 				)
 
 				it(
-					'should be false if the predicate is not satisfied for every element',
+					"should be false if the predicate is not satisfied for every element",
 					function()
 						assert.same(
 							false,
@@ -1060,9 +1060,9 @@ describe('functional', function()
 				)
 			end)
 
-			describe('using any', function()
+			describe("using any", function()
 				it(
-					'should be true if the predicate is satisfied for one of the elements',
+					"should be true if the predicate is satisfied for one of the elements",
 					function()
 						assert.same(
 							true,
@@ -1074,7 +1074,7 @@ describe('functional', function()
 				)
 
 				it(
-					'should be false if the predicate is not satisfied for all elements',
+					"should be false if the predicate is not satisfied for all elements",
 					function()
 						assert.same(
 							false,
@@ -1086,67 +1086,67 @@ describe('functional', function()
 				)
 			end)
 
-			describe('using sum', function()
-				it('should sum all the elements', function()
+			describe("using sum", function()
+				it("should sum all the elements", function()
 					assert.same(15, f.range(1, 5):sum())
 				end)
 
-				it('should sum all the elements even if floating', function()
+				it("should sum all the elements even if floating", function()
 					assert.same(27, f.range(1, 5, 0.5):sum())
 				end)
 
-				it('should return 0 when the iterator is empty', function()
+				it("should return 0 when the iterator is empty", function()
 					assert.same(0, f.sum(f.range(0)))
 				end)
 			end)
 
-			describe('using product', function()
-				it('should product all the elements', function()
+			describe("using product", function()
+				it("should product all the elements", function()
 					assert.same(120, f.range(1, 5):product())
 				end)
 
-				it('should product all the elements even if floating', function()
+				it("should product all the elements even if floating", function()
 					assert.same(7087.5, f.range(1, 5, 0.5):product())
 				end)
 
-				it('should return 0 when the iterator is empty', function()
+				it("should return 0 when the iterator is empty", function()
 					assert.same(1, f.product(f.range(0)))
 				end)
 			end)
 
-			describe('using minimum', function()
-				it('should return the smallest number', function()
+			describe("using minimum", function()
+				it("should return the smallest number", function()
 					assert.same(1, f.range(10):minimum())
 				end)
 
-				it('should return the smallest letter', function()
-					assert.same('d', f.iterate({ 'z', 'x', 'd' }):minimum())
+				it("should return the smallest letter", function()
+					assert.same("d", f.iterate({ "z", "x", "d" }):minimum())
 				end)
 
-				it('should throw an error when the iterator is empty', function()
+				it("should throw an error when the iterator is empty", function()
 					assert.error(function()
 						f.minimum({})
 					end)
 				end)
 			end)
 
-			describe('using maximum', function()
-				it('should return the biggest number', function()
+			describe("using maximum", function()
+				it("should return the biggest number", function()
 					assert.same(10, f.range(10):maximum())
 				end)
 
-				it('should return the biggest letter', function()
-					assert.same('z', f.iterate({ 'z', 'x', 'd' }):maximum())
+				it("should return the biggest letter", function()
+					assert.same("z", f.iterate({ "z", "x", "d" }):maximum())
 				end)
 
-				it('should throw an error when the iterator is empty', function()
+				it("should throw an error when the iterator is empty", function()
 					assert.error(function()
 						f.maximum({})
 					end)
 				end)
 			end)
 
-			describe('using minimum_by', function()
+			describe("using minimum_by", function()
 				local function p(a, b)
 					if -a < -b then
 						return a
@@ -1156,20 +1156,20 @@ describe('functional', function()
 				end
 
 				it(
-					'should return the smallest number given a predicate',
+					"should return the smallest number given a predicate",
 					function()
 						assert.same(10, f.range(10):minimum_by(p))
 					end
 				)
 
-				it('should throw an error when the iterator is empty', function()
+				it("should throw an error when the iterator is empty", function()
 					assert.error(function()
 						f.minimum_by(p, {})
 					end)
 				end)
 			end)
 
-			describe('using maximum_by', function()
+			describe("using maximum_by", function()
 				local function p(a, b)
 					if -a < -b then
 						return a
@@ -1179,35 +1179,35 @@ describe('functional', function()
 				end
 
 				it(
-					'should return the biggest number given a predicate',
+					"should return the biggest number given a predicate",
 					function()
 						assert.same(10, f.range(10):maximum_by(p))
 					end
 				)
 
-				it('should throw an error when the iterator is empty', function()
+				it("should throw an error when the iterator is empty", function()
 					assert.error(function()
 						f.maximum_by(p, {})
 					end)
 				end)
 			end)
 
-			describe('using totable', function()
-				it('should return a table from the iterator', function()
+			describe("using totable", function()
+				it("should return a table from the iterator", function()
 					local expected = { 1, 2, 3, 4, 5 }
 
 					assert.same(expected, f.range(5):totable())
 				end)
 			end)
 
-			describe('using tomap', function()
+			describe("using tomap", function()
 				it(
-					'should return an iterator from the zipped iterators',
+					"should return an iterator from the zipped iterators",
 					function()
-						local expected = { 'a', 'b', 'c', 'd', 'e', 'f' }
+						local expected = { "a", "b", "c", "d", "e", "f" }
 						local i = 1
 
-						local actual = f.zip(f.range(7), 'abcdef'):tomap()
+						local actual = f.zip(f.range(7), "abcdef"):tomap()
 
 						f.iterate(actual):foreach(function(x)
 							assert.same(expected[i], x)
@@ -1220,13 +1220,13 @@ describe('functional', function()
 			end)
 		end)
 
-		describe('transforming', function()
-			describe('using map', function()
+		describe("transforming", function()
+			describe("using map", function()
 				local fn = function(...)
-					return 'map', ...
+					return "map", ...
 				end
 
-				it('should not iterate when the iterator is empty', function()
+				it("should not iterate when the iterator is empty", function()
 					local i = 0
 					f.map(fn, f.range(0)):foreach(function()
 						i = i + 1
@@ -1235,11 +1235,11 @@ describe('functional', function()
 					assert.same(0, i)
 				end)
 
-				it('should iterate over the given range of numbers', function()
+				it("should iterate over the given range of numbers", function()
 					local i = 1
 
 					f.range(4):map(fn):foreach(function(x, y)
-						assert.same('map', x)
+						assert.same("map", x)
 						assert.same(i, y)
 
 						i = i + 1
@@ -1248,18 +1248,18 @@ describe('functional', function()
 					assert.same(5, i)
 				end)
 
-				it('should enumerate the given range of letters', function()
+				it("should enumerate the given range of letters", function()
 					local expected = {
-						{ 'map', 1, 'a' },
-						{ 'map', 2, 'b' },
-						{ 'map', 3, 'c' },
-						{ 'map', 4, 'd' },
-						{ 'map', 5, 'e' },
+						{ "map", 1, "a" },
+						{ "map", 2, "b" },
+						{ "map", 3, "c" },
+						{ "map", 4, "d" },
+						{ "map", 5, "e" },
 					}
 
 					local i = 1
 
-					f.enumerate('abcde'):map(fn):foreach(function(x, y, z)
+					f.enumerate("abcde"):map(fn):foreach(function(x, y, z)
 						assert.same(expected[i], { x, y, z })
 						i = i + 1
 					end)
@@ -1268,19 +1268,19 @@ describe('functional', function()
 				end)
 			end)
 
-			describe('using enumerate', function()
-				it('should enumerate over the given table', function()
+			describe("using enumerate", function()
+				it("should enumerate over the given table", function()
 					local expected = {
-						{ 1, 'a' },
-						{ 2, 'b' },
-						{ 3, 'c' },
-						{ 4, 'd' },
-						{ 5, 'e' },
+						{ 1, "a" },
+						{ 2, "b" },
+						{ 3, "c" },
+						{ 4, "d" },
+						{ 5, "e" },
 					}
 
 					local i = 1
 
-					f.enumerate({ 'a', 'b', 'c', 'd', 'e' }):foreach(function(x, y)
+					f.enumerate({ "a", "b", "c", "d", "e" }):foreach(function(x, y)
 						assert.same(expected[i], { x, y })
 						i = i + 1
 					end)
@@ -1288,18 +1288,18 @@ describe('functional', function()
 					assert.same(6, i)
 				end)
 
-				it('should enumerate multiple times', function()
+				it("should enumerate multiple times", function()
 					local expected = {
-						{ 1, 1, 1, 'a' },
-						{ 2, 2, 2, 'b' },
-						{ 3, 3, 3, 'c' },
-						{ 4, 4, 4, 'd' },
-						{ 5, 5, 5, 'e' },
+						{ 1, 1, 1, "a" },
+						{ 2, 2, 2, "b" },
+						{ 3, 3, 3, "c" },
+						{ 4, 4, 4, "d" },
+						{ 5, 5, 5, "e" },
 					}
 
 					local i = 1
 
-					f.enumerate({ 'a', 'b', 'c', 'd', 'e' })
+					f.enumerate({ "a", "b", "c", "d", "e" })
 						:enumerate()
 						:enumerate()
 						:foreach(function(w, x, y, z)
@@ -1310,20 +1310,20 @@ describe('functional', function()
 					assert.same(6, i)
 				end)
 
-				it('should enumerate over zipped iterators', function()
+				it("should enumerate over zipped iterators", function()
 					local expected = {
-						{ 1, 'one', 'a' },
-						{ 2, 'two', 'b' },
-						{ 3, 'three', 'c' },
-						{ 4, 'four', 'd' },
-						{ 5, 'five', 'e' },
+						{ 1, "one", "a" },
+						{ 2, "two", "b" },
+						{ 3, "three", "c" },
+						{ 4, "four", "d" },
+						{ 5, "five", "e" },
 					}
 
 					local i = 1
 
 					f.zip(
-						{ 'one', 'two', 'three', 'four', 'five' },
-						{ 'a', 'b', 'c', 'd', 'e' }
+						{ "one", "two", "three", "four", "five" },
+						{ "a", "b", "c", "d", "e" }
 					)
 						:enumerate()
 						:foreach(function(x, y, z)
@@ -1335,28 +1335,28 @@ describe('functional', function()
 				end)
 			end)
 
-			describe('using intersperse', function()
+			describe("using intersperse", function()
 				it(
-					'should intersperse the first argument into the iterator',
+					"should intersperse the first argument into the iterator",
 					function()
 						local expected = {
-							'a',
-							'x',
-							'b',
-							'x',
-							'c',
-							'x',
-							'd',
-							'x',
-							'e',
-							'x',
-							'f',
-							'x',
+							"a",
+							"x",
+							"b",
+							"x",
+							"c",
+							"x",
+							"d",
+							"x",
+							"e",
+							"x",
+							"f",
+							"x",
 						}
 
 						local i = 1
 
-						f.iterate('abcdef'):intersperse('x'):foreach(function(x)
+						f.iterate("abcdef"):intersperse("x"):foreach(function(x)
 							assert.same(expected[i], x)
 							i = i + 1
 						end)
@@ -1367,19 +1367,19 @@ describe('functional', function()
 			end)
 		end)
 
-		describe('compositions', function()
-			describe('using zip', function()
-				it('should zip the iterators together', function()
+		describe("compositions", function()
+			describe("using zip", function()
+				it("should zip the iterators together", function()
 					local expected = {
-						{ 'a', 'one' },
-						{ 'b', 'two' },
-						{ 'c', 'three' },
+						{ "a", "one" },
+						{ "b", "two" },
+						{ "c", "three" },
 					}
 
 					local i = 1
 
-					f.iterate({ 'a', 'b', 'c', 'd' })
-						:zip({ 'one', 'two', 'three' })
+					f.iterate({ "a", "b", "c", "d" })
+						:zip({ "one", "two", "three" })
 						:foreach(function(x, y)
 							assert.same(expected[i], { x, y })
 							i = i + 1
@@ -1388,7 +1388,7 @@ describe('functional', function()
 					assert.same(4, i)
 				end)
 
-				it('should not iterate when there is nothing to zip', function()
+				it("should not iterate when there is nothing to zip", function()
 					local i = 0
 
 					f.zip():foreach(function()
@@ -1398,7 +1398,7 @@ describe('functional', function()
 					assert.same(0, i)
 				end)
 
-				it('should zip multiple iterators together', function()
+				it("should zip multiple iterators together", function()
 					assert.same({ 28, 46, 64, 82 }, {
 						f.zip(
 							f.range(1, 100, 3),
@@ -1409,7 +1409,7 @@ describe('functional', function()
 					})
 				end)
 
-				it('should zip partitions', function()
+				it("should zip partitions", function()
 					local expected = {
 						{ 8, 1 },
 						{ 9, 2 },
@@ -1433,14 +1433,14 @@ describe('functional', function()
 				end)
 			end)
 
-			describe('using cycle', function()
+			describe("using cycle", function()
 				it(
-					'should iterate until the end and cycle to the beginning',
+					"should iterate until the end and cycle to the beginning",
 					function()
-						local expected = { 'a', 'b', 'c', 'd', 'e' }
+						local expected = { "a", "b", "c", "d", "e" }
 						local i = 0
 
-						f.cycle({ 'a', 'b', 'c', 'd', 'e' })
+						f.cycle({ "a", "b", "c", "d", "e" })
 							:take(15)
 							:foreach(function(x)
 								assert.same(expected[i % 5 + 1], x)
@@ -1451,7 +1451,7 @@ describe('functional', function()
 					end
 				)
 
-				it('should cycle over a range of numbers', function()
+				it("should cycle over a range of numbers", function()
 					local i = 0
 
 					f.range(5):cycle():take(15):foreach(function(x)
@@ -1462,18 +1462,18 @@ describe('functional', function()
 					assert.same(15, i)
 				end)
 
-				it('should cycle over a zipped iterator', function()
+				it("should cycle over a zipped iterator", function()
 					local expected = {
-						{ 1, 'a' },
-						{ 2, 'b' },
-						{ 3, 'c' },
-						{ 4, 'd' },
-						{ 5, 'e' },
+						{ 1, "a" },
+						{ 2, "b" },
+						{ 3, "c" },
+						{ 4, "d" },
+						{ 5, "e" },
 					}
 
 					local i = 0
 
-					f.zip(f.range(5), { 'a', 'b', 'c', 'd', 'e' })
+					f.zip(f.range(5), { "a", "b", "c", "d", "e" })
 						:cycle()
 						:take(15)
 						:foreach(function(x, y)
@@ -1485,9 +1485,9 @@ describe('functional', function()
 				end)
 			end)
 
-			describe('using chain', function()
+			describe("using chain", function()
 				it(
-					'should return the same iterator if only one is given',
+					"should return the same iterator if only one is given",
 					function()
 						local i = 1
 
@@ -1500,14 +1500,14 @@ describe('functional', function()
 					end
 				)
 
-				it('should chain given iterators', function()
-					local expected = { 1, 2, 'a', 'b', 'c', 'one', 'two', 'three' }
+				it("should chain given iterators", function()
+					local expected = { 1, 2, "a", "b", "c", "one", "two", "three" }
 					local i = 1
 
 					f.chain(
 						f.range(2),
-						{ 'a', 'b', 'c' },
-						{ 'one', 'two', 'three' }
+						{ "a", "b", "c" },
+						{ "one", "two", "three" }
 					)
 						:foreach(function(x)
 							assert.same(expected[i], x)
@@ -1517,21 +1517,21 @@ describe('functional', function()
 					assert.same(9, i)
 				end)
 
-				it('should chain, cycle, and enumerate correctly', function()
+				it("should chain, cycle, and enumerate correctly", function()
 					local expected = {
-						{ 1, 'a' },
-						{ 2, 'b' },
-						{ 3, 'c' },
-						'one',
-						'two',
-						'three',
+						{ 1, "a" },
+						{ 2, "b" },
+						{ 3, "c" },
+						"one",
+						"two",
+						"three",
 					}
 
 					local i = 0
 
 					f.chain(
-						f.enumerate({ 'a', 'b', 'c' }),
-						{ 'one', 'two', 'three' }
+						f.enumerate({ "a", "b", "c" }),
+						{ "one", "two", "three" }
 					)
 						:cycle()
 						:take(15)
@@ -1549,7 +1549,7 @@ describe('functional', function()
 				end)
 
 				it(
-					'should return the nil generator when no iterators are given',
+					"should return the nil generator when no iterators are given",
 					function()
 						local i = 0
 
@@ -1563,9 +1563,9 @@ describe('functional', function()
 			end)
 		end)
 
-		describe('builtin operator', function()
-			describe('comparison', function()
-				it('lt should behave as designed', function()
+		describe("builtin operator", function()
+			describe("comparison", function()
+				it("lt should behave as designed", function()
 					local t = { 1, 2, 3, 4 }
 					local u = { 2, 3, 4, 5 }
 
@@ -1575,7 +1575,7 @@ describe('functional', function()
 					assert.is_truthy(result)
 				end)
 
-				it('le should behave as designed', function()
+				it("le should behave as designed", function()
 					local t = { 1, 2, 3, 4 }
 					local u = { 2, 2, 3, 5 }
 
@@ -1585,7 +1585,7 @@ describe('functional', function()
 					assert.is_truthy(result)
 				end)
 
-				it('eq should behave as designed', function()
+				it("eq should behave as designed", function()
 					local t = { 1, 2, 3, 4 }
 
 					local result = f.zip(f.iterate(t), f.iterate(t))
@@ -1594,7 +1594,7 @@ describe('functional', function()
 					assert.is_truthy(result)
 				end)
 
-				it('ne should behave as designed', function()
+				it("ne should behave as designed", function()
 					local t = { 1, 2, 3, 4 }
 					local u = { 2, 3, 4, 5 }
 
@@ -1604,7 +1604,7 @@ describe('functional', function()
 					assert.is_truthy(result)
 				end)
 
-				it('gt should behave as designed', function()
+				it("gt should behave as designed", function()
 					local t = { 2, 3, 4, 5 }
 					local u = { 1, 2, 3, 4 }
 
@@ -1614,7 +1614,7 @@ describe('functional', function()
 					assert.is_truthy(result)
 				end)
 
-				it('ge should behave as designed', function()
+				it("ge should behave as designed", function()
 					local t = { 2, 3, 4, 5 }
 					local u = { 2, 2, 3, 5 }
 
@@ -1624,7 +1624,7 @@ describe('functional', function()
 					assert.is_truthy(result)
 				end)
 
-				it('ge should behave as designed', function()
+				it("ge should behave as designed", function()
 					local t = { 2, 3, 4, 5 }
 					local u = { 2, 2, 3, 5 }
 
@@ -1635,8 +1635,8 @@ describe('functional', function()
 				end)
 			end)
 
-			describe('arithmetic', function()
-				it('add should behave as designed', function()
+			describe("arithmetic", function()
+				it("add should behave as designed", function()
 					local t = { 1, 1, 1, 1 }
 					local u = { 1, 2, 3, 4 }
 					local v = { 2, 3, 4, 5 }
@@ -1648,7 +1648,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('sub should behave as designed', function()
+				it("sub should behave as designed", function()
 					local t = { 1, 2, 3, 4 }
 					local u = { 1, 1, 1, 1 }
 					local v = { 0, 1, 2, 3 }
@@ -1660,7 +1660,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('div should behave as designed', function()
+				it("div should behave as designed", function()
 					local t = { 1, 4, 3, 5 }
 					local u = { 2, 2, 1, 2 }
 					local v = { 0.5, 2, 3, 2.5 }
@@ -1672,7 +1672,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('mod should behave as designed', function()
+				it("mod should behave as designed", function()
 					local t = { 1, 4, 3, 5 }
 					local u = { 2, 2, 1, 2 }
 					local v = { 1, 0, 0, 1 }
@@ -1684,7 +1684,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('mul should behave as designed', function()
+				it("mul should behave as designed", function()
 					local t = { 1, 4, 3, 5 }
 					local u = { 2, 2, 1, 2 }
 					local v = { 2, 8, 3, 10 }
@@ -1696,7 +1696,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('pow should behave as designed', function()
+				it("pow should behave as designed", function()
 					local t = { 1, 4, 3, 5 }
 					local u = { 2, 2, 1, 2 }
 					local v = { 1, 16, 3, 25 }
@@ -1708,7 +1708,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('neg should behave as designed', function()
+				it("neg should behave as designed", function()
 					local t = { 1, 4, 3, 5 }
 					local u = { -1, -4, -3, -5 }
 
@@ -1717,7 +1717,7 @@ describe('functional', function()
 					assert.same(u, result)
 				end)
 
-				it('floordiv should behave as designed', function()
+				it("floordiv should behave as designed", function()
 					local t = { 1, 4, 3, 5 }
 					local u = { 2, 2, 1, 2 }
 					local v = { 0, 2, 3, 2 }
@@ -1729,7 +1729,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('intdiv should behave as designed', function()
+				it("intdiv should behave as designed", function()
 					local t = { -1, -4, 3, -5 }
 					local u = { 2, 3, 2, 2 }
 					local v = { 0, -1, 1, -2 }
@@ -1742,11 +1742,11 @@ describe('functional', function()
 				end)
 			end)
 
-			describe('string', function()
-				it('concat should concatenate strings', function()
-					local t = { 'foo', 'hello' }
-					local u = { 'bar', ' world' }
-					local v = { 'foobar', 'hello world' }
+			describe("string", function()
+				it("concat should concatenate strings", function()
+					local t = { "foo", "hello" }
+					local u = { "bar", " world" }
+					local v = { "foobar", "hello world" }
 
 					local result = f.zip(f.iterate(t), f.iterate(u))
 						:map(f.operator.concat)
@@ -1755,8 +1755,8 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('length should concatenate strings', function()
-					local t = { 'foo', 'hello' }
+				it("length should concatenate strings", function()
+					local t = { "foo", "hello" }
 					local u = { 3, 5 }
 
 					local result = f.iterate(t):map(f.operator.length):totable()
@@ -1765,8 +1765,8 @@ describe('functional', function()
 				end)
 			end)
 
-			describe('logical', function()
-				it('and (land) should concatenate strings', function()
+			describe("logical", function()
+				it("and (land) should concatenate strings", function()
 					local t = { false, false, true, true }
 					local u = { false, true, false, true }
 					local v = { false, false, false, true }
@@ -1778,7 +1778,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('or (lor) should concatenate strings', function()
+				it("or (lor) should concatenate strings", function()
 					local t = { false, false, true, true }
 					local u = { false, true, false, true }
 					local v = { false, true, true, true }
@@ -1790,7 +1790,7 @@ describe('functional', function()
 					assert.same(v, result)
 				end)
 
-				it('not (lnot) should concatenate strings', function()
+				it("not (lnot) should concatenate strings", function()
 					local t = { false, true }
 					local u = { true, false }
 
@@ -1799,8 +1799,8 @@ describe('functional', function()
 					assert.same(u, result)
 				end)
 
-				it('truth should concatenate strings', function()
-					local t = { false, true, 'foo', 123 }
+				it("truth should concatenate strings", function()
+					local t = { false, true, "foo", 123 }
 					local u = { false, true, true, true }
 
 					local result = f.iterate(t):map(f.operator.truth):totable()
@@ -1809,8 +1809,8 @@ describe('functional', function()
 				end)
 			end)
 
-			describe('miscellaneous', function()
-				it('identity should return its arguments', function()
+			describe("miscellaneous", function()
+				it("identity should return its arguments", function()
 					local t = { a = 1, b = 2, c = 3 }
 
 					local result = f.iterate(t):map(f.operator.id):tomap()
@@ -1819,7 +1819,7 @@ describe('functional', function()
 				end)
 
 				it(
-					'skip_key should return the values without the keys',
+					"skip_key should return the values without the keys",
 					function()
 						local t = { a = 1, b = 2, c = 3 }
 						local u = { 1, 2, 3 }
@@ -1832,10 +1832,10 @@ describe('functional', function()
 				)
 
 				it(
-					'skip_value should return the keys without the values',
+					"skip_value should return the keys without the values",
 					function()
 						local t = { a = 1, b = 2, c = 3 }
-						local u = { 'a', 'b', 'c' }
+						local u = { "a", "b", "c" }
 
 						local result =
 							f.iterate(t):map(f.operator.skip_value):totable()
@@ -1847,7 +1847,7 @@ describe('functional', function()
 		end)
 
 		it(
-			'should be able to iterate through all elements of a table',
+			"should be able to iterate through all elements of a table",
 			function()
 				local t = { first = 1, second = 2, third = 3, fourth = 4 }
 				local r = {}
@@ -1861,35 +1861,35 @@ describe('functional', function()
 		)
 
 		it(
-			'should be able to iterate through all elements of a table',
+			"should be able to iterate through all elements of a table",
 			function()
-				local s = 'something'
+				local s = "something"
 				local r = {}
 
 				f.iterate(s):foreach(function(x)
 					table.insert(r, x)
 				end)
 
-				assert.same({ 's', 'o', 'm', 'e', 't', 'h', 'i', 'n', 'g' }, r)
+				assert.same({ "s", "o", "m", "e", "t", "h", "i", "n", "g" }, r)
 			end
 		)
 
-		it('should always return the nth element of the iterator', function()
-			local t = { 'first', 'second', 'third', 'fourth' }
+		it("should always return the nth element of the iterator", function()
+			local t = { "first", "second", "third", "fourth" }
 			local r = f.iterate(t)
 
-			assert.same('first', r:nth(1))
-			assert.same('first', r:nth(1))
-			assert.same('second', r:nth(2))
-			assert.same('second', r:nth(2))
-			assert.same('third', r:nth(3))
-			assert.same('third', r:nth(3))
-			assert.same('fourth', r:nth(4))
-			assert.same('fourth', r:nth(4))
+			assert.same("first", r:nth(1))
+			assert.same("first", r:nth(1))
+			assert.same("second", r:nth(2))
+			assert.same("second", r:nth(2))
+			assert.same("third", r:nth(3))
+			assert.same("third", r:nth(3))
+			assert.same("fourth", r:nth(4))
+			assert.same("fourth", r:nth(4))
 		end)
 
 		it(
-			'should always return `nil` when the iterator is exceeded',
+			"should always return `nil` when the iterator is exceeded",
 			function()
 				local t = { 1, 2, 3, 4 }
 				local r = f.iterate(t)
@@ -1902,15 +1902,15 @@ describe('functional', function()
 			end
 		)
 
-		it('should always return the first element of the iterator', function()
-			local t = { 'first', 'second', 'third', 'fourth' }
+		it("should always return the first element of the iterator", function()
+			local t = { "first", "second", "third", "fourth" }
 			local r = f.iterate(t)
 
-			assert.same('first', r:head())
-			assert.same('first', r:head())
+			assert.same("first", r:head())
+			assert.same("first", r:head())
 		end)
 
-		it('should raise an exception when the iterator is empty', function()
+		it("should raise an exception when the iterator is empty", function()
 			local r = f.iterate({})
 
 			assert.error(function()
@@ -1919,9 +1919,9 @@ describe('functional', function()
 		end)
 	end)
 
-	describe('edge case', function()
+	describe("edge case", function()
 		it(
-			'deepcopy should throw an error when given a wrong parameter',
+			"deepcopy should throw an error when given a wrong parameter",
 			function()
 				local p = coroutine.create(function()
 					return true

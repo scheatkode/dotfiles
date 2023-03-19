@@ -141,26 +141,26 @@ local module = {}
 
 --- # Initialization {{{1
 
-local compat = require('compat')
+local compat = require("compat")
 
-local assert       = assert
+local assert = assert
 local getmetatable = getmetatable
 local setmetatable = setmetatable
-local ipairs       = ipairs
-local pairs        = pairs
-local select       = select
-local type         = type
-local unpack       = compat.table_unpack
+local ipairs = ipairs
+local pairs = pairs
+local select = select
+local type = type
+local unpack = compat.table_unpack
 
-local mceil   = math.ceil
-local mfloor  = math.floor
-local mmax    = math.max
-local mmin    = math.min
+local mceil = math.ceil
+local mfloor = math.floor
+local mmax = math.max
+local mmin = math.min
 local mrandom = math.random
 
-local sfind   = string.find
+local sfind = string.find
 local sformat = string.format
-local ssub    = string.sub
+local ssub = string.sub
 
 --- # Early declarations {{{1
 
@@ -214,7 +214,7 @@ end
 ---
 --- @return string
 function Iterator:__tostring()
-	return '<iterator>'
+	return "<iterator>"
 end
 
 --- # Helper functions {{{1
@@ -263,14 +263,14 @@ end
 local function deepcopy(original)
 	local copy
 
-	if type(original) == 'table' then
+	if type(original) == "table" then
 		copy = {}
 
 		for k, v in next, original, nil do
 			copy[deepcopy(k)] = deepcopy(v)
 		end
-	elseif type(original) == 'userdata' or type(original) == 'thread' then
-		error('deepcopy: wrong parameter type')
+	elseif type(original) == "userdata" or type(original) == "thread" then
+		error("deepcopy: wrong parameter type")
 	else
 		copy = original
 	end
@@ -284,14 +284,14 @@ end
 --- @vararg ...
 --- @return number
 local count_arguments = function(...)
-	local n = select('#', ...)
+	local n = select("#", ...)
 
 	if n >= 3 then
 		-- Fix last argument
 		local it = select(n - 2, ...)
 
 		if
-			type(it) == 'table'
+			type(it) == "table"
 			and getmetatable(it) == Iterator
 			and it.parameter == select(n - 1, ...)
 			and it.state == select(n, ...)
@@ -313,9 +313,9 @@ end
 --- @param  state     any
 --- @return any, any, any
 local raw_iterator = function(object, parameter, state)
-	assert(object ~= nil, 'invalid iterator')
+	assert(object ~= nil, "invalid iterator")
 
-	if type(object) == 'table' then
+	if type(object) == "table" then
 		local metatable = getmetatable(object)
 
 		if metatable ~= nil and metatable == Iterator then
@@ -327,9 +327,9 @@ local raw_iterator = function(object, parameter, state)
 		else -- hash
 			return hashmap_generator, object, nil
 		end
-	elseif type(object) == 'function' then
+	elseif type(object) == "function" then
 		return object, parameter, state
-	elseif type(object) == 'string' then
+	elseif type(object) == "string" then
 		if #object == 0 then
 			return nil_generator, nil, nil
 		end
@@ -725,11 +725,11 @@ local hoe_2_args = function(f)
 	end
 end
 
-module.foreach  = hoe_1_arg(foreach)
-module.iterate  = iterate
+module.foreach = hoe_1_arg(foreach)
+module.iterate = iterate
 module.stateful = with_state
-module.wrap     = wrap
-module.unwrap   = unwrap
+module.wrap = wrap
+module.unwrap = unwrap
 
 --- # Finite generators {{{1
 ---
@@ -866,10 +866,10 @@ local range = function(start, stop, step)
 		step = start <= stop and 1 or -1
 	end
 
-	assert(type(start) == 'number', 'start must be a number')
-	assert(type(stop) == 'number', 'stop must be a number')
-	assert(type(step) == 'number', 'step must be a number')
-	assert(step ~= 0, 'step must not be zero')
+	assert(type(start) == "number", "start must be a number")
+	assert(type(stop) == "number", "stop must be a number")
+	assert(type(step) == "number", "step must be a number")
+	assert(step ~= 0, "step must not be zero")
 
 	if step > 0 then
 		return wrap(range_generator, { stop, step }, start - step)
@@ -918,7 +918,7 @@ end
 --- @vararg ...
 --- @return Iterator
 local duplicate = function(...)
-	if select('#', ...) <= 1 then
+	if select("#", ...) <= 1 then
 		return wrap(duplicate_generator, select(1, ...), 0)
 	else
 		return wrap(duplicate_table_generator, { ... }, 0)
@@ -926,7 +926,7 @@ local duplicate = function(...)
 end
 module.duplicate = duplicate
 module.replicate = duplicate
-module.xrepeat   = duplicate
+module.xrepeat = duplicate
 
 --- The iterator  that returns `f(0)`,  `f(1)`, `f(2)`,
 --- ... values indefinitely.
@@ -941,10 +941,10 @@ module.xrepeat   = duplicate
 --- @param  f function
 --- @return Iterator
 local tabulate = function(f)
-	assert(type(f) == 'function')
+	assert(type(f) == "function")
 	return wrap(duplicate_function_generator, f, 0)
 end
-module.tabulate      = tabulate
+module.tabulate = tabulate
 module.from_function = tabulate
 
 --- Creates an infinite iterator  that will yield zeros
@@ -993,16 +993,16 @@ local random = function(n, m)
 		return wrap(random_nil_generator, 0, 0)
 	end
 
-	assert(type(n) == 'number', 'invalid first argument to random')
+	assert(type(n) == "number", "invalid first argument to random")
 
 	if m == nil then
 		m = n
 		n = 0
 	else
-		assert(type(m) == 'number', 'invalid second argument to random')
+		assert(type(m) == "number", "invalid second argument to random")
 	end
 
-	assert(n < m, 'empty interval')
+	assert(n < m, "empty interval")
 
 	return wrap(random_generator, { n, m - 1 }, 0)
 end
@@ -1021,7 +1021,7 @@ module.random = random
 --- @return nil
 --- @return any
 local nth = function(n, generator, parameter, state)
-	assert(n > 0, 'invalid first argument to nth')
+	assert(n > 0, "invalid first argument to nth")
 
 	-- An optimization for arrays and strings
 	if generator == ipairs_generator then
@@ -1063,7 +1063,7 @@ end
 --- @return ...
 local head_call = function(state, ...)
 	if state == nil then
-		error('head: iterator is empty')
+		error("head: iterator is empty")
 	end
 
 	return ...
@@ -1081,7 +1081,7 @@ local head = function(generator, parameter, state)
 	return head_call(generator(parameter, state))
 end
 module.head = hoe_no_args(head)
-module.car  = module.head
+module.car = module.head
 
 --- Extract the  first element of the  iterator. If the
 --- iterator is empty, an error is raised.
@@ -1110,7 +1110,7 @@ local tail = function(generator, parameter, state)
 	return wrap(generator, parameter, state)
 end
 module.tail = hoe_no_args(tail)
-module.cdr  = module.tail
+module.cdr = module.tail
 
 --- Return  a copy  of the  given iterator  without its
 --- first  element. If  the iterator  is empty  then an
@@ -1160,7 +1160,7 @@ end
 --- @param  state any
 --- @return Iterator
 local take_n = function(n, generator, parameter, state)
-	assert(n >= 0, 'invalid first argument to take_n')
+	assert(n >= 0, "invalid first argument to take_n")
 	return wrap(take_n_generator, { n, generator, parameter }, { 0, state })
 end
 module.take_n = hoe_1_arg(take_n)
@@ -1204,8 +1204,8 @@ end
 --- @return Iterator
 local take_while = function(predicate, generator, parameter, state)
 	assert(
-		type(predicate) == 'function',
-		'invalid first argument to take_while'
+		type(predicate) == "function",
+		"invalid first argument to take_while"
 	)
 	return wrap(
 		take_while_generator,
@@ -1232,7 +1232,7 @@ end
 --- @param  n_or_predicate function
 --- @return Iterator
 local take = function(n_or_predicate, generator, parameter, state)
-	if type(n_or_predicate) == 'number' then
+	if type(n_or_predicate) == "number" then
 		return take_n(n_or_predicate, generator, parameter, state)
 	else
 		return take_while(n_or_predicate, generator, parameter, state)
@@ -1260,7 +1260,7 @@ end
 --- @param  state any
 --- @return Iterator
 local drop_n = function(n, generator, parameter, state)
-	assert(n >= 0, 'invalid first argument to drop_n')
+	assert(n >= 0, "invalid first argument to drop_n")
 
 	for _ = 1, n, 1 do
 		state = generator(parameter, state)
@@ -1307,8 +1307,8 @@ end
 --- @return Iterator
 local drop_while = function(predicate, generator, parameter, state)
 	assert(
-		type(predicate) == 'function',
-		'invalid first argument to drop_while'
+		type(predicate) == "function",
+		"invalid first argument to drop_while"
 	)
 
 	local continue, state_previous
@@ -1345,7 +1345,7 @@ end
 --- @param  state any
 --- @return Iterator
 local drop = function(n_or_predicate, generator, parameter, state)
-	if type(n_or_predicate) == 'number' then
+	if type(n_or_predicate) == "number" then
 		return drop_n(n_or_predicate, generator, parameter, state)
 	else
 		return drop_while(n_or_predicate, generator, parameter, state)
@@ -1383,9 +1383,9 @@ local split_p = function(n_or_predicate, generator, parameter, state)
 	return take(n_or_predicate, generator, parameter, state),
 		drop(n_or_predicate, generator, parameter, state)
 end
-module.split_p  = hoe_1_arg(split_p)
+module.split_p = hoe_1_arg(split_p)
 module.split_at = module.split_p
-module.span     = module.split_p
+module.span = module.split_p
 
 --- Return  an  iterator  pair   where  the  first  one
 --- operates on the longest,  possible empty, prefix of
@@ -1432,7 +1432,7 @@ end
 --- @param  state number
 --- @return Iterator
 local split = function(input, separator, state)
-	assert(type(input) == 'string', 'split should be called only on strings')
+	assert(type(input) == "string", "split should be called only on strings")
 	return wrap(string_split_generator, { input, separator }, state or 1)
 end
 module.split = split
@@ -1457,7 +1457,7 @@ end
 --- @return nil
 --- @return table
 local words = function(input, state)
-	return split(input, ' ', state)
+	return split(input, " ", state)
 end
 module.words = words
 
@@ -1480,7 +1480,7 @@ end
 --- @return table
 local lines = function(input, state)
 	-- TODO(scheatkode): platform specific linebreaks
-	return split(input, '\n', state)
+	return split(input, "\n", state)
 end
 module.lines = lines
 
@@ -1521,8 +1521,8 @@ local index = function(x, generator, parameter, state)
 
 	return nil
 end
-module.index      = hoe_1_arg(index)
-module.index_of   = module.index
+module.index = hoe_1_arg(index)
+module.index_of = module.index
 module.elem_index = module.index
 
 --- Returns the  position of  the first element  in the
@@ -1623,7 +1623,7 @@ filterm_generator = function(f, generator, parameter, state, ...)
 end
 
 local filter_detect = function(f, generator, parameter, state, ...)
-	if select('#', ...) < 2 then
+	if select("#", ...) < 2 then
 		return filter1_generator(f, generator, parameter, state, ...)
 	else
 		return filterm_generator(f, generator, parameter, state, ...)
@@ -1677,7 +1677,7 @@ end
 local grep = function(regex_or_predicate, generator, parameter, state)
 	local f = regex_or_predicate
 
-	if type(regex_or_predicate) == 'string' then
+	if type(regex_or_predicate) == "string" then
 		f = function(x)
 			return sfind(x, regex_or_predicate) ~= nil
 		end
@@ -1777,7 +1777,7 @@ local reduce = function(accumulator, start, generator, parameter, state)
 	return start
 end
 module.reduce = hoe_2_args(reduce)
-module.foldl  = module.reduce
+module.foldl = module.reduce
 
 --- Reduce the  iterator from  left to right  using the
 --- binary operator `accumulator` and the initial value
@@ -1929,7 +1929,7 @@ local every = function(predicate, generator, parameter, state)
 	return state == nil
 end
 module.every = hoe_1_arg(every)
-module.all   = module.every
+module.all = module.every
 
 --- Returns `true`  if all return values  of `iterator`
 --- satisfy the given predicate.
@@ -1958,7 +1958,7 @@ local any = function(predicate, generator, parameter, state)
 
 	return not not v
 end
-module.any  = hoe_1_arg(any)
+module.any = hoe_1_arg(any)
 module.some = module.any
 
 --- Returns  `true` if  at least  one return  values of
@@ -2080,12 +2080,12 @@ local minimum = function(generator, parameter, state)
 	local state_x, m = generator(parameter, state)
 
 	if state_x == nil then
-		error('min: iterator is empty')
+		error("min: iterator is empty")
 	end
 
 	local cmp
 
-	if type(m) == 'number' then
+	if type(m) == "number" then
 		-- An optimization: use math.min for numbers
 		cmp = mmin
 	else
@@ -2123,7 +2123,7 @@ local minimum_by = function(predicate, generator, parameter, state)
 	local state_x, m = generator(parameter, state)
 
 	if state_x == nil then
-		error('min: iterator is empty')
+		error("min: iterator is empty")
 	end
 
 	for _, v in generator, parameter, state_x do
@@ -2156,12 +2156,12 @@ local maximum = function(generator, parameter, state)
 	local state_x, m = generator(parameter, state)
 
 	if state_x == nil then
-		error('max: iterator is empty')
+		error("max: iterator is empty")
 	end
 
 	local cmp
 
-	if type(m) == 'number' then
+	if type(m) == "number" then
 		-- An optimization: use math.max for numbers
 		cmp = mmax
 	else
@@ -2199,7 +2199,7 @@ local maximum_by = function(predicate, generator, parameter, state)
 	local state_x, m = generator(parameter, state)
 
 	if state_x == nil then
-		error('max: iterator is empty')
+		error("max: iterator is empty")
 	end
 
 	for _, v in generator, parameter, state_x do
@@ -2708,11 +2708,10 @@ local operator = {
 }
 
 module.operator = operator
-module.op       = operator
+module.op = operator
 
 --- # Module exports {{{1
 
 return module
 
 -- vim: set fdm=marker fdl=0:
-

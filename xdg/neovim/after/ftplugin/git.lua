@@ -1,1 +1,1 @@
-vim.opt.filetype = 'diff'
+vim.opt.filetype = "diff"

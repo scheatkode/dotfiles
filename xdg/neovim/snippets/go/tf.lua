@@ -1,13 +1,13 @@
-local snippet = require('luasnip')
+local snippet = require("luasnip")
 
 local i = snippet.insert_node
 local s = snippet.s
 
-local f = require('luasnip.extras.fmt').fmta
+local f = require("luasnip.extras.fmt").fmta
 
-snippet.add_snippets('go', {
+snippet.add_snippets("go", {
 	s(
-		'tf',
+		"tf",
 		f(
 			[[
 func Test<name>(t *testing.T) {
@@ -16,8 +16,8 @@ func Test<name>(t *testing.T) {
 <finish>
 			]],
 			{
-				name   = i(1),
-				body   = i(2),
+				name = i(1),
+				body = i(2),
 				finish = i(0),
 			}
 		)

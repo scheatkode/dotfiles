@@ -6,11 +6,11 @@
 
 do
 	local pack_path = (
-		os.getenv('XDG_CONFIG_HOME') or os.getenv('HOME') .. '/.config'
-	) .. '/lib/lua'
+		os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
+	) .. "/lib/lua"
 
 	package.path = string.format(
-		'%s;%s/?.lua;%s/?/init.lua',
+		"%s;%s/?.lua;%s/?/init.lua",
 		package.path,
 		pack_path,
 		pack_path
@@ -23,20 +23,20 @@ end
 -- before any  mapping. this  is to avoid  mapping with
 -- the old leader.
 
-vim.g.mapleader      = ' '
-vim.g.maplocalleader = ' '
-vim.keymap.set('', '<Space>', '<Nop>')
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+vim.keymap.set("", "<Space>", "<Nop>")
 
 -- configuration
 
-require('user.builtins').setup()
-require('user.settings').setup()
-require('user.mappings').setup()
-require('user.providers').setup()
-require('user.autocmd').setup()
-require('scheatkode.autocmds').setup()
+require("user.builtins").setup()
+require("user.settings").setup()
+require("user.mappings").setup()
+require("user.providers").setup()
+require("user.autocmd").setup()
+require("scheatkode.autocmds").setup()
 
-require('colors').load('gruvbox')
+require("colors").load("gruvbox")
 
-require('diagnostics').setup()
-require('plugman').setup()
+require("diagnostics").setup()
+require("plugman").setup()

@@ -8,9 +8,9 @@ local function trim(s)
 	-- noticeable even in benchmarks, but there's little harm especially for
 	-- such a simple, basic, and commonly used function; every performance
 	-- squeeze is beneficiary.
-	local from = s:match('^%s*()')
+	local from = s:match("^%s*()")
 
-	return from > #s and '' or s:match('.*%S', from)
+	return from > #s and "" or s:match(".*%S", from)
 end
 
 return trim

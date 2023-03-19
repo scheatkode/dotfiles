@@ -1,4 +1,4 @@
-local ceil  = math.ceil
+local ceil = math.ceil
 local floor = math.floor
 
 ---This function is effectively equivalent an integer division.

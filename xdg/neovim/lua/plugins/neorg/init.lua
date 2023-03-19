@@ -1,16 +1,16 @@
 return {
-	'nvim-neorg/neorg',
+	"nvim-neorg/neorg",
 
-	ft = 'norg',
+	ft = "norg",
 
 	dependencies = {
-		'nvim-lua/plenary.nvim',
-		'nvim-treesitter/nvim-treesitter',
+		"nvim-lua/plenary.nvim",
+		"nvim-treesitter/nvim-treesitter",
 	},
 
-	run = ':Neorg sync-parsers',
+	run = ":Neorg sync-parsers",
 
 	config = function()
-		require('plugins.neorg.config').setup()
+		require("plugins.neorg.config").setup()
 	end,
 }

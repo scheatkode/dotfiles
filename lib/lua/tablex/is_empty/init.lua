@@ -1,12 +1,12 @@
-local assertx = require('assertx')
+local assertx = require("assertx")
 
 ---Check if a table is empty.
 ---@param table table Table to check
 return function(table)
 	assertx(
-		type(table) == 'table',
+		type(table) == "table",
 		string.format,
-		'Expected table, got %s',
+		"Expected table, got %s",
 		type(table)
 	)
 

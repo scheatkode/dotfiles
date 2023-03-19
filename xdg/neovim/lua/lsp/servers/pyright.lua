@@ -1,7 +1,7 @@
-local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local has_lspconfig, lspconfig = pcall(require, "lspconfig")
 
 if not has_lspconfig then
-	print('‼ Tried loading lspconfig for pyright ... unsuccessfully.')
+	print("‼ Tried loading lspconfig for pyright ... unsuccessfully.")
 	return has_lspconfig
 end
 
@@ -11,20 +11,20 @@ return {
 	autostart = true,
 
 	filetypes = {
-		'python'
+		"python",
 	},
 
 	settings = {
 		python = {
-			disableOrganizeImports  = false,
+			disableOrganizeImports = false,
 			disableLanguageServices = false,
 
 			analysis = {
-				autoSearchPaths        = true,
-				autoImportCompletions  = true,
-				diagnosticMode         = 'workspace',
+				autoSearchPaths = true,
+				autoImportCompletions = true,
+				diagnosticMode = "workspace",
 				useLibraryCodeForTypes = true,
-				typeCheckingMode       = 'strict',
+				typeCheckingMode = "strict",
 			},
 		},
 	},

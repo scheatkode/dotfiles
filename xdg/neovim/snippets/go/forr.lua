@@ -1,13 +1,13 @@
-local snippet = require('luasnip')
+local snippet = require("luasnip")
 
 local i = snippet.insert_node
 local s = snippet.s
 
-local f = require('luasnip.extras.fmt').fmta
+local f = require("luasnip.extras.fmt").fmta
 
-snippet.add_snippets('go', {
+snippet.add_snippets("go", {
 	s(
-		'forr',
+		"forr",
 		f(
 			[[
 for <index>, <value> := range <collection> {
@@ -15,9 +15,9 @@ for <index>, <value> := range <collection> {
 }
 			]],
 			{
-				index = i(1, '_'),
-				value = i(2, 'v'),
-				collection = i(3, 'v'),
+				index = i(1, "_"),
+				value = i(2, "v"),
+				collection = i(3, "v"),
 				finish = i(0),
 			}
 		)

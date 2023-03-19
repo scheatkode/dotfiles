@@ -55,7 +55,7 @@ if jit then
 
 		local result = a
 
-		for i = 1, select('#', ...) do
+		for i = 1, select("#", ...) do
 			result = select(i, ...)(result)
 		end
 
@@ -68,7 +68,7 @@ else
 		-- it's extremely rare that anyone would need anything more. it is also
 		-- split in two to keep the lookup time minimal for the latter part.
 
-		local count = select('#', ...)
+		local count = select("#", ...)
 		local funcs = { ... }
 
 		if count < 11 then

@@ -6,13 +6,13 @@ return {
 		local search = function(forward)
 			return function()
 				return string.format(
-					'%szzzv',
-					vim.v.searchforward == forward and 'n' or 'N'
+					"%szzzv",
+					vim.v.searchforward == forward and "n" or "N"
 				)
 			end
 		end
 
-		vim.keymap.set({ 'n', 'x', 'o' }, 'n', search(1), { expr = true })
-		vim.keymap.set({ 'n', 'x', 'o' }, 'N', search(0), { expr = true })
-	end
+		vim.keymap.set({ "n", "x", "o" }, "n", search(1), { expr = true })
+		vim.keymap.set({ "n", "x", "o" }, "N", search(0), { expr = true })
+	end,
 }

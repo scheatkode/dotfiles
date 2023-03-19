@@ -1,7 +1,7 @@
-local assertx = require('assertx')
+local assertx = require("assertx")
 
-describe('fast assertion', function()
-	it('should only evaluate the first parameter', function()
+describe("fast assertion", function()
+	it("should only evaluate the first parameter", function()
 		local call_count = 0
 
 		assertx(true, function()
@@ -10,7 +10,7 @@ describe('fast assertion', function()
 		assert.equal(call_count, 0)
 	end)
 
-	it('should evaluate the second parameter if the first is falsy', function()
+	it("should evaluate the second parameter if the first is falsy", function()
 		local call_count = 0
 
 		local func1 = function()
@@ -30,7 +30,7 @@ describe('fast assertion', function()
 		assert.equal(call_count, 2)
 	end)
 
-	it('should work repeatedly', function()
+	it("should work repeatedly", function()
 		local call_count = 0
 		local func = function()
 			call_count = call_count + 1
@@ -52,7 +52,7 @@ describe('fast assertion', function()
 	end)
 
 	it(
-		'should call the given function with the rest of the arguments as parameters',
+		"should call the given function with the rest of the arguments as parameters",
 		function()
 			local func = function(a)
 				assert.equal(a, 1337)

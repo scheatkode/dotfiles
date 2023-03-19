@@ -4,9 +4,9 @@
 " for version 5.x: clear all syntax items
 " for later versions: quit when a syntax file was already loaded
 if version < 600
-   syntax clear
-elseif exists('b:current_syntax')
-   finish
+	syntax clear
+elseif exists("b:current_syntax")
+	finish
 endif
 
 let s:keepcpo = &cpo
@@ -4648,4 +4648,4 @@ hi def link ciscostring          String
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
-let b:current_syntax = 'cisco'
+let b:current_syntax = "cisco"

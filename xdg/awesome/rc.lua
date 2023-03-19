@@ -4,16 +4,17 @@
 --           ░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░
 --
 
-local home_directory       = os.getenv('HOME') or '~'
-local xdg_config_directory = os.getenv('XDG_CONFIG_HOME') or home_directory .. '/.config'
-local awesome_directory    = xdg_config_directory .. '/awesome'
+local home_directory = os.getenv("HOME") or "~"
+local xdg_config_directory = os.getenv("XDG_CONFIG_HOME")
+	or home_directory .. "/.config"
+local awesome_directory = xdg_config_directory .. "/awesome"
 
 -------------------------------------------------------
 -- affects the main theme.
 
 local themes = {
-	'gruvbox', -- 1 --
-	'gruvvy', -- 2 --
+	"gruvbox", -- 1 --
+	"gruvvy", -- 2 --
 }
 
 -- change this number to use a different theme.
@@ -25,7 +26,7 @@ local theme = themes[2]
 -- ...
 
 local decorations = {
-	'gruvbox', -- 1 --
+	"gruvbox", -- 1 --
 }
 
 local decoration = decorations[1]
@@ -35,7 +36,7 @@ local decoration = decorations[1]
 -- each theme.
 
 local bars = {
-	'gruvbox', -- 1 --
+	"gruvbox", -- 1 --
 }
 
 local bar = bars[1]
@@ -45,7 +46,7 @@ local bar = bars[1]
 -- that display image icons.
 
 local icons = {
-	'gruvbox', -- 1 --
+	"gruvbox", -- 1 --
 }
 
 local icon = icons[1]
@@ -54,7 +55,7 @@ local icon = icons[1]
 -- notification themes.
 
 local notifications = {
-	'gruvbox', -- 1 --
+	"gruvbox", -- 1 --
 }
 
 local notification = notifications[1]
@@ -63,7 +64,7 @@ local notification = notifications[1]
 -- side bar themes.
 
 local sidebars = {
-	'gruvbox', -- 1 --
+	"gruvbox", -- 1 --
 }
 
 local sidebar = sidebars[1]
@@ -72,7 +73,7 @@ local sidebar = sidebars[1]
 -- dashboard themes.
 
 local dashboards = {
-	'gruvbox', -- 1 --
+	"gruvbox", -- 1 --
 }
 
 local dashboard = dashboards[1]
@@ -83,34 +84,38 @@ local dashboard = dashboards[1]
 settings = {
 	-- >> default applications <<
 
-	terminal          = 'wezterm',
-	floating_terminal = 'wezterm',
-	browser           = 'firefox',
+	terminal = "wezterm",
+	floating_terminal = "wezterm",
+	browser = "firefox",
 	-- file_manager = ''
 	-- editor = ''
 	-- email_client = ''
 	-- music_client = ''
 
 	-- >> Web search <<
-	web_search_cmd = 'xdg-open https://duckduckgo.com/?q=',
+	web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
 	-- web_search_cmd = 'xdg-open https://google.com/search?q=',
 
 	-- >> user profile <<
-	profile = awesome_directory .. '/profile.png',
+	profile = awesome_directory .. "/profile.png",
 
 	-- directories with fallback values
 	directories = {
-		documents   = os.getenv('XDG_DOCUMENTS_DIR')    or home_directory .. '/Documents',
-		downloads   = os.getenv('XDG_DOWNLOADS_DIR')    or home_directory .. '/Downloads',
-		music       = os.getenv('XDG_MUSIC_DIR')        or home_directory .. '/Music',
-		pictures    = os.getenv('XDG_PICTURES_DIR')     or home_directory .. '/Pictures',
-		screenshots = os.getenv('XDG_SCREEENSHOTS_DIR') or home_directory .. '/Pictures/Screenshots',
-		videos      = os.getenv('XDG_VIDEOS_DIR')       or home_directory .. '/Videos',
+		documents = os.getenv("XDG_DOCUMENTS_DIR")
+			or home_directory .. "/Documents",
+		downloads = os.getenv("XDG_DOWNLOADS_DIR")
+			or home_directory .. "/Downloads",
+		music = os.getenv("XDG_MUSIC_DIR") or home_directory .. "/Music",
+		pictures = os.getenv("XDG_PICTURES_DIR")
+			or home_directory .. "/Pictures",
+		screenshots = os.getenv("XDG_SCREEENSHOTS_DIR")
+			or home_directory .. "/Pictures/Screenshots",
+		videos = os.getenv("XDG_VIDEOS_DIR") or home_directory .. "/Videos",
 	},
 
 	-- >> sidebar <<
 	sidebar = {
-		hide_on_mouse_leave       = true,
+		hide_on_mouse_leave = true,
 		show_on_mouse_screen_edge = true,
 	},
 
@@ -123,7 +128,7 @@ settings = {
 
 	-- >> battery <<
 	-- notifications will be issued when the battery reaches these levels.
-	battery_threshold_low      = 20,
+	battery_threshold_low = 20,
 	battery_threshold_critical = 8,
 }
 
@@ -134,12 +139,11 @@ pcall(require, "luarocks.loader")
 
 do
 	local pack_path = (
-		 os.getenv('XDG_CONFIG_HOME')
-			  or os.getenv('HOME') .. '/.config'
-		 ) .. '/lib/lua'
+		os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
+	) .. "/lib/lua"
 
 	package.path = string.format(
-		'%s;%s/?.lua;%s/?/init.lua',
+		"%s;%s/?.lua;%s/?/init.lua",
 		package.path,
 		pack_path,
 		pack_path
@@ -147,13 +151,13 @@ do
 end
 
 -- load theme
-local awesome   = require('awesome')
-local awful     = require('awful')
-local beautiful = require('beautiful')
-local naughty   = require('naughty')
+local awesome = require("awesome")
+local awful = require("awful")
+local beautiful = require("beautiful")
+local naughty = require("naughty")
 -- beautiful.init(gears.filesystem.get_themes_dir() .. )
-local theme_dir = awesome_directory .. '/themes/' .. theme
-beautiful.init(theme_dir .. '/theme.lua')
+local theme_dir = awesome_directory .. "/themes/" .. theme
+beautiful.init(theme_dir .. "/theme.lua")
 
 -- {{{ Error handling
 -- check if awesome encountered an error during startup
@@ -162,8 +166,8 @@ beautiful.init(theme_dir .. '/theme.lua')
 if awesome.startup_errors then
 	naughty.notify({
 		preset = naughty.config.presets.critical,
-		title  = "Oops, there were errors during startup!",
-		text   = awesome.startup_errors,
+		title = "Oops, there were errors during startup!",
+		text = awesome.startup_errors,
 	})
 end
 
@@ -171,15 +175,17 @@ end
 do
 	local in_error = false
 
-	awesome.connect_signal('debug::error', function(err)
+	awesome.connect_signal("debug::error", function(err)
 		-- make sure we don't go into an endless error loop
-		if in_error then return end
+		if in_error then
+			return
+		end
 		in_error = true
 
 		naughty.notify({
 			preset = naughty.config.presets.critical,
-			title  = 'Oops, an error happened!',
-			text   = tostring(err)
+			title = "Oops, an error happened!",
+			text = tostring(err),
 		})
 
 		in_error = false
@@ -187,51 +193,63 @@ do
 end
 -- }}}
 
-local mod = require('bindings.mod')
+local mod = require("bindings.mod")
 
 -- setup key and mouse bindings.
-require('bindings').setup({
+require("bindings").setup({
 	keyboard = {
-		['keyboard::screen::take a screenshot'] = {
-			modifiers   = { mod.super, mod.shift },
-			key         = 's',
-			description = 'take a screenshot',
-			group       = 'screen',
-			on_press    = function()
-				awful.spawn.with_shell("sleep 0.5; maim -s | xclip -selection clipboard -t image/png")
-			end
+		["keyboard::screen::take a screenshot"] = {
+			modifiers = { mod.super, mod.shift },
+			key = "s",
+			description = "take a screenshot",
+			group = "screen",
+			on_press = function()
+				awful.spawn.with_shell(
+					"sleep 0.5; maim -s | xclip -selection clipboard -t image/png"
+				)
+			end,
 		},
 
-		['keyboard::command::spawn neovim'] = {
-			modifiers   = { mod.super, mod.shift },
-			key         = 'v',
-			description = 'Spawn a neovim instance',
-			group       = 'command',
-			on_press    = function()
+		["keyboard::command::spawn neovim"] = {
+			modifiers = { mod.super, mod.shift },
+			key = "v",
+			description = "Spawn a neovim instance",
+			group = "command",
+			on_press = function()
 				local tempfile = os.tmpname()
 
 				awful.spawn.easy_async_with_shell(
-					string.format('chmod o-r "%s"; wezterm start -- nvim "%s"', tempfile, tempfile),
+					string.format(
+						'chmod o-r "%s"; wezterm start -- nvim "%s"',
+						tempfile,
+						tempfile
+					),
 					function()
-						awful.spawn.with_shell(string.format('cat "%s" | xclip -selection clipboard; rm "%s"', tempfile, tempfile))
+						awful.spawn.with_shell(
+							string.format(
+								'cat "%s" | xclip -selection clipboard; rm "%s"',
+								tempfile,
+								tempfile
+							)
+						)
 					end
 				)
-			end
-		}
-	}
+			end,
+		},
+	},
 })
 
 -- setup rules.
-require('rules').setup()
+require("rules").setup()
 
 -- setup signals.
-require('signals').setup()
+require("signals").setup()
 
 -- setup screens.
-require('screens').setup()
+require("screens").setup()
 
 -- setup flash.
-require('modules.flash').setup()
+require("modules.flash").setup()
 
 -- local lockscreen = require('components.lockscreen')
 -- -- lockscreen.init()

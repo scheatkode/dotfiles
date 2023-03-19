@@ -1,7 +1,7 @@
 " Vim indent file
 " Language: SAS
 
-if exists('b:did_indent')
+if exists("b:did_indent")
 	finish
 endif
 
@@ -19,80 +19,80 @@ set cpo&vim
 
 " list of procs supporting run-processing
 let s:run_processing_procs = [
-			\ 'anova',
-			\ 'arima',
-			\ 'catalog',
-			\ 'catmod',
-			\ 'chart',
-			\ 'datasets',
-			\ 'document',
-			\ 'ds2',
-			\ 'factex',
-			\ 'gareabar',
-			\ 'gbarline',
-			\ 'gchart',
-			\ 'gkpi',
-			\ 'glm',
-			\ 'gmap',
-			\ 'gplot',
-			\ 'gradar',
-			\ 'greplay',
-			\ 'gslide',
-			\ 'gtile',
-			\ 'iml',
-			\ 'model',
-			\ 'optex',
-			\ 'plan',
-			\ 'plot',
-			\ 'reg',
-			\ 'sql',
+			\ "anova",
+			\ "arima",
+			\ "catalog",
+			\ "catmod",
+			\ "chart",
+			\ "datasets",
+			\ "document",
+			\ "ds2",
+			\ "factex",
+			\ "gareabar",
+			\ "gbarline",
+			\ "gchart",
+			\ "gkpi",
+			\ "glm",
+			\ "gmap",
+			\ "gplot",
+			\ "gradar",
+			\ "greplay",
+			\ "gslide",
+			\ "gtile",
+			\ "iml",
+			\ "model",
+			\ "optex",
+			\ "plan",
+			\ "plot",
+			\ "reg",
+			\ "sql",
 			\ ]
 
 " regex that captures the start of a data/proc section
-let s:section_str     = '\v%(^|;)\s*%(data|proc)>'
+let s:section_str     = "\v%(^|;)\s*%(data|proc)>"
 " regex that captures the start of a data/proc section that
 " supports run-processing
-let s:section_rpp_str = '\v%(^|;)\s*proc\s+%(' . join(s:run_processing_procs, '|') . ')>'
+let s:section_rpp_str = "\v%(^|;)\s*proc\s+%(" . join(s:run_processing_procs, "|") . ")>"
 " regex that captures the end of a data/proc section
-let s:section_run     = '\v%(^|;)\s*run>'
+let s:section_run     = "\v%(^|;)\s*run>"
 " regex that captures the end of a data/proc section that
 " supports run-processing
-let s:section_end     = '\v%(^|;)\s*%(quit|enddata)>'
+let s:section_end     = "\v%(^|;)\s*%(quit|enddata)>"
 
 " regex that captures the start of a control block within data
 " section
-let s:block_str      = '\v\%@<!<%(do>%([^;]+<%(to|over|until|while)>[^;]+)=|select%(\s+\([^;]+\))=)\s*;'
+let s:block_str      = "\v\%@<!<%(do>%([^;]+<%(to|over|until|while)>[^;]+)=|select%(\s+\([^;]+\))=)\s*;"
 " regex that captures the end of a control block within data
 " section
-let s:block_end      = '\v\%@<!<end\s*;'
+let s:block_end      = "\v\%@<!<end\s*;"
 " regex that captures the start of a control block within proc
 " section
-let s:proc_block_str = '\v%(^|;)\s*%(begingraph|compute|layout|sidebar|innermargin|discreteattrmap)>'
+let s:proc_block_str = "\v%(^|;)\s*%(begingraph|compute|layout|sidebar|innermargin|discreteattrmap)>"
 " regex that captures the end of a control block within proc
 " section
-let s:proc_block_end = '\v%(^|;)\s*%(endgraph|endcomp|endlayout|endsidebar|endinnermargin|enddiscreteattrmap)>'
+let s:proc_block_end = "\v%(^|;)\s*%(endgraph|endcomp|endlayout|endsidebar|endinnermargin|enddiscreteattrmap)>"
 
 " regex that captures the start of a submit block
-let s:submit_str = '\v%(^|;)\s*submit>'
+let s:submit_str = "\v%(^|;)\s*submit>"
 " regex that captures the end of a submit block
-let s:submit_end = '\v%(^|;)\s*endsubmit>'
+let s:submit_end = "\v%(^|;)\s*endsubmit>"
 
 " regex that captures the start of a macro definition
-let s:macro_str       = '\v\%macro>'
+let s:macro_str       = "\v\%macro>"
 " regex that captures the end of a macro definition
-let s:macro_end       = '\v\%mend>'
+let s:macro_end       = "\v\%mend>"
 " regex that captures the start of a macro control block
-let s:macro_block_str = '\v\%do>'
+let s:macro_block_str = "\v\%do>"
 " regex that captures the end of a macro control block
-let s:macro_block_end = '\v\%end>'
+let s:macro_block_end = "\v\%end>"
 
 " regex that defines the end of the program
-let s:program_end = '\v%(^|;)\s*endsas>'
+let s:program_end = "\v%(^|;)\s*endsas>"
 
 
 " find the line number of previous keyword defined by the regex
 function! MatchPrevious(line_number, regex)
-	let skip_line            = '\v%(^|;)\s*\%=\*'
+	let skip_line            = "\v%(^|;)\s*\%=\*"
 	let previous_line_number = prevnonblank(a:line_number - 1)
 
 	while previous_line_number > 0

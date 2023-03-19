@@ -1,19 +1,19 @@
 return {
-	'nvim-treesitter/nvim-treesitter',
+	"nvim-treesitter/nvim-treesitter",
 
 	dependencies = {
-		{ 'JoosepAlviste/nvim-ts-context-commentstring' },
-		{ 'nvim-treesitter/nvim-treesitter-textobjects' },
-		{ 'nvim-treesitter/playground', cmd = 'TSPlaygroundToggle' },
+		{ "JoosepAlviste/nvim-ts-context-commentstring" },
+		{ "nvim-treesitter/nvim-treesitter-textobjects" },
+		{ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
 	},
 
 	event = {
-		'FileType',
+		"FileType",
 	},
 
-	build = ':TSUpdate',
+	build = ":TSUpdate",
 
 	config = function()
-		require('plugins.nvim-treesitter.config').setup()
+		require("plugins.nvim-treesitter.config").setup()
 	end,
 }

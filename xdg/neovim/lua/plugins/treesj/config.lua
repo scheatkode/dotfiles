@@ -1,6 +1,6 @@
 return {
 	setup = function()
-		require('treesj').setup({
+		require("treesj").setup({
 			---Do not use default mappings.
 			---@type boolean
 			use_default_keymaps = false,
@@ -19,7 +19,7 @@ return {
 			--- - start → cursor jumps to the first formatted symbol
 			--- - end   → cursor jumps to the last formatted symbol
 			---@type 'hold'|'start'|'end'
-			cursor_behavior = 'hold',
+			cursor_behavior = "hold",
 
 			---Notify about possible problems.
 			---@type boolean

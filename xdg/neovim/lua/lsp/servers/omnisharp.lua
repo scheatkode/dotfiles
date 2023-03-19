@@ -1,10 +1,10 @@
-local deep_extend = require('tablex.deep_extend')
-local is_list = require('tablex.is_list')
+local deep_extend = require("tablex.deep_extend")
+local is_list = require("tablex.is_list")
 
-local has_lspconfig, _ = pcall(require, 'lspconfig')
+local has_lspconfig, _ = pcall(require, "lspconfig")
 
 if not has_lspconfig then
-	print('‼ Tried loading lspconfig for omnisharp ... unsuccessfully.')
+	print("‼ Tried loading lspconfig for omnisharp ... unsuccessfully.")
 	return has_lspconfig
 end
 
@@ -16,31 +16,21 @@ end
 --- @param value any Current value
 --- @return table _ flattened table
 local function flatten(acc, sep, key, value)
-	if type(value) ~= 'table' then
+	if type(value) ~= "table" then
 		acc[key] = value
 		return acc
 	end
 
 	if is_list(value) then
 		for i = 1, #value do
-			flatten(
-				acc,
-				':',
-				string.format('%s%s%s', key, sep, i - 1),
-				value[i]
-			)
+			flatten(acc, ":", string.format("%s%s%s", key, sep, i - 1), value[i])
 		end
 
 		return acc
 	end
 
 	for k, v in pairs(value) do
-		flatten(
-			acc,
-			':',
-			string.format('%s%s%s', key, sep, k),
-			v
-		)
+		flatten(acc, ":", string.format("%s%s%s", key, sep, k), v)
 	end
 
 	return acc
@@ -66,8 +56,8 @@ local function omnisharp_settings()
 			indentSwitchCaseSectionWhenBlock = true,
 			indentSwitchSection = true,
 			indentationSize = 3,
-			labelPositioning = 'oneLess',
-			newLine = '\n',
+			labelPositioning = "oneLess",
+			newLine = "\n",
 			newLineForCatch = true,
 			newLineForClausesInQuery = true,
 			newLineForElse = false,
@@ -107,7 +97,7 @@ local function omnisharp_settings()
 			spaceWithinSquareBrackets = true,
 			spacesIgnoreAroundVariableDeclaration = false,
 			spacingAfterMethodDeclarationName = true,
-			spacingAroundBinaryOperator = 'single',
+			spacingAroundBinaryOperator = "single",
 			tabSize = 3,
 			useTabs = false,
 			wrappingKeepStatementsOnSingleLine = true,
@@ -115,10 +105,10 @@ local function omnisharp_settings()
 		},
 
 		roslynExtensionsOptions = {
-			documentAnalysisTimeoutMs  = 10000,
-			enableAnalyzersSupport     = true,
+			documentAnalysisTimeoutMs = 10000,
+			enableAnalyzersSupport = true,
 			enableDecompilationSupport = true,
-			enableImportCompletion     = true,
+			enableImportCompletion = true,
 		},
 	}
 end
@@ -127,19 +117,19 @@ end
 ---
 --- @return table _ Flattened environment table for OmniSharp.
 local function make_environment()
-	local settings = flatten({}, '_', 'OMNISHARP', omnisharp_settings())
+	local settings = flatten({}, "_", "OMNISHARP", omnisharp_settings())
 	local home_env = {
-		OMNISHARPHOME = vim.fn.expand('$XDG_DATA_HOME') .. '/omnisharp'
+		OMNISHARPHOME = vim.fn.expand("$XDG_DATA_HOME") .. "/omnisharp",
 	}
 
-	return deep_extend('keep', settings, home_env)
+	return deep_extend("keep", settings, home_env)
 end
 
 return {
 	filetypes = {
-		'cs',
-		'vb'
+		"cs",
+		"vb",
 	},
 
-	cmd_env = make_environment()
+	cmd_env = make_environment(),
 }

@@ -1,11 +1,11 @@
 local fmt = string.format
 
-local f        = require('f')
-local rpartial = require('f.function.rpartial')
-local pipe     = require('f.function.pipe')
+local f = require("f")
+local rpartial = require("f.function.rpartial")
+local pipe = require("f.function.pipe")
 
-describe('function', function()
-	describe('rpartial', function()
+describe("function", function()
+	describe("rpartial", function()
 		local add = function(x, y)
 			return x + y
 		end
@@ -20,7 +20,7 @@ describe('function', function()
 		):foreach(function(adder, multiplier, number)
 			it(
 				fmt(
-					'should partially apply through the pipe such that (%3d + %3d) * %3d',
+					"should partially apply through the pipe such that (%3d + %3d) * %3d",
 					number,
 					adder,
 					multiplier
@@ -49,7 +49,7 @@ describe('function', function()
 		):foreach(function(a, b, c)
 			it(
 				fmt(
-					'should partially apply the function with one argument (%3d, %3d, %3d)',
+					"should partially apply the function with one argument (%3d, %3d, %3d)",
 					a,
 					b,
 					c
@@ -70,7 +70,7 @@ describe('function', function()
 		):foreach(function(a, b, c)
 			it(
 				fmt(
-					'should partially apply the function with multiple arguments (%3d, %3d, %3d)',
+					"should partially apply the function with multiple arguments (%3d, %3d, %3d)",
 					a,
 					b,
 					c

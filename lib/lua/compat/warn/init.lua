@@ -12,14 +12,14 @@ local enabled = false
 ---@param message string
 ---@vararg any
 return function(message, ...)
-	if type(message) == 'string' and message:sub(1, 1) == '@' then
+	if type(message) == "string" and message:sub(1, 1) == "@" then
 		--- control message
-		if message == '@on' then
+		if message == "@on" then
 			enabled = true
 			return
 		end
 
-		if message == '@off' then
+		if message == "@off" then
 			enabled = false
 			return
 		end
@@ -29,7 +29,7 @@ return function(message, ...)
 	end
 
 	if enabled then
-		io.stderr:write('Lua warning: ', message, ...)
-		io.stderr:write('\n')
+		io.stderr:write("Lua warning: ", message, ...)
+		io.stderr:write("\n")
 	end
 end

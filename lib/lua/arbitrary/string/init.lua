@@ -1,6 +1,6 @@
-local char    = string.char
-local random  = math.random
-local assertx = require('assertx')
+local char = string.char
+local random = math.random
+local assertx = require("assertx")
 
 local band = bit.band
 local rshift = bit.rshift
@@ -24,20 +24,20 @@ local function utf8_enc(code_point)
 		-- Special case of one-byte encoding.
 		return char(code_point)
 	elseif code_point <= 0x7ff then
-		n    = 2
+		n = 2
 		mask = 0xC0
 	elseif code_point <= 0xffff then
-		n    = 3
+		n = 3
 		mask = 0xe0
 	elseif code_point <= 0x10ffff then
-		n    = 4
+		n = 4
 		mask = 0xF0
 	else
 		return nil
 	end
 
 	while n > 1 do
-		bytes[n]   = char(0x80 + band(code_point, 0x3f))
+		bytes[n] = char(0x80 + band(code_point, 0x3f))
 		code_point = rshift(code_point, 6)
 		n = n - 1
 	end
@@ -74,14 +74,14 @@ local function recurse(length)
 end
 
 local function random_string(length, seed)
-	seed   = seed   or os.clock() ^ 5
+	seed = seed or os.clock() ^ 5
 	length = length or math.random(100)
 
 	math.randomseed(seed or os.clock() ^ 5)
 	assertx(
-		type(length) == 'number' and length >= 0,
+		type(length) == "number" and length >= 0,
 		string.format,
-		'wrong argument #1 to random string generator, expected positive number, got %s',
+		"wrong argument #1 to random string generator, expected positive number, got %s",
 		length
 	)
 

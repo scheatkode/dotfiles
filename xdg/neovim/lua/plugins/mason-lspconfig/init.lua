@@ -1,11 +1,11 @@
 return {
-	'williamboman/mason-lspconfig.nvim',
+	"williamboman/mason-lspconfig.nvim",
 
 	dependencies = {
-		'williamboman/mason.nvim',
+		"williamboman/mason.nvim",
 	},
 
 	config = function()
-		require('plugins.mason-lspconfig.config').setup()
+		require("plugins.mason-lspconfig.config").setup()
 	end,
 }

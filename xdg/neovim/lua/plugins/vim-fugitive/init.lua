@@ -44,20 +44,25 @@
 --    \|_|/                            `,,---,,'
 
 return {
-	'tpope/vim-fugitive',
+	"tpope/vim-fugitive",
 
 	cmd = {
-		'G',
-		'Git',
-		'GcLog',
-		'Gdiffsplit',
+		"G",
+		"Git",
+		"GcLog",
+		"Gdiffsplit",
 	},
 
 	keys = {
-		'<leader>gg',
+		"<leader>gg",
 	},
 
 	config = function()
-		vim.keymap.set('n', '<leader>gg', '<cmd>tab G<CR>', { desc = 'Open git fugitive' })
+		vim.keymap.set(
+			"n",
+			"<leader>gg",
+			"<cmd>tab G<CR>",
+			{ desc = "Open git fugitive" }
+		)
 	end,
 }

@@ -1,16 +1,16 @@
 return { -- delete buffer without messing up layout
-	'ojroques/nvim-bufdel',
+	"ojroques/nvim-bufdel",
 
 	cmd = {
-		'BufDel',
+		"BufDel",
 	},
 	keys = {
-		'<leader>bk',
-		'<leader>bK',
+		"<leader>bk",
+		"<leader>bK",
 	},
 
 	config = function()
-		require('plugins.nvim-bufdel.config').setup()
-		require('plugins.nvim-bufdel.keys').setup()
+		require("plugins.nvim-bufdel.config").setup()
+		require("plugins.nvim-bufdel.keys").setup()
 	end,
 }

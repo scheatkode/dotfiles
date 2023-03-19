@@ -4,12 +4,12 @@
 ---@param table table
 ---@return boolean `true` if array-like table, `false` otherwise
 return function(table)
-	if type(table) ~= 'table' then
+	if type(table) ~= "table" then
 		return false
 	end
 
 	for k, _ in pairs(table) do
-		if type(k) ~= 'number' then
+		if type(k) ~= "number" then
 			return false
 		end
 	end

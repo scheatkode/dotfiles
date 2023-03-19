@@ -1,1 +1,1 @@
-require('luasnip').filetype_extend('sls', { 'jinja' })
+require("luasnip").filetype_extend("sls", { "jinja" })

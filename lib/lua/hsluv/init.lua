@@ -25,7 +25,7 @@
 -- CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 -- SOFTWARE.
 
-local hex_chars = '0123456789abcdef'
+local hex_chars = "0123456789abcdef"
 
 local m = {
 	{ 3.240969941904521, -1.537383177570093, -0.498610760293 },
@@ -39,10 +39,10 @@ local minv = {
 	{ 0.019330818715591, 0.11919477979462, 0.95053215224966 },
 }
 
-local ref_y   = 1.0
-local ref_u   = 0.19783000664283
-local ref_v   = 0.46831999493879
-local kappa   = 903.2962962
+local ref_y = 1.0
+local ref_u = 0.19783000664283
+local ref_v = 0.46831999493879
+local kappa = 903.2962962
 local epsilon = 0.0088564516
 
 local function distance_line_from_origin(line)
@@ -55,7 +55,7 @@ end
 
 local function get_bounds(l)
 	local result = {}
-	local sub1   = ((l + 16) ^ 3) / 1560896
+	local sub1 = ((l + 16) ^ 3) / 1560896
 	local sub2
 
 	if sub1 > epsilon then
@@ -86,7 +86,7 @@ local function get_bounds(l)
 end
 
 local function max_safe_chroma_for_l(l)
-	local min    = 1.7976931348623157e+308
+	local min = 1.7976931348623157e+308
 	local bounds = get_bounds(l)
 
 	for i = 1, 6 do
@@ -101,12 +101,12 @@ local function max_safe_chroma_for_l(l)
 end
 
 local function max_safe_chroma_for_lh(l, h)
-	local min    = 1.7976931348623157e+308
-	local hrad   = h / 360 * math.pi * 2
+	local min = 1.7976931348623157e+308
+	local hrad = h / 360 * math.pi * 2
 	local bounds = get_bounds(l)
 
 	for i = 1, 6 do
-		local bound  = bounds[i]
+		local bound = bounds[i]
 		local length = length_of_ray_until_intersect(hrad, bound)
 
 		if length >= 0 then
@@ -352,12 +352,12 @@ local function lch_to_hpluv(tuple)
 end
 
 local function rgb_to_hex(tuple)
-	local h = { '#' }
+	local h = { "#" }
 
 	for i = 1, 3 do
-		local c      = math.floor(tuple[i] * 255 + 0.5)
+		local c = math.floor(tuple[i] * 255 + 0.5)
 		local digit2 = math.fmod(c, 16)
-		local x      = (c - digit2) / 16
+		local x = (c - digit2) / 16
 		local digit1 = math.floor(x)
 
 		h[#h + 1] = string.sub(hex_chars, digit1 + 1, digit1 + 1)
@@ -373,8 +373,8 @@ local function hex_to_rgb(hex)
 	hex = string.lower(hex)
 
 	for i = 0, 2 do
-		local char1  = string.sub(hex, i * 2 + 2, i * 2 + 2)
-		local char2  = string.sub(hex, i * 2 + 3, i * 2 + 3)
+		local char1 = string.sub(hex, i * 2 + 2, i * 2 + 2)
+		local char2 = string.sub(hex, i * 2 + 3, i * 2 + 3)
 		local digit1 = string.find(hex_chars, char1) - 1
 		local digit2 = string.find(hex_chars, char2) - 1
 
@@ -426,43 +426,43 @@ end
 
 return {
 	-- constants
-	m       = m,
-	minv    = minv,
-	ref_y   = ref_y,
-	ref_u   = ref_u,
-	ref_v   = ref_v,
-	kappa   = kappa,
+	m = m,
+	minv = minv,
+	ref_y = ref_y,
+	ref_u = ref_u,
+	ref_v = ref_v,
+	kappa = kappa,
 	epsilon = epsilon,
 
 	-- functions
-	dot_product            = dot_product,
-	from_linear            = from_linear,
-	get_bounds             = get_bounds,
-	hex_to_hpluv           = hex_to_hpluv,
-	hex_to_hsluv           = hex_to_hsluv,
-	hex_to_rgb             = hex_to_rgb,
-	hpluv_to_hex           = hpluv_to_hex,
-	hpluv_to_lch           = hpluv_to_lch,
-	hpluv_to_rgb           = hpluv_to_rgb,
-	hsluv_to_hex           = hsluv_to_hex,
-	hsluv_to_lch           = hsluv_to_lch,
-	hsluv_to_rgb           = hsluv_to_rgb,
-	l_to_y                 = l_to_y,
-	lch_to_hpluv           = lch_to_hpluv,
-	lch_to_hsluv           = lch_to_hsluv,
-	lch_to_luv             = lch_to_luv,
-	lch_to_rgb             = lch_to_rgb,
-	luv_to_lch             = luv_to_lch,
-	luv_to_xyz             = luv_to_xyz,
-	max_safe_chroma_for_l  = max_safe_chroma_for_l,
+	dot_product = dot_product,
+	from_linear = from_linear,
+	get_bounds = get_bounds,
+	hex_to_hpluv = hex_to_hpluv,
+	hex_to_hsluv = hex_to_hsluv,
+	hex_to_rgb = hex_to_rgb,
+	hpluv_to_hex = hpluv_to_hex,
+	hpluv_to_lch = hpluv_to_lch,
+	hpluv_to_rgb = hpluv_to_rgb,
+	hsluv_to_hex = hsluv_to_hex,
+	hsluv_to_lch = hsluv_to_lch,
+	hsluv_to_rgb = hsluv_to_rgb,
+	l_to_y = l_to_y,
+	lch_to_hpluv = lch_to_hpluv,
+	lch_to_hsluv = lch_to_hsluv,
+	lch_to_luv = lch_to_luv,
+	lch_to_rgb = lch_to_rgb,
+	luv_to_lch = luv_to_lch,
+	luv_to_xyz = luv_to_xyz,
+	max_safe_chroma_for_l = max_safe_chroma_for_l,
 	max_safe_chroma_for_lh = max_safe_chroma_for_lh,
-	rgb_to_hex             = rgb_to_hex,
-	rgb_to_hpluv           = rgb_to_hpluv,
-	rgb_to_hsluv           = rgb_to_hsluv,
-	rgb_to_lch             = rgb_to_lch,
-	rgb_to_xyz             = rgb_to_xyz,
-	to_linear              = to_linear,
-	xyz_to_luv             = xyz_to_luv,
-	xyz_to_rgb             = xyz_to_rgb,
-	y_to_l                 = y_to_l,
+	rgb_to_hex = rgb_to_hex,
+	rgb_to_hpluv = rgb_to_hpluv,
+	rgb_to_hsluv = rgb_to_hsluv,
+	rgb_to_lch = rgb_to_lch,
+	rgb_to_xyz = rgb_to_xyz,
+	to_linear = to_linear,
+	xyz_to_luv = xyz_to_luv,
+	xyz_to_rgb = xyz_to_rgb,
+	y_to_l = y_to_l,
 }

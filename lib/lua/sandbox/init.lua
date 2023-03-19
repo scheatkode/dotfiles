@@ -12,19 +12,18 @@
 ---
 --- @brief ]]
 
-local compat = require('compat')
+local compat = require("compat")
 
-local cload    = compat.load
-local ctpack   = compat.table_pack
+local cload = compat.load
+local ctpack = compat.table_pack
 local ctunpack = compat.table_unpack
 
 local default_preempt_count = 500000
-local original_string_rep   = string.rep
-
+local original_string_rep = string.rep
 
 local run_with_jit_disabled_if_needed
 
-if type(jit) ~= 'nil' then
+if type(jit) ~= "nil" then
 	run_with_jit_disabled_if_needed = function(f, ...)
 		jit.off()
 		local t = ctpack(pcall(f, ...))
@@ -40,9 +39,8 @@ end
 
 local sethook
 
-if type(debug.sethook) ~= 'function' then
-	sethook = function()
-	end
+if type(debug.sethook) ~= "function" then
+	sethook = function() end
 else
 	sethook = debug.sethook
 end
@@ -52,7 +50,7 @@ local sandbox = {}
 --- The  base  environment  is merged  with  the  given
 --- `environment`  option (or  an  empty  table, if  no
 --- `environment` is provided).
-local base_environment = {};
+local base_environment = {}
 
 --- list of unsafe packages/functions :
 ---
@@ -119,8 +117,8 @@ local _ = ([[
 
    table.insert table.maxn table.remove table.sort
 
-]]):gsub('%S+', function(id)
-	local module, method = id:match('([^%.]+)%.([^%.]+)')
+]]):gsub("%S+", function(id)
+	local module, method = id:match("([^%.]+)%.([^%.]+)")
 
 	if module then
 		base_environment[module] = base_environment[module] or {}
@@ -135,17 +133,17 @@ local function protect_module(module, module_name)
 		__index = module,
 		__newindex = function(_, attribute_name, _)
 			error(
-				'Can not modify '
+				"Can not modify "
 					.. module_name
-					.. '.'
+					.. "."
 					.. attribute_name
-					.. '. This is a sandboxed and read-only environment'
+					.. ". This is a sandboxed and read-only environment"
 			)
 		end,
 	})
 end
 
-_ = ([[coroutine math os string table]]):gsub('%S+', function(module_name)
+_ = ([[coroutine math os string table]]):gsub("%S+", function(module_name)
 	base_environment[module_name] =
 		protect_module(base_environment[module_name], module_name)
 end)
@@ -195,13 +193,13 @@ end
 --- @return function
 ---
 function sandbox.protect(code, options)
-	assert(type(code) == 'string', 'expected a string')
+	assert(type(code) == "string", "expected a string")
 
 	options = options or {}
 
 	local quota = options.quota
 
-	if type(quota) ~= 'number' and quota ~= false then
+	if type(quota) ~= "number" and quota ~= false then
 		quota = default_preempt_count
 	end
 
@@ -221,16 +219,16 @@ function sandbox.protect(code, options)
 	setmetatable(environment, { __index = options.environment })
 	environment._G = environment
 
-	local f = assert(cload(code, nil, 't', environment))
+	local f = assert(cload(code, nil, "t", environment))
 
 	return function(...)
 		if quota then
 			local preempt = function()
 				cleanup()
-				error('Quota exceeded: ' .. tostring(quota))
+				error("Quota exceeded: " .. tostring(quota))
 			end
 
-			sethook(preempt, '', quota)
+			sethook(preempt, "", quota)
 		end
 
 		string.rep = nil

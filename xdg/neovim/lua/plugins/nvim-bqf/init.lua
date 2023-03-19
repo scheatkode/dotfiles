@@ -1,15 +1,15 @@
 return {
-	'kevinhwang91/nvim-bqf',
+	"kevinhwang91/nvim-bqf",
 
 	dependencies = {
-		'nvim-treesitter/nvim-treesitter',
+		"nvim-treesitter/nvim-treesitter",
 	},
 
 	ft = {
-		'qf',
+		"qf",
 	},
 
 	config = function()
-		require('plugins.nvim-bqf.config').setup()
+		require("plugins.nvim-bqf.config").setup()
 	end,
 }

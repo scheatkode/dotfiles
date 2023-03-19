@@ -1,8 +1,8 @@
-local constant = require('f.function.constant')
-local extend   = require('tablex.deep_extend')
+local constant = require("f.function.constant")
+local extend = require("tablex.deep_extend")
 
-local protocol = require('vim.lsp.protocol')
-local util     = require('vim.lsp.util')
+local protocol = require("vim.lsp.protocol")
+local util = require("vim.lsp.util")
 
 local type = type
 
@@ -11,10 +11,10 @@ local lsp = vim.lsp
 
 local triggers = {
 	start_completion = constant(
-		api.nvim_replace_termcodes('<C-x><C-o>', true, true, true)
+		api.nvim_replace_termcodes("<C-x><C-o>", true, true, true)
 	),
 	accept_completion = constant(
-		api.nvim_replace_termcodes('<C-y>', true, true, true)
+		api.nvim_replace_termcodes("<C-y>", true, true, true)
 	),
 }
 
@@ -86,21 +86,21 @@ local triggers = {
 ---@param encoding string utf-8|utf-16|utf-32|nil defaults to utf-16
 ---@return number byte (utf-8) index of `encoding` index `index` in `line`
 local function byteindex_encoding(line, index, encoding)
-	encoding = encoding or 'utf-16'
+	encoding = encoding or "utf-16"
 
-	if encoding == 'utf-8' then
+	if encoding == "utf-8" then
 		if index then
 			return index
 		end
 
 		return #line
-	elseif encoding == 'utf-16' then
+	elseif encoding == "utf-16" then
 		return vim.str_byteindex(line, index, true)
-	elseif encoding == 'utf-32' then
+	elseif encoding == "utf-32" then
 		return vim.str_byteindex(line, index)
 	end
 
-	error('Invalid encoding: ' .. vim.inspect(encoding))
+	error("Invalid encoding: " .. vim.inspect(encoding))
 end
 
 ---Returns text that should be inserted when selecting completion item. The
@@ -110,23 +110,23 @@ local function get_completion_word(item)
 	if
 		item.textEdit ~= nil
 		and item.textEdit.newText ~= nil
-		and item.textEdit.newText ~= ''
+		and item.textEdit.newText ~= ""
 	then
 		local insert_text_format =
 			protocol.InsertTextFormat[item.insertTextFormat]
 
-		if insert_text_format == 'PlainText' or insert_text_format == nil then
+		if insert_text_format == "PlainText" or insert_text_format == nil then
 			return item.textEdit.newText
 		end
 
 		return util.parse_snippet(item.textEdit.newText)
 	end
 
-	if item.insertText ~= nil and item.insertText ~= '' then
+	if item.insertText ~= nil and item.insertText ~= "" then
 		local insert_text_format =
 			protocol.InsertTextFormat[item.insertTextFormat]
 
-		if insert_text_format == 'PlainText' or insert_text_format == nil then
+		if insert_text_format == "PlainText" or insert_text_format == nil then
 			return item.insertText
 		end
 
@@ -176,7 +176,7 @@ local function adjust_start_col(lnum, line, items, encoding)
 				return nil
 			end
 
-			if range.start.character > range['end'].character then
+			if range.start.character > range["end"].character then
 				return nil
 			end
 
@@ -206,7 +206,7 @@ local function text_document_completion_list_to_complete_items(result, prefix)
 		return {}
 	end
 
-	if prefix ~= '' then
+	if prefix ~= "" then
 		items =
 			vim.fn.matchfuzzy(items, prefix, { text_cb = get_completion_word })
 	end
@@ -224,15 +224,15 @@ local function text_document_completion_list_to_complete_items(result, prefix)
 	local matches = {}
 
 	for _, completion_item in ipairs(items) do
-		local info = ' '
+		local info = " "
 		local documentation = completion_item.documentation
 
 		if documentation then
-			if type(documentation) == 'string' and documentation ~= '' then
+			if type(documentation) == "string" and documentation ~= "" then
 				info = documentation
 			elseif
-				type(documentation) == 'table'
-				and type(documentation.value) == 'string'
+				type(documentation) == "table"
+				and type(documentation.value) == "string"
 			then
 				info = documentation.value
 			end
@@ -243,8 +243,8 @@ local function text_document_completion_list_to_complete_items(result, prefix)
 		table.insert(matches, {
 			word = word,
 			abbr = completion_item.label,
-			kind = lsp.protocol.CompletionItemKind[completion_item.kind] or '',
-			menu = completion_item.detail or '',
+			kind = lsp.protocol.CompletionItemKind[completion_item.kind] or "",
+			menu = completion_item.detail or "",
 			info = info,
 			icase = 1,
 			dup = 1,
@@ -288,21 +288,21 @@ local function omnifunc(findstart, _)
 	end
 
 	-- Then, perform standard completion request
-	local pos            = api.nvim_win_get_cursor(0)
-	local line           = api.nvim_get_current_line()
+	local pos = api.nvim_win_get_cursor(0)
+	local line = api.nvim_get_current_line()
 	local line_to_cursor = line:sub(1, pos[2])
 
 	-- Get the start position of the current keyword
-	local text_match = vim.fn.match(line_to_cursor, '\\k*$')
-	local params     = util.make_position_params()
-	local items      = {}
+	local text_match = vim.fn.match(line_to_cursor, "\\k*$")
+	local params = util.make_position_params()
+	local items = {}
 
 	lsp.buf_request(
 		bufnr,
-		'textDocument/completion',
+		"textDocument/completion",
 		params,
 		function(err, result, context)
-			if err or not result or vim.fn.mode() ~= 'i' then
+			if err or not result or vim.fn.mode() ~= "i" then
 				return
 			end
 
@@ -323,17 +323,17 @@ local function omnifunc(findstart, _)
 			--
 			-- `adjust_start_col` is used to prefer the language server boundary.
 			--
-			local client     = lsp.get_client_by_id(context.client_id)
-			local encoding   = client and client.offset_encoding or 'utf-16'
+			local client = lsp.get_client_by_id(context.client_id)
+			local encoding = client and client.offset_encoding or "utf-16"
 			local candidates = util.extract_completion_items(result)
-			local startbyte  = adjust_start_col(
+			local startbyte = adjust_start_col(
 				pos[1],
 				line,
 				candidates,
 				encoding
 			) or text_match
 
-			local prefix  = line:sub(startbyte + 1, pos[2])
+			local prefix = line:sub(startbyte + 1, pos[2])
 			local matches =
 				text_document_completion_list_to_complete_items(result, prefix)
 
@@ -363,7 +363,7 @@ local function apply_lsp_additional_text_edits(context)
 		return
 	end
 
-	local pos  = api.nvim_win_get_cursor(0)
+	local pos = api.nvim_win_get_cursor(0)
 	local lnum = pos[1]
 	local item = completed_item.user_data.nvim.lsp.completion_item
 
@@ -403,10 +403,10 @@ local function on_text_changed_i(context)
 		if
 			api.nvim_get_current_line()
 				:sub(1, api.nvim_win_get_cursor(0)[2])
-				:match('[%w_.@-]$')
+				:match("[%w_.@-]$")
 		then
-			if not api.nvim_get_mode().mode:match('^[^i]') then
-				api.nvim_feedkeys(triggers.start_completion(), 'n', false)
+			if not api.nvim_get_mode().mode:match("^[^i]") then
+				api.nvim_feedkeys(triggers.start_completion(), "n", false)
 			end
 		end
 	end
@@ -417,12 +417,12 @@ end
 local function commit_completion(context)
 	return function()
 		if vim.fn.pumvisible() ~= 0 then
-			if vim.fn.complete_info()['selected'] == -1 then
+			if vim.fn.complete_info()["selected"] == -1 then
 				-- gotta live without completeopt+='preview' because of this.
 				-- @see https://github.com/neovim/neovim/pull/13854
 				-- @see https://github.com/neovim/neovim/issues/16488
 				api.nvim_select_popupmenu_item(0, true, true, {})
-				return ''
+				return ""
 			end
 
 			return triggers.accept_completion()
@@ -436,34 +436,34 @@ return {
 	setup = function(client, bufnr, overrides)
 		local defaults = {
 			autocomplete = false,
-			newline      = constant('<CR>'),
+			newline = constant("<CR>"),
 		}
 
-		local context = extend('force', defaults, overrides or {}, {
-			bufnr  = bufnr,
+		local context = extend("force", defaults, overrides or {}, {
+			bufnr = bufnr,
 			client = client,
 		})
 
-		local augroup = api.nvim_create_augroup('completion', { clear = false })
+		local augroup = api.nvim_create_augroup("completion", { clear = false })
 
 		api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		api.nvim_create_autocmd('CompleteDone', {
+		api.nvim_create_autocmd("CompleteDone", {
 			callback = on_complete_done(context),
-			buffer   = bufnr,
-			group    = augroup,
+			buffer = bufnr,
+			group = augroup,
 		})
 		if context.autocomplete and context.autocomplete > 0 then
-			api.nvim_create_autocmd('TextChangedI', {
+			api.nvim_create_autocmd("TextChangedI", {
 				callback = on_text_changed_i(context),
-				buffer   = bufnr,
-				group    = augroup,
+				buffer = bufnr,
+				group = augroup,
 			})
 		end
 
 		-- Enter keys accepts current completion.
-		vim.keymap.set('i', '<CR>', commit_completion(context), {
+		vim.keymap.set("i", "<CR>", commit_completion(context), {
 			buffer = bufnr,
-			expr   = true,
+			expr = true,
 		})
 
 		if _G.custom == nil then
@@ -472,6 +472,6 @@ return {
 
 		_G.custom.omnifunc = omnifunc
 
-		vim.bo[bufnr].omnifunc = 'v:lua.custom.omnifunc'
+		vim.bo[bufnr].omnifunc = "v:lua.custom.omnifunc"
 	end,
 }

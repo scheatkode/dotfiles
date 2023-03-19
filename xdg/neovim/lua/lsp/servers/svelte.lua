@@ -1,7 +1,7 @@
-local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local has_lspconfig, lspconfig = pcall(require, "lspconfig")
 
 if not has_lspconfig then
-	print('‼ Tried loading lspconfig for svelte ... unsuccessfully.')
+	print("‼ Tried loading lspconfig for svelte ... unsuccessfully.")
 	return has_lspconfig
 end
 
@@ -9,18 +9,18 @@ end
 
 return {
 	filetypes = {
-		'svelte',
+		"svelte",
 	},
 
 	root_dir = lspconfig.util.root_pattern(
-		'.git',
-		'svelte.config.js',
-		'package.json'
+		".git",
+		"svelte.config.js",
+		"package.json"
 	),
 
 	settings = {
 		svelte = {
-			['enable-ts-plugin'] = true
-		}
-	}
+			["enable-ts-plugin"] = true,
+		},
+	},
 }

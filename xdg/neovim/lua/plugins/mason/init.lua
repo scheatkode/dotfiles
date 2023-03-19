@@ -1,15 +1,15 @@
 return {
-	'williamboman/mason.nvim',
+	"williamboman/mason.nvim",
 
 	cmd = {
-		'Mason',
-		'MasonInstall',
-		'MasonUninstall',
-		'MasonUninstallAll',
-		'MasonLog',
+		"Mason",
+		"MasonInstall",
+		"MasonUninstall",
+		"MasonUninstallAll",
+		"MasonLog",
 	},
 
 	config = function()
-		require('mason').setup()
+		require("mason").setup()
 	end,
 }

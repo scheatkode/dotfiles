@@ -1,14 +1,14 @@
 local fmt = string.format
 
-local f        = require('f')
-local identity = require('f.function.identity')
+local f = require("f")
+local identity = require("f.function.identity")
 
-describe('function', function()
-	describe('identity()', function()
+describe("function", function()
+	describe("identity()", function()
 		f.zip(f.range(1, 50, 1), f.random(0, 1000):take(50))
 			:take(50)
 			:foreach(function(i)
-				it(fmt('should return its parameter (#%02d)', i), function()
+				it(fmt("should return its parameter (#%02d)", i), function()
 					assert.are.same(i, identity(i))
 				end)
 			end)

@@ -1,3 +1,3 @@
 return {
-	'jbyuki/one-small-step-for-vimkind',
+	"jbyuki/one-small-step-for-vimkind",
 }

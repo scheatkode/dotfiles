@@ -1,11 +1,11 @@
 return {
-	'lukas-reineke/indent-blankline.nvim',
+	"lukas-reineke/indent-blankline.nvim",
 
 	event = {
-		'FileType',
+		"FileType",
 	},
 
 	config = function()
-		require('plugins.indent-blankline.config').setup()
+		require("plugins.indent-blankline.config").setup()
 	end,
 }

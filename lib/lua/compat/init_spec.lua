@@ -1,16 +1,16 @@
-local compat = require('compat')
+local compat = require("compat")
 
-describe('compatibilty', function()
-	describe('of neovim', function()
-		it('should detect being inside neovim', function()
+describe("compatibilty", function()
+	describe("of neovim", function()
+		it("should detect being inside neovim", function()
 			local should_detect_vim = not not vim
 			assert.same(should_detect_vim, compat.neovim)
 		end)
 	end)
 
-	describe('of load', function()
+	describe("of load", function()
 		local code_generator = coroutine.wrap(function()
-			local result = { 'ret', "urn 'Hello there !'" }
+			local result = { "ret", "urn 'Hello there !'" }
 
 			for _, v in ipairs(result) do
 				coroutine.yield(v)
@@ -19,35 +19,35 @@ describe('compatibilty', function()
 			coroutine.yield(nil)
 		end)
 
-		it('should match the original function behaviour', function()
+		it("should match the original function behaviour", function()
 			local f, err = compat.load(code_generator)
 
 			assert.same(nil, err)
-			assert.same(f(), 'Hello there !')
+			assert.same(f(), "Hello there !")
 		end)
 	end)
 
-	describe('of package.searchpath', function()
+	describe("of package.searchpath", function()
 		it(
-			'should match the original function behaviour when a package is found',
+			"should match the original function behaviour when a package is found",
 			function()
-				local path = 'lib/lua/?/init.lua'
+				local path = "lib/lua/?/init.lua"
 
 				assert.is_truthy(
 					compat
-						.package_searchpath('compat', path)
-						:match('lib[/\\]lua[/\\]compat')
+						.package_searchpath("compat", path)
+						:match("lib[/\\]lua[/\\]compat")
 				)
 			end
 		)
 
-		local path = 'some/?/random.path;another/?.path'
+		local path = "some/?/random.path;another/?.path"
 
 		it(
-			'should match the original function behaviour when a package is not found',
+			"should match the original function behaviour when a package is not found",
 			function()
 				local ok, err =
-					compat.package_searchpath('some.file.name', path, '.', '/')
+					compat.package_searchpath("some.file.name", path, ".", "/")
 
 				assert.is_nil(ok)
 				assert.same(
@@ -58,10 +58,10 @@ describe('compatibilty', function()
 		)
 
 		it(
-			'should match the original function behaviour when a package is not found',
+			"should match the original function behaviour when a package is not found",
 			function()
 				local ok, err =
-					compat.package_searchpath('some/file/name', path, '/', '.')
+					compat.package_searchpath("some/file/name", path, "/", ".")
 
 				assert.is_nil(ok)
 				assert.same(

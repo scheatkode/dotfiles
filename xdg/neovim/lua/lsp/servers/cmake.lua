@@ -1,4 +1,4 @@
-local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local has_lspconfig, lspconfig = pcall(require, "lspconfig")
 
 if not has_lspconfig then
 	print()
@@ -9,17 +9,17 @@ end
 
 return {
 	filetypes = {
-		'cmake'
+		"cmake",
 	},
 
 	init_options = {
-		buildDirectory = 'build',
+		buildDirectory = "build",
 	},
 
 	root_dir = lspconfig.util.root_pattern(
-		'.git',
-		'compile_commands.json',
-		'build'
+		".git",
+		"compile_commands.json",
+		"build"
 	),
 
 	single_file_support = true,

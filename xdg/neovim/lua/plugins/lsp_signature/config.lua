@@ -1,6 +1,6 @@
 return {
 	setup = function()
-		require('lsp_signature').setup({
+		require("lsp_signature").setup({
 			-- Autoclose signature float win after x sec, disabled if
 			-- `nil`.
 			auto_close_after = nil,
@@ -42,9 +42,9 @@ return {
 			floating_window = true,
 
 			floating_window_off_y = function(floating_options)
-				local linenr    = vim.api.nvim_win_get_cursor(0)[1]
+				local linenr = vim.api.nvim_win_get_cursor(0)[1]
 				local pumheight = vim.o.pumheight
-				local winline   = vim.fn.winline()
+				local winline = vim.fn.winline()
 				local winheight = vim.fn.winheight(0)
 
 				if floating_options.height < winline - 1 then
@@ -72,11 +72,11 @@ return {
 			floating_window_above_cur_line = true,
 
 			hint_enable = false, -- virtual hint disable.
-			hint_prefix = 'ⓘ ', -- icon.
-			hint_scheme = 'String',
+			hint_prefix = "ⓘ ", -- icon.
+			hint_scheme = "String",
 
 			-- How the parameter will be highlighted.
-			hi_parameter = 'LspSignatureActiveParameter',
+			hi_parameter = "LspSignatureActiveParameter",
 
 			-- Max height of the signature floating window, if content is
 			-- more than `max_height`, you can scroll down to view the
@@ -88,7 +88,7 @@ return {
 			max_width = 50,
 
 			handler_opts = {
-				border = 'none', -- double, single, shadow, none
+				border = "none", -- double, single, shadow, none
 			},
 		})
 
@@ -99,18 +99,21 @@ return {
 		-- passed to `setup` is not taken into account*.
 		-- PS: No offence intended to the author.
 		---@diagnostic disable: undefined-global
-		vim.api.nvim_create_autocmd('InsertLeave', {
-			group = vim.api.nvim_create_augroup('Lsp_signature_hacks', { clear = true }),
+		vim.api.nvim_create_autocmd("InsertLeave", {
+			group = vim.api.nvim_create_augroup(
+				"Lsp_signature_hacks",
+				{ clear = true }
+			),
 			callback = function()
 				local winnr = _LSP_SIG_CFG.winnr
 
 				if winnr and winnr > 0 and vim.api.nvim_win_is_valid(winnr) then
-					require('lsp_signature').toggle_float_win()
+					require("lsp_signature").toggle_float_win()
 				end
 			end,
 		})
 
-		_LSP_SIG_CFG.handler_opts.border = 'none'
+		_LSP_SIG_CFG.handler_opts.border = "none"
 		_LSP_SIG_CFG.hint_enable = false
 	end,
 }

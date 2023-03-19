@@ -3,7 +3,7 @@
 return function(...)
 	local result = {}
 
-	for i = 1, select('#', ...) do
+	for i = 1, select("#", ...) do
 		local argument = select(i, ...)
 
 		if argument ~= nil then

@@ -1,7 +1,7 @@
-local memo = require('f.function.memoize')
+local memo = require("f.function.memoize")
 
-describe('function', function()
-	describe('memoize', function()
+describe("function", function()
+	describe("memoize", function()
 		local counter
 		local memoized
 
@@ -15,31 +15,31 @@ describe('function', function()
 			memoized = memo(count)
 		end)
 
-		it('should accept no parameters', function()
+		it("should accept no parameters", function()
 			memoized()
 			assert.are.same(1, memoized())
 			assert.are.same(1, counter)
 		end)
 
-		it('should accept 1 parameter', function()
-			memoized('foo')
-			assert.are.same(1, memoized('foo'))
-			assert.are.same(2, memoized('bar'))
-			assert.are.same(1, memoized('foo'))
-			assert.are.same(2, memoized('bar'))
+		it("should accept 1 parameter", function()
+			memoized("foo")
+			assert.are.same(1, memoized("foo"))
+			assert.are.same(2, memoized("bar"))
+			assert.are.same(1, memoized("foo"))
+			assert.are.same(2, memoized("bar"))
 			assert.are.same(2, counter)
 		end)
 
-		it('should accept 2 parameters', function()
-			memoized('foo', 'bar')
-			assert.are.same(1, memoized('foo', 'bar'))
-			assert.are.same(2, memoized('foo', 'baz'))
-			assert.are.same(1, memoized('foo', 'bar'))
-			assert.are.same(2, memoized('foo', 'baz'))
+		it("should accept 2 parameters", function()
+			memoized("foo", "bar")
+			assert.are.same(1, memoized("foo", "bar"))
+			assert.are.same(2, memoized("foo", "baz"))
+			assert.are.same(1, memoized("foo", "bar"))
+			assert.are.same(2, memoized("foo", "baz"))
 			assert.are.same(2, counter)
 		end)
 
-		it('should accept tables and functions', function()
+		it("should accept tables and functions", function()
 			local t1 = {}
 			local t2 = {}
 
@@ -50,7 +50,7 @@ describe('function', function()
 			assert.are.same(2, counter)
 		end)
 
-		it('should handle returning multiple values', function()
+		it("should handle returning multiple values", function()
 			local flip = memo(function(x, y)
 				counter = counter + 1
 				return y, x
@@ -82,7 +82,7 @@ describe('function', function()
 			assert.same(2, counter)
 		end)
 
-		it('should handle flipped arguments', function()
+		it("should handle flipped arguments", function()
 			local add = function(x, y)
 				counter = counter + 1
 				return x + y

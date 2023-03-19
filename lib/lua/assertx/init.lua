@@ -1,6 +1,6 @@
-local compat = require('compat')
+local compat = require("compat")
 local unpack = compat.table_unpack
-local type   = type
+local type = type
 
 ---Raises an error if the value of its argument v is falsy
 ---(i.e., `nil` or `false`); otherwise, returns all its
@@ -29,13 +29,13 @@ local function assertx(v, ...)
 
 	local f = ...
 
-	if type(f) == 'function' then
+	if type(f) == "function" then
 		local arguments = { ... }
 		table.remove(arguments, 1)
 		error(f(unpack(arguments)), 2)
 	end
 
-	error(f or 'assertion failed!', 2)
+	error(f or "assertion failed!", 2)
 end
 
 return assertx

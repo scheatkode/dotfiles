@@ -3,5 +3,5 @@ return {
 	---some remote servers I don't personally manage either way.
 	setup = function()
 		vim.opt.compatible = false
-	end
+	end,
 }

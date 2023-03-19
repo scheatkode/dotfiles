@@ -1,17 +1,17 @@
 return {
 	setup = function()
-		require('bqf').setup({
+		require("bqf").setup({
 			preview = {
 				border_chars = {
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
 				},
 			},
 		})

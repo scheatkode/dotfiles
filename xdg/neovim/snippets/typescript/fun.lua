@@ -1,15 +1,15 @@
-local snippet = require('luasnip')
+local snippet = require("luasnip")
 
 local i = snippet.insert_node
 local s = snippet.s
 local c = snippet.choice_node
 local t = snippet.text_node
 
-local f = require('luasnip.extras.fmt').fmta
+local f = require("luasnip.extras.fmt").fmta
 
-snippet.add_snippets('typescript', {
+snippet.add_snippets("typescript", {
 	s(
-		'fun',
+		"fun",
 		f(
 			[[
 			<async>function<gen> <name>(<params>)<ret> {
@@ -18,16 +18,16 @@ snippet.add_snippets('typescript', {
 			]],
 			{
 				async = c(1, {
-					t(''),
-					t('async '),
+					t(""),
+					t("async "),
 				}),
 				gen = c(2, {
-					t(''),
-					t('*'),
+					t(""),
+					t("*"),
 				}),
-				name   = i(3),
+				name = i(3),
 				params = i(4),
-				ret    = i(5),
+				ret = i(5),
 				finish = i(0),
 			}
 		)

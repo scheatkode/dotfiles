@@ -1,7 +1,7 @@
-local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local has_lspconfig, lspconfig = pcall(require, "lspconfig")
 
 if not has_lspconfig then
-	print('‼ Tried loading lspconfig for perlls ... unsuccessfully.')
+	print("‼ Tried loading lspconfig for perlls ... unsuccessfully.")
 	return has_lspconfig
 end
 
@@ -9,30 +9,30 @@ end
 
 return {
 	filetypes = {
-		'perl',
+		"perl",
 	},
 
 	settings = {
 		perl = {
 			fileFilter = {
-				'.pm',
-				'.pl',
+				".pm",
+				".pl",
 			},
-			ignoreDirs = '.git',
-			perlCmd    = 'perl',
-			perlInc    = {
-				'local/lib/perl5',
-				'local/bin/',
-				'src',
+			ignoreDirs = ".git",
+			perlCmd = "perl",
+			perlInc = {
+				"local/lib/perl5",
+				"local/bin/",
+				"src",
 			},
 		},
 	},
 
 	root_dir = function(filename)
 		return lspconfig.util.root_pattern(
-			'cpanfile',
-			'cpanfile.snapshot',
-			'.git'
+			"cpanfile",
+			"cpanfile.snapshot",
+			".git"
 		)(filename)
 	end,
 }

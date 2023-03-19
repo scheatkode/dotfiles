@@ -1,13 +1,13 @@
-local snippet = require('luasnip')
+local snippet = require("luasnip")
 
 local i = snippet.insert_node
 local s = snippet.s
 
-local f = require('luasnip.extras.fmt').fmta
+local f = require("luasnip.extras.fmt").fmta
 
-snippet.add_snippets('javascript', {
+snippet.add_snippets("javascript", {
 	s(
-		'if',
+		"if",
 		f(
 			[[
 			if (<cond>) {
@@ -16,8 +16,8 @@ snippet.add_snippets('javascript', {
 			<finish>
 			]],
 			{
-				cond   = i(1),
-				body   = i(2),
+				cond = i(1),
+				body = i(2),
 				finish = i(0),
 			}
 		)

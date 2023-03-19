@@ -23,18 +23,18 @@
 --  `----'(____________)
 
 return {
-	'lewis6991/gitsigns.nvim',
+	"lewis6991/gitsigns.nvim",
 
 	event = {
-		'BufReadPost',
-		'FileReadPre',
+		"BufReadPost",
+		"FileReadPre",
 	},
 
 	dependencies = {
-		'nvim-lua/plenary.nvim',
+		"nvim-lua/plenary.nvim",
 	},
 
 	config = function()
-		require('plugins.gitsigns.config').setup()
+		require("plugins.gitsigns.config").setup()
 	end,
 }

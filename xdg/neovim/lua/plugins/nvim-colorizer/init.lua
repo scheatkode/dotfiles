@@ -1,19 +1,19 @@
 return { -- colorize hex/rgb/hsl values
 
-	'norcalli/nvim-colorizer.lua',
+	"norcalli/nvim-colorizer.lua",
 
 	ft = {
-		'html',
-		'pug',
+		"html",
+		"pug",
 
-		'css',
-		'sass',
-		'scss',
+		"css",
+		"sass",
+		"scss",
 
-		'lua',
+		"lua",
 	},
 
 	config = function()
-		require('colorizer').setup()
+		require("colorizer").setup()
 	end,
 }

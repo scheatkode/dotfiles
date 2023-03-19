@@ -4,14 +4,14 @@
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
-if !exists('main_syntax')
+if !exists("main_syntax")
 	if v:version < 600
 		syntax clear
-	elseif exists('b:current_syntax')
+	elseif exists("b:current_syntax")
 		finish
 	endif
 
-	let main_syntax = 'jinja'
+	let main_syntax = "jinja"
 endif
 
 syntax case match
@@ -53,7 +53,7 @@ syntax region jinjatagblock matchgroup=jinjatagdelim start=/{%[-+]\?/ end=/[-+]\
 
 syntax region jinjavarblock matchgroup=jinjavardelim start=/{{-\?/ end=/-\?}}/ containedin=ALLBUT,jinjatagblock,jinjavarblock,jinjaraw,jinjastring,jinjanested,jinjacomment
 
-" jinja template 'raw' tag
+" jinja template "raw" tag
 syntax region jinjaraw matchgroup=jinjarawdelim start="{%\s*raw\s*%}" end="{%\s*endraw\s*%}" containedin=ALLBUT,jinjatagblock,jinjavarblock,jinjastring,jinjacomment
 
 " jinja comments
@@ -91,8 +91,8 @@ hi def link jinjastring       Constant
 hi def link jinjanumber       Constant
 hi def link jinjacomment      Comment
 
-let b:current_syntax = 'jinja'
+let b:current_syntax = "jinja"
 
-if main_syntax ==# 'jinja'
+if main_syntax ==# "jinja"
 	unlet main_syntax
 endif

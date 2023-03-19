@@ -31,19 +31,18 @@
 --- @field subclassed     function
 --- @field subclasses     table
 
-local assert       = assert
-local rawget       = rawget
+local assert = assert
+local rawget = rawget
 local setmetatable = setmetatable
-local tostring     = tostring
-local type         = type
-
+local tostring = tostring
+local type = type
 
 local function create_index_wrapper(c, f)
 	if f == nil then
 		return c.__instance_dictionary
 	end
 
-	if type(f) == 'function' then
+	if type(f) == "function" then
 		return function(self, name)
 			local value = c.__instance_dictionary[name]
 
@@ -68,7 +67,7 @@ local function create_index_wrapper(c, f)
 end
 
 local function propagate_instance_method(c, name, f)
-	f = (name == '__index' and create_index_wrapper(c, f) or f)
+	f = (name == "__index" and create_index_wrapper(c, f) or f)
 
 	c.__instance_dictionary[name] = f
 
@@ -90,7 +89,7 @@ local function declare_instance_method(c, name, f)
 end
 
 local function __tostring(self)
-	return 'class ' .. self.name
+	return "class " .. self.name
 end
 
 local function __call(self, ...)
@@ -107,7 +106,7 @@ local function create_class(name, super)
 		prototype = {},
 		__instance_dictionary = dictionary,
 		__declared_methods = {},
-		subclasses = setmetatable({}, { __mode = 'k' }),
+		subclasses = setmetatable({}, { __mode = "k" }),
 	}
 
 	if super then
@@ -141,10 +140,10 @@ local function create_class(name, super)
 end
 
 local function implement_mixin(c, mixin)
-	assert(type(mixin) == 'table', 'mixin must be a table')
+	assert(type(mixin) == "table", "mixin must be a table")
 
 	for name, method in pairs(mixin) do
-		if name ~= 'implemented' and name ~= 'prototype' then
+		if name ~= "implemented" and name ~= "prototype" then
 			c[name] = method
 		end
 	end
@@ -153,7 +152,7 @@ local function implement_mixin(c, mixin)
 		c.prototype[name] = method
 	end
 
-	if type(mixin.implemented) == 'function' then
+	if type(mixin.implemented) == "function" then
 		mixin:implemented(c)
 	end
 
@@ -162,16 +161,16 @@ end
 
 local default_mixin = {
 	__tostring = function(self)
-		return 'instance of ' .. tostring(self.class)
+		return "instance of " .. tostring(self.class)
 	end,
 	construct = function(self, ...) end,
 	is_instance_of = function(self, c)
-		return type(c) == 'table'
-			and type(self) == 'table'
+		return type(c) == "table"
+			and type(self) == "table"
 			and (
 				self.class == c
-				or type(self.class) == 'table'
-					and type(self.class.is_subclass_of) == 'function'
+				or type(self.class) == "table"
+					and type(self.class.is_subclass_of) == "function"
 					and self.class:is_subclass_of(c)
 			)
 	end,
@@ -179,7 +178,7 @@ local default_mixin = {
 	prototype = {
 		allocate = function(self)
 			assert(
-				type(self) == 'table',
+				type(self) == "table",
 				[[make sure that you are using 'Class:allocate' instead of 'Class.allocate']]
 			)
 			return setmetatable({ class = self }, self.__instance_dictionary)
@@ -187,7 +186,7 @@ local default_mixin = {
 
 		new = function(self, ...)
 			assert(
-				type(self) == 'table',
+				type(self) == "table",
 				[[make sure that you are using 'Class:new' instead of 'Class.new']]
 			)
 
@@ -197,18 +196,18 @@ local default_mixin = {
 
 		extend = function(self, name)
 			assert(
-				type(self) == 'table',
+				type(self) == "table",
 				[[make sure that you are using 'Class:extend' instead of 'Class.extend']]
 			)
 			assert(
-				type(name) == 'string',
-				'you must provide a name for your class'
+				type(name) == "string",
+				"you must provide a name for your class"
 			)
 
 			local subclass = create_class(name, self)
 
 			for method, f in pairs(self.__instance_dictionary) do
-				if not (method == '__index' and type(f) == 'table') then
+				if not (method == "__index" and type(f) == "table") then
 					propagate_instance_method(subclass, method, f)
 				end
 			end
@@ -226,14 +225,14 @@ local default_mixin = {
 		subclassed = function(self, other) end,
 
 		is_subclass_of = function(self, other)
-			return type(other) == 'table'
-				and type(self.super) == 'table'
+			return type(other) == "table"
+				and type(self.super) == "table"
 				and (self.super == other or self.super:is_subclass_of(other))
 		end,
 
 		implement = function(self, ...)
 			assert(
-				type(self) == 'table',
+				type(self) == "table",
 				[[make sure you that you are using 'Class:implement' instead of 'Class.implement']]
 			)
 
@@ -251,7 +250,7 @@ local default_mixin = {
 --- @param super? Class
 --- @return Class
 return function(name, super)
-	assert(type(name) == 'string', 'a name is needed for the new class')
+	assert(type(name) == "string", "a name is needed for the new class")
 
 	return super and super:extend(name)
 		or implement_mixin(create_class(name), default_mixin)

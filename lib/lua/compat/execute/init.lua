@@ -1,4 +1,4 @@
-local flags = require('compat.flags')
+local flags = require("compat.flags")
 
 ---Execute a shell command in a compatible and platform
 ---independent way. This is a compatibility function that
@@ -18,7 +18,7 @@ local flags = require('compat.flags')
 return function(command)
 	local r1, r2, r3 = os.execute(command)
 
-	if r2 == 'No error' and r3 == 0 and flags.is_windows then
+	if r2 == "No error" and r3 == 0 and flags.is_windows then
 		-- `os.execute` bug in Lua 5.2/5.3 not reporting `-1`
 		-- properly on Windows was fixed in 5.4.
 

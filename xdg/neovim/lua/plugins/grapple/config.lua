@@ -1,8 +1,8 @@
 return {
 	setup = function()
-		require('grapple').setup({
+		require("grapple").setup({
 			popup_options = {
-				border = 'none',
+				border = "none",
 			},
 		})
 	end,

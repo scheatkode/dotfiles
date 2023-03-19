@@ -1,14 +1,14 @@
 return {
-	'windwp/nvim-autopairs',
+	"windwp/nvim-autopairs",
 
-	event = 'InsertEnter',
+	event = "InsertEnter",
 
 	dependencies = {
-		'nvim-treesitter/nvim-treesitter',
+		"nvim-treesitter/nvim-treesitter",
 	},
 
 	config = function()
-		require('plugins.nvim-autopairs.config').setup()
-		require('plugins.nvim-autopairs.rules').setup()
+		require("plugins.nvim-autopairs.config").setup()
+		require("plugins.nvim-autopairs.rules").setup()
 	end,
 }

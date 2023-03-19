@@ -1,13 +1,13 @@
-local snippet = require('luasnip')
+local snippet = require("luasnip")
 
 local i = snippet.insert_node
 local s = snippet.s
 
-local f = require('luasnip.extras.fmt').fmta
+local f = require("luasnip.extras.fmt").fmta
 
-snippet.add_snippets('lua', {
+snippet.add_snippets("lua", {
 	s(
-		'func',
+		"func",
 		f(
 			[[
 function <name>(<parameters>)
@@ -16,10 +16,10 @@ end
 <finish>
 			]],
 			{
-				name       = i(1),
+				name = i(1),
 				parameters = i(2),
-				body       = i(3, '-- do something'),
-				finish     = i(0),
+				body = i(3, "-- do something"),
+				finish = i(0),
 			}
 		)
 	),

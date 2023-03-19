@@ -1,28 +1,28 @@
 return {
 	setup = function()
-		local lazy        = require('load')
-		local deep_extend = require('tablex.deep_extend')
+		local lazy = require("load")
+		local deep_extend = require("tablex.deep_extend")
 
-		require('lsp.protocol').setup()
-		require('lsp.handlers').setup()
+		require("lsp.protocol").setup()
+		require("lsp.handlers").setup()
 
-		local flags        = require('lsp.flags').setup()
-		local on_attach    = require('lsp.on_attach').setup()
+		local flags = require("lsp.flags").setup()
+		local on_attach = require("lsp.on_attach").setup()
 		local capabilities = deep_extend(
-			'force',
-			require('lsp.capabilities').setup(),
+			"force",
+			require("lsp.capabilities").setup(),
 			vim.lsp.protocol.make_client_capabilities()
 		)
 
-		local lspconfig       = lazy.on_index('lspconfig')
-		local mason_lspconfig = require('mason-lspconfig')
+		local lspconfig = lazy.on_index("lspconfig")
+		local mason_lspconfig = require("mason-lspconfig")
 
 		local function run_hook(hook, client, bufnr, s)
-			if type(hook) == 'function' then
+			if type(hook) == "function" then
 				return hook(client, bufnr, s)
 			end
 
-			if type(hook) ~= 'table' then
+			if type(hook) ~= "table" then
 				return
 			end
 
@@ -41,15 +41,15 @@ return {
 
 		local default_config = {
 			capabilities = capabilities,
-			flags        = flags,
-			on_attach    = on_attach,
+			flags = flags,
+			on_attach = on_attach,
 		}
 
 		mason_lspconfig.setup()
 		mason_lspconfig.setup_handlers({
 			function(server)
 				local has_config, config =
-					pcall(require, 'lsp.servers.' .. server)
+					pcall(require, "lsp.servers." .. server)
 
 				if not has_config then
 					return lspconfig[server].setup(default_config)
@@ -57,8 +57,14 @@ return {
 
 				config.on_attach = config.on_attach or attach_hooks(config)
 
-				return lspconfig[server].setup(deep_extend('force', default_config, config))
+				return lspconfig[server].setup(
+					deep_extend("force", default_config, config)
+				)
 			end,
 		})
+
+		-- vim.api.nvim_create_autocmd("FileType", {
+		-- 	group = vim.api.nvim_create_augroup("mason-lspconfig"),
+		-- })
 	end,
 }

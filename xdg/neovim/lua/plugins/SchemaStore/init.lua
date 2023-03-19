@@ -1,8 +1,8 @@
 return { -- Access to the SchemaStore catalog.
 
-	'b0o/SchemaStore.nvim',
+	"b0o/SchemaStore.nvim",
 
 	ft = {
-		'json',
+		"json",
 	},
 }

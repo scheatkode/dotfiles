@@ -1,9 +1,9 @@
-local pack   = require('compat.table.pack')
-local unpack = require('compat.table.unpack')
+local pack = require("compat.table.pack")
+local unpack = require("compat.table.unpack")
 
-describe('compat', function()
-	describe('table.pack()', function()
-		it('should pack its arguments into a table with `n` field', function()
+describe("compat", function()
+	describe("table.pack()", function()
+		it("should pack its arguments into a table with `n` field", function()
 			local t = { 1, 2, 3 }
 
 			assert.are.same({ n = 3, 1, 2, 3 }, pack(1, 2, 3))
@@ -12,8 +12,8 @@ describe('compat', function()
 		end)
 	end)
 
-	describe('table.unpack()', function()
-		it('should unpack the table into different variables', function()
+	describe("table.unpack()", function()
+		it("should unpack the table into different variables", function()
 			local x, y, z = unpack({ 1, 2, 3 })
 
 			assert.are.same(x, 1)
@@ -32,7 +32,7 @@ describe('compat', function()
 			end
 		)
 
-		it('should respect the `n` field', function()
+		it("should respect the `n` field", function()
 			local x, y, z, a, b = unpack({ n = 3, 1, 2, 3, 4, 5 })
 
 			assert.are.same(x, 1)

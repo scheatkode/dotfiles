@@ -1,7 +1,7 @@
 local getmetatable = getmetatable
-local iotype       = io.type
-local rawtype      = type
-local sformat      = string.format
+local iotype = io.type
+local rawtype = type
+local sformat = string.format
 
 --- Return  an  *enhaced*  type   name  for  the  given
 --- `value`.
@@ -27,7 +27,7 @@ local sformat      = string.format
 local function typex(value)
 	local raw_type = rawtype(value)
 
-	if raw_type ~= 'table' and raw_type ~= 'userdata' then
+	if raw_type ~= "table" and raw_type ~= "userdata" then
 		return raw_type
 	end
 
@@ -37,7 +37,7 @@ local function typex(value)
 		local mt_type = mt.__type
 
 		if mt_type then
-			if rawtype(mt_type) == 'function' then
+			if rawtype(mt_type) == "function" then
 				mt_type = mt_type(value)
 			end
 
@@ -45,7 +45,7 @@ local function typex(value)
 		end
 	end
 
-	if raw_type == 'userdata' then
+	if raw_type == "userdata" then
 		local io_type = iotype(value)
 
 		if io_type then
@@ -79,7 +79,7 @@ end
 --- @return boolean
 local function istypex(typename, value)
 	assert(
-		rawtype(typename) == 'string',
+		rawtype(typename) == "string",
 		sformat(
 			'bad argument #1 to "is_typex" (string expected, got %s)',
 			rawtype(typename)
@@ -89,7 +89,7 @@ local function istypex(typename, value)
 	local raw_type = rawtype(value)
 	local raw_type_equality = raw_type == typename
 
-	if raw_type_equality or raw_type ~= 'table' and raw_type ~= 'userdata' then
+	if raw_type_equality or raw_type ~= "table" and raw_type ~= "userdata" then
 		return raw_type_equality
 	end
 
@@ -98,9 +98,9 @@ local function istypex(typename, value)
 	if mt then
 		local istype_f = mt.__istype
 
-		if rawtype(istype_f) == 'function' then
+		if rawtype(istype_f) == "function" then
 			return istype_f(value, typename)
-		elseif rawtype(istype_f) == 'string' then
+		elseif rawtype(istype_f) == "string" then
 			return istype_f == typename
 		elseif istype_f ~= nil then
 			error(

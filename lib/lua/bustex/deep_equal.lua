@@ -1,5 +1,5 @@
-local a = require('luassert')
-local s = require('say')
+local a = require("luassert")
+local s = require("say")
 
 -- TODO(scheatkode): fix circular references
 
@@ -25,7 +25,7 @@ local function deep_equal(o1, o2, sort)
 	if o1_type ~= o2_type then
 		return false
 	end
-	if o1_type ~= 'table' then
+	if o1_type ~= "table" then
 		return false
 	end
 
@@ -57,13 +57,13 @@ local function deep_equal_for_luassert(_, arguments)
 	return deep_equal(arguments[1], arguments[2], arguments[3])
 end
 
-s:set('assertion.deep_equal.positive', 'Expected %s\n to equal\n%s')
-s:set('assertion.deep_equal.negative', 'Expected %s\n to not equal\n%s')
+s:set("assertion.deep_equal.positive", "Expected %s\n to equal\n%s")
+s:set("assertion.deep_equal.negative", "Expected %s\n to not equal\n%s")
 
 a:register(
-	'assertion',
-	'deep_equal',
+	"assertion",
+	"deep_equal",
 	deep_equal_for_luassert,
-	'assertion.deep_equal.positive',
-	'assertion.deep_equal.negative'
+	"assertion.deep_equal.positive",
+	"assertion.deep_equal.negative"
 )

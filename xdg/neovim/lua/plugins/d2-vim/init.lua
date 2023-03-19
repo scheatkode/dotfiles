@@ -1,7 +1,7 @@
 return {
-	'terrastruct/d2-vim',
+	"terrastruct/d2-vim",
 
 	ft = {
-		'd2',
+		"d2",
 	},
 }

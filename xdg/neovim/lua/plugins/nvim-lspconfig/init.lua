@@ -1,18 +1,18 @@
 return {
-	'neovim/nvim-lspconfig',
+	"neovim/nvim-lspconfig",
 
 	cmd = {
-		'LspStatus',
-		'LspStart',
-		'LspInfo',
+		"LspStatus",
+		"LspStart",
+		"LspInfo",
 	},
 	event = {
-		'FileType',
+		"FileType",
 	},
 
 	dependencies = {
-		'j-hui/fidget.nvim',
-		'williamboman/mason.nvim',
-		'williamboman/mason-lspconfig.nvim',
+		"j-hui/fidget.nvim",
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
 	},
 }

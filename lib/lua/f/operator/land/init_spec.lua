@@ -1,10 +1,10 @@
 local fmt = string.format
 
-local f    = require('f')
-local land = require('f.operator.land')
+local f = require("f")
+local land = require("f.operator.land")
 
-describe('logical operator', function()
-	describe('land()', function()
+describe("logical operator", function()
+	describe("land()", function()
 		local function tobool(x)
 			return x == 1
 		end
@@ -15,7 +15,7 @@ describe('logical operator', function()
 				y = tobool(y)
 
 				it(
-					fmt('should apply a logical and on %s and %s', x, y),
+					fmt("should apply a logical and on %s and %s", x, y),
 					function()
 						assert.are.same(x and y, land(x, y))
 					end

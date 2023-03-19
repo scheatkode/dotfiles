@@ -1,16 +1,16 @@
 return {
-	'nvim-neotest/neotest',
+	"nvim-neotest/neotest",
 
 	keys = {
-		'<leader>ct',
+		"<leader>ct",
 	},
 
 	dependencies = {
-		'nvim-neotest/neotest-plenary',
+		"nvim-neotest/neotest-plenary",
 	},
 
 	config = function()
-		require('plugins.neotest.config').setup()
-		require('plugins.neotest.keys').setup()
+		require("plugins.neotest.config").setup()
+		require("plugins.neotest.keys").setup()
 	end,
 }

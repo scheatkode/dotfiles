@@ -2,8 +2,8 @@ if package.searchpath then
 	return package.searchpath
 end
 
-local assertx   = require('assertx')
-local separator = require('compat.separator')
+local assertx = require("assertx")
+local separator = require("compat.separator")
 
 ---Get the full path where a file name would have matched. This
 ---function was introduced in Lua 5.2. This compatibility version
@@ -19,35 +19,35 @@ return function(name, path, sep, rep)
 	local type = type
 
 	assertx(
-		type(name) == 'string',
+		type(name) == "string",
 		string.format,
 		"bad argument #1 to 'searchpath' (string expected, got %s)",
 		type(path),
 		2
 	)
 	assertx(
-		type(path) == 'string',
+		type(path) == "string",
 		string.format,
 		"bad argument #2 to 'searchpath' (string expected, got %s)",
 		type(path),
 		2
 	)
 	assertx(
-		sep == nil or type(sep) == 'string',
+		sep == nil or type(sep) == "string",
 		string.format,
 		"bad argument #3 to 'searchpath' (string expected, got %s)",
 		type(path),
 		2
 	)
 	assertx(
-		rep == nil or type(rep) == 'string',
+		rep == nil or type(rep) == "string",
 		string.format,
 		"bad argument #4 to 'searchpath' (string expected, got %s)",
 		type(path),
 		2
 	)
 
-	sep = sep or '.'
+	sep = sep or "."
 	rep = rep or separator
 
 	do
@@ -55,7 +55,7 @@ return function(name, path, sep, rep)
 
 		while s do
 			name = string.format(
-				'%s%s%s',
+				"%s%s%s",
 				name:sub(1, s - 1),
 				rep,
 				name:sub(e + 1, -1)
@@ -67,9 +67,9 @@ return function(name, path, sep, rep)
 
 	local paths_tried = {}
 
-	for m in path:gmatch('[^;]+') do
-		local nm = m:gsub('?', name)
-		local f  = io.open(nm, 'r')
+	for m in path:gmatch("[^;]+") do
+		local nm = m:gsub("?", name)
+		local f = io.open(nm, "r")
 
 		paths_tried[#paths_tried + 1] = nm
 

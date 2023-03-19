@@ -1,4 +1,4 @@
-local pack = require('compat.table.pack')
+local pack = require("compat.table.pack")
 
 ---A predicate combiner.
 ---

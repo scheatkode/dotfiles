@@ -1,4 +1,4 @@
-local compose = require('f.function.compose')
+local compose = require("f.function.compose")
 
 ---Pipe the value of an expression into a pipeline of functions,
 ---effectively calling every function on the return value of the

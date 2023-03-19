@@ -1,142 +1,142 @@
 return {
 	setup = function()
-		local neorg = require('neorg')
+		local neorg = require("neorg")
 
 		neorg.setup({
 			load = {
-				['core.defaults'] = {},
+				["core.defaults"] = {},
 
-				['core.norg.esupports.metagen'] = {
+				["core.norg.esupports.metagen"] = {
 					config = {
-						type = 'auto',
+						type = "auto",
 					},
 				},
 
-				['core.norg.concealer'] = {
+				["core.norg.concealer"] = {
 					config = {
 						icons = {
 							heading = {
-								level_1 = { enabled = true, icon = '█' },
-								level_2 = { enabled = true, icon = '██' },
-								level_3 = { enabled = true, icon = '███' },
-								level_4 = { enabled = true, icon = '████' },
-								level_5 = { enabled = true, icon = '█████' },
+								level_1 = { enabled = true, icon = "█" },
+								level_2 = { enabled = true, icon = "██" },
+								level_3 = { enabled = true, icon = "███" },
+								level_4 = { enabled = true, icon = "████" },
+								level_5 = { enabled = true, icon = "█████" },
 								level_6 = {
 									enabled = true,
-									icon = '██████',
+									icon = "██████",
 								},
 							},
 							todo = {
 								enable = true,
 								pending = {
-									icon = '',
+									icon = "",
 								},
 								uncertain = {
-									icon = '?',
+									icon = "?",
 								},
 								urgent = {
-									icon = '',
+									icon = "",
 								},
 								on_hold = {
-									icon = '',
+									icon = "",
 								},
 								cancelled = {
-									icon = '',
+									icon = "",
 								},
 							},
 						},
 					},
 				},
 
-				['core.keybinds'] = {
+				["core.keybinds"] = {
 					config = {
 						default_keybinds = false,
-						neorg_leader = '<leader>o',
+						neorg_leader = "<leader>o",
 					},
 				},
 
-				['core.norg.dirman'] = {
+				["core.norg.dirman"] = {
 					config = {
 						workspaces = {
-							brain = '~/brain',
+							brain = "~/brain",
 						},
 					},
 				},
 
-				['core.norg.qol.toc'] = {
+				["core.norg.qol.toc"] = {
 					config = {
 						close_split_on_jump = false,
-						toc_split_placement = 'right',
+						toc_split_placement = "right",
 					},
 				},
 
-				['core.export'] = {},
-				['core.export.markdown'] = {},
+				["core.export"] = {},
+				["core.export.markdown"] = {},
 			},
 
 			hook = function()
 				-- This sets the leader for all Neorg keybinds. It is separate from the
 				-- regular <Leader>, And allows you to shove every Neorg keybind under
 				-- one "umbrella".
-				local neorg_leader = '<Leader>n'
+				local neorg_leader = "<Leader>n"
 
 				-- Require the user callbacks module, which allows us to tap into the core of
 				-- Neorg.
 				-- local has_neorg, neorg = pcall(require, 'neorg')
-				local neorg_callbacks = require('neorg.callbacks')
+				local neorg_callbacks = require("neorg.callbacks")
 
 				-- Listen for the `enable_keybinds` event, which signals a `ready` state
 				-- meaning we can bind keys. This hook will be called several times,
 				-- e.g. whenever the Neorg Mode changes or an event that needs to
 				-- reevaluate all the bound keys is invoked.
 				neorg_callbacks.on_event(
-					'core.keybinds.events.enable_keybinds',
+					"core.keybinds.events.enable_keybinds",
 					function(_, keybinds)
 						-- Map all the below keybinds only when the 'norg' mode is active.
-						keybinds.map_event_to_mode('norg', {
+						keybinds.map_event_to_mode("norg", {
 							n = { -- Bind keys in normal mode.
 
 								-- Keys for managing `TODO` items and setting their states.
 								{
-									'gtu',
-									'core.norg.qol.todo_items.todo.task_undone',
+									"gtu",
+									"core.norg.qol.todo_items.todo.task_undone",
 								},
 								{
-									'gtp',
-									'core.norg.qol.todo_items.todo.task_pending',
+									"gtp",
+									"core.norg.qol.todo_items.todo.task_pending",
 								},
-								{ 'gtd', 'core.norg.qol.todo_items.todo.task_done' },
+								{ "gtd", "core.norg.qol.todo_items.todo.task_done" },
 								{
-									'gth',
-									'core.norg.qol.todo_items.todo.task_on_hold',
-								},
-								{
-									'gtc',
-									'core.norg.qol.todo_items.todo.task_cancelled',
+									"gth",
+									"core.norg.qol.todo_items.todo.task_on_hold",
 								},
 								{
-									'gtr',
-									'core.norg.qol.todo_items.todo.task_recurring',
+									"gtc",
+									"core.norg.qol.todo_items.todo.task_cancelled",
 								},
 								{
-									'gti',
-									'core.norg.qol.todo_items.todo.task_important',
+									"gtr",
+									"core.norg.qol.todo_items.todo.task_recurring",
 								},
 								{
-									'<C-Space>',
-									'core.norg.qol.todo_items.todo.task_cycle',
+									"gti",
+									"core.norg.qol.todo_items.todo.task_important",
+								},
+								{
+									"<C-Space>",
+									"core.norg.qol.todo_items.todo.task_cycle",
 								},
 
 								-- Keys for managing GTD
-								{ neorg_leader .. 'c', 'core.gtd.base.capture' },
-								{ neorg_leader .. 'v', 'core.gtd.base.views' },
-								{ neorg_leader .. 'e', 'core.gtd.base.edit' },
+								{ neorg_leader .. "c", "core.gtd.base.capture" },
+								{ neorg_leader .. "v", "core.gtd.base.views" },
+								{ neorg_leader .. "e", "core.gtd.base.edit" },
 
-								{ '<CR>', 'core.norg.esupports.hop.hop-link' },
+								{ "<CR>", "core.norg.esupports.hop.hop-link" },
 								{
-									'<M-CR>',
-									'core.norg.esupports.hop.hop-link',
-									'vsplit',
+									"<M-CR>",
+									"core.norg.esupports.hop.hop-link",
+									"vsplit",
 								},
 							},
 						}, { silent = true, noremap = true })

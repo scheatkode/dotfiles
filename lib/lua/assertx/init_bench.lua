@@ -3,23 +3,23 @@ do
 
 	-- bare bones way of getting the running script's file name
 	-- and directory.
-	local this_filename  = debug.getinfo(1, 'S').source:sub(2)
-	local this_directory = this_filename:match('(.*)/') or './'
-	local repository_path = sf('%s../../..', this_directory)
-	local library_path = sf('%s/lib/lua', repository_path)
+	local this_filename = debug.getinfo(1, "S").source:sub(2)
+	local this_directory = this_filename:match("(.*)/") or "./"
+	local repository_path = sf("%s../../..", this_directory)
+	local library_path = sf("%s/lib/lua", repository_path)
 
 	-- constructing a `package.path` to enable requiring from the
 	-- dotfile manager directory or the central repository lib.
 	package.path = sf(
-		'%s;%s/?/init.lua;%s/?.lua',
+		"%s;%s/?/init.lua;%s/?.lua",
 		package.path,
 		library_path,
 		library_path
 	)
 end
 
-local assertx = require('assertx')
-local assert  = assert
+local assertx = require("assertx")
+local assert = assert
 
 local ITERATIONS = 20000000
 
@@ -36,26 +36,26 @@ local function bench(signature, func)
 		func(i)
 	end
 
-	print(string.format('%s: %s', signature, os.clock() - start))
+	print(string.format("%s: %s", signature, os.clock() - start))
 end
 
 bench("assertx(true, table.concat({ 'blah', i }))", function(i)
-	assertx(true, table.concat({ 'blah', i }))
+	assertx(true, table.concat({ "blah", i }))
 end)
 
 bench(
 	"assertx(true, function() return table.concat({'blah', i}) end)",
 	function(i)
 		assertx(true, function()
-			return table.concat({ 'blah', i })
+			return table.concat({ "blah", i })
 		end)
 	end
 )
 
 bench("assertx(true, concat, 'blah', i)", function(i)
-	assertx(true, concat, 'blah', i)
+	assertx(true, concat, "blah", i)
 end)
 
 bench("assert(true, table.concat({ 'blah', i }))", function(i)
-	assert(true, table.concat({ 'blah', i }))
+	assert(true, table.concat({ "blah", i }))
 end)

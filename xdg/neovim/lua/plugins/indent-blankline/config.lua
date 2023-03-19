@@ -1,6 +1,6 @@
 return {
 	setup = function()
-		local iguides = require('indent_blankline')
+		local iguides = require("indent_blankline")
 
 		-- -- will make screen redrawing slower but required as a workaround to prevent
 		-- -- the ugly "highlight bleed" into the next line.
@@ -10,7 +10,7 @@ return {
 		iguides.setup({
 			-- default configuration
 
-			char = '│',
+			char = "│",
 			indent_level = 10,
 			viewport_buffer = 30,
 
@@ -23,30 +23,30 @@ return {
 			show_end_of_line = true,
 
 			context_patterns = {
-				'arguments',
-				'array',
-				'block',
-				'class',
-				'for',
-				'function',
-				'if',
-				'method',
-				'object',
-				'table',
-				'while',
+				"arguments",
+				"array",
+				"block",
+				"class",
+				"for",
+				"function",
+				"if",
+				"method",
+				"object",
+				"table",
+				"while",
 			},
 
 			-- excludes
 
 			buftype_exclude = {
-				'nofile',
-				'terminal',
+				"nofile",
+				"terminal",
 			},
 
 			filetype_exclude = {
-				'Outline',
-				'help',
-				'norg',
+				"Outline",
+				"help",
+				"norg",
 			},
 		})
 	end,

@@ -1,7 +1,7 @@
-local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local has_lspconfig, lspconfig = pcall(require, "lspconfig")
 
 if not has_lspconfig then
-	print('‼ Tried loading lspconfig for perlpls ... unsuccessfully.')
+	print("‼ Tried loading lspconfig for perlpls ... unsuccessfully.")
 	return has_lspconfig
 end
 
@@ -10,9 +10,9 @@ end
 return {
 	root_dir = function(filename)
 		return lspconfig.util.root_pattern(
-			'cpanfile',
-			'cpanfile.snapshot',
-			'.git'
+			"cpanfile",
+			"cpanfile.snapshot",
+			".git"
 		)(filename)
 	end,
 
