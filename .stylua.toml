@@ -4,4 +4,4 @@ indent_width              = 3
 call_parentheses          = 'Always'
 collapse_simple_statement = 'Never'
 line_endings              = 'Unix'
-quote_style               = 'AutoPreferSingle'
+quote_style               = 'AutoPreferDouble'
