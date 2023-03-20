@@ -24,7 +24,7 @@
    pager  = delta
 
 [diff]
-	algorithm = histogram
+	algorithm = myers
 
 [merge]
 	tool = nvimdiff
