@@ -70,6 +70,13 @@ return {
 					},
 				},
 
+				["core.norg.journal"] = {
+					config = {
+						workspace = "brain",
+						journal_folder = "journal",
+					},
+				},
+
 				["core.export"] = {},
 				["core.export.markdown"] = {},
 			},
