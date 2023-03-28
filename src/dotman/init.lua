@@ -153,7 +153,7 @@ end
 
 local function setup(s, t)
 	local cpath = string.format("%s/%s", XDG_CONFIG_HOME, s)
-	local rpath = string.format("%s/xdg/%s", repository, t or s)
+	local rpath = string.format("%s/config/%s", repository, t or s)
 
 	if s == "gnupg" or s == "ssh" then
 		cpath = string.format("%s/%s", HOME, s)
@@ -264,7 +264,7 @@ local function run_sh(name)
 end
 
 local function install(component)
-	local prefix = "xdg"
+	local prefix = "config"
 	local extensions = {
 		lua = run_lua,
 		py = run_py,
@@ -291,7 +291,7 @@ local function install(component)
 end
 
 local function install_all()
-	for dirent in walkdir("xdg", "d") do
+	for dirent in walkdir("config", "d") do
 		install(dirent)
 	end
 end
