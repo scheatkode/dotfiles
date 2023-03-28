@@ -8,6 +8,9 @@ set rtp+=../plenary.nvim
 set rtp+=~/.local/share/nvim/site/pack/packer/opt/plenary.nvim
 set rtp+=~/.local/share/nvim/site/pack/packer/start/plenary.nvim
 
+" when using lazy.nvim
+set rtp+=~/.local/share/nvim/lazy/plenary.nvim
+
 " when using vim-plug
 set rtp+=~/.vim/plugged/plenary.nvim
 
