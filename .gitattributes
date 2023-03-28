@@ -1,17 +1,25 @@
 # Set default behavior to automatically normalize line endings.
-* text=auto
+*                         text=auto
 
 # Items with `binary` is treated as binary file.
 # Items with `eol=lf` is converted to LF on checkin, back to LF on checkout.
 # Items with `eol=crlf` is converted to LF on checkin, back to CRLF on checkout.
 
-*.gif             binary
-*.ico             binary
-*.jpg             binary
-*.png             binary
-*.ttf             binary
-*.woff            binary
+*.gif                     binary
+*.ico                     binary
+*.jpg                     binary
+*.png                     binary
+*.ttf                     binary
+*.woff                    binary
 
 # Below is a list of patterns and individual paths for secret files that should
 # never be committed in clear-text to the repository.
-config/gmailctl/**   diff=git-crypt filter=git-crypt
+config/gmailctl/**        diff=git-crypt filter=git-crypt
+config/gpg/**             diff=git-crypt filter=git-crypt
+config/ssh/**             diff=git-crypt filter=git-crypt
+
+config/gpg/.gitignore     -diff          -filter
+config/gpg/gpg-agent.conf -diff          -filter
+config/gpg/install.sls    -diff          -filter
+config/ssh/.gitignore     -diff          -filter
+config/ssh/install.sls    -diff          -filter
