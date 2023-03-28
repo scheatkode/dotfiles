@@ -204,18 +204,6 @@ zinit ice wait:'0c' blockf silent atpull:'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
 zinit wait:'1a' silent from:gh-r as:program light-mode for \
-    bpick:'*linux*64*'                                     \
-     pick:'fzf'                                            \
-         @junegunn/fzf                                     \
-    bpick:'*Linux*86*64*'                                  \
-   atload:'alias lg=lazygit'                               \
-         @jesseduffield/lazygit                            \
-    bpick:'*linux*86*64*'                                  \
-       mv:'teal* -> tldr'                                  \
-         @dbrgn/tealdeer                                   \
-    bpick:'*linux*64*'                                     \
-       mv:'ipinfo* -> ipinfo'                              \
-         @ipinfo/cli                                       \
     bpick:'*64*linux*'                                     \
      pick:'xh-*/xh'                                        \
          @ducaale/xh                                       \
@@ -232,23 +220,6 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
          @muesli/duf
 
 zinit wait:'1b' silent from:gh-r as:program for \
-   atload:'alias cat=bat'                       \
-       mv:'bat* -> bat'                         \
-     pick:'bat*/bat'                            \
-            @sharkdp/bat                        \
-     pick:'fd*/fd'                              \
-            @sharkdp/fd                         \
-       mv:'hyperfine*/hyperfine -> hyperfine'   \
-     pick:'hyperfine'                           \
-            @sharkdp/hyperfine                  \
-   atload:'alias ls="exa --icons"'              \
-       mv:'bin/exa* -> exa'                     \
-     pick:'exa'                                 \
-            @ogham/exa                          \
-       mv:'ripgrep*/rg -> rg'                   \
-     pick:'rg'                                  \
-            @BurntSushi/ripgrep                 \
-            @dalance/procs                      \
      pick:'imsnif/bandwhich'                    \
             @imsnif/bandwhich                   \
      pick:'dust*/dust'                          \
@@ -267,37 +238,12 @@ zinit wait:'1b' silent from:gh-r as:program for \
        mv:'pueued-* -> pueued'                  \
      pick:'pueued'                              \
             @Nukesor/pueue                      \
-   atload:'eval "$(zoxide init zsh)"'           \
-     pick:'zoxide'                              \
-      src:'completions/_zoxide'                 \
-            @ajeetdsouza/zoxide                 \
-   atload:'alias diff="delta"'                  \
-     pick:'delta*/delta'                        \
-            @dandavison/delta                   \
-   atload:'alias dig="dog"'                     \
-    bpick:'*linux*'                             \
-     pick:'bin/dog'                             \
-      src:'completions/dog.zsh'                 \
-            @ogham/dog                          \
     bpick:'*x86_64*linux*gnu*'                  \
      pick:'hexyl*/hexyl'                        \
             @sharkdp/hexyl                      \
     bpick:'*linux*amd64*'                       \
      pick:'pup'                                 \
-            @ericchiang/pup                     \
-    bpick:'*linux*amd64'                        \
-     pick:'yq'                                  \
-       mv:'yq_* -> yq'                          \
-            @mikefarah/yq                       \
-    bpick:'*linux*64*'                          \
-     pick:'jq'                                  \
-       mv:'jq* -> jq'                           \
-            @stedolan/jq
-
-zinit wait:'0a' silent from:gh-r as:program for \
-    bpick:'*86*64*linux*'                       \
-     pick:'btop/bin/btop'                       \
-            @aristocratos/btop
+            @ericchiang/pup
 
 zinit creinstall pueue > /dev/null 2>&1
 
@@ -328,3 +274,4 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 # Finalize p10k configuration.
 
 (( ! ${+functions[p10k]} )) || p10k finalize
+eval "$(zoxide init zsh)"
