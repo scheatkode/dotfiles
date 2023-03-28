@@ -2,12 +2,93 @@ return {
 	setup = function()
 		local extensions = require("lsp.extensions")
 
+		-- local function has_words_before()
+		-- 	local line, column = unpack(vim.api.nvim_win_get_cursor(0))
+
+		-- 	return column ~= 0
+		-- 		and vim.api
+		-- 				.nvim_buf_get_lines(0, line - 1, line, true)[1]
+		-- 				:sub(column, column)
+		-- 				:match('%s')
+		-- 			== nil
+		-- end
 
 		return function(_, bufnr, _)
 			-- if client.supports_method('textDocument/completion') then
 			-- 	require('lsp.completion').setup(client, bufnr)
 			-- end
 
+			-- if client.supports_method('textDocument/completion') then
+			-- 	require('lsp.completion').setup(client, bufnr, {
+			-- 		newline = require('nvim-autopairs').autopairs_cr,
+			-- 		autocomplete = 300,
+			-- 	})
+			-- end
+
+			-- local has_snippets, snippets = pcall(require, 'luasnip')
+
+			-- if not has_snippets then
+			-- 	-- Coerce used snippets functions to keep using the completion
+			-- 	-- engine yet avoid errors when snippets are not available.
+			-- 	snippets = {
+			-- 		jumpable = function(_)
+			-- 			return false
+			-- 		end,
+			-- 	}
+			-- end
+
+			-- vim.keymap.set('i', '<Tab>', function()
+			-- 	if vim.fn.pumvisible() ~= 0 then
+			-- 		return vim.api.nvim_feedkeys(
+			-- 			vim.api.nvim_replace_termcodes('<C-n>', true, true, true),
+			-- 			'n',
+			-- 			false
+			-- 		)
+			-- 	end
+
+			-- 	if snippets.jumpable(1) then
+			-- 		return snippets.jump(1)
+			-- 	end
+
+			-- 	if has_words_before() then
+			-- 		return vim.api.nvim_feedkeys(
+			-- 			vim.api.nvim_replace_termcodes(
+			-- 				'<C-x><C-o>',
+			-- 				true,
+			-- 				true,
+			-- 				true
+			-- 			),
+			-- 			'n',
+			-- 			false
+			-- 		)
+			-- 	end
+
+			-- 	return vim.api.nvim_feedkeys(
+			-- 		vim.api.nvim_replace_termcodes('<Tab>', true, true, true),
+			-- 		'n',
+			-- 		false
+			-- 	)
+			-- end, { buffer = bufnr })
+
+			-- vim.keymap.set('i', '<S-Tab>', function()
+			-- 	if vim.fn.pumvisible() ~= 0 then
+			-- 		return vim.api.nvim_feedkeys(
+			-- 			vim.api.nvim_replace_termcodes('<C-p>', true, true, true),
+			-- 			'n',
+			-- 			false
+			-- 		)
+			-- 	end
+
+			-- 	if snippets.jumpable(-1) then
+			-- 		return snippets.jump(-1)
+			-- 	end
+
+			-- 	return vim.api.nvim_feedkeys(
+			-- 		vim.api.nvim_replace_termcodes('<S-Tab>', true, true, true),
+			-- 		'n',
+			-- 		false
+			-- 	)
+			-- end, { buffer = bufnr })
 
 			-- go to declaration
 			vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, {

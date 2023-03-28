@@ -38,7 +38,7 @@ opportunity to learn a new paradigm.
       ├── assets/                 # Images and the such.
       ├── etc/                    # System-wide configuration.
       ├── src/                    # Unported, old configuration.
-      ├── xdg/                    # User configuration.
+      ├── config/                 # User configuration.
       │   ├── alsa/               # Alsa configuration.
       │   ├── awesome/            # Awesome Window Manager configuration.
       │   ├── btop/               # Btop system monitor configuration.
