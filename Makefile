@@ -2,7 +2,9 @@
 
 EUSER ?= ${USER}
 
-.PHONY: install test
+.PHONY:    \
+	install \
+	test
 
 install:
 	@sudo -E salt-call --local      \
