@@ -1,0 +1,4 @@
+include:
+  - .prepare
+  - .packages
+  - .install
