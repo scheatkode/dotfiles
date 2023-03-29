@@ -17,6 +17,7 @@
 config/gmailctl/**        diff=git-crypt filter=git-crypt
 config/gpg/**             diff=git-crypt filter=git-crypt
 config/keepassxc/**       diff=git-crypt filter=git-crypt
+config/remmina/**         diff=git-crypt filter=git-crypt
 config/ssh/**             diff=git-crypt filter=git-crypt
 
 config/gpg/.gitignore     -diff          -filter
@@ -24,3 +25,5 @@ config/gpg/gpg-agent.conf -diff          -filter
 config/gpg/install.sls    -diff          -filter
 config/ssh/.gitignore     -diff          -filter
 config/ssh/install.sls    -diff          -filter
+
+data/remmina/**           diff=git-crypt filter=git-crypt
