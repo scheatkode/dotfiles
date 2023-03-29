@@ -27,3 +27,6 @@ config/ssh/.gitignore     -diff          -filter
 config/ssh/install.sls    -diff          -filter
 
 data/remmina/**           diff=git-crypt filter=git-crypt
+data/zsh/**               diff=git-crypt filter=git-crypt
+
+data/zsh/.gitignore       -diff          -filter
