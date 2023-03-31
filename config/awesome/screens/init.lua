@@ -62,7 +62,7 @@ local function setup_screen(s)
 	})
 
 	-- create a textclock widget
-	s.textclock = awful.widget.textclock()
+	s.textclock = wibox.widget.textclock()
 
 	-- create the wibox
 	s.wibox = awful.wibar({
