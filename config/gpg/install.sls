@@ -14,3 +14,16 @@ link gnupg config:
     - parallel: true
     - require:
       - file: prepare xdg directories
+
+ensure correct permissions:
+  file.directory:
+    - name: {{ root }}/config/gpg
+    - user: {{ user }}
+    - group: {{ user }}
+    - file_mode: "0600"
+    - dir_mode: "0700"
+    - parallel: true
+    - recurse:
+      - user
+      - group
+      - mode
