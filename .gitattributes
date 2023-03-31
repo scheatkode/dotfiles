@@ -20,11 +20,11 @@ config/keepassxc/**       diff=git-crypt filter=git-crypt
 config/remmina/**         diff=git-crypt filter=git-crypt
 config/ssh/**             diff=git-crypt filter=git-crypt
 
-config/gpg/.gitignore     -diff          -filter
-config/gpg/gpg-agent.conf -diff          -filter
-config/gpg/install.sls    -diff          -filter
-config/ssh/.gitignore     -diff          -filter
-config/ssh/install.sls    -diff          -filter
+config/gpg/.gitignore     diff=text     -filter
+config/gpg/gpg-agent.conf diff=text     -filter
+config/gpg/install.sls    diff=text     -filter
+config/ssh/.gitignore     diff=text     -filter
+config/ssh/install.sls    diff=text     -filter
 
 data/remmina/**           diff=git-crypt filter=git-crypt
 data/zsh/**               diff=git-crypt filter=git-crypt
