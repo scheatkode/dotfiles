@@ -1,3 +1,244 @@
-xrdb -load "${XDG_CONFIG_HOME}/x11/resources"
-setxkbmap -layout us -variant dvorak -option keypad:hex -option lv3:ralt_switch -option lv3:caps_switch_latch -option xcustom:kbd_hexpad
-exec awesome
+#!/usr/bin/env false
+# shellcheck shell=sh
+
+set -e
+set -u
+
+#
+# Source this file only once.
+#
+test "${XSESSION_IS_UP+yes}" != "yes" || return
+XSESSION_IS_UP=yes
+export XSESSION_IS_UP
+
+#
+# Some common user and system files.
+#
+XETCDIR=/etc/X11
+XUSRETCDIR=/usr/etc/X11
+XXDGCONFIGHOME="${XDG_CONFIG_HOME}/x11"
+xdefaults="${XXDGCONFIGHOME}/defaults"
+xresources="${XXDGCONFIGHOME}/resources"
+xmodmap="${XXDGCONFIGHOME}/modmap"
+xkbmap="${XXDGCONFIGHOME}/kbmap"
+
+#
+# Check for X11R6 in $PATH.
+#
+case ":${PATH}:" in
+	*:/usr/X11R6/bin:*);;
+	*) PATH="${PATH}:/usr/X11R6/bin"
+esac
+
+#
+# Run user xinit scripts.
+#
+for script in \
+	/usr/etc/X11/xinit/xinitrc.d/* \
+	/etc/X11/xinit/xinitrc.d/*
+do
+	test -e "${script}" || continue
+	test -d "${script}" && continue
+
+	# higher priority for /etc/X11/xinit/xinitrc.d
+	if echo "${script}" | grep -q ^/usr; then
+		sname="$(basename "${script}")"
+		test -e "/etc/X11/xinit/xinitrc.d/${sname}" && continue
+	fi
+
+	case "${script}" in
+		.*)     continue ;;
+		*.rpm*) continue ;;
+		*.swap) continue ;;
+		*.bak)  continue ;;
+		*.orig) continue ;;
+		\#*)    continue ;;
+		*~)     continue ;;
+	esac
+
+	if [ -x "${script}" ]; then
+		if grep -qE '^# to be sourced' "${script}" >/dev/null 2>&1; then
+			. "${script}"
+		else
+			# run number ordered scripts sequentially
+			case "${script##*/}" in
+				[0-9][0-9]-*) "${script}" ;;
+				*)            "${script}" & ;;
+			esac
+		fi
+	else
+		. "${script}"
+	fi
+done
+unset script
+
+#
+# Choose a window manager if not set by `/etc/profile.d/profile.sh`.
+#
+if [ "${WINDOWMANAGER+yes}" != 'yes' ]; then
+	# For some reason, $WINDOWMANAGER is not set.
+	# This is because the user cleared it or DEFAULT_WM is empty.
+	# Fall back on any session we can find.
+	_find_wm()
+	{
+		file=''
+		dir='/usr/share/xsessions'
+
+		# Pick a session description file.
+		for file in "${dir}"/*.desktop; do
+			case "${file##*/}" in
+				# ignore user's .xsession as we can't
+				# handle it as a fallback
+				xsession.*)
+					continue ;;
+			esac
+
+			test -e "${file}" && break
+		done
+
+		test -z "${file}" && return
+
+		# Grab the session command line from the file.
+		while read -r line
+		do
+			case "${line}" in
+				Exec=*)
+					WINDOWMANAGER="${line#Exec=}"
+					break
+					;;
+			esac
+		done < "${file}"
+
+		unset line
+		unset file
+		unset dir
+	}
+	_find_wm
+	unset _find_wm
+fi
+
+#
+# Error, no Window Manager found. The `exit` should
+# raise the fallback trap of the sourcing script.
+#
+if [ "${WINDOWMANAGER+yes}" != 'yes' ]; then
+	if [ -t 1 ]; then
+		echo "Error: Unable to find a window manager. Please make sure you installed one!"
+		echo "       This could be due to a misconfigured WINDOWMANAGER in your shell,"
+		echo "       an unknown DEFAULT_WM in /etc/sysconfig/windowmanager, or because"
+		echo "       the programs referenced in /usr/share/xsessions/*.desktop are"
+		echo "       not in the PATH."
+		echo "Exiting..."
+	fi
+
+	xmessage -timeout 20 -default okay -center -file - <<-EOF
+	Error: Unable to find a window manager. Please make sure you installed one!
+	       This could be due to a misconfigured WINDOWMANAGER in your shell,
+	       an unknown DEFAULT_WM in /etc/sysconfig/windowmanager, or because
+	       the session program referenced in /usr/share/xsessions/*.desktop is
+	       not in the PATH.
+	Exiting...
+	EOF
+
+	exit 1
+fi
+
+#
+# Foreign X session scripts may use other variable names.
+#
+WINDOW_MANAGER="${WINDOWMANAGER}"
+STARTUP="${WINDOWMANAGER}"
+export WINDOWMANAGER WINDOW_MANAGER STARTUP
+
+#
+# Start the XIM server.
+#
+if [ -r /etc/X11/xim ]; then
+	XIMFILE=/etc/X11/xim
+elif [ -r /usr/etc/X11/xim ]; then
+	XIMFILE=/usr/etc/X11/xim
+fi
+
+test -r "${XDG_CONFIG_HOME}/x11/xim" && XIMFILE="${XDG_CONFIG_HOME}/x11/xim"
+test -r "${XIMFILE}" && . "${XIMFILE}"
+
+#
+# Enable Numlock if set.
+#
+if [ -r /var/run/numlock-on ] && command -v numlockx > /dev/null; then
+	numlockx
+fi
+
+#
+# Load nvidia settings.
+#
+if [ -r "${HOME}/.nvidia-settings-rc" ] && command -v nvidia-settings > /dev/null; then
+	nvidia-settings --load-config-only > /dev/null 2>&1 &
+fi
+
+#
+# Handle system's and/or user's Xkbmap (x)or user's Xmodmap.
+# Note that xkb and xmodmap should not be mixed.
+# Priority: 1. User's xkb -> 2. User's xmodmap -> 3. System's xkb
+#
+if [ -s "${xkbmap}" ]; then
+	# apply system's xkb first
+	if [ -s "${XETCDIR}/Xkbmap" ]; then
+		test -r "${XETCDIR}/Xkbmap" && xkbcomp - "${DISPLAY}" < "${XETCDIR}/Xkbmap"
+	elif [ -s "${XUSRETCDIR}/Xkbmap" ]; then
+		test -r "${XUSRETCDIR}/Xkbmap" && xkbcomp - "${DISPLAY}" < "${XUSRETCDIR}/Xkbmap"
+	fi
+
+	test -r "${xkbmap}" && xkbcomp - "${DISPLAY}" < "${xkbmap}"
+elif [ -s "${xmodmap}" ]; then
+	test -r "${xmodmap}" && xmodmap "${xmodmap}"
+elif [ -s "${XETCDIR}/Xkbmap" ]; then
+	test -r "${XETCDIR}/Xkbmap" && xkbcomp - "${DISPLAY}" < "${XETCDIR}/Xkbmap"
+elif [ -s "${XUSRETCDIR}/Xkbmap" ]; then
+	test -r "${XUSRETCDIR}/Xkbmap" && xkbcomp - "${DISPLAY}" < "${XUSRETCDIR}/Xkbmap"
+fi
+
+#
+# Handle the system and the user's Xresources.
+#
+if [ -r "${xdefaults}" ]; then
+	if [ -r "${XETCDIR}/Xresources" ]; then
+		xrdb -nocpp -load -retain ${XETCDIR}/Xresources
+		xrdb -I"${XXDGCONFIGHOME}" -merge "${xdefaults}"
+	elif [ -r "${XUSRETCDIR}/Xresources" ]; then
+		xrdb -nocpp -load -retain "${XUSRETCDIR}/Xresources"
+		xrdb -I"${XXDGCONFIGHOME}" -merge "${xdefaults}"
+	else
+		xrdb -I"${XXDGCONFIGHOME}" -load -retain "${xdefaults}"
+	fi
+
+	if [ -r "${xresources}" ]; then
+		xrdb -I"${XXDGCONFIGHOME}" -merge "${xresources}"
+	fi
+elif [ -r "${xresources}" ]; then
+	if [ -r "${XETCDIR}/Xresources" ]; then
+		xrdb -nocpp -load -retain "${XETCDIR}/Xresources"
+		xrdb -I"${XXDGCONFIGHOME}" -merge "${xresources}"
+	elif [ -r "${XUSRETCDIR}/Xresources" ]; then
+		xrdb -nocpp -load -retain "${XUSRETCDIR}/Xresources"
+		xrdb -I"${XXDGCONFIGHOME}" -merge "${xresources}"
+	else
+		xrdb -I"${XXDGCONFIGHOME}" -load -retain "${xresources}"
+	fi
+elif [ -r "${XETCDIR}/Xresources" ]; then
+	xrdb -nocpp -load -retain "${XETCDIR}/Xresources"
+elif [ -r "${XUSRETCDIR}/Xresources" ]; then
+	xrdb -nocpp -load -retain "${XUSRETCDIR}/Xresources"
+fi
+
+unset XETCDIR
+unset XUSRETCDIR
+unset xdefaults
+unset xresources
+unset xmodmap
+unset xkbmap
+
+# prevent gnome-session from failing (shame on you)
+export XDG_SESSION_TYPE=x11
+
+# vim: set ft=bash:
