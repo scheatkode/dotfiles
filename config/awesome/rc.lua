@@ -151,8 +151,6 @@ do
 end
 
 -- load theme
-local awesome = require("awesome")
-local awful = require("awful")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 -- beautiful.init(gears.filesystem.get_themes_dir() .. )
@@ -193,51 +191,8 @@ do
 end
 -- }}}
 
-local mod = require("bindings.mod")
-
 -- setup key and mouse bindings.
-require("bindings").setup({
-	keyboard = {
-		["keyboard::screen::take a screenshot"] = {
-			modifiers = { mod.super, mod.shift },
-			key = "s",
-			description = "take a screenshot",
-			group = "screen",
-			on_press = function()
-				awful.spawn.with_shell(
-					"sleep 0.5; maim -s | xclip -selection clipboard -t image/png"
-				)
-			end,
-		},
-
-		["keyboard::command::spawn neovim"] = {
-			modifiers = { mod.super, mod.shift },
-			key = "v",
-			description = "Spawn a neovim instance",
-			group = "command",
-			on_press = function()
-				local tempfile = os.tmpname()
-
-				awful.spawn.easy_async_with_shell(
-					string.format(
-						'chmod o-r "%s"; wezterm start -- nvim "%s"',
-						tempfile,
-						tempfile
-					),
-					function()
-						awful.spawn.with_shell(
-							string.format(
-								'cat "%s" | xclip -selection clipboard; rm "%s"',
-								tempfile,
-								tempfile
-							)
-						)
-					end
-				)
-			end,
-		},
-	},
-})
+require("bindings").setup()
 
 -- setup rules.
 require("rules").setup()

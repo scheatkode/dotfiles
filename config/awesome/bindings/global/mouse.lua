@@ -1,25 +1,17 @@
-local awful = require("awful")
-local widgets = require("widgets")
-
 return {
+	setup = function()
+		local awful = require("awful")
+		local gears = require("gears")
+		local widgets = require("widgets")
 
-	["mouse::global::toggle main menu"] = {
-		modifiers = {},
-		button = 3,
-		on_press = function()
-			widgets.menu.mainmenu:toggle()
-		end,
-	},
-
-	["mouse::tag::view previous"] = {
-		modifiers = {},
-		button = 4,
-		on_press = awful.tag.viewprev,
-	},
-
-	["mouse::tag::view next"] = {
-		modifiers = {},
-		button = 5,
-		on_press = awful.tag.viewnext,
-	},
+		return root.buttons(
+			gears.table.join(
+				awful.button({}, 3, function()
+					widgets.menu.mainmenu:toggle()
+				end),
+				awful.button({}, 4, awful.tag.viewprev),
+				awful.button({}, 5, awful.tag.viewnext)
+			)
+		)
+	end,
 }
