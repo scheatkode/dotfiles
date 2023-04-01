@@ -39,7 +39,6 @@ But before you embark on this perilous adventure, *it's dangerous to go alone,
 take this*.
 
       .
-      ├── assets/                 # Images and the such.
       ├── config/                 # User configuration (maps to $XDG_CONFIG_HOME).
       │   ├── alsa/               # Alsa configuration.
       │   ├── awesome/            # Awesome Window Manager configuration.
@@ -66,6 +65,5 @@ take this*.
       ├── etc/                    # System-wide configuration.
       │   └── xkb/                # Custom keyboard definitions.
       ├── src/                    # Unported, old configuration.
-      ├── dotfiles.cmd            # Dotfiles management entrypoint.
       ├── LICENSE
       └── README.md
