@@ -12,11 +12,13 @@ authenticate repositories:
     - watch:
       - file: /tmp/RPM-GPG-KEY
 
-  module.run:
-    - name: gpg.trust_key
-    - fingerprint: B3EC086C879504FDB3EA93D063220853F3F033B1
-    - trust_level: marginally
-    - parallel: true
+  module.wait:
+    - gpg.trust_key:
+      - fingerprint: AEDA7A0AD8BE5021E5D02F86B07F8F97475A5429
+      - trust_level: marginally
+    - gpg.trust_key:
+      - fingerprint: B3EC086C879504FDB3EA93D063220853F3F033B1
+      - trust_level: marginally
     - require:
       - pip: python-gnupg
 
@@ -26,6 +28,12 @@ add custom repositories:
       - repo-anydesk-stable:
         - humanname: AnyDesk (Stable)
         - mirrorlist: http://rpm.anydesk.com/opensuse/$basearch/
+        - gpgcheck: true
+        - gpgautoimport: true
+      - repo-cloc-community:
+        - humanname: cloc (Community)
+        - mirrorlist: https://download.opensuse.org/repositories/home:/rxmd/openSUSE_Tumbleweed/
+        - gpgkey: https://download.opensuse.org/repositories/home:/rxmd/openSUSE_Tumbleweed/repodata/repomd.xml.key
         - gpgcheck: true
         - gpgautoimport: true
       - repo-dbeaver-community:
@@ -59,7 +67,7 @@ install packages:
         - bat
         - btop
         - cargo
-        # - cloc
+        - cloc
         - curl
         - dbeaver
         - discord
