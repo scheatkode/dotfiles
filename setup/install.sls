@@ -6,15 +6,14 @@
 
 {%- set blacklist = (".", "..", "profile") -%}
 
-{%- set all_configs = salt.file.readdir(root ~ "/config") | reject("in", blacklist) -%}
 {%- set vanilla_configs = [] -%}
 {%- set custom_configs = [] -%}
+{%- set etc_configs = [] -%}
 
-{%- set all_data = salt.file.readdir(root ~ "/data") | reject("in", blacklist) -%}
 {%- set vanilla_data = [] -%}
 {%- set custom_data = [] -%}
 
-{%- for config in all_configs %}
+{%- for config in salt.file.readdir(root ~ "/config") | reject("in", blacklist) %}
   {%- if salt.file.file_exists(root ~ "/config/" ~ config ~ "/install.sls") %}
 {%- do custom_configs.append(config) -%}
   {%- else %}
@@ -22,7 +21,13 @@
   {%- endif -%}
 {%- endfor -%}
 
-{%- for data in all_data %}
+{%- for config in salt.file.readdir(root ~ "/etc") | reject("in", blacklist) %}
+  {%- if salt.file.file_exists(root ~ "/etc/" ~ config ~ "/install.sls") %}
+{%- do etc_configs.append(config) -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- for data in salt.file.readdir(root ~ "/data") | reject("in", blacklist) %}
   {%- if salt.file.file_exists(root ~ "/data/" ~ data ~ "/install.sls") %}
 {%- do custom_data.append(data) -%}
   {%- else %}
@@ -30,10 +35,16 @@
   {%- endif -%}
 {%- endfor -%}
 
-{%- if custom_configs | length() > 0 or custom_data | length() > 0 %}
+{%- if custom_configs | length() > 0
+    or etc_configs    | length() > 0
+    or custom_data    | length() > 0
+%}
 include:
   {%- for config in custom_configs %}
   - config.{{ config }}.install
+  {%- endfor -%}
+  {%- for config in etc_configs %}
+  - etc.{{ config }}.install
   {%- endfor -%}
   {%- for data in custom_data %}
   - data.{{ data }}.install
