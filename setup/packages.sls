@@ -86,6 +86,7 @@ install packages:
         - helvum
         - htop
         - hyperfine
+        - imv
         - jq
         - keepassxc
         - maim
@@ -149,7 +150,6 @@ after-install cleanup:
       - vim
       - xclock
       - xterm
-      - MozillaFirefox-branding-openSUSE
 
   service.dead:
     - parallel: true
