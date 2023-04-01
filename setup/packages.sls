@@ -41,9 +41,14 @@ add custom repositories:
     - require_in:
       - pkg: install packages
 
+{% set patterns = salt.pkg.list_installed_patterns() %}
+
 install packages:
   pkg.installed:
     - parallel: true
+    - retry:
+        attempts: 5
+        interval: 2
     - pkgs:
         - 7zip
         - MozillaFirefox
@@ -116,11 +121,19 @@ install packages:
         - zoxide
         - zsh
 
+          {%- if "devel_basis" not in patterns %}
         - pattern:devel_basis
+          {%- endif %}
+          {%- if "kvm_server" not in patterns %}
+        - pattern:kvm_server
+          {%- endif %}
+          {%- if "kvm_tools" not in patterns %}
+        - pattern:kvm_tools
+          {%- endif %}
 
 
 after-install cleanup:
-  pkg.absent:
+  pkg.purged:
     - parallel: true
     - require:
       - pkg: install packages
@@ -136,4 +149,4 @@ after-install cleanup:
       - pkg: install packages
     - names:
       - anydesk:
-        - enabled: false
+        - enable: false
