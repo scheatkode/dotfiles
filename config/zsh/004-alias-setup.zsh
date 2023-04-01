@@ -8,6 +8,18 @@ alias 'vol'='alsamixer'
 alias 'v'='nvim'
 alias 'ssh-keyless'='ssh -o PasswordAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no'
 
+#
+# Bultin alternatives
+#
+
+alias 'cat'='bat'
+alias 'ls'='exa'
+alias 'dig'='dog'
+
+#
+# Git aliases
+#
+
 alias 'g'='git'
 
 function git_current_branch() {
