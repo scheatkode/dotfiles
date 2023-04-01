@@ -2,6 +2,7 @@ return {
 	"jose-elias-alvarez/null-ls.nvim",
 
 	ft = {
+		"bash",
 		"css",
 		"go",
 		"html",
