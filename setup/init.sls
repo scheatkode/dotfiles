@@ -3,3 +3,4 @@ include:
   - .packages
   - .install
   - .sysconfig
+  - .cleanup
