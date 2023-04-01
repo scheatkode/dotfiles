@@ -10,7 +10,6 @@ install:
 	@sudo -E salt-call --local      \
 			--state-output=changes_id \
 			--file-root="$(CURDIR)"   \
-			--skip-grains             \
 		state.highstate
 
 test:
