@@ -46,34 +46,37 @@ install packages:
     - parallel: true
     - pkgs:
         - 7zip
+        - MozillaFirefox
         - alsa
         - anydesk
         - aria2
         - awesome
         - bat
         - btop
-        - cloc
+        - cargo
+        # - cloc
         - curl
         - dbeaver
         - discord
         - dog
         - exa
         - fd
-        - ffmpeg
-        - firefox
+        - ffmpeg-6
         - fzf
         - gdb
         - ghostscript
         - git
         - git-crypt
         - git-delta
+        - gnu_parallel
         - gpg2
         - helvum
         - htop
         - hyperfine
         - jq
         - keepassxc
-        - mpc
+        - maim
+        - mpclient
         - mpd
         - mpv
         - ncmpcpp
@@ -82,10 +85,10 @@ install packages:
         - nodejs18
         - openfortivpn
         - openvpn
-        - parallel
+        - pinentry-gtk2
         - pipewire
         - pipewire-alsa
-        - pipewire-pulse
+        - pipewire-pulseaudio
         - pipewire-tools
         - podman
         - python
@@ -96,15 +99,15 @@ install packages:
         - remmina-plugin-vnc
         - ripgrep
         - rsync
-        - scrot
         - simple-mtpfs
         - simple-scan
         - sqlite3
         - telegram-desktop
         - terraform
-        - transmission
+        - transmission-daemon
         - wezterm
         - wireplumber
+        - wireplumber-audio
         - wireshark
         - xclip
         - yq
