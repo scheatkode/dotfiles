@@ -17,9 +17,10 @@ run galore.
 
 This repository is a strictly personal collection of loosely coupled, mostly
 failed experiments and/or thoughts. I try to keep everything filterless,
-meaning I dump whatever I have on my mind at the time of writing, which can
-consist of sometimes extremely basic explanation that a 2 year old should
-already be aware of. Whatever is written should be taken with a grain of salt.
+meaning I dump whatever I have in mind at the time of writing, which can
+range from extremely basic explanation that a 2 year old should
+already be aware of, to commit messages that would put a sailor to shame.
+Whatever is written should be taken with a grain of salt.
 
 <blockquote>
 <p align='center'>
@@ -29,16 +30,17 @@ already be aware of. Whatever is written should be taken with a grain of salt.
 
 Enough with the poor banter, this here is my meager attempt at keeping my
 dotfiles up to date in case of catastrophic system failures and following the
-[literate programming](https://en.wikipedia.org/wiki/Literate_programming) paradigm. Being a sucker for the darker parts of the
-computer science culture, history, and discipline, I feel this is the perfect
-opportunity to learn a new paradigm.
+[literate programming](https://en.wikipedia.org/wiki/Literate_programming) paradigm; or simply being an enabler to myself for
+distro-hopping. Being a sucker for the darker parts of the computer science
+culture, history, and discipline, I feel this is the perfect opportunity to
+learn a new paradigm and discover newer, darker corners.
 
+But before you embark on this perilous adventure, *it's dangerous to go alone,
+take this*.
 
       .
       ├── assets/                 # Images and the such.
-      ├── etc/                    # System-wide configuration.
-      ├── src/                    # Unported, old configuration.
-      ├── config/                 # User configuration.
+      ├── config/                 # User configuration (maps to $XDG_CONFIG_HOME).
       │   ├── alsa/               # Alsa configuration.
       │   ├── awesome/            # Awesome Window Manager configuration.
       │   ├── btop/               # Btop system monitor configuration.
@@ -46,15 +48,24 @@ opportunity to learn a new paradigm.
       │   ├── git/                # Git configuration.
       │   ├── gmailctl/           # GmailCtl configuration.
       │   ├── gpg/                # GnuPG configuration.
+      │   ├── htop/               # htop configuration.
+      │   ├── keepassxc/          # keepassxc configuration.
       │   ├── mpd/                # mpd configuration.
       │   ├── ncmpcpp/            # ncmpcpp configuration.
       │   ├── neovim/             # Neovim configuration.
-      │   ├── picom/              # Picom configuration (for some reason).
       │   ├── pueue/              # Pueue configuration.
+      │   ├── remmina/            # Remmina configuration.
+      │   ├── ssh/                # SSH configuration.
       │   ├── wezterm/            # WezTerm configuration.
       │   ├── x11/                # X11 configuration.
       │   ├── zsh/                # Zsh configuration.
       │   └── profile             # Shell base profile configuration.
+      ├── data/                   # User data (maps to $XDG_DATA_HOME).
+      │   ├── remmina/            # Remmina user data.
+      │   └── zsh/                # ZSH user data.
+      ├── etc/                    # System-wide configuration.
+      │   └── xkb/                # Custom keyboard definitions.
+      ├── src/                    # Unported, old configuration.
       ├── dotfiles.cmd            # Dotfiles management entrypoint.
       ├── LICENSE
       └── README.md
