@@ -117,3 +117,23 @@ install packages:
         - zsh
 
         - pattern:devel_basis
+
+
+after-install cleanup:
+  pkg.absent:
+    - parallel: true
+    - require:
+      - pkg: install packages
+    - pkgs:
+      - vim
+      - xclock
+      - xterm
+      - MozillaFirefox-branding-openSUSE
+
+  service.dead:
+    - parallel: true
+    - require:
+      - pkg: install packages
+    - names:
+      - anydesk:
+        - enabled: false
