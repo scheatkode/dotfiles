@@ -13,7 +13,7 @@ return {
 		vim.keymap.set({ "n" }, "gs", "<Plug>(leap-from-window)")
 		vim.keymap.set({ "o" }, "s", "<Plug>(leap-forward-x)")
 		vim.keymap.set({ "o" }, "S", "<Plug>(leap-backward-x)")
-		vim.keymap.set({ "v", "x" }, "s", "<Plug>(leap-forward-till)")
-		vim.keymap.set({ "v", "x" }, "S", "<Plug>(leap-backward-till)")
+		vim.keymap.set({ "x" }, "s", "<Plug>(leap-forward-till)")
+		vim.keymap.set({ "x" }, "S", "<Plug>(leap-backward-till)")
 	end,
 }
