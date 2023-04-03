@@ -119,6 +119,8 @@ install packages:
         - telegram-desktop
         - terraform
         - transmission-daemon
+        - transmission-web-control
+        - wavemon
         - wezterm
         - wireplumber
         - wireplumber-audio
