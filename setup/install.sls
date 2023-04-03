@@ -74,4 +74,4 @@ link dotfile configs:
         - backupname: {{ xdg_data_home }}/{{ data }}.back
 {%- endfor %}
     - require:
-      - file: prepare xdg directories
+      - file: xdg prepare directories

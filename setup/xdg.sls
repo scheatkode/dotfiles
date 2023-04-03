@@ -1,6 +1,6 @@
 {%- set user = salt.environ.get("EUSER") -%}
 
-prepare xdg directories:
+xdg prepare directories:
   file.directory:
     - user: {{ user }}
     - group: {{ user }}

@@ -1,5 +1,5 @@
 include:
-  - .prepare
+  - .xdg
   - .packages
   - .install
   - .sysconfig
