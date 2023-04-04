@@ -14,8 +14,8 @@ activate custom keyboard definitions:
       - /usr/share/X11/xkb/rules/base
       - /usr/share/X11/xkb/rules/evdev
     - insert_after_match: '^!\s*option\s*=\s*symbols$'
-    - marker_start: '  # -- Start of managed block'
-    - marker_end: '  # -- End of managed block'
+    - marker_start: '  // -- Start of managed block'
+    - marker_end: '  // -- End of managed block'
     - content: |2
           xcustom:kbd_keypad = +xcustom(kbd_keypad)
           xcustom:kbd_hexpad = +xcustom(kbd_hexpad)

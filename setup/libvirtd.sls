@@ -35,4 +35,4 @@ libvirtd enable modular services:
     - enable: true
     - parallel: true
     - require:
-        pkg: install packages
+      - pkg: install packages

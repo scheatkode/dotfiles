@@ -13,4 +13,4 @@ link neovim config:
     - makedirs: true
     - parallel: true
     - require:
-      - file: prepare xdg directories
+      - file: xdg prepare directories
