@@ -139,7 +139,7 @@ local function setup()
 		end
 
 		return wt.format(icons[name] or {
-			{ Foreground = { Color = { colors.pale_aqua } } },
+			{ Foreground = { Color = colors.pale_aqua } },
 			{ Text = string.format("[%s]", name) },
 		})
 	end
