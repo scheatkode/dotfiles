@@ -11,6 +11,7 @@ return {
 		require("user.mappings.custom.modifiers").setup()
 		require("user.mappings.custom.path").setup()
 		require("user.mappings.custom.resize").setup()
+		require("user.mappings.custom.statusline").setup()
 		require("user.mappings.custom.tabs").setup()
 		require("user.mappings.custom.visual").setup()
 	end,
