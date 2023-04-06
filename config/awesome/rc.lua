@@ -5,132 +5,13 @@
 --
 
 local home_directory = os.getenv("HOME") or "~"
-local xdg_config_directory = os.getenv("XDG_CONFIG_HOME")
+local xdg_config_home = os.getenv("XDG_CONFIG_HOME")
 	or home_directory .. "/.config"
-local awesome_directory = xdg_config_directory .. "/awesome"
-
--------------------------------------------------------
--- affects the main theme.
-
-local themes = {
-	"gruvbox", -- 1 --
-	"gruvvy", -- 2 --
-}
+local awm_dir = xdg_config_home .. "/awesome"
 
 -- change this number to use a different theme.
 -- TODO(scheatkode): Add keybinding to automate this.
-local theme = themes[2]
-
--------------------------------------------------------
--- affects  the window  appearance: title  bar, buttons
--- ...
-
-local decorations = {
-	"gruvbox", -- 1 --
-}
-
-local decoration = decorations[1]
-
--------------------------------------------------------
--- status bar themes. multiple  bars can be declared in
--- each theme.
-
-local bars = {
-	"gruvbox", -- 1 --
-}
-
-local bar = bars[1]
-
--------------------------------------------------------
--- affects  which icon  theme will  be used  by widgets
--- that display image icons.
-
-local icons = {
-	"gruvbox", -- 1 --
-}
-
-local icon = icons[1]
-
--------------------------------------------------------
--- notification themes.
-
-local notifications = {
-	"gruvbox", -- 1 --
-}
-
-local notification = notifications[1]
-
--------------------------------------------------------
--- side bar themes.
-
-local sidebars = {
-	"gruvbox", -- 1 --
-}
-
-local sidebar = sidebars[1]
-
--------------------------------------------------------
--- dashboard themes.
-
-local dashboards = {
-	"gruvbox", -- 1 --
-}
-
-local dashboard = dashboards[1]
-
--------------------------------------------------------
--- variables and preferences themes.
-
-settings = {
-	-- >> default applications <<
-
-	terminal = "wezterm",
-	floating_terminal = "wezterm",
-	browser = "firefox",
-	-- file_manager = ''
-	-- editor = ''
-	-- email_client = ''
-	-- music_client = ''
-
-	-- >> Web search <<
-	web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
-	-- web_search_cmd = 'xdg-open https://google.com/search?q=',
-
-	-- >> user profile <<
-	profile = awesome_directory .. "/profile.png",
-
-	-- directories with fallback values
-	directories = {
-		documents = os.getenv("XDG_DOCUMENTS_DIR")
-			or home_directory .. "/Documents",
-		downloads = os.getenv("XDG_DOWNLOADS_DIR")
-			or home_directory .. "/Downloads",
-		music = os.getenv("XDG_MUSIC_DIR") or home_directory .. "/Music",
-		pictures = os.getenv("XDG_PICTURES_DIR")
-			or home_directory .. "/Pictures",
-		screenshots = os.getenv("XDG_SCREEENSHOTS_DIR")
-			or home_directory .. "/Pictures/Screenshots",
-		videos = os.getenv("XDG_VIDEOS_DIR") or home_directory .. "/Videos",
-	},
-
-	-- >> sidebar <<
-	sidebar = {
-		hide_on_mouse_leave = true,
-		show_on_mouse_screen_edge = true,
-	},
-
-	-- >> lock screen <<
-	-- This password will ONLY be used if you have not installed
-	-- https://github.com/RMTT/lua-pam
-	-- as described in the README instructions
-	-- Leave it empty in order to unlock with just the Enter key.
-	-- lock_screen_custom_password = "",
-
-	-- >> battery <<
-	-- notifications will be issued when the battery reaches these levels.
-	battery_threshold_low = 20,
-	battery_threshold_critical = 8,
-}
+local theme = "gruvvy"
 
 -- if luarocks  is installed,  make sure  that packages
 -- installed  through  it  are  found  (e.g.  lgi).  if
@@ -152,15 +33,13 @@ end
 
 -- load theme
 local beautiful = require("beautiful")
-local naughty = require("naughty")
--- beautiful.init(gears.filesystem.get_themes_dir() .. )
-local theme_dir = awesome_directory .. "/themes/" .. theme
-beautiful.init(theme_dir .. "/theme.lua")
+beautiful.init(string.format("%s/themes/%s/theme.lua", awm_dir, theme))
 
 -- {{{ Error handling
 -- check if awesome encountered an error during startup
 -- and fell back to another config (This code will only
 -- ever execute for the fallback config)
+local naughty = require("naughty")
 if awesome.startup_errors then
 	naughty.notify({
 		preset = naughty.config.presets.critical,
@@ -190,6 +69,13 @@ do
 	end)
 end
 -- }}}
+
+local awful = require("awful")
+awful.layout.layouts = {
+	awful.layout.suit.tile,
+	awful.layout.suit.tile.left,
+	awful.layout.suit.floating,
+}
 
 -- setup key and mouse bindings.
 require("bindings").setup()

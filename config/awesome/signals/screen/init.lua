@@ -3,9 +3,6 @@ local beautiful = require("beautiful")
 local gears = require("gears")
 local wibox = require("wibox")
 
--- local vars    = require('config.vars')
--- local widgets = require('widgets')
-
 return {
 	["request::wallpaper"] = function(s)
 		awful.wallpaper({
@@ -40,8 +37,3 @@ return {
 		end
 	end,
 }
-
--- awful.screen.connect_for_each_screen(function (s)
---    set_wallpaper(s)
---    awful.tag(vars.tags, s, awful.layout.layouts[1])
--- end)
