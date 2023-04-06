@@ -17,6 +17,7 @@ return {
 		"scss",
 		"sh",
 		"sls",
+		"sls.yaml",
 		"svelte",
 		"typescript",
 		"typescript.tsx",
