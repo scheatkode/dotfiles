@@ -26,6 +26,7 @@ local function setup(overrides)
 		vimballPlugin = false,
 		zip = false,
 		zipPlugin = false,
+		did_install_default_menus = false,
 	}
 
 	local builtins = vim.tbl_extend("force", defaults, overrides or {})
