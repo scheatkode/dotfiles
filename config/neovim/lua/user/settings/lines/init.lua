@@ -5,7 +5,6 @@ return {
 		vim.opt.relativenumber = true -- Use line numbers relative to the current line
 		vim.opt.number = true -- ... but show the actual current line number
 		vim.opt.linebreak = true -- Lines wrap at words rather than random characters
-		vim.opt.ruler = false
 		vim.opt.cursorline = false -- Cursorline is highlighted conditionally through autocmd
 		vim.opt.cursorlineopt = "screenline,number"
 		vim.opt.synmaxcol = 200 -- Don't highlight after the 200th character

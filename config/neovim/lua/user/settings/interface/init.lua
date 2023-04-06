@@ -12,9 +12,11 @@ return {
 		-- Statusline & Cmdline
 		vim.opt.history = 1000 -- Number of commands to remember
 		vim.opt.cmdheight = 1 -- Height of the command bar
-		vim.opt.laststatus = 2 -- Always enable the status line
+		vim.opt.laststatus = 0 -- Disable the status line
 		vim.opt.showcmd = true -- Show me keystrokes
-		vim.opt.showmode = false -- Disable showing modes below the statusline
+		vim.opt.showmode = true -- Enable showing modes below the statusline
+		vim.opt.ruler = true -- Show cursor position below each window
+		vim.opt.rulerformat = "%1*%l%0*:%2*%c%3*%V%=%4*%P%0*"
 
 		vim.opt.shortmess = {
 			s = true, -- Ignore 'search hit BOTTOM' kind of messages
