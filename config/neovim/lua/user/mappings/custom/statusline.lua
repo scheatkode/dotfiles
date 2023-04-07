@@ -13,22 +13,21 @@ return {
 				})
 			end
 
-			local line =
-				string.format("%s  %s ", status.head, vim.fn.expand("%"))
+			local line = string.format("%s ", status.head, vim.fn.expand("%"))
 
 			if status.added ~= 0 then
-				line = line .. " +" .. status.added
+				line = string.format("%s +%s", line, status.added)
 			end
 
 			if status.changed ~= 0 then
-				line = line .. " ~" .. status.changed
+				line = string.format("%s ~%s", line, status.changed)
 			end
 
 			if status.removed ~= 0 then
-				line = line .. " -" .. status.removed
+				line = string.format("%s -%s", line, status.removed)
 			end
 
-			print(line)
+			vim.notify(string.format("%s %s", line, vim.fn.expand("%")))
 		end
 
 		vim.keymap.set("n", "<C-g>", genmessage)
