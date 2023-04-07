@@ -65,11 +65,23 @@ return {
 			{
 				rule_any = {
 					type = {
-						"dialog",
 						"normal",
 					},
 				},
 				properties = {
+					titlebars_enabled = false,
+				},
+			},
+
+			-- Disable titlebars to normal clients and dialogs.
+			{
+				rule_any = {
+					type = {
+						"dialog",
+					},
+				},
+				properties = {
+					sticky = true,
 					titlebars_enabled = false,
 				},
 			},
