@@ -459,17 +459,22 @@ local function generate_highlights(colors, config)
 		GitSignsDeleteLn = { fg = "NONE", bg = m.alter(colors.red, -65) },
 
 		-- Telescope
-		TelescopeNormal = { fg = colors.fg1, bg = colors.bg_soft },
-		TelescopeSelection = { fg = colors.orange, bold = true },
-		TelescopeSelectionCaret = { fg = colors.red },
+		TelescopeNormal = { fg = colors.fg1, bg = colors.bg_dim },
+		TelescopeSelection = {
+			fg = colors.orange,
+			bg = colors.bg_soft,
+			bold = true,
+		},
+		TelescopeSelectionCaret = { fg = colors.red, bg = colors.bg_soft },
 		TelescopeMultiSelection = { fg = colors.gray },
 		TelescopeBorder = { link = "FloatBorder" },
-		TelescopePromptBorder = { link = "TelescopeNormal" },
 		TelescopeResultsBorder = { link = "TelescopeNormal" },
 		TelescopePreviewBorder = { link = "TelescopeNormal" },
+		TelescopePromptBorder = { link = "TelescopePrompt" },
 		TelescopeMatching = { fg = colors.blue },
 		TelescopePromptPrefix = { fg = colors.red },
-		TelescopePrompt = { link = "TelescopeNormal" },
+		TelescopePrompt = { fg = colors.fg1, bg = colors.bg_soft },
+		TelescopePromptNormal = { link = "TelescopePrompt" },
 
 		-- NeoVim                         = {},
 		healthError = { fg = colors.error },

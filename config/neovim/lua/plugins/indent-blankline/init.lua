@@ -42,6 +42,7 @@ return {
 		},
 
 		filetype_exclude = {
+			"TelescopePrompt",
 			"fugitive",
 			"help",
 			"markdown",

@@ -14,15 +14,16 @@ return {
 		telescope.setup({
 			defaults = {
 
-				border = false,
+				border = {},
+				borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
 
 				file_previewer = previewers.vim_buffer_cat.new,
 				grep_previewer = previewers.vim_buffer_vimgrep.new,
 				qflist_previewer = previewers.vim_buffer_qflist.new,
 
-				entry_prefix = "  ",
-				prompt_prefix = "❯ ",
-				selection_caret = "❯ ",
+				entry_prefix = "    ",
+				prompt_prefix = "   ",
+				selection_caret = " ❯  ",
 
 				initial_mode = "insert",
 
@@ -46,6 +47,8 @@ return {
 						width = { padding = 0.05 },
 						height = { padding = 0.05 },
 						preview_width = 0.6,
+						results_width = 0.7,
+						prompt_position = "bottom",
 					},
 
 					vertical = {
