@@ -135,16 +135,30 @@ return {
 			}),
 
 			awful.key({ mod.super, mod.shift }, "j", function()
-				awful.client.swap.byidx(1)
+				awful.client.swap.bydirection("down")
 			end, {
-				description = "swap with next client by index",
+				description = "swap with client down of the current one",
 				group = "client",
 			}),
 
 			awful.key({ mod.super, mod.shift }, "k", function()
-				awful.client.swap.byidx(-1)
+				awful.client.swap.bydirection("up")
 			end, {
-				description = "swap with previous client by index",
+				description = "swap with client up of the current one",
+				group = "client",
+			}),
+
+			awful.key({ mod.super, mod.shift }, "l", function()
+				awful.client.swap.bydirection("right")
+			end, {
+				description = "swap with client right of the current one",
+				group = "client",
+			}),
+
+			awful.key({ mod.super, mod.shift }, "h", function()
+				awful.client.swap.bydirection("left")
+			end, {
+				description = "swap with client left of the current one",
 				group = "client",
 			}),
 
