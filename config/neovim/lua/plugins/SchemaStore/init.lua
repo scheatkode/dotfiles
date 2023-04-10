@@ -4,5 +4,6 @@ return { -- Access to the SchemaStore catalog.
 
 	ft = {
 		"json",
+		"yaml",
 	},
 }
