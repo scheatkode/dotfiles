@@ -2,76 +2,21 @@ return {
 	setup = function()
 		local ls = require("null-ls")
 
-		local djlint = ls.builtins.formatting.djlint.with({
-			args = {
-				"--indent=2",
-				"--preserve-blank-lines",
-				"--preserve-leading-space",
-				"--reformat",
-				"-",
-			},
-
-			filetypes = {
-				"jinja",
-				"sls",
-				"sls.jinja",
-				"sls.yaml",
-				"yaml",
-			},
-		})
-
-		local hadolint = ls.builtins.diagnostics.hadolint.with({
-			command = "hadolint",
-			args = {
-				"--no-fail",
-				"--format=json",
-				"$FILENAME",
-			},
-		})
-
-		local shellcheck_diagnostics = ls.builtins.diagnostics.shellcheck.with({
-			command = "shellcheck",
-
-			args = {
-				"--enable=all",
-				"--severity=style",
-				"--format",
-				"json1",
-				"--source-path=$DIRNAME",
-				"--external-sources",
-				"-",
-			},
-		})
-
-		local shellcheck_codeactions =
-			ls.builtins.code_actions.shellcheck.with({
-				command = "shellcheck",
-
-				args = {
-					"--enable=all",
-					"--severity=style",
-					"--format",
-					"json1",
-					"--source-path=$DIRNAME",
-					"--external-sources",
-					"-",
-				},
-			})
-
 		ls.setup({
-			debounce = 250,
+			debounce = 500,
 			default_timeout = 5000,
 			diagnostics_format = "#{m}",
 			on_attach = require("lsp.on_attach").setup(),
 			root_dir = vim.loop.cwd,
 			sources = {
-				djlint,
-				hadolint,
-				shellcheck_diagnostics,
-				shellcheck_codeactions,
-
 				-- (t|j)s-specific
-				ls.builtins.formatting.prettier,
+				ls.builtins.formatting.prettier.with({
+					filetypes = {
+						"typescript",
+						"javascript",
+						"svelte",
+					},
+				}),
 
 				-- generic
 				ls.builtins.diagnostics.vale,
@@ -98,9 +43,71 @@ return {
 				-- shell-specific
 				ls.builtins.formatting.shfmt,
 				ls.builtins.formatting.shellharden,
+				ls.builtins.diagnostics.shellcheck.with({
+					args = {
+						"--enable=all",
+						"--severity=style",
+						"--format",
+						"json1",
+						"--source-path=$DIRNAME",
+						"--external-sources",
+						"-",
+					},
+
+					filetypes = {
+						"sh",
+						"bash",
+						"zsh",
+					},
+				}),
+				ls.builtins.code_actions.shellcheck.with({
+					args = {
+						"--enable=all",
+						"--severity=style",
+						"--format",
+						"json1",
+						"--source-path=$DIRNAME",
+						"--external-sources",
+						"-",
+					},
+
+					filetypes = {
+						"sh",
+						"bash",
+						"zsh",
+					},
+				}),
 
 				-- github actions specific
 				ls.builtins.diagnostics.actionlint,
+
+				-- dockerfiles specific
+				ls.builtins.diagnostics.hadolint.with({
+					args = {
+						"--no-fail",
+						"--format=json",
+						"$FILENAME",
+					},
+				}),
+
+				-- template languages specific
+				ls.builtins.formatting.djlint.with({
+					args = {
+						"--indent=2",
+						"--preserve-blank-lines",
+						"--preserve-leading-space",
+						"--reformat",
+						"-",
+					},
+
+					filetypes = {
+						"jinja",
+						"sls",
+						"sls.jinja",
+						"sls.yaml",
+						"yaml",
+					},
+				}),
 			},
 		})
 	end,
