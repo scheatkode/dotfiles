@@ -96,16 +96,30 @@ return {
 			--- client {{{1
 
 			awful.key({ mod.super }, "j", function()
-				awful.client.focus.byidx(1)
+				awful.client.focus.bydirection("down")
 			end, {
-				description = "focus next by index",
+				description = "focus the window down of the current window",
 				group = "client",
 			}),
 
 			awful.key({ mod.super }, "k", function()
-				awful.client.focus.byidx(-1)
+				awful.client.focus.bydirection("up")
 			end, {
-				description = "focus previous by index",
+				description = "focus the window up of the current window",
+				group = "client",
+			}),
+
+			awful.key({ mod.super }, "l", function()
+				awful.client.focus.bydirection("right")
+			end, {
+				description = "focus the window right of the current window",
+				group = "client",
+			}),
+
+			awful.key({ mod.super }, "h", function()
+				awful.client.focus.bydirection("left")
+			end, {
+				description = "focus the window left of the current window",
 				group = "client",
 			}),
 
