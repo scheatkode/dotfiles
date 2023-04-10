@@ -13,7 +13,5 @@ return { -- colorize hex/rgb/hsl values
 		"lua",
 	},
 
-	config = function()
-		require("colorizer").setup()
-	end,
+	config = true,
 }

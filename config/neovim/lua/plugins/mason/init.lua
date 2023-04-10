@@ -9,7 +9,5 @@ return {
 		"MasonLog",
 	},
 
-	config = function()
-		require("mason").setup()
-	end,
+	config = true,
 }

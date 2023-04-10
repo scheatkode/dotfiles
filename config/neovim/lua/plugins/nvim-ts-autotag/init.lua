@@ -15,7 +15,5 @@ return {
 		"xml",
 	},
 
-	config = function()
-		require("nvim-ts-autotag").setup()
-	end,
+	config = true,
 }

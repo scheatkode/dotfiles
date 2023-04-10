@@ -9,7 +9,19 @@ return {
 		"qf",
 	},
 
-	config = function()
-		require("plugins.nvim-bqf.config").setup()
-	end,
+	opts = {
+		preview = {
+			border_chars = {
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+			},
+		},
+	},
 }
