@@ -1,3 +1,5 @@
+{%- set user = salt.environ.get("EUSER") -%}
+
 libvirtd enable modular services:
   service.running:
     - names:
@@ -33,6 +35,19 @@ libvirtd enable modular services:
       # - virtproxyd-tcp.socket
       # - virtproxyd-tls.socket
     - enable: true
+    - parallel: true
+    - require:
+      - pkg: install packages
+
+libvirtd add user to groups:
+  group.present:
+    - names:
+      - kvm:
+        - addusers:
+          - {{ user }}
+      - libvirt:
+        - addusers:
+          - {{ user }}
     - parallel: true
     - require:
       - pkg: install packages
