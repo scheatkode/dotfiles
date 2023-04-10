@@ -1,3 +1,17 @@
+-- Language: Shell scripts
+vim.filetype.add({
+	extension = {
+		["sh"] = "bash",
+		["bash"] = "bash",
+		["csh"] = "bash",
+		["ksh"] = "bash",
+		["zsh"] = "bash",
+	},
+	filename = {
+		[".zshrc"] = "bash",
+	},
+})
+
 -- Language: Bazel/Please build definition file
 vim.filetype.add({
 	filename = {
