@@ -97,6 +97,24 @@ return {
 						"--preserve-blank-lines",
 						"--preserve-leading-space",
 						"--reformat",
+						"--profile",
+						"jinja",
+						"-",
+					},
+
+					filetypes = {
+						"jinja",
+						"sls",
+						"sls.jinja",
+						"sls.yaml",
+						"yaml",
+					},
+				}),
+
+				ls.builtins.diagnostics.djlint.with({
+					args = {
+						"--profile",
+						"jinja",
 						"-",
 					},
 
