@@ -181,7 +181,7 @@ local function setup()
 			return
 		end
 
-		file:write(pane:get_lines_as_text())
+		file:write(pane:get_lines_as_text(10000))
 		file:flush()
 		file:close()
 
