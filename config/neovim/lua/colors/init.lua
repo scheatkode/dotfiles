@@ -230,7 +230,7 @@ local function generate_highlights(colors, config)
 
 		Identifier = { fg = colors.blue },
 		Function = extend(
-			{ fg = colors.green, bold = true },
+			{ fg = colors.orange, bold = true },
 			config.function_style
 		),
 		Statement = extend({ fg = colors.red }, config.statement_style),
