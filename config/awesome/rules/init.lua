@@ -48,6 +48,7 @@ return {
 					-- match defined rules here.
 					name = {
 						"Event Tester", -- xev.
+						"anydesk", -- AnyDesk's remote address field.
 					},
 
 					role = {
