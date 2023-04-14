@@ -461,4 +461,6 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = "/usr/share/icons/Adwaita"
 
+require("themes.gruvvy.notifications").setup()
+
 return theme
