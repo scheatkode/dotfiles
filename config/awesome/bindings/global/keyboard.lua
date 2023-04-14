@@ -267,6 +267,20 @@ return {
 				group = "screen",
 			}),
 
+			awful.key({ mod.super, mod.ctrl }, "l", function()
+				awful.screen.focus_bydirection("right")
+			end, {
+				description = "focus screen to the right",
+				group = "screen",
+			}),
+
+			awful.key({ mod.super, mod.ctrl }, "h", function()
+				awful.screen.focus_bydirection("left")
+			end, {
+				description = "focus screen to the left",
+				group = "screen",
+			}),
+
 			--- screenshot {{{1
 			awful.key({ mod.super, mod.shift }, "s", function()
 				awful.spawn.with_shell(
