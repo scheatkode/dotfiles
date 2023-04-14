@@ -36,6 +36,10 @@ return {
 		-- rendering. This is turned off to avoid said breakages.
 		vim.opt.emoji = false
 
-		vim.opt.virtualedit = "block" -- Allow cursor to move freely in visual block mode
+		-- Allow cursor to move freely in visual block mode
+		vim.opt.virtualedit = "block"
+
+		-- StatusColumn
+		vim.opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum) : ''} %s"
 	end,
 }

@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 -- Setup package path
 
 -- To prevent code duplication, a library with utilities

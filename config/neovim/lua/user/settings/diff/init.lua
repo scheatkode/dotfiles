@@ -12,6 +12,7 @@ return {
 			"hiddenoff",
 			"foldcolumn:0",
 			"context:16",
+			"linematch:60",
 			"indent-heuristic",
 			"algorithm:histogram",
 		}

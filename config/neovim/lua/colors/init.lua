@@ -150,6 +150,8 @@ local function generate_highlights(colors, config)
 		CursorIM = { link = "Cursor" },
 		CursorLine = { bg = colors.bg1 },
 		CursorColumn = { link = "CursorLine" },
+		CursorLineSign = { link = "CursorLine" },
+		CursorLineFold = { link = "CursorLine" },
 		Directory = { fg = colors.blue, bold = true },
 		DiffAdd = { fg = colors.green },
 		DiffChange = { fg = colors.aqua },
@@ -318,6 +320,11 @@ local function generate_highlights(colors, config)
 		DiagnosticLineBackgroundInfo = { bg = "NONE" },
 		DiagnosticLineBackgroundHint = { bg = "NONE" },
 
+		DiagnosticCulError = { fg = colors.red, bg = colors.bg1 },
+		DiagnosticCulWarn = { fg = colors.yellow, bg = colors.bg1 },
+		DiagnosticCulInfo = { fg = colors.blue, bg = colors.bg1 },
+		DiagnosticCulHint = { fg = colors.aqua, bg = colors.bg1 },
+
 		LspSignatureActiveParameter = { fg = colors.yellow },
 		LspCodeLens = { fg = colors.fg_comment },
 
@@ -456,6 +463,11 @@ local function generate_highlights(colors, config)
 		GitSignsAdd = { fg = colors.green },
 		GitSignsChange = { fg = colors.orange },
 		GitSignsDelete = { fg = colors.red },
+		GitSignsUntracked = { fg = colors.gray },
+		GitSignsAddCul = { fg = colors.green, bg = colors.bg1 },
+		GitSignsChangeCul = { fg = colors.orange, bg = colors.bg1 },
+		GitSignsDeleteCul = { fg = colors.red, bg = colors.bg1 },
+		GitSignsUntrackedCul = { fg = colors.gray, bg = colors.bg1 },
 		GitSignsDeleteLn = { fg = "NONE", bg = m.alter(colors.red, -65) },
 
 		-- Telescope

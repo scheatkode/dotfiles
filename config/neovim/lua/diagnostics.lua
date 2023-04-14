@@ -20,21 +20,25 @@ return {
 				text = "",
 				texthl = "DiagnosticError",
 				linehl = "DiagnosticLineBackgroundError",
+				culhl = "DiagnosticCulError"
 			},
 			DiagnosticSignWarn = {
 				text = "‼",
 				texthl = "DiagnosticWarn",
 				linehl = "DiagnosticLineBackgroundWarn",
+				culhl = "DiagnosticCulWarn"
 			},
 			DiagnosticSignInfo = {
 				text = "ℹ",
 				texthl = "DiagnosticInfo",
 				linehl = "DiagnosticLineBackgroundInfo",
+				culhl = "DiagnosticCulWarn"
 			},
 			DiagnosticSignHint = {
 				text = "",
 				texthl = "DiagnosticHint",
 				linehl = "DiagnosticLineBackgroundHint",
+				culhl = "DiagnosticCulWarn"
 			},
 		}
 
