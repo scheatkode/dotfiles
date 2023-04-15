@@ -37,7 +37,7 @@ return {
 	opts = {
 		signs = {
 			add = { text = "┃" },
-			change = { text = "┣" },
+			change = { text = "┃" },
 			delete = { text = "━" },
 			topdelete = { text = "━" },
 			changedelete = { text = "╋" },
@@ -46,6 +46,34 @@ return {
 
 		on_attach = function(bufnr)
 			local gs = require("gitsigns")
+
+			-- override signs to add `culhl` which is not supported by gitsigns.
+			local signs = {
+				GitSignsAdd = {
+					text = "┃",
+					texthl = "GitSignsAdd",
+					culhl = "GitSignsAddCul",
+				},
+				GitSignsChange = {
+					text = "┃",
+					texthl = "GitSignsChange",
+					culhl = "GitSignsChangeCul",
+				},
+				GitSignsDelete = {
+					text = "━",
+					texthl = "GitSignsDelete",
+					culhl = "GitSignsDeleteCul",
+				},
+				GitSignsUntracked = {
+					text = "┃",
+					texthl = "GitSignsUntracked",
+					culhl = "GitSignsUntrackedCul",
+				},
+			}
+
+			for k, v in pairs(signs) do
+				vim.fn.sign_define(k, v)
+			end
 
 			-- navigation
 			vim.keymap.set("n", "]h", function()
@@ -117,36 +145,4 @@ return {
 			internal = true,
 		},
 	},
-
-	config = function(_, opts)
-		require("gitsigns").setup(opts)
-
-		-- override signs to add `culhl` which is not supported by gitsigns.
-		local signs = {
-			GitSignsAdd = {
-				text = "┃",
-				texthl = "GitSignsAdd",
-				culhl = "GitSignsAddCul",
-			},
-			GitSignsChange = {
-				text = "┃",
-				texthl = "GitSignsChange",
-				culhl = "GitSignsChangeCul",
-			},
-			GitSignsDelete = {
-				text = "━",
-				texthl = "GitSignsDelete",
-				culhl = "GitSignsDeleteCul",
-			},
-			GitSignsUntracked = {
-				text = "┃",
-				texthl = "GitSignsUntracked",
-				culhl = "GitSignsUntrackedCul",
-			},
-		}
-
-		for k, v in pairs(signs) do
-			vim.fn.sign_define(k, v)
-		end
-	end,
 }
