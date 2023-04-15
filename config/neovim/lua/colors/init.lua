@@ -209,7 +209,7 @@ local function generate_highlights(colors, config)
 		StatusLineNC = { fg = colors.bg2, bg = colors.bg_dim },
 		TabLine = { bg = colors.bg1, fg = colors.bg4 },
 		TabLineFill = { link = "TabLine" },
-		TabLineSel = { fg = colors.green, bg = colors.bg1 },
+		TabLineSel = { fg = colors.bg1, bg = colors.yellow },
 		Title = { fg = colors.green, bold = true },
 		Visual = { bg = colors.bg2 },
 		VisualNOS = { link = "Visual" },

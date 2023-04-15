@@ -23,5 +23,6 @@ return {
 		require("user.settings.backup").setup()
 		require("user.settings.wrap").setup()
 		require("user.settings.menus").setup()
+		require("user.settings.tabline").setup()
 	end,
 }

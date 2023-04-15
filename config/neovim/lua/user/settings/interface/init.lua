@@ -40,6 +40,7 @@ return {
 		vim.opt.virtualedit = "block"
 
 		-- StatusColumn
-		vim.opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum) : ''} %s"
+		vim.opt.statuscolumn =
+			"%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum) : ''} %s"
 	end,
 }
