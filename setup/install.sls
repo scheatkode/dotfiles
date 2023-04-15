@@ -20,6 +20,7 @@
 
 {%- set XDG_CONFIG_HOME = get("XDG_CONFIG_HOME", home, ".config") -%}
 {%- set XDG_DATA_HOME   = get("XDG_DATA_HOME",   home, ".local", "share") -%}
+{%- set XDG_BIN_HOME    = join(XDG_DATA_HOME, "..", "bin") -%}
 
 {%- set blacklist = (".", "..", "profile") -%}
 
@@ -89,6 +90,11 @@ link dotfile configs:
       - {{ join(XDG_DATA_HOME, data) }}:
         - target: {{ join(root, "data", data) }}
         - backupname: {{ join(XDG_DATA_HOME, data ~ ".back") }}
+{%- endfor %}
+{%- for bin in readdir(root, "bin") | load_json | reject("in", blacklist) %}
+      - {{ join(XDG_BIN_HOME, bin) }}:
+        - target: {{ join(root, "bin", bin) }}
+        - backupname: {{ join(XDG_BIN_HOME, bin ~ ".back") }}
 {%- endfor %}
     - require:
       - file: xdg prepare directories
