@@ -1,34 +1,51 @@
+{%- macro join() -%}
+{{ salt.file.normpath(salt.file.join(*varargs)) }}
+{%- endmacro -%}
+
+{%- macro get(env) -%}
+{{ salt.environ.get(env, join(*varargs)) }}
+{%- endmacro -%}
+
+{%- macro file_exists() -%}
+{{ salt.file.file_exists(join(*varargs)) | json }}
+{%- endmacro -%}
+
+{%- macro readdir() -%}
+{{ salt.file.readdir(join(*varargs)) | json }}
+{%- endmacro -%}
+
 {%- set user = salt.environ.get("EUSER") -%}
 {%- set root = salt.environ.get("PWD") -%}
+{%- set home = get("EHOME", "/home", user) -%}
 
-{%- set xdg_config_home = salt.environ.get("XDG_CONFIG_HOME", "/home/" ~ user ~ "/.config")      -%}
-{%- set xdg_data_home   = salt.environ.get("XDG_DATA_HOME",   "/home/" ~ user ~ "/.local/share") -%}
+{%- set XDG_CONFIG_HOME = get("XDG_CONFIG_HOME", home, ".config") -%}
+{%- set XDG_DATA_HOME   = get("XDG_DATA_HOME",   home, ".local", "share") -%}
 
 {%- set blacklist = (".", "..", "profile") -%}
 
 {%- set vanilla_configs = [] -%}
-{%- set custom_configs = [] -%}
-{%- set etc_configs = [] -%}
+{%- set custom_configs  = [] -%}
+{%- set etc_configs     = [] -%}
 
 {%- set vanilla_data = [] -%}
-{%- set custom_data = [] -%}
+{%- set custom_data  = [] -%}
 
-{%- for config in salt.file.readdir(root ~ "/config") | reject("in", blacklist) %}
-  {%- if salt.file.file_exists(root ~ "/config/" ~ config ~ "/install.sls") %}
+{%- for config in readdir(root, "config") | load_json | reject("in", blacklist) %}
+  {%- if file_exists(root, "config", config, "install.sls") | load_json %}
 {%- do custom_configs.append(config) -%}
   {%- else %}
 {%- do vanilla_configs.append(config) -%}
   {%- endif -%}
 {%- endfor -%}
 
-{%- for config in salt.file.readdir(root ~ "/etc") | reject("in", blacklist) %}
-  {%- if salt.file.file_exists(root ~ "/etc/" ~ config ~ "/install.sls") %}
+{%- for config in readdir(root, "etc") | load_json | reject("in", blacklist) %}
+  {%- if file_exists(root, "etc", config, "install.sls") | load_json %}
 {%- do etc_configs.append(config) -%}
   {%- endif -%}
 {%- endfor -%}
 
-{%- for data in salt.file.readdir(root ~ "/data") | reject("in", blacklist) %}
-  {%- if salt.file.file_exists(root ~ "/data/" ~ data ~ "/install.sls") %}
+{%- for data in readdir(root, "data") | load_json | reject("in", blacklist) %}
+  {%- if file_exists(root, "data", data, "install.sls") | load_json %}
 {%- do custom_data.append(data) -%}
   {%- else %}
 {%- do vanilla_data.append(data) -%}
@@ -59,19 +76,19 @@ link dotfile configs:
     - makedirs: true
     - parallel: true
     - names:
-      - /home/{{ user }}/.profile:
-        - target: {{ root }}/config/profile
-      - {{ xdg_config_home }}/lib:
-        - target: {{ root }}/lib
+      - {{ join(home, ".profile") }}:
+        - target: {{ join(root, "config", "profile") }}
+      - {{ join(XDG_CONFIG_HOME, "lib") }}:
+        - target: {{ join(root, "lib") }}
 {%- for config in vanilla_configs %}
-      - {{ xdg_config_home }}/{{ config }}:
-        - target: {{ root }}/config/{{ config }}
-        - backupname: {{ xdg_config_home }}/{{ config }}.back
+      - {{ join(XDG_CONFIG_HOME, config) }}:
+        - target: {{ join(root, "config", config) }}
+        - backupname: {{ join(XDG_CONFIG_HOME, config ~ ".back") }}
 {%- endfor %}
 {%- for data in vanilla_data %}
-      - {{ xdg_data_home }}/{{ data }}:
-        - target: {{ root }}/data/{{ data }}
-        - backupname: {{ xdg_data_home }}/{{ data }}.back
+      - {{ join(XDG_DATA_HOME, data) }}:
+        - target: {{ join(root, "data", data) }}
+        - backupname: {{ join(XDG_DATA_HOME, data ~ ".back") }}
 {%- endfor %}
     - require:
       - file: xdg prepare directories

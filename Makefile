@@ -1,5 +1,6 @@
 .EXPORT_ALL_VARIABLES:
 
+EHOME ?= ${HOME}
 EUSER ?= ${USER}
 
 .PHONY:    \
