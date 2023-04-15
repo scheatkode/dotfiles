@@ -1,0 +1,48 @@
+#!/bin/sh
+
+set -e
+set -u
+
+convert_bytes_to_human_readable () {
+	test "${@}" = "" && return 1
+
+	echo "${@}" | awk '
+	function human(x) {
+ 		if (x < 1000) {
+ 	 		return x;
+ 		}
+
+		x /= 1024;
+ 		unit = "kMGTEPZY";
+
+ 		while (x >= 1000 && length(unit) > 1) {
+ 	 		x /= 1024;
+ 	 		unit = substr(unit, 2);
+ 		}
+
+ 		return int(x + 0.5) substr(unit, 1, 1) "B"
+	}
+
+	{
+ 		sub(/^[0-9]+/, human($1));
+ 		print;
+	}'
+
+	unset input
+}
+
+main() {
+	input=''
+
+	if [ -p /dev/stdin ]; then
+		input="$(cat -)"
+	else
+		input="${*}"
+	fi
+
+	convert_bytes_to_human_readable "${input}"
+}
+
+${__SOURCED__:+return}
+
+main "${@}"
