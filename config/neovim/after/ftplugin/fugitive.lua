@@ -22,3 +22,8 @@ vim.keymap.set("n", "cne", "<cmd>G commit --amend --no-edit --no-verify<CR>", {
 	buffer = true,
 	desc = "Create a new commit without running git hooks.",
 })
+
+vim.keymap.set("n", "q", "<cmd>q<CR>", {
+	buffer = true,
+	desc = "Create a new commit without running git hooks.",
+})
