@@ -6,13 +6,21 @@ return {
 
 		local rules = {}
 
-		-- additional `%` rule for tagged templates, i.e. `{%%}`
-		rules[#rules + 1] = rule("%", "%", {
+		-- additional `%` rule for tagged templates, i.e. `{% | %}`
+		rules[#rules + 1] = rule("{%", " %", {
 			"jinja",
 			"sls",
 			"sls.yaml",
 			"yaml",
-		})
+		}):set_end_pair_length(2)
+
+		-- additional `{}` rule for tagged templates, i.e. `{{ | }}`
+		rules[#rules + 1] = rule("{{", " }", {
+			"jinja",
+			"sls",
+			"sls.yaml",
+			"yaml",
+		}):set_end_pair_length(2)
 
 		-- remove spaces between brackets
 		rules[#rules + 1] = rule("[ ", " ]")
