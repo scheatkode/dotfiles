@@ -38,6 +38,8 @@ return {
 
 				-- python-specific
 				ls.builtins.formatting.black,
+				ls.builtins.formatting.ruff,
+				ls.builtins.diagnostics.ruff,
 				-- ls.builtins.diagnostics.pylint,
 
 				-- shell-specific
