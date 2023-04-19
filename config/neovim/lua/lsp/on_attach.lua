@@ -13,7 +13,7 @@ return {
 		-- 			== nil
 		-- end
 
-		return function(_, bufnr, _)
+		return function(client, bufnr, _)
 			-- if client.supports_method('textDocument/completion') then
 			-- 	require('lsp.completion').setup(client, bufnr)
 			-- end
@@ -89,6 +89,10 @@ return {
 			-- 		false
 			-- 	)
 			-- end, { buffer = bufnr })
+
+			-- Should probably wait for neovim/neovim#23026 and until I have time
+			-- to rework the colorscheme.
+			client.server_capabilities.semanticTokensProvider = nil
 
 			-- go to declaration
 			vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, {
