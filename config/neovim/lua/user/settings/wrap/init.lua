@@ -10,8 +10,8 @@ return {
 			foldclose = "▸",
 			foldopen = "▾",
 			foldsep = "│",
-			msgsep = "‾",
-			vert = "▕",
+			msgsep = "─",
+			vert = "│",
 		}
 
 		vim.opt.listchars = {

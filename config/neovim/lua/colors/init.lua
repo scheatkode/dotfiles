@@ -161,7 +161,7 @@ local function generate_highlights(colors, config)
 		-- TermCursor                     = {},
 		-- TermCursorNC                   = {},
 		ErrorMsg = { fg = colors.red, bg = "NONE" },
-		VertSplit = { fg = colors.bg3, bg = colors.bg0 },
+		VertSplit = { fg = colors.bg3, bg = colors.bg_dim },
 		Folded = { fg = colors.gray, bg = colors.bg1, italic = true },
 		FoldColumn = { fg = colors.gray, bg = colors.bg1 },
 		SignColumn = { fg = colors.bg3, bg = "NONE" },
