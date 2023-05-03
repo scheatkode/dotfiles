@@ -12,6 +12,7 @@ return {
 				"css",
 				"diff",
 				"dockerfile",
+				"git_config",
 				"git_rebase",
 				"gitattributes",
 				"gitcommit",
