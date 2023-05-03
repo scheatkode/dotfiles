@@ -5,8 +5,7 @@ return {
 		vim.opt.foldnestmax = 3
 		vim.opt.foldminlines = 1
 
-		vim.opt.foldmethod = "expr"
-		vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		vim.opt.foldmethod = "manual"
 		vim.opt.foldtext =
 			"getline(v:foldstart) . ' ... ' . trim(getline(v:foldend))"
 
