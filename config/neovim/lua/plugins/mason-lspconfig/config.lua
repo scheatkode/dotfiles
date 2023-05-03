@@ -45,22 +45,23 @@ return {
 			on_attach = on_attach,
 		}
 
-		mason_lspconfig.setup()
-		mason_lspconfig.setup_handlers({
-			function(server)
-				local has_config, config =
-					pcall(require, "lsp.servers." .. server)
+		mason_lspconfig.setup({
+			handlers = {
+				function(server)
+					local has_config, config =
+						pcall(require, "lsp.servers." .. server)
 
-				if not has_config then
-					return lspconfig[server].setup(default_config)
-				end
+					if not has_config then
+						return lspconfig[server].setup(default_config)
+					end
 
-				config.on_attach = config.on_attach or attach_hooks(config)
+					config.on_attach = config.on_attach or attach_hooks(config)
 
-				return lspconfig[server].setup(
-					deep_extend("force", default_config, config)
-				)
-			end,
+					return lspconfig[server].setup(
+						deep_extend("force", default_config, config)
+					)
+				end,
+			},
 		})
 	end,
 }
