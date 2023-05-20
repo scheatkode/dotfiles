@@ -90,10 +90,6 @@ return {
 			-- 	)
 			-- end, { buffer = bufnr })
 
-			-- Should probably wait for neovim/neovim#23026 and until I have time
-			-- to rework the colorscheme.
-			client.server_capabilities.semanticTokensProvider = nil
-
 			-- go to declaration
 			vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, {
 				buffer = bufnr,
