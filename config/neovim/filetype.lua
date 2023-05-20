@@ -64,6 +64,9 @@ vim.filetype.add({
 
 -- Language: TSConfig file
 vim.filetype.add({
+	extension = {
+		["json5"] = "jsonc",
+	},
 	filename = {
 		["tsconfig.json"] = "jsonc",
 	},
