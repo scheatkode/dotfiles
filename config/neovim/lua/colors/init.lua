@@ -433,11 +433,15 @@ local function generate_highlights(colors, config)
 		["@enum"] = { link = "@constructor" },
 		["@enumMember"] = { link = "Constant" },
 		["@event"] = { link = "Identifier" },
-		["@interface"] = { link = "Identifier" },
+		["@interface"] = { link = "Type" },
 		["@modifier"] = { link = "Identifier" },
 		["@regexp"] = { link = "SpecialChar" },
 		["@typeParameter"] = { link = "Type" },
 		["@decorator"] = { link = "Identifier" },
+
+		-- This is intended for python but should be safe to enable globally.
+		-- Note: Python-only override is `@string.documentation.python`.
+		["@string.documentation"] = { link = "Comment" },
 
 		-- Git
 		diffAdded = { fg = colors.green },
