@@ -15,11 +15,11 @@ daemon:
   callback: ~
   callback_log_lines: 10
 shared:
-  pueue_directory: /home/scheatkode/.local/share/pueue
+  pueue_directory: ~/.local/share/pueue
   use_unix_socket: true
-  unix_socket_path: /home/scheatkode/.local/share/pueue/pueue_scheatkode.socket
+  unix_socket_path: ~/.local/share/pueue/pueue_scheatkode.socket
   host: 127.0.0.1
   port: "6924"
-  daemon_cert: /home/scheatkode/.local/share/pueue/certs/daemon.cert
-  daemon_key: /home/scheatkode/.local/share/pueue/certs/daemon.key
-  shared_secret_path: /home/scheatkode/.local/share/pueue/shared_secret
+  daemon_cert: ~/.local/share/pueue/certs/daemon.cert
+  daemon_key: ~/.local/share/pueue/certs/daemon.key
+  shared_secret_path: ~/.local/share/pueue/shared_secret
