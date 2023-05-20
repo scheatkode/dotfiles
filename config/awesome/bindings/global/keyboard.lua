@@ -102,10 +102,24 @@ return {
 				group = "client",
 			}),
 
+			awful.key({ mod.super, mod.alt }, "j", function()
+				awful.client.focus.byidx(1)
+			end, {
+				description = "focus the next window",
+				group = "client",
+			}),
+
 			awful.key({ mod.super }, "k", function()
 				awful.client.focus.bydirection("up")
 			end, {
 				description = "focus the window up of the current window",
+				group = "client",
+			}),
+
+			awful.key({ mod.super, mod.alt }, "k", function()
+				awful.client.focus.byidx(-1)
+			end, {
+				description = "focus the previous window",
 				group = "client",
 			}),
 
