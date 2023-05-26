@@ -12,7 +12,7 @@ return {
 		-- Statusline & Cmdline
 		vim.opt.history = 1000 -- Number of commands to remember
 		vim.opt.cmdheight = 1 -- Height of the command bar
-		vim.opt.laststatus = 1 -- Disable the status line
+		vim.opt.laststatus = 2 -- Enable the status line
 		vim.opt.showcmd = true -- Show me keystrokes
 		vim.opt.showmode = true -- Enable showing modes below the statusline
 		vim.opt.ruler = true -- Show cursor position below each window
