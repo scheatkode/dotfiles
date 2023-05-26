@@ -157,7 +157,7 @@ alias 'glop'='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cg
 alias 'glos'='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" --stat'
 alias 'glops'='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" --patch --stat'
 
-alias 'gm'='git merge'
+alias 'gm'='git merge '
 alias 'gma'='git merge --abort'
 
 alias 'gp'='git push'
