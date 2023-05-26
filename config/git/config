@@ -21,7 +21,6 @@
 
 [core]
    editor = nvim
-   pager  = delta
 
 [diff]
 	algorithm = myers
@@ -42,10 +41,6 @@
 	added     = green
 	changed   = yellow
 	untracked = magenta
-
-[delta]
-   line-numbers = true
-   syntax-theme = gruvbox-dark
 
 [alias]
    branches = branch --format='%(color:magenta)%(authorname)%(color:reset) %(HEAD) %(align:right,15)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(contents:subject) %(color:green)(%(committerdate:relative))%(color:reset)' --sort=-committerdate
