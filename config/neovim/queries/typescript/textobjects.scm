@@ -78,6 +78,15 @@
 ;; ```
 (type_arguments (_) @swappable)
 
+;; Type parameters.
+;;
+;; ```typescript
+;; type ValueOf<TData, TOptions> = `${TData[TOptions]}`;
+;; //           ╰───╯  ╰──────╯
+;; //            ╰─ captures ─╯
+;; ```
+(type_parameter) @swappable
+
 ;; Properties in type declarations.
 ;;
 ;; ```typescript
