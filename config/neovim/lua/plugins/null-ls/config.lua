@@ -15,6 +15,7 @@ return {
 						"typescript",
 						"javascript",
 						"svelte",
+						"vue",
 					},
 				}),
 
