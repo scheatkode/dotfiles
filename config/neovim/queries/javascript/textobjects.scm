@@ -47,3 +47,12 @@
 ;; //             ╰─ captures ─╯
 ;; ```
 (array (_) @swappable)
+
+;; Identifiers in named imports.
+;;
+;; ```javascript
+;; import { access, ftruncate } from 'fs'
+;; //       ╰────╯  ╰───────╯
+;; //        ╰─ captures ─╯
+;; ```
+(named_imports (import_specifier) @swappable)
