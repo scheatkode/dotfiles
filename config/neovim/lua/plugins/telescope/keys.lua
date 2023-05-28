@@ -26,6 +26,7 @@ return {
 		-- find files
 		vim.keymap.set("n", "<leader><leader>", pickers.project_or_find_files)
 		vim.keymap.set("n", "<leader>sf", pickers.find_files)
+		vim.keymap.set("n", "<leader>sfc", pickers.git_files)
 		vim.keymap.set("n", "<leader>sF", function()
 			pickers.find_files({ hidden = true, no_ignore = true })
 		end)
@@ -39,7 +40,7 @@ return {
 
 		-- git commit
 		vim.keymap.set("n", "<leader>sgc", pickers.git_commits)
-		vim.keymap.set("n", "<leader>sgf", pickers.git_current_file_commits)
+		vim.keymap.set("n", "<leader>sgcf", pickers.git_current_file_commits)
 		vim.keymap.set("n", "<leader>sgb", pickers.git_branches)
 
 		-- commands
