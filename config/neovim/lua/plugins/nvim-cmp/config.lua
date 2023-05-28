@@ -44,11 +44,6 @@ return {
 				keyword_length = 2,
 			},
 
-			performance = {
-				debounce = 300,
-				throttle = 300,
-			},
-
 			window = {
 				completion = {
 					border = options.borders,
