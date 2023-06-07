@@ -12,7 +12,7 @@ snippet.add_snippets("jinja", {
 			[[
 {%- for <item> in <list> %}
 <body>
-{%- endfor -%}<finish>
+{%- endfor %}<finish>
 			]],
 			{
 				item = i(1, "item"),
