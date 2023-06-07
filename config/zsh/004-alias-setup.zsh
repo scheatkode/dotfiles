@@ -149,6 +149,8 @@ alias 'gcom'='git checkout $(git_main_branch)'
 alias 'gcor'='git checkout --recurse-submodules'
 
 alias 'gd'='git diff'
+alias 'gd!'='git ls-files --exclude-standard | fzf -m --print0 | xargs -0 -o -t git diff'
+alias 'gd!!'='git ls-files --exclude-standard -m | fzf -m --print0 | xargs -0 -o -t git diff'
 alias 'gdca'='git diff --cached'
 alias 'gdcw'='git diff --cached --word-diff'
 alias 'gds'='git diff --staged'
