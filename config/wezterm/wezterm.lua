@@ -200,7 +200,10 @@ local function setup()
 
 	---Predicate that checks whether the current running process is Vim or Neovim.
 	local function is_vi_process(pane)
-		return pane:get_foreground_process_name():find("n?vim") ~= nil
+		local process_name = pane:get_foreground_process_name()
+
+		return process_name:find("n?vim") ~= nil
+			or process_name:find("git") ~= nil
 	end
 
 	---Conditionally activate a pane in the given direction.
