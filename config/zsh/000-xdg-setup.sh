@@ -3,6 +3,7 @@
 #         ░▄▀▄░█░█░█░█░░░▀▀█░█▀▀░░█░░█░█░█▀▀
 #         ░▀░▀░▀▀░░▀▀▀░░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░░
 #
+# shellcheck shell=sh
 
 export            CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export                GOPATH="${XDG_DATA_HOME}/go"

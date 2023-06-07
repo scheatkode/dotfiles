@@ -7,7 +7,10 @@
 
 # load modular configurations
 
-for config ("${ZDOTDIR:-~}"/**/*.zsh) source "${config}"
+for config in "${ZDOTDIR:-~}"/**/*.*sh
+do
+	. "${config}"
+done
 
 # ---------------------------------------------------------------------------- #
 #                                 Word style                                   #
@@ -288,7 +291,7 @@ export FZF_CTRL_R_OPTS="
   --color header:italic
   --header 'Press CTRL-Y to copy command into clipboard'"
 
-# Setpu coloscheme.
+# Setup coloscheme.
 
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 --color=fg:#a89984,bg:-1,hl:#d79921
