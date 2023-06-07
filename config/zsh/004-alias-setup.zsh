@@ -32,15 +32,15 @@ fi
 
 alias 'g'='git'
 
-function git_current_branch() {
-	local ref
-	local ret
-
+git_current_branch() {
 	ref="$(GIT_OPTIONAL_LOCKS=0 command git symbolic-ref --quiet HEAD 2> /dev/null)"
-	ret=${?}
+	ret="${?}"
 
-	if [[ ${ret} != 0 ]]; then
-		if [[ ${ret} = 128 ]]; then
+	if [ "${ret}" != '0' ]; then
+		if [ "${ret}" = '128' ]; then
+			unset ref
+			unset ret
+
 			return # no git repo
 		fi
 
@@ -48,19 +48,23 @@ function git_current_branch() {
 	fi
 
 	echo "${ref#refs/heads/}"
+
+	unset ref
+	unset ret
 }
 
-function git_main_branch() {
-	local ref
-	command git rev-parse --git-dir &>/dev/null || return
+git_main_branch() {
+	command git rev-parse --git-dir >/dev/null 2>&1 || return
 
 	for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk}; do
 		if command git show-ref -q --verify "${ref}"; then
 			echo "${ref:t}"
+			unset ref
 			return
 		fi
 	done
 
+	unset ref
 	echo master
 }
 
@@ -96,7 +100,7 @@ alias 'gbD'='git branch -D'
 alias 'gbnm'='git branch --no-merged'
 alias 'gbr'='git branch --remote'
 
-function gbR() {
+gbR() {
 	if [[ -z "${1}" || -z "${2}" ]]; then
 		echo "Usage: ${0} <old branch> <new branch>"
 		return 1
