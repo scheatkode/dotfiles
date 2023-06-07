@@ -11,17 +11,7 @@ return {
 
 	opts = {
 		preview = {
-			border_chars = {
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-			},
+			border = "none",
 		},
 	},
 }
