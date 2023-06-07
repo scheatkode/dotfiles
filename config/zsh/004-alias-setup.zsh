@@ -3,6 +3,7 @@
 #         ░█▀█░█░░░░█░░█▀█░▀▀█░░░▀▀█░█▀▀░░█░░█░█░█▀▀
 #         ░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░░
 #
+# shellcheck shell=zsh
 
 alias 'vol'='alsamixer'
 alias 'v'='nvim'
@@ -13,9 +14,17 @@ alias 'sudo'='sudo '
 # Bultin alternatives
 #
 
-alias 'cat'='bat'
-alias 'ls'='exa'
-alias 'dig'='dog'
+if command -v bat > /dev/null; then
+	alias 'cat'='bat'
+fi
+
+if command -v exa > /dev/null; then
+	alias 'ls'='exa'
+fi
+
+if command -v dig > /dev/null; then
+	alias 'dig'='dog'
+fi
 
 #
 # Git aliases
