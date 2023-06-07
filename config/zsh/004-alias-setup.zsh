@@ -154,6 +154,7 @@ alias 'gd!!'='git ls-files --exclude-standard -m | fzf -m --print0 | xargs -0 -o
 alias 'gdca'='git diff --cached'
 alias 'gdcw'='git diff --cached --word-diff'
 alias 'gds'='git diff --staged'
+alias 'gdt'='git diff-tree --no-commit-id --name-only -r'
 alias 'gdu'='git diff @{upstream}'
 alias 'gdw'='git diff --word-diff'
 
@@ -174,8 +175,13 @@ alias 'glops'='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %C
 
 alias 'gm'='git merge '
 alias 'gma'='git merge --abort'
+alias 'gmm'='git merge $(git_main_branch)'
+alias 'gmd'='git merge $(git_dev_branch)'
+alias 'gmt'='git mergetool'
 
 alias 'gp'='git push'
+alias 'gpp'='git push origin $(git_current_branch)'
+alias 'gpup'='git push --set-upstream origin $(git_current_branch)'
 alias 'gpd'='git push --dry-run'
 alias 'gp!'='git push --force-with-lease'
 alias 'gp!!'='git push --force'
@@ -188,7 +194,7 @@ alias 'grsu'='git remote set-url'
 alias 'gru'='git remote update'
 alias 'grv'='git remote -v'
 
-alias 'grt'='cd "$(git rev-parse --show-toplevel || echo .)"'
+alias 'groot'='cd "$(git rev-parse --show-toplevel || echo .)"'
 
 alias 'grb'='git rebase'
 alias 'grba'='git rebase --abort'
@@ -199,6 +205,10 @@ alias 'grbd'='git rebase $(git_dev_branch)'
 alias 'grbm'='git rebase $(git_main_branch)'
 alias 'grbo'='git rebase --onto'
 alias 'grbs'='git rebase --skip'
+
+alias 'gcp'='git cherry-pick'
+alias 'gcpa'='git cherry-pick --abort'
+alias 'gcpc'='git cherry-pick --continue'
 
 alias 'grh'='git reset'
 alias 'grhh'='git reset --hard'
@@ -216,6 +226,8 @@ alias 'gsp'='git stash pop'
 alias 'gss'='git stash show'
 alias 'gsps'='git stash list --stat --patch'
 
+alias 'gst'='git status --untracked-files=no'
+alias 'gst!'='git status'
 alias 'gsb'='git status -sb'
 
 alias 'gw'='git worktree'
@@ -223,3 +235,7 @@ alias 'gwa'='git worktree add'
 alias 'gwl'='git worktree list'
 alias 'gwmv'='git worktree move'
 alias 'gwrm'='git worktree remove'
+
+alias 'gfp'='git format-patch'
+alias 'gfpc'='git format-patch --cover-letter'
+alias 'gsm'='git send-email'
