@@ -1,6 +1,9 @@
 return {
 	"nvim-neotest/neotest",
 
+	cmd = {
+		"Neotest",
+	},
 	keys = {
 		"<leader>ct",
 	},
