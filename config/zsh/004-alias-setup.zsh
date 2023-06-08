@@ -7,8 +7,10 @@
 
 alias 'vol'='alsamixer'
 alias 'v'='nvim'
+alias 'j'='jobs'
 alias 'ssh-keyless'='ssh -o PasswordAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no'
 alias 'sudo'='sudo '
+alias 'zy'='zypper'
 
 #
 # Bultin alternatives
