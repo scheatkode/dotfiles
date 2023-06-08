@@ -42,10 +42,21 @@
 	interactive = auto
 	status      = auto
 
+[color "branch"]
+	current  = green
+	local    = white
+	remote   = yellow
+	upstream = blue
+
 [color "status"]
 	added     = green
+	branch    = blue
 	changed   = yellow
+	unmerged  = red
 	untracked = magenta
+
+[status]
+	showStash = true
 
 [alias]
    branches = branch --format='%(color:magenta)%(authorname)%(color:reset) %(HEAD) %(align:right,15)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(contents:subject) %(color:green)(%(committerdate:relative))%(color:reset)' --sort=-committerdate
