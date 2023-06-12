@@ -1,11 +1,12 @@
 [user]
    name       = scheatkode
-   email      = scheatkode@proton.me
+   email      = scheatkode@disroot.org
    signingkey = 8981A760E69A4951!
 
 [commit]
    gpgsign  = true
    cleanup  = strip
+   status   = true
    template = ~/.config/git/message
    verbose  = true
 
@@ -41,19 +42,30 @@
 	diff        = auto
 	interactive = auto
 	status      = auto
+	showBranch = auto
+	ui         = true
 
 [color "branch"]
-	current  = green
+	current  = blue italic
 	local    = white
 	remote   = yellow
-	upstream = blue
+	upstream = green
+
+[color "diff"]
+	meta = white dim
+	frag = yellow
+	old  = red
+	new  = green
 
 [color "status"]
-	added     = green
-	branch    = blue
-	changed   = yellow
-	unmerged  = red
-	untracked = magenta
+	added        = green
+	branch       = blue italic
+	changed      = yellow
+	nobranch     = red italic
+	localBranch  = blue italic
+	remoteBranch = yellow italic
+	unmerged     = red
+	untracked    = magenta
 
 [status]
 	showStash = true
