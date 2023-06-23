@@ -497,19 +497,18 @@ local function generate_highlights(colors, config)
 		healthSuccess = { fg = colors.green },
 		healthWarning = { fg = colors.yellow },
 
-		-- Leap
-		LeapMatch = {
-			fg = colors.fg,
-			bg = colors.neutral_yellow,
+		-- Flash
+		FlashMatch = {
+			fg = colors.neutral_yellow,
 			bold = true,
 		},
-		LeapLabelPrimary = {
+		FlashLabel = {
 			fg = colors.fg,
-			bg = colors.neutral_yellow,
+			bg = colors.neutral_orange,
 			bold = true,
 		},
-		LeapLabelSecondary = { fg = colors.green, bold = true },
-		LeapBackdrop = { fg = colors.fg_comment, italic = true },
+		FlashCurrent = { fg = colors.yellow, bold = true },
+		FlashBackdrop = { fg = colors.fg_comment, italic = true },
 
 		-- vim-sandwich
 		OperatorSandwichAdd = { fg = colors.gray, italic = true },
