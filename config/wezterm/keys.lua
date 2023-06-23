@@ -3,22 +3,6 @@ return {
 		local wt = require("wezterm")
 
 		return {
-			-- Pane splitting
-			{
-				key = "\\",
-				mods = "LEADER",
-				action = wt.action({
-					SplitHorizontal = { domain = "CurrentPaneDomain" },
-				}),
-			},
-			{
-				key = "-",
-				mods = "LEADER",
-				action = wt.action({
-					SplitVertical = { domain = "CurrentPaneDomain" },
-				}),
-			},
-
 			-- Fat fingered aliases
 			{
 				key = "\\",
@@ -35,12 +19,40 @@ return {
 				}),
 			},
 
+			-- Pane splitting
+			{
+				key = "\\",
+				mods = "LEADER",
+				action = wt.action({
+					SplitHorizontal = { domain = "CurrentPaneDomain" },
+				}),
+			},
+			{
+				key = "-",
+				mods = "LEADER",
+				action = wt.action({
+					SplitVertical = { domain = "CurrentPaneDomain" },
+				}),
+			},
+
 			-- Pane zooming
 			{ key = "=", mods = "ALT", action = wt.action.TogglePaneZoomState },
 			{
 				key = "=",
 				mods = "LEADER",
 				action = wt.action.TogglePaneZoomState,
+			},
+
+			-- Pane moving
+			{
+				key = "r",
+				mods = "ALT",
+				action = wt.action.RotatePanes("Clockwise"),
+			},
+			{
+				key = "r",
+				mods = "ALT|SHIFT",
+				action = wt.action.RotatePanes("CounterClockwise"),
 			},
 
 			-- Parkour
