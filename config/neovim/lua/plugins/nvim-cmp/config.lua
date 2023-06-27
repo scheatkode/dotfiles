@@ -64,12 +64,6 @@ return {
 				end,
 			},
 
-			snippet = {
-				expand = function(arguments)
-					snippets.lsp_expand(arguments.body)
-				end,
-			},
-
 			mapping = {
 				["<C-x><C-x>"] = completion.mapping.complete(),
 				["<C-x><C-o>"] = completion.mapping.complete(),
@@ -137,11 +131,33 @@ return {
 					completion.config.compare.exact,
 					completion.config.compare.score,
 
+					-- Better sort completion items that start with one or more
+					-- underlines.
+					function(a, b)
+						local _, a_ = a.completion_item.label:find("^_+")
+						local _, b_ = b.completion_item.label:find("^_+")
+
+						a_ = a_ or 0
+						b_ = b_ or 0
+
+						if a_ > b_ then
+							return false
+						elseif b_ > a_ then
+							return true
+						end
+					end,
+
 					completion.config.compare.kind,
 					completion.config.compare.sort_text,
 					completion.config.compare.length,
 					completion.config.compare.order,
 				},
+			},
+
+			snippet = {
+				expand = function(arguments)
+					snippets.lsp_expand(arguments.body)
+				end,
 			},
 		})
 	end,
