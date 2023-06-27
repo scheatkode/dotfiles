@@ -44,6 +44,12 @@ return {
 				keyword_length = 2,
 			},
 
+			performance = {
+				max_view_entries = 30,
+				async_budget = 100,
+				fetching_timeout = 200,
+			},
+
 			window = {
 				completion = {
 					border = options.borders,
