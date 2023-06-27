@@ -26,5 +26,10 @@ return {
 		jump = {
 			autojump = true,
 		},
+		modes = {
+			char = {
+				enabled = false,
+			},
+		},
 	},
 }
