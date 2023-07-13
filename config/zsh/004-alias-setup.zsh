@@ -145,6 +145,50 @@ alias 'gcs'='git commit -S'
 alias 'gcss'='git commit -S -s'
 alias 'gcssm'='git commit -S -s -m'
 
+# Prepare a commit message.
+gprep () {
+	msgfile="$(git rev-parse --git-dir)/COMMIT_WIPMSG"
+
+	if [ ! -f "${msgfile}" ]
+	then
+		template="$(git config --get commit.template)"
+
+		if [ "${template}" != '' ]
+		then
+			case "${template}" in
+				'~/'*) template="${HOME}/${template##\~/}" ;;
+				*) ;;
+			esac
+
+			cp "${template}" "${msgfile}"
+		fi
+
+		unset template
+	fi
+
+	"${EDITOR:-vi}" "${msgfile}"
+
+	unset msgfile
+}
+
+# Commit with a prepared message.
+gcprep () {
+	msgfile="$(git rev-parse --git-dir)/COMMIT_WIPMSG"
+
+	if [ -f "${msgfile}" ]
+	then
+		if git commit -e -F "${msgfile}" "${@}"
+		then
+			rm "${msgfile}"
+		fi
+	else
+		echo 'No prepared message found, falling back to regular git commit.'
+		git commit "${@}"
+	fi
+
+	unset msgfile
+}
+
 alias 'gcb'='git checkout -b'
 alias 'gco'='git checkout'
 alias 'gcod'='git checkout $(git_dev_branch)'
