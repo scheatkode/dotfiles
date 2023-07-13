@@ -158,7 +158,7 @@ function compress-pdf () {
 }
 
 function __compress-one-pdf () {
-	gs                                            \
+	command gs                                    \
 			-q                                      \
 			-dNOPAUSE                               \
 			-dBATCH                                 \
