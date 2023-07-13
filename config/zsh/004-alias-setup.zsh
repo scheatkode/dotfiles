@@ -88,6 +88,7 @@ alias 'ga'='git add'
 alias 'ga!'='git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 -o -t git add'
 alias 'gaa'='git add --all'
 alias 'gap'='git add --patch'
+alias 'gap!'='git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 -o -t git add --patch'
 alias 'gau'='git add --update'
 alias 'gav'='git add --verbose'
 
