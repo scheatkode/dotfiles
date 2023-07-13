@@ -1,36 +1,9 @@
 #
-#         ░█▀█░█░░░▀█▀░█▀█░█▀▀░░░█▀▀░█▀▀░▀█▀░█░█░█▀█
-#         ░█▀█░█░░░░█░░█▀█░▀▀█░░░▀▀█░█▀▀░░█░░█░█░█▀▀
-#         ░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░░
+#          ░█▀▀░▀█▀░▀█▀
+#          ░█░█░░█░░░█░
+#          ░▀▀▀░▀▀▀░░▀░
 #
-# shellcheck shell=zsh
-
-alias 'vol'='alsamixer'
-alias 'v'='nvim'
-alias 'j'='jobs'
-alias 'ssh-keyless'='ssh -o PasswordAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no'
-alias 'sudo'='sudo '
-alias 'zy'='zypper'
-
-#
-# Bultin alternatives
-#
-
-if command -v bat > /dev/null; then
-	alias 'cat'='bat'
-fi
-
-if command -v exa > /dev/null; then
-	alias 'ls'='exa'
-fi
-
-if command -v dig > /dev/null; then
-	alias 'dig'='dog'
-fi
-
-#
-# Git aliases
-#
+# shellcheck shell=sh
 
 alias 'g'='git'
 
@@ -70,17 +43,18 @@ git_main_branch() {
 	echo master
 }
 
-function git_dev_branch() {
-	local branch
-	command git rev-parse --git-dir &>/dev/null || return
+git_dev_branch() {
+	command git rev-parse --git-dir >/dev/null 2>&1 || return
 
 	for branch in dev devel development; do
 		if command git show-ref -q --verify "refs/heads/${branch}"; then
 			echo "${branch}"
+			unset branch
 			return
 		fi
 	done
 
+	unset branch
 	echo develop
 }
 
@@ -104,7 +78,7 @@ alias 'gbnm'='git branch --no-merged'
 alias 'gbr'='git branch --remote'
 
 gbR() {
-	if [[ -z "${1}" || -z "${2}" ]]; then
+	if [ -z "${1}" ] || [ -z "${2}" ]; then
 		echo "Usage: ${0} <old branch> <new branch>"
 		return 1
 	fi
