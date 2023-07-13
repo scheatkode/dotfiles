@@ -1,0 +1,81 @@
+#!/usr/bin/env -S awk -E
+
+BEGIN {
+	split("0123456789abcdefghijklmnopqrstuvwxyz -", alphabet, "");
+
+	for (i in alphabet) {
+		font[alphabet[i]][0] = "";
+	}
+
+	split("░▄▀▄x░█/█x░░▀░",   font["0"], "x");
+	split("░▀█░x░░█░x░▀▀▀",   font["1"], "x");
+	split("░▀▀▄x░▄▀░x░▀▀▀",   font["2"], "x");
+	split("░▀▀█x░░▀▄x░▀▀░",   font["3"], "x");
+	split("░█░█x░░▀█x░░░▀",   font["4"], "x");
+	split("░█▀▀x░▀▀▄x░▀▀░",   font["5"], "x");
+	split("░▄▀▀x░█▀▄x░░▀░",   font["6"], "x");
+	split("░▀▀█x░▄▀░x░▀░░",   font["7"], "x");
+	split("░▄▀▄x░▄▀▄x░░▀░",   font["8"], "x");
+	split("░▄▀▄x░░▀█x░▀▀░",   font["9"], "x");
+	split("░█▀█x░█▀█x░▀░▀",   font["a"], "x");
+	split("░█▀▄x░█▀▄x░▀▀░",   font["b"], "x");
+	split("░█▀▀x░█░░x░▀▀▀",   font["c"], "x");
+	split("░█▀▄x░█░█x░▀▀░",   font["d"], "x");
+	split("░█▀▀x░█▀▀x░▀▀▀",   font["e"], "x");
+	split("░█▀▀x░█▀▀x░▀░░",   font["f"], "x");
+	split("░█▀▀x░█░█x░▀▀▀",   font["g"], "x");
+	split("░█░█x░█▀█x░▀░▀",   font["h"], "x");
+	split("░▀█▀x░░█░x░▀▀▀",   font["i"], "x");
+	split("░▀▀█x░░░█x░▀▀░",   font["j"], "x");
+	split("░█░█x░█▀▄x░▀░▀",   font["k"], "x");
+	split("░█░░x░█░░x░▀▀▀",   font["l"], "x");
+	split("░█▄█x░█░█x░▀░▀",   font["m"], "x");
+	split("░█▀█x░█░█x░▀░▀",   font["n"], "x");
+	split("░█▀█x░█░█x░▀▀▀",   font["o"], "x");
+	split("░█▀█x░█▀▀x░▀░░",   font["p"], "x");
+	split("░▄▀▄x░█\\█x░░▀\\", font["q"], "x");
+	split("░█▀▄x░█▀▄x░▀░▀",   font["r"], "x");
+	split("░█▀▀x░▀▀█x░▀▀▀",   font["s"], "x");
+	split("░▀█▀x░░█░x░░▀░",   font["t"], "x");
+	split("░█░█x░█░█x░▀▀▀",   font["u"], "x");
+	split("░█░█x░▀▄▀x░░▀░",   font["v"], "x");
+	split("░█░█x░█▄█x░▀░▀",   font["w"], "x");
+	split("░█░█x░▄▀▄x░▀░▀",   font["x"], "x");
+	split("░█░█x░░█░x░░▀░",   font["y"], "x");
+	split("░▀▀█x░▄▀░x░▀▀▀",   font["z"], "x");
+	split("░░x░░x░░",         font[" "], "x");
+	split("░░░░x░▀▀▀x░░░░",   font["-"], "x");
+
+	for (i = 1; i < ARGC; i++) {
+		words = words " " ARGV[i];
+		delete ARGV[i];
+	}
+
+	sub(/^ /, "", words);
+
+	if (!system("[ -t 0 ]")) {
+		exit;
+	}
+}
+
+function process_line(line) {
+   len = split(line, characters, "");
+
+   for ( i = 1; i <= 3 ; i ++ ) {
+      for ( j = 1; j <= len ; j ++ ) {
+         printf font[characters[j]][i];
+      }
+
+      printf "\n";
+   }
+}
+
+{
+	process_line($0);
+}
+
+END {
+	if ( words !~ /^ *$/) {
+		process_line(words);
+	}
+}
