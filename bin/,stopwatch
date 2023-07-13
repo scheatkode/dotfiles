@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+set -u
+
+start="$(date '+%s')"
+
+duration() {
+	printf '\r%s\r' "$(date -u -d "@$(($(date '+%s') - start))" '+%T')"
+}
+
+stopwatch() {
+	while true; do
+		duration
+		sleep 0.2
+	done
+}
+
+cleanup() {
+	duration
+	unset cleanup
+	unset display_duration
+	unset start
+	unset stopwatch
+}
+
+trap cleanup EXIT
+
+stopwatch
