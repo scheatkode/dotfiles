@@ -228,8 +228,8 @@ alias 'gsp'='git stash pop'
 alias 'gss'='git stash show'
 alias 'gsps'='git stash list --stat --patch'
 
-alias 'gst'='git status --untracked-files=no'
-alias 'gst!'='git status'
+alias 'gs'='git status --untracked-files=no'
+alias 'gs!'='git status'
 alias 'gsb'='git status -sb'
 
 alias 'gw'='git worktree'
