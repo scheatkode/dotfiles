@@ -23,12 +23,19 @@ git_current_branch() (
 )
 
 git_main_branch() (
+	_dot_void command git rev-parse --git-dir || return
 
-	command git rev-parse --git-dir >/dev/null 2>&1 || return
+	refs='refs/heads/main refs/heads/trunk'
 
-	for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk}; do
+	for remote in $(command git remote --no-verbose); do
+		for branch in main trunk; do
+			refs="${refs} refs/remotes/${remote}/${branch}"
+		done
+	done
+
+	for ref in $(_dot_split "${refs}" ' '); do
 		if command git show-ref -q --verify "${ref}"; then
-			echo "${ref:t}"
+			echo "${ref##*/}"
 			return
 		fi
 	done
