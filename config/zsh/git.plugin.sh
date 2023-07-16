@@ -7,7 +7,7 @@
 
 alias 'g'='git'
 
-git_current_branch() (
+_dot_git_current_branch() (
 	ref="$(GIT_OPTIONAL_LOCKS=0 command git symbolic-ref --quiet HEAD 2> /dev/null)"
 	ret="${?}"
 
@@ -22,7 +22,7 @@ git_current_branch() (
 	echo "${ref#refs/heads/}"
 )
 
-git_main_branch() (
+_dot_git_main_branch() (
 	_dot_void command git rev-parse --git-dir || return
 
 	refs='refs/heads/main refs/heads/trunk'
@@ -43,7 +43,7 @@ git_main_branch() (
 	echo master
 )
 
-git_dev_branch() (
+_dot_git_dev_branch() (
 	command git rev-parse --git-dir >/dev/null 2>&1 || return
 
 	for branch in dev devel development; do
@@ -70,10 +70,11 @@ alias 'gap3'='git apply --3way'
 alias 'gb'='git branch'
 alias 'gba'='git branch -a'
 alias 'gbd'='git branch -d'
-alias 'gbda'='git branch --no-color --merged | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | command xargs git branch -d 2>/dev/null'
+alias 'gbda'='git branch --no-color --merged | command grep -vE "^([+*]|\s*($(_dot_git_main_branch)|$(_dot_git_dev_branch))\s*$)" | command xargs git branch -d 2>/dev/null'
 alias 'gbD'='git branch -D'
 alias 'gbnm'='git branch --no-merged'
 alias 'gbr'='git branch --remote'
+alias 'gbup'='git branch --set-upstream-to origin/$(_dot_git_current_branch) $(_dot_git_current_branch)'
 
 gbR() {
 	if [ -z "${1}" ] || [ -z "${2}" ]; then
@@ -163,8 +164,8 @@ gcprep () {
 
 alias 'gcb'='git checkout -b'
 alias 'gco'='git checkout'
-alias 'gcod'='git checkout $(git_dev_branch)'
-alias 'gcom'='git checkout $(git_main_branch)'
+alias 'gcod'='git checkout $(_dot_git_dev_branch)'
+alias 'gcom'='git checkout $(_dot_git_main_branch)'
 alias 'gcor'='git checkout --recurse-submodules'
 
 alias 'gd'='git diff'
@@ -194,13 +195,13 @@ alias 'glops'='git log --graph --pretty="%C(green)%H%C(red)%d%n%C(bold)%C(reset)
 
 alias 'gm'='git merge '
 alias 'gma'='git merge --abort'
-alias 'gmm'='git merge $(git_main_branch)'
-alias 'gmd'='git merge $(git_dev_branch)'
+alias 'gmm'='git merge $(_dot_git_main_branch)'
+alias 'gmd'='git merge $(_dot_git_dev_branch)'
 alias 'gmt'='git mergetool'
 
 alias 'gp'='git push'
-alias 'gpp'='git push origin $(git_current_branch)'
-alias 'gpup'='git push --set-upstream origin $(git_current_branch)'
+alias 'gpp'='git push origin $(_dot_git_current_branch)'
+alias 'gpup'='git push --set-upstream origin $(_dot_git_current_branch)'
 alias 'gpd'='git push --dry-run'
 alias 'gp!'='git push --force-with-lease'
 alias 'gp!!'='git push --force'
@@ -222,8 +223,8 @@ alias 'grbc!'='GIT_EDITOR=true git rebase --continue'
 alias 'grbe'='git rebase --edit-todo'
 alias 'grbi'='git rebase -i'
 alias 'grbis'='git rebase -i --autosquash'
-alias 'grbd'='git rebase $(git_dev_branch)'
-alias 'grbm'='git rebase $(git_main_branch)'
+alias 'grbd'='git rebase $(_dot_git_dev_branch)'
+alias 'grbm'='git rebase $(_dot_git_main_branch)'
 alias 'grbo'='git rebase --onto'
 alias 'grbs'='git rebase --skip'
 
@@ -233,7 +234,7 @@ alias 'gcpc'='git cherry-pick --continue'
 
 alias 'grh'='git reset'
 alias 'grhh'='git reset --hard'
-alias 'grho'='git reset origin/$(git_current_branch) --hard'
+alias 'grho'='git reset origin/$(_dot_git_current_branch) --hard'
 
 alias 'grm'='git rm'
 alias 'grmc'='git rm --cached'
