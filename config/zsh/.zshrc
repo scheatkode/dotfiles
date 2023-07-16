@@ -5,6 +5,7 @@
 #
 # shellcheck shell=sh
 
+. "${ZDOTDIR}"/functions.include.sh
 . "${ZDOTDIR}"/init.config.zsh
 . "${ZDOTDIR}"/main.config.zsh
 . "${ZDOTDIR}"/zinit.plugin.zsh
