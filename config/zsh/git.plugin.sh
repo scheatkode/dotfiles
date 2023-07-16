@@ -56,11 +56,23 @@ _dot_git_dev_branch() (
 	echo develop
 )
 
+_dot_git_super_add() {
+	git ls-files --deleted --modified --other --exclude-standard \
+		| fzf --exit-0 --multi --preview 'git diff --color=always {-1}' \
+		| xargs -r0 git add
+}
+
+_dot_git_super_add_patch() {
+	git ls-files --deleted --modified --other --exclude-standard \
+		| fzf --exit-0 --multi --preview 'git diff --color=always {-1}' \
+		| xargs -r0 git add --patch
+}
+
 alias 'ga'='git add'
-alias 'ga!'='git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 -o -t git add'
+alias 'ga!'='_dot_git_super_add'
 alias 'gaa'='git add --all'
 alias 'gap'='git add --patch'
-alias 'gap!'='git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 -o -t git add --patch'
+alias 'gap!'='_dot_git_super_add_patch'
 alias 'gau'='git add --update'
 alias 'gav'='git add --verbose'
 
@@ -99,6 +111,13 @@ alias 'gbss'='git bisect start'
 
 alias 'gcl'='git clone --recurse-submodules'
 
+_dot_git_super_fixup() {
+	command git log --oneline --no-decorate --no-merges \
+		| fzf --exit-0 --preview 'git show --color=always --format=oneline {1}' \
+		| cut -d' ' -f1 \
+		| xargs -r git commit -v "${@}" --fixup
+}
+
 alias 'gc'='git commit -v'
 alias 'gc!'='git commit -v --amend'
 alias 'gc!!'='git commit -v --amend --no-edit'
@@ -113,6 +132,7 @@ alias 'gcsm'='git commit -s -m'
 alias 'gcas'='git commit -a -s'
 alias 'gcasm'='git commit -a -s -m'
 alias 'gcf'='git commit -v --fixup'
+alias 'gcf!'='_dot_git_super_fixup'
 alias 'gcm'='git commit -m'
 alias 'gcs'='git commit -S'
 alias 'gcss'='git commit -S -s'
@@ -239,6 +259,13 @@ alias 'grho'='git reset origin/$(_dot_git_current_branch) --hard'
 alias 'grm'='git rm'
 alias 'grmc'='git rm --cached'
 
+_dot_git_super_stash_pop() {
+	git stash list \
+		| fzf --exit-0 --preview 'git show --pretty=oneline --color=always --patch "$(echo {} | cut -d: -f1)"' \
+		| cut -d: -f1 \
+		| xargs -r git stash pop
+}
+
 alias 'gsu'='git stash push'
 alias 'gsa'='git stash apply'
 alias 'gsc'='git stash clear'
@@ -246,6 +273,7 @@ alias 'gsd'='git stash drop'
 alias 'gsl'='git stash list --pretty="%C(yellow)%gd%C(reset): %C(green)%cr %C(reset)%s"'
 alias 'gslp'='git stash list --patch'
 alias 'gsp'='git stash pop'
+alias 'gsp!'='_dot_git_super_stash_pop'
 alias 'gss'='git stash show'
 alias 'gssp'='git stash show --patch'
 alias 'gsps'='git stash list --stat --patch'
