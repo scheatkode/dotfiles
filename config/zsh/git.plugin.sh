@@ -7,56 +7,47 @@
 
 alias 'g'='git'
 
-git_current_branch() {
+git_current_branch() (
 	ref="$(GIT_OPTIONAL_LOCKS=0 command git symbolic-ref --quiet HEAD 2> /dev/null)"
 	ret="${?}"
 
 	if [ "${ret}" != '0' ]; then
 		if [ "${ret}" = '128' ]; then
-			unset ref
-			unset ret
-
-			return # no git repo
+			return # not a git repository
 		fi
 
 		ref="$(GIT_OPTIONAL_LOCKS=0 command git rev-parse --short HEAD 2> /dev/null)" || return
 	fi
 
 	echo "${ref#refs/heads/}"
+)
 
-	unset ref
-	unset ret
-}
+git_main_branch() (
 
-git_main_branch() {
 	command git rev-parse --git-dir >/dev/null 2>&1 || return
 
 	for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk}; do
 		if command git show-ref -q --verify "${ref}"; then
 			echo "${ref:t}"
-			unset ref
 			return
 		fi
 	done
 
-	unset ref
 	echo master
-}
+)
 
-git_dev_branch() {
+git_dev_branch() (
 	command git rev-parse --git-dir >/dev/null 2>&1 || return
 
 	for branch in dev devel development; do
 		if command git show-ref -q --verify "refs/heads/${branch}"; then
 			echo "${branch}"
-			unset branch
 			return
 		fi
 	done
 
-	unset branch
 	echo develop
-}
+)
 
 alias 'ga'='git add'
 alias 'ga!'='git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 -o -t git add'
