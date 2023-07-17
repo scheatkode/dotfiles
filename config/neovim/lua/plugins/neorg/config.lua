@@ -23,18 +23,16 @@ return {
 					config = {
 						icons = {
 							heading = {
-								level_1 = { enabled = true, icon = "█" },
-								level_2 = { enabled = true, icon = "██" },
-								level_3 = { enabled = true, icon = "███" },
-								level_4 = { enabled = true, icon = "████" },
-								level_5 = { enabled = true, icon = "█████" },
-								level_6 = {
-									enabled = true,
-									icon = "██████",
+								icons = {
+									"█",
+									"█",
+									"█",
+									"█",
+									"█",
+									"█",
 								},
 							},
 							todo = {
-								enable = true,
 								pending = {
 									icon = "",
 								},
@@ -64,17 +62,21 @@ return {
 
 				["core.keybinds"] = {
 					config = {
-						default_keybinds = false,
-						neorg_leader = "<leader>o",
+						default_keybinds = true,
+						neorg_leader = "<localleader>",
 					},
 				},
 
 				["core.dirman"] = {
 					config = {
 						workspaces = {
-							brain = "~/brain",
+							brain = "~/brain/agenda",
 						},
 					},
+				},
+
+				["core.itero"] = {
+					config = {},
 				},
 
 				["core.qol.toc"] = {
