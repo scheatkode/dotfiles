@@ -3,26 +3,6 @@ return {
 		local extensions = require("lsp.extensions")
 
 		return function(client, bufnr, _)
-			-- go to declaration
-			vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, {
-				buffer = bufnr,
-				desc = "Go to declaration",
-			})
-			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {
-				buffer = bufnr,
-				desc = "Go to declaration",
-			})
-
-			-- go to definition
-			vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {
-				buffer = bufnr,
-				desc = "Go to definition",
-			})
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
-				buffer = bufnr,
-				desc = "Go to definition",
-			})
-
 			-- go to type definition
 			vim.keymap.set("n", "<leader>cT", vim.lsp.buf.type_definition, {
 				buffer = bufnr,
