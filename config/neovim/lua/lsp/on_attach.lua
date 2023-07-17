@@ -2,7 +2,7 @@ return {
 	setup = function()
 		local extensions = require("lsp.extensions")
 
-		return function(client, bufnr, _)
+		return function(_, bufnr, _)
 			-- go to type definition
 			vim.keymap.set("n", "<leader>cT", vim.lsp.buf.type_definition, {
 				buffer = bufnr,
@@ -90,10 +90,15 @@ return {
 			})
 
 			-- workspace management
-			vim.keymap.set("n", "<leader>cwa", vim.lsp.buf.add_workspace_folder, {
-				buffer = bufnr,
-				desc = "Add folder to workspace",
-			})
+			vim.keymap.set(
+				"n",
+				"<leader>cwa",
+				vim.lsp.buf.add_workspace_folder,
+				{
+					buffer = bufnr,
+					desc = "Add folder to workspace",
+				}
+			)
 			vim.keymap.set(
 				"n",
 				"<leader>cwd",
@@ -103,10 +108,15 @@ return {
 					desc = "Remove folder from workspace",
 				}
 			)
-			vim.keymap.set("n", "<leader>cwl", vim.lsp.buf.list_workspace_folders, {
-				buffer = bufnr,
-				desc = "Remove folder from workspace",
-			})
+			vim.keymap.set(
+				"n",
+				"<leader>cwl",
+				vim.lsp.buf.list_workspace_folders,
+				{
+					buffer = bufnr,
+					desc = "Remove folder from workspace",
+				}
+			)
 
 			-- code formatting
 
@@ -132,10 +142,6 @@ return {
 				})
 			end
 
-			vim.keymap.set({ "n", "x" }, "<leader>cf", format, {
-				buffer = bufnr,
-				desc = "Format code in current buffer",
-			})
 			vim.keymap.set({ "n", "x" }, "<leader>=", format, {
 				buffer = bufnr,
 				desc = "Format code in current buffer",
