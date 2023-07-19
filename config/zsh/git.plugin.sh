@@ -63,9 +63,12 @@ _dot_git_super_add() {
 }
 
 _dot_git_super_add_patch() {
-	git ls-files --deleted --modified --other --exclude-standard \
-		| fzf --exit-0 --multi --preview 'git diff --color=always {-1}' \
-		| xargs -r0 git add --patch
+	# No need to be so strict here.
+	# shellcheck disable=2312,2046
+	git add --patch $(
+		git ls-files --deleted --modified --other --exclude-standard \
+		| fzf --exit-0 --multi --preview 'git diff --color=always {-1}'
+	)
 }
 
 alias 'ga'='git add'
