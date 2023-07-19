@@ -220,6 +220,7 @@ local function generate_highlights(colors, config)
 		User2 = { fg = colors.aqua, bg = colors.bg_dim },
 		User3 = { fg = colors.yellow, bg = colors.bg_dim },
 		User4 = { fg = colors.orange, bg = colors.bg_dim },
+		User5 = { fg = colors.red, bg = colors.bg_dim },
 
 		Constant = { fg = colors.purple },
 		String = { fg = colors.neutral_green, italic = true },

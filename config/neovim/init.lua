@@ -42,3 +42,5 @@ require("colors").load("gruvbox")
 
 require("diagnostics").setup()
 require("plugman").setup()
+
+require("user.plugins.statusline").setup()
