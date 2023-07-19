@@ -20,6 +20,9 @@
 [rebase]
    autoStash = true
 
+[rerere]
+	enabled = true
+
 [core]
    editor = nvim
 
