@@ -29,5 +29,7 @@ return {
 			"start",
 			"indent",
 		}
+
+		vim.opt.matchpairs:append("<:>")
 	end,
 }
