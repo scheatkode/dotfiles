@@ -27,7 +27,7 @@
    editor = nvim
 
 [diff]
-	algorithm = myers
+	algorithm = patience
 
 [merge]
 	tool = nvimdiff
