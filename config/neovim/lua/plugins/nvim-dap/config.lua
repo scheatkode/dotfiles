@@ -1,35 +1,35 @@
 return {
 	setup = function()
 		vim.fn.sign_define("DapBreakpoint", {
-			text = "",
+			text = " ",
 			texthl = "Error",
 			linehl = "",
 			numhl = "",
 		})
 
 		vim.fn.sign_define("DapBreakpointCondition", {
-			text = "ﳁ",
+			text = " ",
 			texthl = "Question",
 			linehl = "",
 			numhl = "",
 		})
 
 		vim.fn.sign_define("DapBreakpointRejected", {
-			text = "",
+			text = " ",
 			texthl = "Warning",
 			linehl = "",
 			numhl = "",
 		})
 
 		vim.fn.sign_define("DapStopped", {
-			text = "▶",
+			text = " ",
 			texthl = "Success",
 			linehl = "CursorLine",
 			numhl = "",
 		})
 
 		vim.fn.sign_define("DapLogPoint", {
-			text = "",
+			text = " ",
 			texthl = "Question",
 			linehl = "",
 			numhl = "",
@@ -45,6 +45,10 @@ return {
 
 			if type(settings.setup) == "function" then
 				settings.setup()
+			end
+
+			for adapter, conf in pairs(settings.adapters or {}) do
+				dap.adapters[adapter] = conf
 			end
 
 			dap.adapters[name] = settings.adapter
