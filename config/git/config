@@ -1,37 +1,36 @@
 [user]
-   name       = scheatkode
-   email      = scheatkode@disroot.org
-   signingkey = 8981A760E69A4951!
+	name       = scheatkode
+	email      = scheatkode@disroot.org
+	signingkey = 8981A760E69A4951!
 
 [commit]
-   gpgsign  = true
-   cleanup  = strip
-   status   = true
-   template = ~/.config/git/message
-   verbose  = true
+	gpgsign  = true
+	cleanup  = strip
+	status   = true
+	template = ~/.config/git/message
+	verbose  = true
 
 [push]
-   default = current
+	default = current
 
 [pull]
-   ff     = only
-   rebase = true
+	rebase = true
+
+[merge]
+	tool = nvimdiff
 
 [rebase]
-   autoStash = true
 	autosquash = true
+	autostash  = true
 
 [rerere]
 	enabled = true
 
 [core]
-   editor = nvim
+	editor = nvim
 
 [diff]
 	algorithm = patience
-
-[merge]
-	tool = nvimdiff
 
 [advice]
 	addEmptyPathspec = false
@@ -41,8 +40,8 @@
 	diff        = auto
 	interactive = auto
 	status      = auto
-	showBranch = auto
-	ui         = true
+	showbranch  = auto
+	ui          = true
 
 [color "branch"]
 	current  = blue italic
@@ -61,19 +60,19 @@
 	branch       = blue italic
 	changed      = yellow
 	nobranch     = red italic
-	localBranch  = blue italic
-	remoteBranch = yellow italic
+	localbranch  = blue italic
+	remotebranch = yellow italic
 	unmerged     = red
 	untracked    = magenta
 
 [status]
-	showStash = true
+	showstash = true
 
 [alias]
-   branches = branch --format='%(color:magenta)%(authorname)%(color:reset) %(HEAD) %(align:right,15)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(contents:subject) %(color:green)(%(committerdate:relative))%(color:reset)' --sort=-committerdate
-   last     = log -1 HEAD --stat
-   unstage  = reset HEAD --
-   uncommit = reset HEAD^
+	branches = branch --format='%(color:magenta)%(authorname)%(color:reset) %(HEAD) %(align:right,15)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(contents:subject) %(color:green)(%(committerdate:relative))%(color:reset)' --sort=-committerdate
+	last     = log -1 HEAD --stat
+	unstage  = reset HEAD --
+	uncommit = reset HEAD^
 
 	d = "!sh ~/.config/git/alias d"
 	s = "!sh ~/.config/git/alias s"
