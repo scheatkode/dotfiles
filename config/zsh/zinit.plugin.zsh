@@ -100,7 +100,10 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
        mv:'d2*/bin/d2 -> d2'                               \
          @terrastruct/d2                                   \
     bpick:'*linux*64*gz'                                   \
-         @muesli/duf
+         @muesli/duf                                       \
+    bpick:'*static*linux*amd64*'                           \
+       mv:'usql_static -> usql'                            \
+         @xo/usql
 
 zinit wait:'1b' silent from:gh-r as:program for \
      pick:'imsnif/bandwhich'                    \
