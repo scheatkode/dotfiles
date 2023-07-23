@@ -146,6 +146,14 @@ return {
 							query = "@block.inner",
 							desc = "Select inside block region",
 						},
+						["ac"] = {
+							query = "@call.outer",
+							desc = "Select around call expression",
+						},
+						["ic"] = {
+							query = "@call.inner",
+							desc = "Select inside call expression",
+						},
 						["aC"] = {
 							query = "@class.outer",
 							desc = "Select around class region",
@@ -185,6 +193,14 @@ return {
 						["iP"] = {
 							query = "@parameter.inner",
 							desc = "Select inside parameter region",
+						},
+						["aS"] = {
+							query = "@statement.outer",
+							desc = "Select around statement",
+						},
+						["iS"] = {
+							query = "@statement.inner",
+							desc = "Select inside statement",
 						},
 						["af"] = {
 							query = "@function.outer",
