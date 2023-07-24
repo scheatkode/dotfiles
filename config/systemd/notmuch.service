@@ -1,0 +1,9 @@
+[Unit]
+Description=Mail indexer cleanup service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/notmuch compress
+
+[Install]
+WantedBy=default.target

@@ -5,6 +5,7 @@ Description=Mailbox synchronization service
 Type=oneshot
 ExecStartPre=/bin/sh -c 'exec ~/bin/mail-create-maildirs ${HOME}/.config/isync/mbsyncrc'
 ExecStart=/usr/bin/mbsync -c ${HOME}/.config/isync/mbsyncrc -a
+ExecStartPost=/usr/bin/notmuch new
 
 [Install]
 WantedBy=default.target

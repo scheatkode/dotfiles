@@ -1,0 +1,10 @@
+[Unit]
+Description=Mail indexer cleanup timer
+
+[Timer]
+OnCalendar=weekly
+Persistent=True
+Unit=notmuch.service
+
+[Install]
+WantedBy=timers.target
