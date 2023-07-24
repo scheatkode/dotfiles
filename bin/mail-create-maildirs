@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Create Maildir folders on disk, using the parameter (mbsync's config file)
+# as source of truth.
+
+set -e
+set -u
+
+create() (
+	sed -n 's|^Path \(.\+\)/$|\1|p' "${1}" | while read -r filename; do
+		case "${filename}" in
+			~*) filename="${HOME}${filename##\~}" ;;
+			*) ;;
+		esac
+
+		mkdir -p "${filename}"
+	done
+)
+
+create "${@}"
