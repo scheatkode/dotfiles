@@ -9,7 +9,7 @@ let s:keepcpo = &cpo
 set cpo&vim
 
 syntax match mbserror    /.*/
-syntax match mbscomment /^#.*$/ contains=@Spell
+syntax match mbscomment /^#.*$/ contains=@Spell,@spell
 
 " -- Properties
 syntax match   mbsnumber        /[0-9]\+/ display contained
