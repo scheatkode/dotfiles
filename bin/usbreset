@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+
+"""
+# usbreset
+
+Headphones be like: *« I'mma bring you back to 1970 where mono was still the
+$h!t »*
+
+This is me wasting 15 minutes because I’m too lazy to get up and remove the
+headphone USB cable for the fourth time today.
+
+This is me wasting another 15 minutes rewriting in Python because I don't want
+to think about setting up a CMake build pipeline in my dotfiles.
+
+```bash
+❯ lsusb
+Bus 002 Device 001: ID xxxx:xxxx Linux Foundation 3.0 root hub
+Bus 001 Device 004: ID xxxx:xxxx Genesys Logic, Inc. Hub
+Bus 001 Device 003: ID xxxx:xxxx MOSART Semi. 2.4G Wireless Mouse
+Bus 001 Device 002: ID xxxx:xxxx Logitech, Inc. Keyboard K120
+Bus 001 Device 007: ID xxxx:xxxx Intel Corp. AX201 Bluetooth
+Bus 001 Device 006: ID xxxx:xxxx ASUSTek Computer, Inc. AURA LED Controller
+```
+
+Then do your thing, simple as that.
+
+```bash
+❯ sudo ./usbreset /dev/bus/usb/002/001
+```
+"""
+
+
+import argparse
+import fcntl
+import os
+import platform
+import sys
+
+
+def linux_usbdevfs_reset(*, device: str) -> None:
+    """
+    Use an IOCTL syscall to send USBDEVFS_RESET to a USB device on Linux
+    systems.
+
+    :param device: The device path to the USB device (under /dev/bus/usb/).
+    """
+
+    # Equivalent of the `_IO('U', 20)` constant in the Linux kernel.
+    USBDEVFS_RESET = ord("U") << (4 * 2) | 20
+
+    with open(device, "w", os.O_WRONLY) as f:
+        fcntl.ioctl(f, USBDEVFS_RESET, 0)
+
+
+def main(argv: list[str] = sys.argv[1:]) -> int:
+    """
+    The main entrypoint.
+
+    Parses command line arguments and dispatches the main program logic.
+    """
+    parser = argparse.ArgumentParser(
+        prog="usbreset",
+        description="a utility sending a usb port reset signal to a usb device",
+    )
+    parser.add_argument("device", type=str)
+
+    args = {k: v for k, v in vars(parser.parse_args(argv)).items() if v is not None}
+    errcode = None
+
+    try:
+        match platform.system():
+            case "Linux":
+                linux_usbdevfs_reset(**args)
+            case _:
+                raise Exception(f"Unsupported system {platform.system()}")
+    except Exception as e:
+        print(e)
+        errcode = 1
+        pass
+    else:
+        return 0
+
+    return errcode or -1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
