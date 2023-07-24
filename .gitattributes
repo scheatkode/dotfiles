@@ -18,6 +18,7 @@ config/gmailctl/**        diff=git-crypt filter=git-crypt
 config/gpg/**             diff=git-crypt filter=git-crypt
 config/isync/**           diff=git-crypt filter=git-crypt
 config/keepassxc/**       diff=git-crypt filter=git-crypt
+config/msmtp/**           diff=git-crypt filter=git-crypt
 config/remmina/**         diff=git-crypt filter=git-crypt
 config/ssh/**             diff=git-crypt filter=git-crypt
 
