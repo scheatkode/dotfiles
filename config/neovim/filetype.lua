@@ -15,12 +15,12 @@ vim.filetype.add({
 -- Language: Bazel/Please build definition file
 vim.filetype.add({
 	filename = {
-		["BUILD"] = "python.bzl",
+		["BUILD"] = "starlark",
 	},
 	pattern = {
-		[".*%.build_defs"] = "python.bzl",
-		[".*%.bzl"] = "python.bzl",
-		["BUILD%..*"] = "python.bzl",
+		[".*%.build_defs"] = "starlark",
+		[".*%.bzl"] = "starlark",
+		["BUILD%..*"] = "starlark",
 	},
 })
 
