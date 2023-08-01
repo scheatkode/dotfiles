@@ -21,6 +21,8 @@
 . "${ZDOTDIR}"/fzf.plugin.sh
 . "${ZDOTDIR}"/zoxide.plugin.sh
 
+. "${ZDOTDIR}"/fun.plugin.sh
+
 # shellcheck disable=3006
 # this is interpreted by zsh anyway
 (( ! ${+functions[p10k]} )) || p10k finalize
