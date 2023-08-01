@@ -1,39 +1,25 @@
 return {
 	setup = function()
-		vim.fn.sign_define("DapBreakpoint", {
-			text = " ",
-			texthl = "Error",
-			linehl = "",
-			numhl = "",
-		})
+		local signs = {
+			DapBreakpoint = { text = " ", texthl = "Error" },
+			DapBreakpointCondition = { text = " ", texthl = "Question" },
+			DapBreakpointRejected = { text = " ", texthl = "Warning" },
+			DapLogPoint = { text = " ", texthl = "Question" },
+			DapStopped = {
+				text = " ",
+				texthl = "Success",
+				linehl = "CursorLine",
+			},
+		}
 
-		vim.fn.sign_define("DapBreakpointCondition", {
-			text = " ",
-			texthl = "Question",
-			linehl = "",
-			numhl = "",
-		})
-
-		vim.fn.sign_define("DapBreakpointRejected", {
-			text = " ",
-			texthl = "Warning",
-			linehl = "",
-			numhl = "",
-		})
-
-		vim.fn.sign_define("DapStopped", {
-			text = " ",
-			texthl = "Success",
-			linehl = "CursorLine",
-			numhl = "",
-		})
-
-		vim.fn.sign_define("DapLogPoint", {
-			text = " ",
-			texthl = "Question",
-			linehl = "",
-			numhl = "",
-		})
+		for sign, opts in pairs(signs) do
+			vim.fn.sign_define(sign, {
+				text = opts.text,
+				texthl = opts.texthl,
+				linehl = opts.linehl or "",
+				numhl = opts.numhl or "",
+			})
+		end
 
 		local dap = require("dap")
 
