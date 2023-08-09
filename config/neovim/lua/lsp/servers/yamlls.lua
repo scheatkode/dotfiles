@@ -1,14 +1,15 @@
-local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+return function()
+	local lookup = require("lsp.utilities.find_ancestor")
 
-if not has_lspconfig then
-	print("‼ Tried loading lspconfig for yamlls ... unsuccessfully.")
-	return has_lspconfig
+	return {
+		autostart = false,
+
+		filetypes = {
+			"yaml",
+		},
+
+		root_dir = lookup(".git"),
+
+		single_file_support = true,
+	}
 end
-
--- TODO(scheatkode): Add autoinstall with spinner animation
-
-return {
-	autostart = false,
-	filetypes = { "yaml" },
-	root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
-}

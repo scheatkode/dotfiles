@@ -1,26 +1,27 @@
-local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+return function()
+	local lookup = require("lsp.utilities.find_ancestor")
 
-if not has_lspconfig then
-	print("‼ Tried loading lspconfig for svelte ... unsuccessfully.")
-	return has_lspconfig
-end
-
--- TODO(scheatkode): Add autoinstall with spinner animation
-
-return {
-	filetypes = {
-		"svelte",
-	},
-
-	root_dir = lspconfig.util.root_pattern(
-		".git",
-		"svelte.config.js",
-		"package.json"
-	),
-
-	settings = {
-		svelte = {
-			["enable-ts-plugin"] = true,
+	return {
+		filetypes = {
+			"svelte",
 		},
-	},
-}
+
+		root_dir = lookup(
+			"svelte.config.js",
+			"tsconfig.json",
+			"jsconfig.json",
+			"package.json",
+			"pnpm-lock.yaml",
+			"yarn.lock",
+			"package-lock.json",
+			"pnpm-workspace.yaml",
+			".git"
+		),
+
+		settings = {
+			svelte = {
+				["enable-ts-plugin"] = true,
+			},
+		},
+	}
+end

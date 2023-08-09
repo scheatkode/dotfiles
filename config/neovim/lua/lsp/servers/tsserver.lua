@@ -1,30 +1,25 @@
-local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+return function()
+	local lookup = require("lsp.utilities.find_ancestor")
 
-if not has_lspconfig then
-	print("‼ Tried loading lspconfig for tsserver ... unsuccessfully.")
-	return has_lspconfig
+	return {
+		filetypes = {
+			"javascript",
+			"javascriptreact",
+			"javascript.jsx",
+			"typescript",
+			"typescriptreact",
+			"typescript.tsx",
+		},
+
+		root_dir = lookup(
+			"pnpm-workspace.yaml",
+			"pnpm-lock.yaml",
+			"yarn.lock",
+			"package-lock.json",
+			"tsconfig.json",
+			"jsconfig.json",
+			"package.json",
+			".git"
+		),
+	}
 end
-
-return {
-	filetypes = {
-		"javascript",
-		"javascriptreact",
-		"javascript.jsx",
-		"typescript",
-		"typescriptreact",
-		"typescript.tsx",
-	},
-
-	root_dir = lspconfig.util.root_pattern(
-		"pnpm-workspace.yaml",
-		"pnpm-lock.yaml",
-		"yarn.lock",
-		"package-lock.json",
-		".git",
-		"tsconfig.json",
-		"jsconfig.json",
-		"package.json"
-	),
-
-	single_file_support = false,
-}

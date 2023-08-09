@@ -1,15 +1,14 @@
-local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+return function()
+	local lookup = require("lsp.utilities.find_ancestor")
 
-if not has_lspconfig then
-	print("‼ Tried loading lspconfig for rust_analyzer ... unsuccessfully.")
-	return has_lspconfig
+	return {
+		filetypes = {
+			"rust",
+		},
+		settings = {
+			["rust-analyzer"] = {},
+		},
+		root_dir = lookup(".git"),
+		single_file_support = true,
+	}
 end
-
-return {
-	filetypes = { "rust" },
-	settings = {
-		["rust-analyzer"] = {},
-	},
-	root_dir = lspconfig.util.root_pattern(".git"),
-	single_file_support = true,
-}

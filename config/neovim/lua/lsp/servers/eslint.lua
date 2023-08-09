@@ -1,21 +1,31 @@
-local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+return function()
+	local lookup = require("lsp.utilities.find_ancestor")
 
-if not has_lspconfig then
-	print("‼ Tried loading lspconfig for eslint ... unsuccessfully.")
-	return has_lspconfig
+	return {
+		filetypes = {
+			"javascript",
+			"javascript.jsx",
+			"javascriptreact",
+			"svelte",
+			"typescript",
+			"typescript.jsx",
+			"typescriptreact",
+			"vue",
+		},
+
+		root_dir = lookup(
+			"pnpm-workspace.yaml",
+			"pnpm-lock.yaml",
+			"yarn.lock",
+			"package-lock.json",
+			".git",
+			"tsconfig.json",
+			"jsconfig.json",
+			"package.json",
+			"eslint.config.js",
+			".eslintrc.js",
+			".eslintrc.json",
+			".eslintrc.yaml"
+		),
+	}
 end
-
-return {
-	filetypes = {
-		"javascript",
-		"javascriptreact",
-		"javascript.jsx",
-		"svelte",
-		"typescript",
-		"typescriptreact",
-		"typescript.jsx",
-		"vue",
-	},
-
-	root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
-}
