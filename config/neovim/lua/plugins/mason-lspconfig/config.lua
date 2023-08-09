@@ -55,6 +55,10 @@ return {
 						return lspconfig[server].setup(default_config)
 					end
 
+					if type(config) == "function" then
+						config = config()
+					end
+
 					config.on_attach = config.on_attach or attach_hooks(config)
 
 					return lspconfig[server].setup(
