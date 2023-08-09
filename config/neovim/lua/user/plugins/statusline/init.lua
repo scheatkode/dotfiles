@@ -89,7 +89,7 @@ end
 ---return an empty string.
 ---@return string
 local function dap_status()
-	if not package.loaded.dap then
+	if not package.loaded["dap"] then
 		return ""
 	end
 

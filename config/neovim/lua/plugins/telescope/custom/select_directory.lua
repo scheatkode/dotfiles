@@ -16,7 +16,7 @@ return function(operation)
 						or entry_path:parent()
 
 					local absolute = directory:absolute()
-					local relative = directory:make_relative(vim.fn.getcwd())
+					local relative = directory:make_relative(vim.loop.cwd())
 
 					operation({
 						cwd = absolute,
