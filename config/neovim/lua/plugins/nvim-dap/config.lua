@@ -1,5 +1,18 @@
+---@class user.dap.DapSimpleSetting
+---@field adapter? Adapter
+---@field configuration? Configuration[]
+
+---@class user.dap.DapMultiSetting
+---@field adapters? table<string, Adapter>
+---@field configurations? table<string, Configuration[]>
+
+---@alias user.dap.DapSetting table<string, user.dap.DapSimpleSetting> | user.dap.DapMultiSetting
+
 return {
 	setup = function()
+		local dap = require("dap")
+		local tx = require("tablex")
+
 		local signs = {
 			DapBreakpoint = { text = " ", texthl = "Error" },
 			DapBreakpointCondition = { text = " ", texthl = "Question" },
@@ -21,24 +34,33 @@ return {
 			})
 		end
 
-		local dap = require("dap")
-
-		for _, config in
-			ipairs(vim.api.nvim_get_runtime_file("lua/dbg/*/init.lua", true))
+		for _, path in
+			ipairs(vim.api.nvim_get_runtime_file("lua/dbg/**/*.lua", true))
 		do
-			local name = string.match(config, "(%w+)/init.lua$")
-			local settings = loadfile(config)()
+			---@type user.dap.DapSetting | (fun(): user.dap.DapSetting)
+			local cfg = loadfile(path)()
 
-			if type(settings.setup) == "function" then
-				settings.setup()
+			if not cfg then
+				goto continue
 			end
 
-			for adapter, conf in pairs(settings.adapters or {}) do
-				dap.adapters[adapter] = conf
+			if type(cfg) == "function" then
+				cfg = cfg()
 			end
 
-			dap.adapters[name] = settings.adapter
-			dap.configurations[name] = settings.configuration
+			if cfg.adapters or cfg.configurations then
+				dap.adapters = tx.extend(dap.adapters, cfg.adapters or {})
+				dap.configurations =
+					tx.extend(dap.configurations, cfg.configurations or {})
+				goto continue
+			end
+
+			for name, subcfg in pairs(cfg) do
+				dap.adapters[name] = subcfg.adapter
+				dap.configurations[name] = subcfg.configuration
+			end
+
+			::continue::
 		end
 	end,
 }
