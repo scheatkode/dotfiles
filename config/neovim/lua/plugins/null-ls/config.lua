@@ -6,7 +6,6 @@ return {
 			debounce = 500,
 			default_timeout = 5000,
 			diagnostics_format = "#{m}",
-			on_attach = require("lsp.on_attach").setup(),
 			root_dir = vim.loop.cwd,
 			sources = {
 				-- (t|j)s-specific
