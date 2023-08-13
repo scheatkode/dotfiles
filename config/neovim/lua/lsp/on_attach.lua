@@ -1,11 +1,20 @@
 return {
 	setup = function()
-		return function(_, bufnr, _)
-			-- go to type definition
-			vim.keymap.set("n", "<leader>cT", vim.lsp.buf.type_definition, {
-				buffer = bufnr,
-				desc = "Go to type definition",
-			})
+		---Setup mappings and behavior for every attached language server.
+		---@param client lsp.Client
+		---@param bufnr number
+		return function(client, bufnr)
+			-- codelens
+			if client.server_capabilities.codeLensProvider then
+				vim.api.nvim_create_autocmd("InsertLeave", {
+					group = vim.api.nvim_create_augroup(
+						string.format("UserLspCodelens-%s", bufnr),
+						{ clear = true }
+					),
+					buffer = bufnr,
+					callback = vim.lsp.codelens.refresh,
+				})
+			end
 
 			-- go to implementation
 			-- Most LSPs don't bother with "textDocument/declaration", and

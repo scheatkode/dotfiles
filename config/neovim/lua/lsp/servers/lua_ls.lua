@@ -5,6 +5,10 @@ return {
 				enable = false,
 			},
 
+			codeLens = {
+				enable = true,
+			},
+
 			diagnostics = {
 				enable = true,
 			},

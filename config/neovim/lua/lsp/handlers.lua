@@ -11,6 +11,16 @@ return {
 					update_in_insert = false,
 				}
 			),
+			["textDocument/codeLens"] = vim.lsp.with(
+				vim.lsp.codelens.on_codelens,
+				{
+					virtual_text = {
+						prefix = "»",
+						spacing = 3,
+					},
+					update_in_insert = false,
+				}
+			),
 		}
 
 		local options = deep_extend("force", defaults, overrides or {})
