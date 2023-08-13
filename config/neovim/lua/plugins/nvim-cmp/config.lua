@@ -32,13 +32,6 @@ return {
 			}
 		end
 
-		-- Not sure about other people, but autocompletion is broken in my
-		-- case. Honestly too buggy to be usable.
-		-- If it weren't for the nice windows, colocated multiple sources,
-		-- and the quick doc, I'd have simply used the `omnifunc` provided
-		-- by `vim.lsp`. I already use the builtin `ins-completion` for
-		-- other stuff and avoid `cmp-buffer` as well as `cmp-cmdline`
-		-- like the plague.
 		completion.setup({
 			completion = {
 				keyword_length = 2,
@@ -48,6 +41,12 @@ return {
 				max_view_entries = 30,
 				async_budget = 100,
 				fetching_timeout = 200,
+			},
+
+			view = {
+				docs = {
+					auto_open = false,
+				},
 			},
 
 			window = {
@@ -84,6 +83,14 @@ return {
 					completion.mapping.scroll_docs(4),
 					{ "i" }
 				),
+
+				["<C-g>"] = function()
+					if completion.visible_docs() then
+						return completion.close_docs()
+					end
+
+					return completion.open_docs()
+				end,
 
 				["<C-e>"] = completion.mapping({
 					i = completion.mapping.abort(),
