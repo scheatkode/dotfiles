@@ -10,10 +10,21 @@ return {
 			})
 
 			-- go to implementation
-			vim.keymap.set("n", "<leader>ci", vim.lsp.buf.implementation, {
-				buffer = bufnr,
-				desc = "Go to implementation",
-			})
+			-- Most LSPs don't bother with "textDocument/declaration", and
+			-- rightfully so, it doesn't provide that much benefit. Prefer using
+			-- "textDocument/implementation", which is more useful in certain
+			-- cases. The go-to method remains "textDocument/definition".
+			if client.server_capabilities.implementationProvider then
+				vim.keymap.set("n", "gD", vim.lsp.buf.implementation, {
+					buffer = bufnr,
+					desc = "Go to implementation",
+				})
+			elseif client.server_capabilities.declarationProvider then
+				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {
+					buffer = bufnr,
+					desc = "Go to declaration",
+				})
+			end
 
 			-- rename symbol
 			vim.keymap.set("n", "<leader>cR", extensions.rename, {
