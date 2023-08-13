@@ -9,12 +9,11 @@
 ;; '                    #         │
 ;; # injection ───────────────────╯
 ;; ```
-(
- (command
+((command
 	name: (_) @_command
-	argument: [(string) (raw_string)] @awk)
+	argument: [(string) (raw_string)] @injection.content)
  (#any-of? @_command "awk" "gawk" "nawk" "mawk")
-)
+ (#set! injection.language "awk"))
 
 ;; redirect heredocs named "jq"
 ;;
@@ -27,12 +26,11 @@
 ;; JQ                                          #         │
 ;; # injection ──────────────────────────────────────────╯
 ;; ```
-(
- (redirected_statement
+((redirected_statement
 	redirect: (heredoc_redirect (heredoc_start) @_heredoc_name))
  (#any-of? @_heredoc_name "JQ" "jq")
- (heredoc_body) @jq
-)
+ (heredoc_body) @injection.content
+ (#set! injection.language "jq"))
 
 ;; direct jq queries
 ;;
@@ -46,12 +44,11 @@
 ;; '                                           #         │
 ;; # injection ──────────────────────────────────────────╯
 ;; ```
-(
- (command
+((command
 	name: (_) @_command
-	argument: [(string) (raw_string)] @jq)
+	argument: [(string) (raw_string)] @injection.content)
  (#eq? @_command "jq")
-)
+ (#set! injection.language "jq"))
 
 ;; strings containing a "# jq" comment
 ;;
@@ -65,8 +62,7 @@
 ;; '                                           #         │
 ;; # injection ──────────────────────────────────────────╯
 ;; ```
-(
- (command
-	argument: [(string) (raw_string)] @jq)
- (#contains? @jq "# jq")
-)
+((command
+	argument: [(string) (raw_string)] @injection.content)
+ (#contains? @injection.content "# jq")
+ (#set! injection.language "jq"))
