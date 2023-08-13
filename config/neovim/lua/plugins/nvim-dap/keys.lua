@@ -67,10 +67,6 @@ return {
 			desc = "Disconnect from session",
 		})
 
-		vim.keymap.set("n", "<leader>dq", dap.list_breakpoints, {
-			desc = "Send breakpoints to quicklist",
-		})
-
 		vim.keymap.set("n", "<leader>du", dap.up, {
 			desc = "Go up in stacktrace",
 		})
@@ -85,12 +81,6 @@ return {
 			dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
 		end, {
 			desc = "Set breakpoint with condition",
-		})
-
-		vim.keymap.set("n", "<leader>dl", function()
-			dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
-		end, {
-			desc = "Set log point",
 		})
 	end,
 }
