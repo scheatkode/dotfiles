@@ -26,6 +26,12 @@ return {
 				})
 			end
 
+			-- signature help
+			vim.keymap.set({ "i", "n" }, "<M-s>", vim.lsp.buf.signature_help, {
+				buffer = bufnr,
+				desc = "Show signature help",
+			})
+
 			-- rename symbol
 			vim.keymap.set("n", "<leader>cR", extensions.rename, {
 				buffer = bufnr,

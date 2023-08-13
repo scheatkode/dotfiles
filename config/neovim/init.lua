@@ -29,18 +29,17 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.keymap.set("", "<Space>", "<Nop>")
 
--- configuration
+-- Configuration
 
 require("user.builtins").setup()
 require("user.settings").setup()
 require("user.mappings").setup()
 require("user.providers").setup()
 require("user.autocmd").setup()
-require("scheatkode.autocmds").setup()
+require("user.diagnostics").setup()
 
 require("colors").load("gruvbox")
 
-require("diagnostics").setup()
 require("plugman").setup()
 
 require("user.plugins.statusline").setup()
