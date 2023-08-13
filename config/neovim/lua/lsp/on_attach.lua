@@ -1,7 +1,5 @@
 return {
 	setup = function()
-		local extensions = require("lsp.extensions")
-
 		return function(_, bufnr, _)
 			-- go to type definition
 			vim.keymap.set("n", "<leader>cT", vim.lsp.buf.type_definition, {
@@ -33,40 +31,24 @@ return {
 			})
 
 			-- rename symbol
-			vim.keymap.set("n", "<leader>cR", extensions.rename, {
+			vim.keymap.set("n", "gR", require("lsp.extensions").rename, {
 				buffer = bufnr,
-				desc = "Rename symbol under cursor",
-			})
-			vim.keymap.set("n", "gR", extensions.rename, {
-				buffer = bufnr,
-				desc = "Rename symbol under cursor",
+				desc = "Rename symbol",
 			})
 
 			-- references
-			vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {
-				buffer = bufnr,
-				desc = "Show references",
-			})
 			vim.keymap.set("n", "gr", vim.lsp.buf.references, {
 				buffer = bufnr,
 				desc = "Show references",
 			})
 
 			-- code action
-			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
+			vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, {
 				buffer = bufnr,
 				desc = "Code actions",
 			})
-			vim.keymap.set("x", "<leader>ca", vim.lsp.buf.code_action, {
-				buffer = bufnr,
-				desc = "Range code actions",
-			})
 
 			-- hover documentation
-			vim.keymap.set("n", "<leader>ch", vim.lsp.buf.hover, {
-				buffer = bufnr,
-				desc = "Show documentation",
-			})
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {
 				buffer = bufnr,
 				desc = "Show documentation",
