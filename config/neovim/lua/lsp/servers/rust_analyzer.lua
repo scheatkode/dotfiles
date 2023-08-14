@@ -1,5 +1,5 @@
 return function()
-	local lookup = require("lsp.utilities.find_ancestor")
+	local lookup = require("user.lsp.utils.find_ancestor")
 
 	return {
 		filetypes = {
