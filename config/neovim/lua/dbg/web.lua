@@ -1,5 +1,5 @@
 return function()
-	local pick = require("user.utils.pick_process")
+	local pick = require("user.dap.utils.pick_process")
 
 	local registry = require("mason-registry")
 	local has_adapter, adapter =
