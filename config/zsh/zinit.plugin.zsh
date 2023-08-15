@@ -103,7 +103,9 @@ zinit wait:'1a' silent from:gh-r as:program light-mode for \
          @muesli/duf                                       \
     bpick:'*static*linux*amd64*'                           \
        mv:'usql_static -> usql'                            \
-         @xo/usql
+         @xo/usql                                          \
+    bpick:'*x86_64*linux*'                                 \
+         @ast-grep/ast-grep
 
 zinit wait:'1b' silent from:gh-r as:program for \
      pick:'imsnif/bandwhich'                    \
