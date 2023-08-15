@@ -15,6 +15,12 @@ return {
 				useLibraryCodeForTypes = true,
 				typeCheckingMode = "strict",
 			},
+
+			exclude = {
+				"**/node_modules",
+				"**/__pycache__",
+				"**/plz-out",
+			},
 		},
 	},
 }
