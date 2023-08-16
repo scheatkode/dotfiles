@@ -58,7 +58,7 @@ _dot_git_dev_branch() (
 
 _dot_git_super_add() {
 	git ls-files --deleted --modified --other --exclude-standard \
-		| fzf --exit-0 --multi --preview 'git diff --color=always {-1}' \
+		| fzf --exit-0 --multi --print0 --preview 'git diff --color=always {-1}' \
 		| xargs -r0 git add
 }
 
