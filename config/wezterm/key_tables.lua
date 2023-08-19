@@ -32,11 +32,11 @@ return {
 					mods = "NONE",
 					action = act.CopyMode("MoveBackwardWord"),
 				},
-				-- {
-				-- 	key = 'e',
-				-- 	mods = 'NONE',
-				-- 	action = act.CopyMode('MoveForwardWordEnd'),
-				-- },
+				{
+					key = 'e',
+					mods = 'NONE',
+					action = act.CopyMode('MoveForwardWordEnd'),
+				},
 				{
 					key = "f",
 					mods = "NONE",
@@ -150,16 +150,16 @@ return {
 				{ key = "b", mods = "CTRL", action = act.CopyMode("PageUp") },
 				{ key = "u", mods = "CTRL", action = act.CopyMode("PageUp") },
 				{ key = "d", mods = "CTRL", action = act.CopyMode("PageDown") },
-				-- {
-				-- 	key = 'u',
-				-- 	mods = 'CTRL',
-				-- 	action = act.CopyMode({ MoveByPage = -0.5 }),
-				-- },
-				-- {
-				-- 	key = 'd',
-				-- 	mods = 'CTRL',
-				-- 	action = act.CopyMode({ MoveByPage = 0.5 }),
-				-- },
+				{
+					key = 'u',
+					mods = 'CTRL',
+					action = act.CopyMode({ MoveByPage = -0.5 }),
+				},
+				{
+					key = 'd',
+					mods = 'CTRL',
+					action = act.CopyMode({ MoveByPage = 0.5 }),
+				},
 			},
 			search_mode = {
 				{ key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
