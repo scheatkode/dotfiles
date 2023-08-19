@@ -29,8 +29,8 @@ return {
 			["<C-c>"] = "actions.close",
 			["q"] = "actions.close",
 
-			["<C-v>"] = "actions.select_vsplit",
-			["<C-s>"] = "actions.select_split",
+			["<M-v>"] = "actions.select_vsplit",
+			["<M-s>"] = "actions.select_split",
 			["<C-p>"] = "actions.preview",
 			["<C-l>"] = "actions.refresh",
 
