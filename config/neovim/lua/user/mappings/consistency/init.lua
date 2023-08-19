@@ -10,7 +10,7 @@ return {
 		require("user.mappings.consistency.saner-n").setup()
 		require("user.mappings.consistency.saner-halfpage").setup()
 		require("user.mappings.consistency.selection-indent").setup()
-		require("user.mappings.consistency.shell").setup()
+		require("user.mappings.consistency.readline").setup()
 		require("user.mappings.consistency.refresh").setup()
 	end,
 }
