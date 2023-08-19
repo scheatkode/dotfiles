@@ -36,6 +36,7 @@ require("user.settings").setup()
 require("user.mappings").setup()
 require("user.providers").setup()
 require("user.autocmd").setup()
+require("user.abbrevs").setup()
 require("user.diagnostics").setup()
 require("user.lsp").setup()
 
