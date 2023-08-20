@@ -11,6 +11,5 @@ return {
 		require("user.mappings.custom.resize").setup()
 		require("user.mappings.custom.statusline").setup()
 		require("user.mappings.custom.tabs").setup()
-		require("user.mappings.custom.visual").setup()
 	end,
 }
