@@ -5,7 +5,7 @@ return {
 		vim.keymap.set(
 			"n",
 			"<C-l>",
-			":<C-u>nohlsearch<CR>:diffupdate<CR><C-l>",
+			":<C-u>nohlsearch|diffupdate<CR><C-l>",
 			{ silent = true }
 		)
 	end,
