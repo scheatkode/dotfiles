@@ -77,12 +77,18 @@ return {
 			-- Disable titlebars to normal clients and dialogs.
 			{
 				rule_any = {
+					instance = {
+						"copyq", -- Includes session name in class.
+						"pinentry",
+					},
+
 					type = {
 						"dialog",
 					},
 				},
 				properties = {
 					sticky = true,
+					placement = awful.placement.centered,
 					titlebars_enabled = false,
 				},
 			},
