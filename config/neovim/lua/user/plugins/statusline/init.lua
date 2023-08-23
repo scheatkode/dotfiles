@@ -1,6 +1,8 @@
----Return a formatted string from fetched diagnostics.
+---Return a formatted string from fetched diagnostics for the
+---given buffer.
+---@param bufnr number
 ---@return string
-local function diagnostic_status()
+local function diagnostic_status(bufnr)
 	local parts = {}
 	local diagnostics = {
 		{ severity = vim.diagnostic.severity.ERROR, format = "%%5* %d%%*" },
@@ -10,7 +12,7 @@ local function diagnostic_status()
 	}
 
 	for _, d in ipairs(diagnostics) do
-		local diags = #vim.diagnostic.get(0, { severity = d.severity })
+		local diags = #vim.diagnostic.get(bufnr, { severity = d.severity })
 		if diags > 0 then
 			parts[#parts + 1] = string.format(d.format, diags)
 		end
@@ -99,13 +101,15 @@ end
 ---Render the statusline.
 ---@return string
 local function statusline()
+	local bufnr = vim.fn.winbufnr(vim.g.statusline_winid)
+
 	local part = {
 		file_or_lsp_status(),
 		[[ %m%r%* ]],
 
 		[[%3*%{&ff!="unix"?"[".&ff."] ":""}%*]],
 		dap_status(),
-		diagnostic_status(),
+		diagnostic_status(bufnr),
 
 		[[%*%= %-14.(%1*%l%0*:%2*%c%3*%V%) %4*%P]],
 	}
@@ -113,23 +117,24 @@ local function statusline()
 	return table.concat(part)
 end
 
----Setup the statusline.
-local function setup()
-	_G.user = _G.user or {}
-	_G.user.statusline = statusline
-	vim.opt.statusline = [[%!v:lua.user.statusline()]]
-
-	vim.api.nvim_create_autocmd("User", {
-		command = "redrawstatus",
-		group = vim.api.nvim_create_augroup("UserStatusLine", { clear = true }),
-		pattern = {
-			"LspProgressUpdate",
-			"LspRequest",
-			"DapProgressUpdate",
-		},
-	})
-end
-
 return {
-	setup = setup,
+	---Setup the statusline.
+	setup = function()
+		_G.user = _G.user or {}
+		_G.user.statusline = statusline
+		vim.opt.statusline = [[%!v:lua.user.statusline()]]
+
+		vim.api.nvim_create_autocmd("User", {
+			command = "redrawstatus",
+			group = vim.api.nvim_create_augroup(
+				"UserStatusLine",
+				{ clear = true }
+			),
+			pattern = {
+				"LspProgressUpdate",
+				"LspRequest",
+				"DapProgressUpdate",
+			},
+		})
+	end,
 }
