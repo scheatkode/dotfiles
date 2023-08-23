@@ -103,6 +103,10 @@ return {
 							query = "@loop.outer",
 							desc = "Go to next loop",
 						},
+						["]P"] = {
+							query = "@parameter.outer",
+							desc = "Go to next parameter",
+						},
 					},
 
 					goto_previous = {
@@ -129,6 +133,10 @@ return {
 						["[l"] = {
 							query = "@loop.outer",
 							desc = "Go to previous loop",
+						},
+						["[P"] = {
+							query = "@parameter.outer",
+							desc = "Go to previous parameter",
 						},
 					},
 				},
@@ -239,10 +247,6 @@ return {
 					},
 				},
 			},
-
-			-- playground = {
-			-- 	enable = false,
-			-- },
 		})
 	end,
 }
