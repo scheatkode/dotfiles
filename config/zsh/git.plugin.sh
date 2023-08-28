@@ -254,6 +254,7 @@ alias 'grbs'='git rebase --skip'
 alias 'gcp'='git cherry-pick'
 alias 'gcpa'='git cherry-pick --abort'
 alias 'gcpc'='git cherry-pick --continue'
+alias 'gcpc!'='GIT_EDITOR=true git cherry-pick --continue'
 
 alias 'grh'='git reset'
 alias 'grhh'='git reset --hard'
