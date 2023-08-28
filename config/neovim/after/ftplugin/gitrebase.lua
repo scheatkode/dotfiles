@@ -1,43 +1,15 @@
+--- Neovim filetype plugin
+--- Language: Git rebase todo
+
+if vim.b.did_after_ftplugin == 1 then
+	return
+end
+
 local function with_count(command)
 	return function()
 		return string.format([[<cmd>.,.+%s%s<CR>]], vim.v.count1 - 1, command)
 	end
 end
-
-vim.keymap.set("n", "<Tab>", "<cmd>Cycle<CR>", {
-	desc = "Cycle commit action",
-	buffer = 0,
-})
-
-vim.keymap.set("n", "ge", with_count("Edit"), {
-	desc = "Edit commit",
-	buffer = 0,
-	expr = true,
-})
-
-vim.keymap.set("n", "gf", with_count("Fixup"), {
-	desc = "Fixup commit",
-	buffer = 0,
-	expr = true,
-})
-
-vim.keymap.set("n", "gp", with_count("Pick"), {
-	desc = "Pick commit",
-	buffer = 0,
-	expr = true,
-})
-
-vim.keymap.set("n", "gr", with_count("Reword"), {
-	desc = "Reword commit",
-	buffer = 0,
-	expr = true,
-})
-
-vim.keymap.set("n", "gs", with_count("Squash"), {
-	desc = "Squash commit",
-	buffer = 0,
-	expr = true,
-})
 
 local function with_range(command)
 	return function()
@@ -50,35 +22,46 @@ local function with_range(command)
 	end
 end
 
-vim.keymap.set("x", "ge", with_range("Edit"), {
-	desc = "Edit selected commits",
+vim.keymap.set("n", "<Tab>", "<cmd>Cycle<CR>", {
+	desc = "Cycle commit action",
 	buffer = 0,
-	expr = true,
 })
 
-vim.keymap.set("x", "gf", with_range("Fixup"), {
-	desc = "Fixup selected commits",
-	buffer = 0,
-	expr = true,
-})
-
-vim.keymap.set("x", "gp", with_range("Pick"), {
-	desc = "Pick selected commits",
-	buffer = 0,
-	expr = true,
-})
-
-vim.keymap.set("x", "gr", with_range("Reword"), {
-	desc = "Reword selected commits",
-	buffer = 0,
-	expr = true,
-})
-
-vim.keymap.set("x", "gs", with_range("Squash"), {
-	desc = "Squash commits",
-	buffer = 0,
-	expr = true,
-})
+for mode, map in pairs({
+	n = {
+		{ lhs = "ge", rhs = with_count("Edit"), desc = "Edit commit" },
+		{ lhs = "gf", rhs = with_count("Fixup"), desc = "Fixup commit" },
+		{ lhs = "gp", rhs = with_count("Pick"), desc = "Pick commit" },
+		{ lhs = "gr", rhs = with_count("Reword"), desc = "Reword commit" },
+		{ lhs = "gs", rhs = with_count("Squash"), desc = "Squash commit" },
+	},
+	x = {
+		{
+			lhs = "gf",
+			rhs = with_range("Fixup"),
+			desc = "Fixup selected commits",
+		},
+		{
+			lhs = "gp",
+			rhs = with_range("Pick"),
+			desc = "Pick selected commits",
+		},
+		{
+			lhs = "gr",
+			rhs = with_range("Reword"),
+			desc = "Reword selected commits",
+		},
+		{ lhs = "gs", rhs = with_range("Squash"), desc = "Squash commits" },
+	},
+}) do
+	for _, m in ipairs(map) do
+		vim.keymap.set(mode, m.lhs, m.rhs, {
+			desc = m.desc,
+			buffer = 0,
+			expr = true,
+		})
+	end
+end
 
 vim.keymap.set("n", "<C-j>", function()
 	vim.cmd.move({
@@ -93,3 +76,5 @@ vim.keymap.set("n", "<C-k>", function()
 		mods = { emsg_silent = true },
 	})
 end, { buffer = 0, desc = "Swap current line with the one above" })
+
+vim.b.did_after_ftplugin = 1
