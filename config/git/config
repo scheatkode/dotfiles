@@ -26,6 +26,9 @@
 [rerere]
 	enabled = true
 
+[tag]
+	gpgsign = true
+
 [core]
 	editor = nvim
 
