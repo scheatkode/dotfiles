@@ -8,4 +8,5 @@ end
 vim.opt_local.textwidth = 72
 vim.opt_local.spell = true
 
+vim.b.editorconfig = false
 vim.b.did_after_ftplugin = 1
