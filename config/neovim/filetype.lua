@@ -16,6 +16,7 @@ vim.filetype.add({
 vim.filetype.add({
 	filename = {
 		["BUILD"] = "starlark",
+		["WORKSPACE"] = "starlark",
 	},
 	pattern = {
 		[".*%.build_defs"] = "starlark",
@@ -96,5 +97,22 @@ vim.filetype.add({
 	},
 	pattern = {
 		[".*/%.?ssh/config"] = "sshconfig",
+	},
+})
+
+-- Language: mutt configuration
+vim.filetype.add({
+	extension = {
+		["muttrc"] = "neomuttrc",
+	},
+	filename = {
+		["muttrc"] = "neomuttrc",
+	},
+})
+
+-- Language: hurl http client
+vim.filetype.add({
+	extension = {
+		["hurl"] = "hurl",
 	},
 })
