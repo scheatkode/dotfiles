@@ -311,10 +311,15 @@ local function generate_highlights(colors, config)
 		DiagnosticVirtualTextInfo = { link = "DiagnosticInfo" },
 		DiagnosticVirtualTextHint = { link = "DiagnosticHint" },
 
-		DiagnosticUnderlineError = { sp = colors.red, undercurl = true },
-		DiagnosticUnderlineWarn = { sp = colors.yellow, undercurl = true },
-		DiagnosticUnderlineInfo = { sp = colors.blue, undercurl = true },
-		DiagnosticUnderlineHint = { sp = colors.aqua, undercurl = true },
+		-- TODO(scheatkode): Restore when Zellij handles styled underlines.
+		-- DiagnosticUnderlineError = { sp = colors.red, undercurl = true },
+		-- DiagnosticUnderlineWarn = { sp = colors.yellow, undercurl = true },
+		-- DiagnosticUnderlineInfo = { sp = colors.blue, undercurl = true },
+		-- DiagnosticUnderlineHint = { sp = colors.aqua, undercurl = true },
+		DiagnosticUnderlineError = { sp = colors.red, underline = true },
+		DiagnosticUnderlineWarn = { sp = colors.yellow, underline = true },
+		DiagnosticUnderlineInfo = { sp = colors.blue, underline = true },
+		DiagnosticUnderlineHint = { sp = colors.aqua, underline = true },
 
 		DiagnosticLineBackgroundError = { bg = "NONE" },
 		DiagnosticLineBackgroundWarn = { bg = "NONE" },
