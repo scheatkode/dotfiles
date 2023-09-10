@@ -1,8 +1,8 @@
 local m = {
 	editor = os.getenv("EDITOR") or "nvim",
-	terminal = "wezterm",
+	terminal = "alacritty",
 }
 
-m.editor_cmd = m.terminal .. " start -- " .. m.editor
+m.editor_cmd = string.format("%s --command %s", m.terminal, m.editor)
 
 return m
