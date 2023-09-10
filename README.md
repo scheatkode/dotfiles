@@ -40,12 +40,12 @@ take this*.
 
       .
       ├── config/                 # User configuration (maps to $XDG_CONFIG_HOME).
+      │   ├── alacritty/          # Alacritty configuration.
       │   ├── alsa/               # Alsa configuration.
       │   ├── awesome/            # Awesome Window Manager configuration.
       │   ├── btop/               # Btop system monitor configuration.
       │   ├── gdb/                # GNU debugger configuration.
       │   ├── git/                # Git configuration.
-      │   ├── gmailctl/           # GmailCtl configuration.
       │   ├── gpg/                # GnuPG configuration.
       │   ├── htop/               # htop configuration.
       │   ├── keepassxc/          # keepassxc configuration.
@@ -55,8 +55,8 @@ take this*.
       │   ├── pueue/              # Pueue configuration.
       │   ├── remmina/            # Remmina configuration.
       │   ├── ssh/                # SSH configuration.
-      │   ├── wezterm/            # WezTerm configuration.
       │   ├── x11/                # X11 configuration.
+      │   ├── zellij/             # Zellij configuration.
       │   ├── zsh/                # Zsh configuration.
       │   └── profile             # Shell base profile configuration.
       ├── data/                   # User data (maps to $XDG_DATA_HOME).
