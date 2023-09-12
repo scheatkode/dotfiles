@@ -2,8 +2,8 @@ return {
 	---Setup diffing behaviour.
 	setup = function()
 		vim.opt.formatoptions = {
-			["1"] = true,
-			["2"] = true, -- Use indent from second line of a paragraph
+			["1"] = true, -- Don't break lines after 1 letter words
+			["/"] = true, -- Only insert `//` at the start of a line
 
 			q = true, -- Continue comments with `gq`
 			c = true, -- Auto-wrap comments using `textwidth`
