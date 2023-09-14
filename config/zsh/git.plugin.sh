@@ -151,6 +151,7 @@ gprep () {
 
 		if [ "${template}" != '' ]
 		then
+			# shellcheck disable=2088
 			case "${template}" in
 				'~/'*) template="${HOME}/${template##\~/}" ;;
 				*) ;;
@@ -211,10 +212,10 @@ alias 'glra'='git pull --rebase --autostash'
 
 alias 'glg'='git log --stat'
 alias 'glp'='git log --stat -p'
-alias 'glo'='git log --graph --pretty="%C(green)%h%C(reset) - %s %C(cyan)<%an> %C(reset)%C(blue)%ar%C(red)%d%C(reset)" --all'
-alias 'glop'='git log --graph --pretty="%C(green)%H%C(red)%d%n%C(bold)%C(reset)%C(cyan)%an <%ae>%n%C(reset)%C(blue)%ai (%ar)%C(reset)%n%+B" --patch'
-alias 'glos'='git log --graph --pretty="%C(green)%H%C(red)%d%n%C(bold)%C(reset)%C(cyan)%an <%ae>%n%C(reset)%C(blue)%ai (%ar)%C(reset)%n%+B" --stat'
-alias 'glops'='git log --graph --pretty="%C(green)%H%C(red)%d%n%C(bold)%C(reset)%C(cyan)%an <%ae>%n%C(reset)%C(blue)%ai (%ar)%C(reset)%n%+B" --patch --stat'
+alias 'glo'='git log --graph --all --pretty=shortlog'
+alias 'glop'='git log --graph --patch --pretty=withpgp'
+alias 'glos'='git log --graph --stat --pretty=multiline'
+alias 'glops'='git log --graph --patch --stat --pretty=everything'
 
 alias 'gm'='git merge '
 alias 'gma'='git merge --abort'
@@ -285,6 +286,7 @@ alias 'gsps'='git stash list --stat --patch'
 alias 'gs'='git status --untracked-files=no'
 alias 'gs!'='git status'
 alias 'gsb'='git status -sb'
+alias 'gsh'='git show'
 
 alias 'gw'='git worktree'
 alias 'gwa'='git worktree add'

@@ -1,39 +1,19 @@
+# It's-a-me, Mario !
 [user]
 	name       = scheatkode
 	email      = scheatkode@disroot.org
 	signingkey = 8981A760E69A4951!
 
-[commit]
-	gpgsign  = true
-	cleanup  = strip
-	status   = true
-	template = ~/.config/git/message
-	verbose  = true
-
-[push]
-	default = current
-
-[pull]
-	rebase = true
-
-[merge]
-	tool = nvimdiff
-
-[rebase]
-	autosquash = true
-	autostash  = true
-
-[rerere]
-	enabled = true
-
-[tag]
-	gpgsign = true
-
 [core]
-	editor = nvim
+	# Recommended SHA minimum length: https://lkml.org/lkml/2013/9/30/365
+	abbrev       = 12
+	editor       = nvim
+	# Enable parallel index preload for some operations.
+	preloadindex = true
 
-[diff]
-	algorithm = patience
+[feature]
+	# Optimize for repos with many files in the working directory.
+	manyfiles = true
 
 [advice]
 	addEmptyPathspec = false
@@ -68,6 +48,38 @@
 	unmerged     = red
 	untracked    = magenta
 
+[commit]
+	gpgsign  = true
+	cleanup  = strip
+	status   = true
+	template = ~/.config/git/message
+	verbose  = true
+
+[fetch]
+	writecommitgraph = true
+
+[pull]
+	rebase = true
+
+[push]
+	default = current
+
+[merge]
+	tool = nvimdiff
+
+[rebase]
+	autosquash = true
+	autostash  = true
+
+[rerere]
+	enabled = true
+
+[tag]
+	gpgsign = true
+
+[diff]
+	algorithm = patience
+
 [status]
 	showstash = true
 
@@ -82,3 +94,9 @@
 
 	daily = "!sh ~/.config/git/daily"
 	stats = "!sh ~/.config/git/stats"
+
+[pretty]
+	shortlog   = %C(green)%h%C(reset) - %C(reset)%s %C(cyan)<%an>%C(magenta)(%G?) %C(reset)%C(blue)%ar%C(red)%d%C(reset)
+	multiline  = %C(green)%H%C(red)%d%n%C(bold)%C(reset)%C(cyan)%an <%ae>%n%C(reset)%C(blue)%ai (%ar)%C(reset)%n%+B
+	withpgp    = %C(green)%H%C(red)%d%n%C(bold)%C(reset)%C(cyan)%an <%ae>%n%C(blue)%ai (%ar)%C(reset)%n%C(magenta)%GG%(trailers:key=Signed-off-by,separator=%x2C)%n%C(white dim)---%C(reset)%+B
+	everything = %C(green)%H%C(red)%d%n%C(bold)%C(cyan)%an <%ae>%n%C(blue)%ai (%ar)%n%C(cyan dim)%cn <%ce>%n%C(blue dim)%ci (%cr)%n%C(magenta)%GG%C(reset)---%C(reset)%+B
