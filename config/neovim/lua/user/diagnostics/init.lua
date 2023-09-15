@@ -18,25 +18,25 @@ return {
 
 		local defaults = {
 			DiagnosticSignError = {
-				text = "",
+				text = " ",
 				texthl = "DiagnosticError",
 				linehl = "DiagnosticLineBackgroundError",
 				culhl = "DiagnosticCulError",
 			},
 			DiagnosticSignWarn = {
-				text = "‼",
+				text = " ",
 				texthl = "DiagnosticWarn",
 				linehl = "DiagnosticLineBackgroundWarn",
 				culhl = "DiagnosticCulWarn",
 			},
 			DiagnosticSignInfo = {
-				text = "ℹ",
+				text = " ",
 				texthl = "DiagnosticInfo",
 				linehl = "DiagnosticLineBackgroundInfo",
 				culhl = "DiagnosticCulWarn",
 			},
 			DiagnosticSignHint = {
-				text = "",
+				text = " ",
 				texthl = "DiagnosticHint",
 				linehl = "DiagnosticLineBackgroundHint",
 				culhl = "DiagnosticCulWarn",
