@@ -2,9 +2,7 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 
 	dependencies = {
-		{ "JoosepAlviste/nvim-ts-context-commentstring" },
 		{ "nvim-treesitter/nvim-treesitter-textobjects" },
-		{ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
 	},
 
 	event = {

@@ -53,15 +53,6 @@ return {
 				disable = flip(is_file_bigger(1048576)), -- 1 MiB,
 			},
 
-			context_commentstring = {
-				enable = true,
-				enable_autocmd = false,
-
-				config = {
-					cs = "// %s",
-				},
-			},
-
 			incremental_selection = {
 				enable = true,
 
