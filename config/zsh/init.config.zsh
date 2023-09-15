@@ -26,9 +26,9 @@ autoload -Uz compinit promptinit
 _comp_files=(${ZCACHEDIR})
 
 if (( ${#_comp_files} )); then
-   compinit -i -C -d "${ZCACHEDIR}/zcompdump"
+	compinit -i -C -d "${ZCACHEDIR}/zcompdump"
 else
-   compinit -i -d "${ZCACHEDIR}/zcompdump"
+	compinit -i -d "${ZCACHEDIR}/zcompdump"
 fi
 
 unset _comp_files
@@ -41,15 +41,11 @@ setopt prompt_subst
 # this block; everything else may go below.
 
 if [[ -r "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+	source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Additional sources
 
 if [ -f "${XDG_CONFIG_HOME}"/tabtab/zsh/__tabtab.zsh ]; then
 	. "${XDG_CONFIG_HOME}"/tabtab/zsh/__tabtab.zsh
-fi
-
-if command -v please > /dev/null 2>&1 || command -v plz > /dev/null 2>&1; then
-	. "${XDG_CONFIG_HOME}"/zsh/please.compl.zsh
 fi
