@@ -124,6 +124,7 @@ _dot_git_super_fixup() {
 alias 'gc'='git commit -v'
 alias 'gc!'='git commit -v --amend'
 alias 'gc!!'='git commit -v --amend --no-edit'
+alias 'gcs'='git commit -v --signoff'
 alias 'gcn'='git commit -v --no-edit'
 alias 'gcn!'='git commit -v --no-edit --amend'
 alias 'gca'='git commit -v -a'
@@ -137,9 +138,6 @@ alias 'gcasm'='git commit -a -s -m'
 alias 'gcf'='git commit -v --fixup'
 alias 'gcf!'='_dot_git_super_fixup'
 alias 'gcm'='git commit -m'
-alias 'gcs'='git commit -S'
-alias 'gcss'='git commit -S -s'
-alias 'gcssm'='git commit -S -s -m'
 
 # Prepare a commit message.
 gprep () {
