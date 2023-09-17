@@ -168,7 +168,6 @@ keybinds clear-defaults=true {
 
 plugins {
    compact-bar { path "compact-bar"; }
-   tab-bar { path "tab-bar"; }
    session-manager { path "session-manager"; }
 }
 
