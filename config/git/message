@@ -1,69 +1,75 @@
+# ----------------------------------------------------------------------
+# <type>: (If applied, this commit will...) <subject> (Max 50 chars)
+# |<----  Using a maximum of 50 characters  ---->|
 
-
-# |<----  Using a Maximum Of 50 Characters  ---->|
-# <type>: (If applied, this commit will...) <subject> (Max 50 char)
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ----------------------------------------------------------------------
 # Explain why this change is being made
-# |<----   Try To Limit Each Line to a Maximum Of 72 Characters   ---->|
+# |<----   Try to limit each line to a maximum of 72 characters   ---->|
 
-# Problem
-#    Problem, Task, Reason for Commit
-# Solution
-#    Solution or List of Changes
-# Note
-#    Special instructions, testing steps, rake, etc
+# Problem:
+# ~~~~~~~~
+# 	Problem, Task, Reason for Commit
+# Solution:
+# ~~~~~~~~~
+# 	Solution or List of Changes
+# Note:
+# ~~~~~
+# 	Special instructions, testing steps, rake, etc
 
-# Provide  links  or  keys  to  any  relevant  tickets,
-# articles or other resources.
-# Example: Github issue #23
+# Provide links or keys to any relevant tickets, articles or other
+# resources as trailers.
+#
+# Example:
+# 	Fixes: #25
+# 	Related-Bug: #23
+# 	Reported-By: somebody <somebody@example.com>
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMIT END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Type can be :
-#    build    (changes affecting build system or external dependencies)
-#    chore    (updating grunt tasks etc; no production code change)
-#    ci       (changes to ci configuration files and scripts)
-#    docs     (changes to documentation)
-#    feat     (new feature)
-#    fix      (bug fix)
-#    perf     (code change that improves performance)
-#    refactor (refactoring production code)
-#    style    (formatting, missing semi colons, etc; no code change)
-#    test     (adding or refactoring tests; no production code change)
-#    wip      (work in progress commit to be squashed -- do not push!)**
+# ----------------------------------------------------------------------
 
-# --------------------
-# Remember to :
-#    - Capitalize the subject line
-#    - Use the imperative mood in the subject line
-#    - Do not end the subject line with a period
-#    - Separate subject from body with a blank line
-#    - Use the body to explain what and why vs. how
-#    - Can use multiple lines with "-" for bullet points in body
+# Type can be:
+# ~~~~~~~~~~~~
+# - build (changes affecting build system or external dependencies)
+# - chore (updating grunt tasks etc; no production code change)
+# - ci    (changes to ci configuration files and scripts)
+# - docs  (changes to documentation)
+# - feat  (new feature)
+# - fix   (bug fix)
+# - perf  (code change that improves performance)
+# - ref   (refactoring production code)
+# - style (formatting, missing semi colons, etc; no code change)
+# - test  (adding or refactoring tests; no production code change)
+# - wip   (work in progress commit to be squashed -- do not push!)**
 
-# --------------------
-# ** wip commit type :
-#    A wip commit should only happen on a local branch.
-#    These  commits are  for unfinished  snapshots that
-#    should not be checked  into a shared branch. These
-#    commits  should  be  squashed before  changes  are
-#    merged to a shared branch.
+# Remember to:
+# ~~~~~~~~~~~~
+# 	- Capitalize the subject line
+# 	- Use the imperative mood in the subject line
+# 	- Do not end the subject line with a period
+# 	- Separate subject from body with a blank line
+# 	- Use the body to explain what and why vs. how
+# 	- Can use multiple lines with "-" for bullet points in body
 
-# --------------------
-# Commit example :
-# BUGFIX: Add New Column For User First Name
+# ** wip commit type:
+# ~~~~~~~~~~~~~~~~~~~
+# 	A wip commit should only happen on a local branch.
+# 	These commits are for unfinished snapshots that should not be
+# 	checked into a shared branch. These commits should be squashed
+# 	before changes are merged to a shared branch.
+
+# Commit example:
+# ~~~~~~~~~~~~~~~
+# fix: Add new column for user first name
 #
 # Problem
 #
-# We  do not  have a  column for  first name.  We need  this column  for
+# We do not have a column for first name. We need this column for
 # reporting.
 #
 # Solution
 #
-# * Add column migration
-# * Create task to populate new column
-# * Update user view
+# - Add column migration
+# - Create task to populate new column
+# - Update user view
 #
 # Note
 #
