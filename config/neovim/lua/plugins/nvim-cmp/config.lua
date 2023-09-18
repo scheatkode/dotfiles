@@ -134,6 +134,7 @@ return {
 			},
 
 			sources = completion.config.sources({
+				{ name = "omni" },
 				{ name = "nvim_lsp" },
 				{ name = "path" },
 			}),
