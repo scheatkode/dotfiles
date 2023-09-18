@@ -1,6 +1,6 @@
 ---@diagnostic disable: assign-type-mismatch
 
-local lazy = require("load.on_member_call")
+local lazy = require("load.on_module_call")
 
 return {
 	---Returns `true` if the string ends with the specified suffix, otherwise
