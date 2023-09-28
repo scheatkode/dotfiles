@@ -5,49 +5,36 @@ return {
 		"FileType",
 	},
 
+	main = "ibl",
+
 	opts = {
 		-- default configuration
 
-		char = "│",
-		indent_level = 10,
-		viewport_buffer = 80,
-
-		-- treesitter related configuration
-
-		use_treesitter = true,
-		show_current_context = true,
-		show_trailing_blankline_indent = false,
-
-		show_end_of_line = true,
-
-		context_patterns = {
-			"arguments",
-			"array",
-			"block",
-			"class",
-			"for",
-			"function",
-			"if",
-			"method",
-			"object",
-			"table",
-			"while",
+		indent = {
+			char = "│",
+			smart_indent_cap = true,
+			tab_char = "│",
 		},
 
-		-- excludes
-
-		buftype_exclude = {
-			"nofile",
-			"terminal",
+		scope = {
+			show_start = false,
+			show_end = false,
 		},
 
-		filetype_exclude = {
-			"TelescopePrompt",
-			"fugitive",
-			"help",
-			"markdown",
-			"norg",
-			"oil",
+		exclude = {
+			filetypes = {
+				"TelescopePrompt",
+				"TelescopeResults",
+				"checkhealth",
+				"fugitive",
+				"gitcommit",
+				"help",
+				"lspinfo",
+				"man",
+				"markdown",
+				"norg",
+				"oil",
+			},
 		},
 	},
 }
