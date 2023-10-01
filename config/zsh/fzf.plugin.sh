@@ -45,4 +45,5 @@ export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS}
 	--color=fg:#a89984,bg:-1,hl:#d79921
 	--color=fg+:#ebdbb2,bg+:-1,hl+:#fabd2f
 	--color=info:#d79921,prompt:#d65d0e,pointer:#fe8019
-	--color=marker:#689d6a,spinner:#b16286,header:#83a598"
+	--color=marker:#689d6a,spinner:#b16286,header:#83a598
+	--bind ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down"
