@@ -80,6 +80,8 @@ alias 'gau'='git add --update'
 alias 'gav'='git add --verbose'
 
 alias 'gapp'='git apply'
+alias 'gapps'='git apply --stat'
+alias 'gappc'='git apply --check'
 alias 'gap3'='git apply --3way'
 
 alias 'gb'='git branch'
