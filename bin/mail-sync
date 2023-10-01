@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Synchronize mail and index new/modified messages.
+
+set -e
+set -u
+
+# Assert a given prerequisite.
+#
+# :param 1: The prerequisite to assert.
+# :exitcode 2: If the prerequisite is not found.
+prereq_assert() {
+	if ! command -v "${1}" >/dev/null 2>&1; then
+		echo "error: the ${1} dependency was not found" 1>&2
+		exit 2 # ENOENT
+	fi
+}
+
+# Assert prerequisites.
+#
+# :exitcode 2: If any of the prerequisites is not found.
+prereq() {
+	prereq_assert mbsync
+	prereq_assert notmuch
+}
+
+# Main entrypoint.
+#
+# :param *: Mailboxes to sync
+# :exitcode 2: If any of the prerequisites are missing.
+# :exitcode 1: If sync fails.
+# :exitcode 0: If sync succeeds.
+main () (
+	prereq
+
+	if [ -n "${*}" ]; then
+		option="-V"
+	else
+		option="-a"
+	fi
+
+	# Ensure XDG_CONFIG_HOME is set with sane defaults.
+	: "${XDG_CONFIG_HOME:="${HOME}/.config"}"
+
+	mail-create-maildirs "${XDG_CONFIG_HOME}/isync/mbsyncrc"
+	mbsync -c "${XDG_CONFIG_HOME}/isync/mbsyncrc" "${option}" "${@}"
+	notmuch new
+)
+
+main "${@}"
