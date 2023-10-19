@@ -25,7 +25,6 @@ return {
 			["g?"] = "actions.show_help",
 
 			["<CR>"] = "actions.select",
-			["<Esc>"] = "actions.close",
 			["<C-c>"] = "actions.close",
 			["q"] = "actions.close",
 
