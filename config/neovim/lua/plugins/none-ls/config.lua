@@ -37,10 +37,28 @@ return {
 				ls.builtins.formatting.stylua,
 
 				-- python-specific
-				ls.builtins.formatting.black,
-				ls.builtins.formatting.ruff,
-				ls.builtins.diagnostics.ruff,
+				ls.builtins.formatting.black.with({
+					filetypes = {
+						"python",
+						"starlark",
+					},
+				}),
+				ls.builtins.formatting.ruff.with({
+					"python",
+					"starlark",
+				}),
+				-- ls.builtins.diagnostics.ruff.with({
+				-- 	"python",
+				-- 	"starlark",
+				-- }),
+				ls.builtins.diagnostics.pydocstyle.with({
+					"python",
+					"starlark",
+				}),
 				-- ls.builtins.diagnostics.pylint,
+
+				-- BUILD specific
+				ls.builtins.diagnostics.buildifier,
 
 				-- shell-specific
 				ls.builtins.formatting.shfmt,
@@ -78,6 +96,14 @@ return {
 						"bash",
 						"zsh",
 					},
+				}),
+
+				-- sql specific
+				ls.builtins.diagnostics.sqlfluff.with({
+					extra_args = { "--dialect", "mysql" },
+				}),
+				ls.builtins.formatting.sqlfmt.with({
+					extra_args = { "-l=72" },
 				}),
 
 				-- github actions specific
@@ -128,6 +154,9 @@ return {
 						"yaml",
 					},
 				}),
+
+				-- markdown-specific
+				ls.builtins.formatting.mdformat,
 			},
 		})
 	end,

@@ -1,5 +1,5 @@
 return {
-	"jose-elias-alvarez/null-ls.nvim",
+	"nvimtools/none-ls.nvim",
 
 	ft = {
 		"bash",
@@ -31,6 +31,6 @@ return {
 	},
 
 	config = function()
-		require("plugins.null-ls.config").setup()
+		require("plugins.none-ls.config").setup()
 	end,
 }
