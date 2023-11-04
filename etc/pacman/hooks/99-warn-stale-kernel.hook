@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Remove
+Operation = Upgrade
+Type      = Package
+Target    = *
+
+[Action]
+Description = Checking whether the kernel is stale...
+When        = PostTransaction
+Exec        = /etc/pacman.d/hooks.bin/warn-stale-kernel.sh

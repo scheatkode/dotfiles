@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type      = Package
+Target    = *
+
+[Action]
+Description = Checking for pacnew/pacsave files...
+When        = PostTransaction
+Exec        = /etc/pacman.d/hooks.bin/list-conflicting-files.sh

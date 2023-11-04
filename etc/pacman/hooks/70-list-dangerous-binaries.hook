@@ -1,0 +1,14 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type      = File
+Target    = bin/*
+Target    = sbin/*
+Target    = usr/bin/*
+Target    = usr/sbin/*
+
+[Action]
+Description = Checking for dangerous binaries...
+When        = PostTransaction
+Exec        = /etc/pacman.d/hooks.bin/list-dangerous-binaries.sh
+NeedsTargets

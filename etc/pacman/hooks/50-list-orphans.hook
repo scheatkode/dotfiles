@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Remove
+Operation = Upgrade
+Type      = Package
+Target    = *
+
+[Action]
+Description = Checking for orphan packages...
+When        = PostTransaction
+Exec        = /etc/pacman.d/hooks.bin/list-orphans.sh

@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Remove
+Operation = Upgrade
+Type      = Package
+Target    = *
+
+[Action]
+Description = Checking for stale libraries...
+When        = PostTransaction
+Exec        = /etc/pacman.d/hooks.bin/list-stale-libraries.sh
