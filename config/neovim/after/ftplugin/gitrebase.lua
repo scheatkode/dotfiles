@@ -34,6 +34,7 @@ for mode, map in pairs({
 		{ lhs = "gp", rhs = with_count("Pick"), desc = "Pick commit" },
 		{ lhs = "gr", rhs = with_count("Reword"), desc = "Reword commit" },
 		{ lhs = "gs", rhs = with_count("Squash"), desc = "Squash commit" },
+		{ lhs = "gd", rhs = with_count("Drop"), desc = "Drop commit" },
 	},
 	x = {
 		{
@@ -52,6 +53,7 @@ for mode, map in pairs({
 			desc = "Reword selected commits",
 		},
 		{ lhs = "gs", rhs = with_range("Squash"), desc = "Squash commits" },
+		{ lhs = "gd", rhs = with_range("Drop"), desc = "Drop commits" },
 	},
 }) do
 	for _, m in ipairs(map) do
