@@ -39,6 +39,6 @@ return {
 
 		-- StatusColumn
 		vim.opt.statuscolumn =
-			"%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum) : ''} %s"
+			"%=%{v:virtnum < 1 ? (&relativenumber ? v:relnum ? v:relnum : v:lnum : v:lnum) : ''} %s"
 	end,
 }
