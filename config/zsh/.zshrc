@@ -8,7 +8,6 @@
 . "${ZDOTDIR}"/functions.include.sh
 . "${ZDOTDIR}"/init.config.zsh
 . "${ZDOTDIR}"/main.config.zsh
-. "${ZDOTDIR}"/zinit.plugin.zsh
 . "${ZDOTDIR}"/paths.plugin.sh
 . "${ZDOTDIR}"/gpg.plugin.sh
 . "${ZDOTDIR}"/ssh.plugin.sh
@@ -20,6 +19,7 @@
 . "${ZDOTDIR}"/fancy-z.plugin.sh
 . "${ZDOTDIR}"/fzf.plugin.sh
 . "${ZDOTDIR}"/zoxide.plugin.sh
+. "${ZDOTDIR}"/zinit.plugin.zsh
 
 . "${ZDOTDIR}"/fun.plugin.sh
 
