@@ -384,3 +384,10 @@ alias 'gwrm'='git worktree remove'
 alias 'gfp'='git format-patch'
 alias 'gfpc'='git format-patch --cover-letter'
 alias 'gsm'='git send-email'
+
+if _dot_has compdef; then
+	compdef _git gldiv=git-log
+
+	compdef _git _dot_git_super_add=git-add
+	compdef _git _dot_git_super_add_patch=git-add
+fi
