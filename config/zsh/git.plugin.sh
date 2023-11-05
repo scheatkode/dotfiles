@@ -274,6 +274,20 @@ alias 'glop'='git log --graph --patch --pretty=withpgp'
 alias 'glos'='git log --graph --stat --pretty=multiline'
 alias 'glops'='git log --graph --patch --stat --pretty=everything'
 
+# Show a graph of diverging branches.
+gldiv() (
+	if [ "${#}" -lt 2 ]; then
+		echo "Usage: ${0} <branches>..." 1>&2
+		return 1
+	fi
+
+	git log          \
+			--oneline  \
+			--graph    \
+			--boundary \
+		"${@}" "$(git merge-base "${@}")^!"
+)
+
 alias 'gm'='git merge '
 alias 'gma'='git merge --abort'
 alias 'gmc'='git merge --continue'
