@@ -4,6 +4,7 @@
 #                   ░▀▀▀░▀▀▀░▀░▀░
 #
 # shellcheck shell=bash
+# shellcheck disable=2296
 
 # ---------------------------------------------------------------------------- #
 #                                 Zsh settings                                 #
@@ -51,7 +52,7 @@ unsetopt FLOW_CONTROL        # disable start/stop characters in shell editor.
 
 # history
 
-export HISTFILE="${ZDATADIR}/history"
+export HISTFILE="${ZDATADIR?}/history"
 export HISTSIZE=65535
 export SAVEHIST=65535
 
@@ -114,7 +115,7 @@ zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "${ZCACHEDIR}/zcompcache"
+zstyle ':completion::complete:*' cache-path "${ZCACHEDIR?}/zcompcache"
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
