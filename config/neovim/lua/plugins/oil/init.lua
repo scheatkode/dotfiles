@@ -1,8 +1,11 @@
+local lazy = require("load.on_member_call")
+local oil = lazy("oil")
+
 return {
 	"stevearc/oil.nvim",
 
 	keys = {
-		"-",
+		{ "-", oil.open, desc = "Toggle file explorer" },
 	},
 
 	opts = {
@@ -20,6 +23,12 @@ return {
 		},
 
 		use_default_keymaps = false,
+
+		view_options = {
+			is_always_hidden = function(name)
+				return name == "." or name == ".."
+			end,
+		},
 
 		keymaps = {
 			["g?"] = "actions.show_help",
@@ -46,14 +55,4 @@ return {
 			["<C-f>"] = "actions.preview_scroll_down",
 		},
 	},
-
-	config = function(_, opts)
-		local oil = require("oil")
-
-		oil.setup(opts)
-
-		vim.keymap.set("n", "-", oil.open, {
-			desc = "Toggle file explorer",
-		})
-	end,
 }
