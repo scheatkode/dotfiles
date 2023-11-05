@@ -7,6 +7,11 @@
 
 alias 'g'='git'
 
+# Get the current git branch.
+#
+# @stdout The current git branch.
+#
+# @exitcode 0 Always.
 _dot_git_current_branch() (
 	ref="$(GIT_OPTIONAL_LOCKS=0 command git symbolic-ref --quiet HEAD 2> /dev/null)"
 	ret="${?}"
@@ -22,6 +27,11 @@ _dot_git_current_branch() (
 	echo "${ref#refs/heads/}"
 )
 
+# Get the main branch of the current git repository.
+#
+# @stdout The main branch of the current git repository.
+#
+# @exitcode 0 Always.
 _dot_git_main_branch() (
 	_dot_void command git rev-parse --git-dir || return
 
@@ -43,6 +53,11 @@ _dot_git_main_branch() (
 	echo master
 )
 
+# Get the development branch of the current git repository.
+#
+# @stdout The development branch of the current git repository.
+#
+# @exitcode 0 Always.
 _dot_git_dev_branch() (
 	command git rev-parse --git-dir >/dev/null 2>&1 || return
 
@@ -56,12 +71,14 @@ _dot_git_dev_branch() (
 	echo develop
 )
 
+# Interactively add files with "git add".
 _dot_git_super_add() {
 	git ls-files --deleted --modified --other --exclude-standard \
 		| fzf --exit-0 --multi --print0 --preview 'git diff --color=always {-1}' \
 		| xargs -r0 git add
 }
 
+# Interactively add patches with "git add --patch".
 _dot_git_super_add_patch() {
 	# No need to be so strict here.
 	# shellcheck disable=2312,2046
@@ -116,6 +133,7 @@ alias 'gbss'='git bisect start'
 
 alias 'gcl'='git clone --recurse-submodules'
 
+# Interactively fixup a commit with the staged changes.
 _dot_git_super_fixup() {
 	command git log --oneline --no-decorate --no-merges \
 		| fzf --exit-0 --preview 'git show --color=always --format=oneline {1}' \
@@ -267,6 +285,7 @@ alias 'grho'='git reset "origin/$(_dot_git_current_branch)" --hard'
 alias 'grm'='git rm'
 alias 'grmc'='git rm --cached'
 
+# Interactively pop a stash.
 _dot_git_super_stash_pop() {
 	git stash list \
 		| fzf --exit-0 --preview 'git show --pretty=oneline --color=always --patch "$(echo {} | cut -d: -f1)"' \
