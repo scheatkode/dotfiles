@@ -73,19 +73,42 @@ _dot_git_dev_branch() (
 
 # Interactively add files with "git add".
 _dot_git_super_add() {
-	git ls-files --deleted --modified --other --exclude-standard \
-		| fzf --exit-0 --multi --print0 --preview 'git diff --color=always {-1}' \
-		| xargs -r0 git add
+	command git ls-files                           \
+			--deleted                                \
+			--modified                               \
+			--other                                  \
+			--exclude-standard                       \
+	| fzf                                          \
+			--exit-0                                 \
+			--multi                                  \
+			--print0                                 \
+			--preview 'git diff --color=always {-1}' \
+	| xargs                                        \
+			--no-run-if-empty                        \
+			--null                                   \
+		git add "${@}"
 }
 
 # Interactively add patches with "git add --patch".
 _dot_git_super_add_patch() {
-	# No need to be so strict here.
-	# shellcheck disable=2312,2046
-	git add --patch $(
-		git ls-files --deleted --modified --other --exclude-standard \
-		| fzf --exit-0 --multi --preview 'git diff --color=always {-1}'
-	)
+	command git ls-files                           \
+			-z                                       \
+			--deleted                                \
+			--modified                               \
+			--other                                  \
+			--exclude-standard                       \
+	| fzf                                          \
+			--exit-0                                 \
+			--read0                                  \
+			--print0                                 \
+			--multi                                  \
+			--preview 'git diff --color=always {-1}' \
+	| xargs                                        \
+			--no-run-if-empty                        \
+			--null                                   \
+			--exit                                   \
+			--open-tty                               \
+		git add --patch "${@}"
 }
 
 alias 'ga'='git add'
@@ -135,10 +158,25 @@ alias 'gcl'='git clone --recurse-submodules'
 
 # Interactively fixup a commit with the staged changes.
 _dot_git_super_fixup() {
-	command git log --oneline --no-decorate --no-merges \
-		| fzf --exit-0 --preview 'git show --color=always --format=oneline {1}' \
-		| cut -d' ' -f1 \
-		| xargs -r git commit -v "${@}" --fixup
+	command git log                                                \
+			-z                                                       \
+			--oneline                                                \
+			--no-decorate                                            \
+			--no-merges                                              \
+	| fzf                                                          \
+			--exit-0                                                 \
+			--print0                                                 \
+			--read0                                                  \
+			--preview 'git show --color=always --format=oneline {1}' \
+	| cut                                                          \
+			--zero-terminated                                        \
+			--delimiter ' '                                          \
+			--fields 1                                               \
+	| xargs                                                        \
+			-I '{}' \
+			--no-run-if-empty                                        \
+			--null                                                   \
+		git commit -v --fixup '{}' "${@}"
 }
 
 alias 'gc'='git commit -v'
@@ -287,10 +325,23 @@ alias 'grmc'='git rm --cached'
 
 # Interactively pop a stash.
 _dot_git_super_stash_pop() {
-	git stash list \
-		| fzf --exit-0 --preview 'git show --pretty=oneline --color=always --patch "$(echo {} | cut -d: -f1)"' \
-		| cut -d: -f1 \
-		| xargs -r git stash pop
+	git stash list -z                               \
+	| fzf                                           \
+			--exit-0                                  \
+			--print0                                  \
+			--read0                                   \
+			--preview 'git show                       \
+					--pretty=oneline                    \
+					--color=always                      \
+					--patch "$(echo {} | cut -d: -f1)"' \
+	| cut                                           \
+			--zero-terminated                         \
+			--delimiter :                             \
+			--fields 1                                \
+	| xargs                                         \
+			--no-run-if-empty                         \
+			--null                                    \
+		git stash pop "${@}"
 }
 
 alias 'gsu'='git stash push'
