@@ -21,7 +21,7 @@ zle      -N self-insert url-quote-magic
 
 # general
 
-setopt   BRACE_CCL           # allow brace character class list expansion.
+unsetopt BRACE_CCL         # allow brace character class list expansion.
 setopt   COMBINING_CHARS     # combine zero-length punctuation characters ( accents ) with the base character.
 setopt   RC_QUOTES           # allow 'tommy''s garage' instead of 'tommy'\''s garage'.
 setopt   MAIL_WARNING        # print a warning message if a mail file has been accessed.
