@@ -16,12 +16,12 @@
 . "${ZDOTDIR}"/alias.plugin.sh
 . "${ZDOTDIR}"/bat.plugin.sh
 . "${ZDOTDIR}"/git.plugin.sh
-. "${ZDOTDIR}"/fancy-z.plugin.sh
-. "${ZDOTDIR}"/fzf.plugin.sh
 . "${ZDOTDIR}"/zoxide.plugin.sh
 . "${ZDOTDIR}"/zinit.plugin.zsh
 
+. "${ZDOTDIR}"/fancy-z.plugin.sh
 . "${ZDOTDIR}"/fun.plugin.sh
+. "${ZDOTDIR}"/fzf.plugin.sh
 
 # shellcheck disable=3006
 # this is interpreted by zsh anyway
