@@ -385,6 +385,8 @@ alias 'gfp'='git format-patch'
 alias 'gfpc'='git format-patch --cover-letter'
 alias 'gsm'='git send-email'
 
+alias 'grp'='git rev-parse'
+
 if _dot_has compdef; then
 	compdef _git gldiv=git-log
 
