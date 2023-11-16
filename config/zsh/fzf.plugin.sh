@@ -8,14 +8,14 @@
 
 # use sharkdp/fd as a faster alternative to `find`.
 
-if command -v fd > /dev/null 2>&1; then
+if _dot_has fzf; then
 	export FZF_CTRL_T_COMMAND='fd --type f --hidden --exclude .git --exclude .cache'
 	export FZF_ALT_C_COMMAND='fd --type d --exclude .git --exclude .npm'
 fi
 
 # preview file content
 
-if command -v bat > /dev/null 2>&1; then
+if _dot_has bat; then
 	export FZF_CTRL_T_OPTS="
 		--preview 'bat -n --color=always {}'
 		--bind 'ctrl-/:change-preview-window(down|hidden|)'"
@@ -25,7 +25,7 @@ fi
 
 # print tree structure in the preview window
 
-if command -v exa > /dev/null 2>&1; then
+if _dot_has exa; then
 	export FZF_ALT_C_OPTS="--preview 'exa -T -L 2 {}'"
 fi
 

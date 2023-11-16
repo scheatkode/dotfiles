@@ -5,12 +5,14 @@
 #
 # shellcheck shell=sh
 
-if command -v nvim > /dev/null 2>&1; then
-   export EDITOR='nvim'
+if _dot_has nvim; then
+	export EDITOR='nvim'
+elif _dot_has vim; then
+	export EDITOR='vim'
 fi
 
-if command -v firefox > /dev/null 2>&1; then
-   export BROWSER='firefox'
+if _dot_has firefox; then
+	export BROWSER='firefox'
 fi
 
 # Use dark mode

@@ -12,7 +12,7 @@ export LSCOLORS="ExGxFxDxCxDxDxhbhdacEc";
 
 # linux or bsd style ?
 
-if command -v dircolors > /dev/null 2>&1 ; then
+if _dot_has dircolors; then
 	cmd='dircolors'
 else
 	cmd='gdircolors'
